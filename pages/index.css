@@ -319,6 +319,12 @@ details[open] {
   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
 }
 
+@media (max-width: 768px) {
+  details[open] {
+    padding: 10px
+  }
+}
+
 details p {
   color: #ffffff;
   font-weight: 300;

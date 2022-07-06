@@ -1047,7 +1047,7 @@ export default function Upload() {
                 </div>
 
                 <div className="overflow-y-auto h-[560px]">
-                  <div className="p-6 space-y-6">
+                  <div className="space-y-6 md:p-5 sm:p-3 lg:p-6 p-1">
                     {[
                       [
                         "user",
@@ -1155,7 +1155,6 @@ export default function Upload() {
                                                   : null,
                                               },
                                             });
-                                            console.log(selectedFeatures);
                                           }}
                                           id={item_.split(" ").join("")}
                                           type="checkbox"
