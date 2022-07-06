@@ -1,5 +1,14 @@
  # [Discord Package](https://discordpackage.com)
 
+<div style="display:flex; gap:4px">
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/peterhanania/Discord-Package)
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/peterhanania/discord-package)
+
+
+</div>
+
 Ever wondered what Data discord collects? Or did you ever want to view what's inside of a discord package? Discord Package is a customisable tool that allows you to view your data in a fancy way. You could also use our sharing feature which is coming soon to share your selected data with your friends.
 
 ### Features
@@ -120,7 +129,7 @@ Ever wondered what Data discord collects? Or did you ever want to view what's in
 This project **does not** store any information, and does not have any third party services. If you would like to self host it yourself, you could follow the following instructions.
 
 
-###  Installation
+###  Production Deployment
 
 Discord Data Package Explorer is built with **[Next.js](https://nextjs.org/)** and **[Tailwind.css](https://tailwindcss.com/)**.
 
