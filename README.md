@@ -1,10 +1,17 @@
- # [Discord Package](https://discordpackage.com)
+<h1 align="left">
+ <br>
+  <a href="https://github.com/peterhanania"><img src="https://i.imgur.com/y588rBZ.png"></a>
+  <br>
+  Discord Package
+  <br>
+</h1>
 
-<div style="display:flex; gap:4px">
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/peterhanania/Discord-Package)
+<div align=left>
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/peterhanania/discord-package)
+<a>[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/peterhanania/Discord-Package)</a>
+<a>
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/peterhanania/discord-package)</a>
 
 
 </div>
