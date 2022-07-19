@@ -11,7 +11,6 @@ import { DataContext } from "./utils/context";
 import Header from "./Header";
 import Data from "./Data";
 import BitField from "./utils/Bitfield";
-import dataExtracted from "./json/test.json";
 
 export default function Upload() {
   const { dataExtracted, setDataExtracted } = useContext(DataContext);
