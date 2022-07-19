@@ -409,7 +409,7 @@ class Utils {
       name: username + Math.floor(Math.random() * 10) + 1,
     }));
 
-    let guilds = Math.floor(Math.random() * 40) + 10;  
+    let guilds = Math.floor(Math.random() * 40) + 10;
     if (isNitroUser) guilds = Math.floor(Math.random() * 100) + 1;
 
     const folderCount = Math.floor(
@@ -601,9 +601,11 @@ class Utils {
           : randomWords(1)[0] + " Land";
       topChannels.push({
         name:
-          names[Math.floor(Math.random() * names.length)] +
-          "#" +
-          Math.floor(Math.random() * (9999 - 1000 + 1)),
+          Object.values(emojis)[
+            Math.floor(Math.random() * Object.values(emojis).length)
+          ] +
+          " | " +
+          names[Math.floor(Math.random() * names.length)],
         guildName: randomG,
         messageCount: Math.floor(Math.random() * (30000 - 1000 + 1)) + 1000,
         favoriteWords: randomWords({ min: 100, max: 700 })
@@ -653,7 +655,7 @@ class Utils {
       Math.floor(Math.random() * (300000 - 1000 + 1)) + 1000;
 
     return {
-      fakeInfo:true,
+      fakeInfo: true,
       user: {
         id,
         username,
