@@ -5,6 +5,12 @@ export default function Document() {
     <Html>
       <Head>
         <>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+            rel="stylesheet"
+          />
           <meta
             name="title"
             content="Discord Data Package Viewer and Explorer"

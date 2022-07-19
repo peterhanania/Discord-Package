@@ -131,7 +131,7 @@ export default function Header() {
                     </video>
                   </div>
                 </div>
-                {/* Modal footer */}
+
                 <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
                   <button
                     onClick={() => {
@@ -263,7 +263,7 @@ export default function Header() {
                     Feel free to Contribute to this project!
                   </div>
                 </div>
-                {/* Modal footer */}
+
                 <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
                   <button
                     onClick={() => {
@@ -468,7 +468,7 @@ export default function Header() {
                     </div>
                   </div>
                 </div>
-                {/* Modal footer */}
+
                 <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
                   <button
                     onClick={() => {
@@ -492,12 +492,12 @@ export default function Header() {
               fontFamily:
                 "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
             }}
-            className="dark:text-white text-gray-900 font-bold lg:text-5xl md:text-3xl sm:text-2xl text-xl uppercase dark:drop-shadow-[0_0_25px_#000] drop-shadow-[0_0_25px_#fff]"
+            className="animate__animated animate__zoomIn dark:text-white text-gray-900 font-bold lg:text-5xl md:text-3xl sm:text-2xl text-xl uppercase dark:drop-shadow-[0_0_25px_#000] drop-shadow-[0_0_25px_#fff]"
           >
             Discord Package
           </h1>
         </div>
-        <p className="dark:text-white text-gray-900 text-xl max-w-md text-center font-mono">
+        <p className="animate__animated animate__fadeIn animate__delay-1s dark:text-white text-gray-900 text-xl max-w-md text-center font-mono">
           An{" "}
           <a
             target="_blank"
@@ -518,13 +518,13 @@ export default function Header() {
           </a>
         </p>
         <div className="flex justify-center items-center mt-2">
-          <Tippy content={"Help"} animation="scale" className="shadow-xl">
+          <Tippy content={"Help"} animation="scale" className="shadow-xl ">
             <svg
               onClick={() => setHelp(true)}
               xmlns="http://www.w3.org/2000/svg"
               height="40"
               width="40"
-              className="dark:fill-white cursor-pointer"
+              className="opacity-90 hover:opacity-100 dark:fill-white cursor-pointer animate__animated animate__fadeIn animate__delay-1s"
             >
               <path d="M20.125 29.625q.667 0 1.167-.479t.5-1.188q0-.708-.48-1.187-.479-.479-1.187-.479-.708 0-1.187.479-.48.479-.48 1.187 0 .667.48 1.167.479.5 1.187.5Zm-1.458-6.083h2.541q0-1.125.292-1.98.292-.854 1.708-2.062 1.209-1.042 1.75-2.062.542-1.021.542-2.271 0-2.209-1.479-3.5-1.479-1.292-3.771-1.292-2.125 0-3.625 1.063-1.5 1.062-2.167 2.812l2.292.875q.375-1.042 1.229-1.729.854-.688 2.146-.688 1.417 0 2.208.75.792.75.792 1.834 0 .916-.521 1.687t-1.437 1.563q-1.417 1.208-1.959 2.208-.541 1-.541 2.792ZM20 36.375q-3.375 0-6.375-1.292-3-1.291-5.208-3.521-2.209-2.229-3.5-5.208Q3.625 23.375 3.625 20q0-3.417 1.292-6.396 1.291-2.979 3.521-5.208 2.229-2.229 5.208-3.5T20 3.625q3.417 0 6.396 1.292 2.979 1.291 5.208 3.5 2.229 2.208 3.5 5.187T36.375 20q0 3.375-1.292 6.375-1.291 3-3.5 5.208-2.208 2.209-5.187 3.5-2.979 1.292-6.396 1.292Z" />
             </svg>
@@ -535,7 +535,7 @@ export default function Header() {
               xmlns="http://www.w3.org/2000/svg"
               height="40"
               width="40"
-              className="dark:fill-white ml-2 cursor-pointer"
+              className="opacity-90 hover:opacity-100 dark:fill-white ml-2 cursor-pointer animate__animated animate__fadeIn animate__delay-1s"
             >
               <path d="m16.083 36.375-.791-5.167q-.375-.125-1.167-.583-.792-.458-1.708-1.042l-4.834 2.125-4-6.958L8 21.5q-.083-.333-.104-.708-.021-.375-.021-.792 0-.333.021-.75T8 18.417l-4.417-3.209 4-6.916 4.875 2.166Q13 10 13.771 9.542q.771-.459 1.521-.709l.791-5.25h7.834l.791 5.209q.709.25 1.48.687.77.438 1.354.979l4.916-2.166 3.959 6.916-4.459 3.209q.042.375.063.771.021.395.021.812 0 .417-.021.812-.021.396-.063.73l4.417 3.208-3.958 6.958-4.875-2.166q-.542.458-1.271.896-.729.437-1.563.77l-.791 5.167Zm3.875-10.958q2.25 0 3.834-1.584Q25.375 22.25 25.375 20t-1.583-3.833q-1.584-1.584-3.834-1.584t-3.833 1.584Q14.542 17.75 14.542 20t1.583 3.833q1.583 1.584 3.833 1.584Z" />
             </svg>
@@ -546,7 +546,7 @@ export default function Header() {
               xmlns="http://www.w3.org/2000/svg"
               height="40"
               width="40"
-              className="dark:fill-white ml-2 cursor-pointer"
+              className="dark:fill-white ml-2 cursor-pointer animate__animated animate__fadeIn animate__delay-1s opacity-90 hover:opacity-100"
             >
               <path d="M18.792 28.208h2.625v-9.833h-2.625ZM20 15.292q.583 0 1-.396.417-.396.417-1.021 0-.625-.396-1.021-.396-.396-1.021-.396-.625 0-1.021.396-.396.396-.396 1.021 0 .583.417 1 .417.417 1 .417Zm0 21.083q-3.375 0-6.375-1.292-3-1.291-5.208-3.521-2.209-2.229-3.5-5.208Q3.625 23.375 3.625 20q0-3.417 1.292-6.396 1.291-2.979 3.521-5.208 2.229-2.229 5.208-3.5T20 3.625q3.417 0 6.396 1.292 2.979 1.291 5.208 3.5 2.229 2.208 3.5 5.187T36.375 20q0 3.375-1.292 6.375-1.291 3-3.5 5.208-2.208 2.209-5.187 3.5-2.979 1.292-6.396 1.292Z" />
             </svg>

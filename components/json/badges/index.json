@@ -1,0 +1,162 @@
+{
+  "DISCORD_EMPLOYEE": {
+    "description": "{p_1} are a Discord Employee",
+    "shift": 0,
+    "undocumented": false
+  },
+  "DISCORD_PARTNER": {
+    "description": "{p_1} are a Discord Partner",
+    "shift": 1,
+    "undocumented": false
+  },
+  "HYPESQUAD_EVENTS": {
+    "description": "{p_1} are a HypeSquad Events member",
+    "shift": 2,
+    "undocumented": false
+  },
+  "BUG_HUNTER_LEVEL_1": {
+    "description": "{p_1} are a Bug Hunter",
+    "shift": 3,
+    "undocumented": false
+  },
+  "MFA_SMS": {
+    "description": "{p_1} have SMS 2FA enabled",
+    "shift": 4,
+    "undocumented": true
+  },
+  "PREMIUM_PROMO_DISMISSED": {
+    "description": "{p_1} have dismissed a nitro promotion",
+    "shift": 5,
+    "undocumented": true
+  },
+  "HOUSE_BRAVERY": {
+    "description": "{p_1} are part of HypeSquad Bravery",
+    "shift": 6,
+    "undocumented": false
+  },
+  "HOUSE_BRILLIANCE": {
+    "description": "{p_1} are part of HypeSquad Brilliance",
+    "shift": 7,
+    "undocumented": false
+  },
+  "HOUSE_BALANCE": {
+    "description": "{p_1} are a part of HypeSquad Balance",
+    "shift": 8,
+    "undocumented": false
+  },
+  "EARLY_SUPPORTER": {
+    "description": "{p_1} are an Early Supporter",
+    "shift": 9,
+    "undocumented": false
+  },
+  "TEAM_PSEUDO_USER": {
+    "description": "Account is a Team account",
+    "shift": 10,
+    "undocumented": false
+  },
+  "INTERNAL_APPLICATION": {
+    "description": "An internal flag accidentally leaked to the client's private flags Relates to partner/verification applications but nothing else is known",
+    "shift": 11,
+    "undocumented": true
+  },
+  "SYSTEM": {
+    "description": "{p_2} account is a system account",
+    "shift": 12,
+    "undocumented": true
+  },
+  "HAS_UNREAD_URGENT_MESSAGES": {
+    "description": "{p_1} have unread messages from Discord",
+    "shift": 13,
+    "undocumented": true
+  },
+  "BUG_HUNTER_LEVEL_2": {
+    "description": "{p_1} have the gold Bug Hunter badge",
+    "shift": 14,
+    "undocumented": false
+  },
+  "UNDERAGE_DELETED": {
+    "description": "{p_2} account was deleted for being underage",
+    "shift": 15,
+    "undocumented": true
+  },
+  "VERIFIED_BOT": {
+    "description": "{p_1} are a verified bot",
+    "shift": 16,
+    "undocumented": false
+  },
+  "VERIFIED_TRUE": {
+    "description": "{p_1} have a verified bot but you are not verified by Discord",
+    "shift": 47,
+    "undocumented": false
+  },
+  "VERIFIED_BOT_DEVELOPER": {
+    "description": "{p_1} are a verified bot developer",
+    "shift": 17,
+    "undocumented": false
+  },
+  "CERTIFIED_MODERATOR": {
+    "description": "{p_1} are a Discord certified moderator",
+    "shift": 18,
+    "undocumented": false
+  },
+  "BOT_HTTP_INTERACTIONS": {
+    "description": "Bot is an HTTP interaction",
+    "shift": 19,
+    "undocumented": false
+  },
+  "SPAMMER": {
+    "description": "{p_1} are marked as a spammer",
+    "shift": 20,
+    "undocumented": true
+  },
+  "DISABLE_PREMIUM": {
+    "description": "Forcefully disables Nitro features",
+    "shift": 21,
+    "undocumented": true
+  },
+  "PREMIUM_DISCRIMINATOR": {
+    "description": "{p_1} have a premium discriminator",
+    "shift": 37,
+    "undocumented": true
+  },
+  "USED_DESKTOP_CLIENT": {
+    "description": "{p_1} have used the desktop client",
+    "shift": 38,
+    "undocumented": true
+  },
+  "USED_WEB_CLIENT": {
+    "description": "{p_1} have used the web client",
+    "shift": 39,
+    "undocumented": true
+  },
+  "USED_MOBILE_CLIENT": {
+    "description": "{p_1} have used the mobile client",
+    "shift": 40,
+    "undocumented": true
+  },
+  "DISABLED": {
+    "description": "{p_2} account is currently temporarily or permanently disabled",
+    "shift": 41,
+    "undocumented": true
+  },
+  "VERIFIED_EMAIL": {
+    "description": "{p_1} have a verified email",
+    "shift": 43,
+    "undocumented": true
+  },
+  "QUARANTINED": {
+    "description": "{p_2} account is quarantined",
+    "shift": 44,
+    "undocumented": true
+  },
+  "nitro": {
+    "description": "{p_1} have Nitro",
+    "shift": 45,
+    "undocumented": false
+  },
+  "nitro_until": {
+    "description": "{p_1} have Nitro till {until}",
+    "shift": 46,
+    "undocumented": false
+  }
+}

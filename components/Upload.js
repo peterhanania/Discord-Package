@@ -7,15 +7,17 @@ import { Fragment, useContext } from "react";
 import Features from "./json/features.json";
 import EventsJSON from "./json/events.json";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { DataContext } from "./utils/context";
 import Header from "./Header";
+import Data from "./Data";
+import BitField from "./utils/Bitfield";
+import dataExtracted from "./json/test.json";
 
 export default function Upload() {
   const { dataExtracted, setDataExtracted } = useContext(DataContext);
   const [dragging, setDragging] = React.useState(false);
   const [error, setError] = React.useState(null);
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState("Loading...|||");
 
   const classifyOBJ = (obj) => {
     let newObj = {};
@@ -34,11 +36,10 @@ export default function Upload() {
 
   const defaultOptions = classifyOBJ({
     bots: true,
-    "user.isMobileUser": true,
     "user.premium_until": true,
+    "user.badges": true,
     "settings.appearance": true,
     "settings.folderCount": true,
-    "settings.favoriteGifsCount": true,
     "settings.recentEmojis": true,
     connections: true,
     "payments.total": true,
@@ -47,6 +48,7 @@ export default function Upload() {
     "messages.channelCount": true,
     "messages.dmChannelCount": true,
     "messages.topChannels": true,
+    "messages.topDMs": true,
     "messages.characterCount": true,
     "messages.hoursValues": true,
     guilds: true,
@@ -60,6 +62,14 @@ export default function Upload() {
   const [oldSelected, setOldSelected] = React.useState(null);
   const [selectedFeatures, setSelectedFeatures] =
     React.useState(defaultOptions);
+
+  const [demo, setDemo] = React.useState(false);
+
+  React.useEffect(() => {
+    if (window.location.href.includes("demo=true") && dataExtracted) {
+      setDemo(true);
+    } else setLoading(false);
+  }, [dataExtracted]);
 
   React.useEffect(() => {
     const file = document.getElementById("file");
@@ -242,14 +252,13 @@ export default function Upload() {
               username: null,
               discriminator: null,
               avatar: null,
-              isMobileUser: null,
               premium_until: null,
               flags: null,
+              badges: [],
             },
             settings: {
               appearance: null,
               folderCount: null,
-              favoriteGifsCount: null,
               recentEmojis: null,
             },
             connections: null,
@@ -265,6 +274,7 @@ export default function Upload() {
               topChannels: null,
               topDMs: null,
               characterCount: null,
+              messageCount: null,
               hoursValues: [],
             },
             guilds: null,
@@ -294,12 +304,10 @@ export default function Upload() {
           setLoading("Loading User Information|||");
           await delay(1000);
 
-          //userinfo
           const userInformationData = JSON.parse(
             await Utils.readFile("account/user.json", files)
           );
 
-          //user main info
           setLoading("Loading User Information|||Loading Main Information");
 
           if (userInformationData.id) {
@@ -315,20 +323,11 @@ export default function Upload() {
           if (userInformationData.avatar_hash)
             data.user.avatar = userInformationData.avatar_hash;
 
-          if (options.user.isMobileUser)
-            if (userInformationData.has_mobile) {
-              data.user.isMobileUser = userInformationData.has_mobile;
-            }
-
-          if (options.premium_until) {
+          if (options.user.premium_until) {
             if (userInformationData.premium_until)
               data.user.premium_until = userInformationData.premium_until;
           }
 
-          if (userInformationData.flags)
-            data.user.flags = userInformationData.flags;
-
-          //more info
           await delay(400);
           setLoading("Loading User Information|||Loading Setting Information");
           if (
@@ -357,12 +356,6 @@ export default function Upload() {
             userInformationData.settings &&
             userInformationData.settings.frecency
           ) {
-            if (options.settings.favoriteGifsCount) {
-              if (userInformationData.settings.frecency.favoriteGifs)
-                data.settings.favoriteGifsCount =
-                  userInformationData.settings.frecency.favoriteGifs.length;
-            }
-
             if (options.settings.recentEmojis) {
               if (
                 userInformationData.settings.frecency.emojiFrecency &&
@@ -457,6 +450,8 @@ export default function Upload() {
                   return {
                     information: p.description,
                     amount: p.amount / 100,
+                    currency: p.currency,
+                    date: p.created_at,
                   };
                 });
             }
@@ -551,7 +546,7 @@ export default function Upload() {
             data.messages.topChannels = channels
               .filter((c) => c.data_ && c.data_.guild)
               .sort((a, b) => b.messages.length - a.messages.length)
-              .slice(0, 10)
+
               .map((channel) => {
                 const words = channel.messages
                   .map((message) => message.words)
@@ -566,18 +561,12 @@ export default function Upload() {
                   });
 
                 const favoriteWords = Utils.getFavoriteWords(words);
-
                 const curseWords = Utils.getCursedWords(words);
-                const topCursed = curseWords.slice(0, 10);
-                const curseCount = curseWords.length;
-
+                const topCursed = curseWords;
                 const links = Utils.getTopLinks(words);
-                const topLinks = links.slice(0, 10);
-                const linkCount = links.length;
-
+                const topLinks = links;
                 const discordLink = Utils.getDiscordLinks(words);
-                const topDiscordLinks = discordLink.slice(0, 10);
-                const discordLinkCount = discordLink.length;
+                const topDiscordLinks = discordLink;
 
                 return {
                   name: channel.name,
@@ -587,14 +576,9 @@ export default function Upload() {
                     ? favoriteWords
                     : null,
                   topCursed: options.other.showCurseWords ? topCursed : null,
-                  curseCount: options.other.showCurseWords ? curseCount : null,
                   topLinks: options.other.showLinks ? topLinks : null,
-                  linkCount: options.other.showLinks ? linkCount : null,
                   topDiscordLinks: options.other.showDiscordLinks
                     ? topDiscordLinks
-                    : null,
-                  discordLinkCount: options.other.showDiscordLinks
-                    ? discordLinkCount
                     : null,
                 };
               });
@@ -610,7 +594,7 @@ export default function Upload() {
                   channel.isDM && channel.name.includes("Direct Message with")
               )
               .sort((a, b) => b.messages.length - a.messages.length)
-              .slice(0, 10)
+
               .map((channel) => {
                 const words = channel.messages
                   .map((message) => message.words)
@@ -627,16 +611,11 @@ export default function Upload() {
                 const favoriteWords = Utils.getFavoriteWords(words);
 
                 const curseWords = Utils.getCursedWords(words);
-                const topCursed = curseWords.slice(0, 10);
-                const curseCount = curseWords.length;
-
+                const topCursed = curseWords;
                 const links = Utils.getTopLinks(words);
-                const topLinks = links.slice(0, 10);
-                const linkCount = links.length;
-
+                const topLinks = links;
                 const discordLink = Utils.getDiscordLinks(words);
-                const topDiscordLinks = discordLink.slice(0, 10);
-                const discordLinkCount = discordLink.length;
+                const topDiscordLinks = discordLink;
 
                 return {
                   channel_id: channel.data_.id,
@@ -647,20 +626,15 @@ export default function Upload() {
                     ? favoriteWords
                     : null,
                   topCursed: options.other.showCurseWords ? topCursed : null,
-                  curseCount: options.other.showCurseWords ? curseCount : null,
                   topLinks: options.other.showLinks ? topLinks : null,
-                  linkCount: options.other.showLinks ? linkCount : null,
                   topDiscordLinks: options.other.showDiscordLinks
                     ? topDiscordLinks
-                    : null,
-                  discordLinkCount: options.other.showDiscordLinks
-                    ? discordLinkCount
                     : null,
                 };
               });
           }
 
-          if (options.characterCount) {
+          if (options.messages.characterCount) {
             await delay(700);
             setLoading("Loading Messages|||Getting your character Count");
 
@@ -669,6 +643,10 @@ export default function Upload() {
               .flat()
               .map((message) => message.length)
               .reduce((p, c) => p + c);
+
+            data.messages.messageCount = channels
+              .map((channel) => channel.messages)
+              .flat().length;
           }
 
           if (options.messages.hoursValues) {
@@ -706,24 +684,21 @@ export default function Upload() {
             await delay(700);
             setLoading("Loading Messages|||Calculating your curse words");
             const curseWords = Utils.getCursedWords(words);
-            data.messages.topCursed = curseWords.slice(0, 10);
-            data.messages.curseCount = curseWords.length;
+            data.messages.topCursed = curseWords;
           }
 
           if (options.other.showLinks) {
             await delay(600);
             setLoading("Loading Messages|||Calculating your general links");
             const links = Utils.getTopLinks(words);
-            data.messages.topLinks = links.slice(0, 10);
-            data.messages.linkCount = links.length;
+            data.messages.topLinks = links;
           }
 
           if (options.other.showDiscordLinks) {
             await delay(700);
             setLoading("Loading Messages|||Calculating your discord links");
             const discordLink = Utils.getDiscordLinks(words);
-            data.messages.topDiscordLinks = discordLink.slice(0, 10);
-            data.messages.discordLinkCount = discordLink.length;
+            data.messages.topDiscordLinks = discordLink;
           }
 
           if (options.guilds) {
@@ -743,7 +718,7 @@ export default function Upload() {
           if (options.bots) {
             await delay(2000);
             setLoading("Loading User Bots|||");
-            //go through each folder in account/applications
+
             await delay(600);
             setLoading("Loading User Bots|||Scanning Bots");
             const bots = files.filter(
@@ -781,6 +756,28 @@ export default function Upload() {
               await delay(700);
               setLoading("Loading User Bots|||Bots not Found");
             }
+          }
+
+          if (userInformationData.flags && options.user.badges) {
+            data.user.flags = userInformationData.flags;
+            const badges = BitField.calculate(userInformationData.flags);
+            if (data.user.premium_until) {
+              badges.push("nitro_until");
+            } else if (
+              !data.user.premium_until &&
+              userInformationData.premium_until
+            ) {
+              badges.push("nitro");
+            }
+
+            if (
+              data?.bots?.filter((bot) => bot.verified)?.length > 0 &&
+              !badges.includes("VERIFIED_BOT_DEVELOPER")
+            ) {
+              badges.push("VERIFIED_TRUE");
+            }
+
+            data.user.badges = badges;
           }
 
           if (options.statistics.length) {
@@ -904,6 +901,8 @@ export default function Upload() {
           .then((data) => {
             setLoading(null);
             setError(null);
+            data.demo = true;
+            data.fakeInfo = false;
             setDataExtracted(data);
 
             toast.success("Data extracted Successfully", {
@@ -932,24 +931,30 @@ export default function Upload() {
       }
 
       startUpload();
-    } else setError("Only zip files are supported");
+    } else {
+      if (fileUploaded.type === "application/json") {
+        setLoading("Loading JSON|||reading files");
+        var readFile_ = new FileReader();
+        readFile_.onload = function (e) {
+          var content = e.target.result;
+          var data = JSON.parse(content);
+
+          if (data) {
+            if (data.dataFile) {
+              setLoading(null);
+              setError(null);
+              data.demo = true;
+              setDataExtracted(data);
+            } else setError("JSON file is not valid");
+          } else setError("JSON file is corrupted");
+        };
+        readFile_.readAsText(fileUploaded);
+      } else setError("Only zip files are supported");
+    }
   };
 
-  return dataExtracted ? (
-    <>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <p>{JSON.stringify(dataExtracted)}</p>
-    </>
+  return demo || (dataExtracted && dataExtracted.demo) ? (
+    <Data data={dataExtracted} />
   ) : (
     <>
       <Header />{" "}
@@ -984,9 +989,7 @@ export default function Upload() {
           <div className="flex items-center justify-center min-h-screen">
             <Dialog.Overlay className="fixed inset-0  bg-black/30" />
             <div className="relative p-4 w-full max-w-7xl md:h-auto h-full">
-              {/* Modal content */}
               <div className="relative shadow-lg bg-[#36393f] ">
-                {/* Modal header */}
                 <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
                   <h3
                     className="text-xl font-medium text-white uppercase"
@@ -1136,7 +1139,6 @@ export default function Upload() {
                                             )[i]
                                           }
                                           onChange={(e) => {
-                                            //find the key by the value item_
                                             const key = Object.keys(
                                               classifyOBJ(Features)[item]
                                             ).find(
@@ -1248,11 +1250,6 @@ export default function Upload() {
                               key={i}
                             >
                               <input
-                                // defaultChecked={EventsJSON.defaultEvents.includes(
-                                //   Object.keys(EventsJSON.events).find(
-                                //     (key) => EventsJSON.events[key] === item
-                                //   )
-                                // )}
                                 checked={selectedFeatures.statistics.includes(
                                   Object.keys(EventsJSON.events).find(
                                     (key) => EventsJSON.events[key] === item
@@ -1303,11 +1300,10 @@ export default function Upload() {
                     </div>
                   </div>{" "}
                 </div>
-                {/* Modal footer */}
+
                 <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
                   <button
                     onClick={() => {
-                      //check if selected features are the same as the default
                       if (
                         JSON.stringify(selectedFeatures) ===
                         JSON.stringify(defaultOptions)
@@ -1382,7 +1378,7 @@ export default function Upload() {
               <input
                 type="file"
                 className="hidden"
-                accept=".zip"
+                accept=".zip, .json"
                 onChange={(e) => {
                   onUpload(e.target.files);
                 }}
@@ -1395,7 +1391,7 @@ export default function Upload() {
                 <label
                   id="dropzone-label"
                   htmlFor="dropzone-file"
-                  className="flex flex-col justify-center items-center w-full h-64 rounded-lg border-4 border-dashed cursor-pointer dark:border-gray-200 dark:hover:border-gray-400 dark:hover:opacity-75 dark:hover:shadow-lg dark:hover:transition-all duration-200"
+                  className="animate__animated animate__headShake flex flex-col justify-center items-center w-full h-64 rounded-lg border-4 border-dashed cursor-pointer dark:border-gray-200 dark:hover:border-gray-400 dark:hover:opacity-75 dark:hover:shadow-lg dark:hover:transition-all duration-200"
                 >
                   <div className="flex flex-col justify-center items-center pt-5 pb-6">
                     <svg
@@ -1417,7 +1413,7 @@ export default function Upload() {
                       drag and drop
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">
-                      Upload your discord package here
+                      Upload your discord package or JSON here
                     </p>
 
                     <button
@@ -1433,7 +1429,7 @@ export default function Upload() {
                     id="dropzone-file"
                     type="file"
                     className="hidden"
-                    accept=".zip"
+                    accept=".zip, .json"
                     onChange={(e) => {
                       onUpload(e.target.files);
                     }}
@@ -1456,7 +1452,7 @@ export default function Upload() {
                         >
                           <path d="M24 34.4q.85 0 1.375-.525T25.9 32.5q0-.85-.525-1.375T24 30.6q-.85 0-1.375.525T22.1 32.5q0 .85.525 1.375T24 34.4Zm-1.65-8.1H26V13.5h-3.65ZM24 44.8q-4.3 0-8.075-1.65-3.775-1.65-6.6-4.475-2.825-2.825-4.475-6.6Q3.2 28.3 3.2 23.95q0-4.3 1.65-8.075 1.65-3.775 4.475-6.6 2.825-2.825 6.6-4.45Q19.7 3.2 24 3.2q4.3 0 8.1 1.625t6.625 4.45q2.825 2.825 4.45 6.625T44.8 24q0 4.3-1.625 8.075-1.625 3.775-4.45 6.575-2.825 2.8-6.625 4.475Q28.3 44.8 24 44.8Z" />
                         </svg>
-                        <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                        <p className="max-w-lg mb-2 text-sm text-gray-500 dark:text-gray-400">
                           {error}
                         </p>
                       </div>
@@ -1464,7 +1460,7 @@ export default function Upload() {
                         id="dropzone-file"
                         type="file"
                         className="hidden"
-                        accept=".zip"
+                        accept=".zip, .json"
                         onChange={(e) => onUpload(e.target.files)}
                       />
                     </label>
@@ -1597,18 +1593,18 @@ export default function Upload() {
           )}
         </div>
       </div>
-      <div className="flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
+      <div className="animate__delay-1s animate__animated animate__fadeIn flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
         Want to view a Demo?{" "}
         <a
           className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1"
-          href="/"
+          href="/?demo=true"
           target="_blank"
           rel="noreferrer"
         >
           Click here
         </a>
       </div>
-      <div className="flex justify-center items-center absolute bottom-8 right-0 left-0">
+      <div className="animate__animated animate__fadeIn animate__delay-1s flex justify-center items-center absolute bottom-8 right-0 left-0">
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] text-slate-800 dark:text-white font-bold flex items-center rounded-md">
           Made by{" "}
           <a

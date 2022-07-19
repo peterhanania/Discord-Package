@@ -38,10 +38,12 @@
 
 :root {
   --bg-color: #eeeeee;
+  --text-color: #2e3338;
 }
 
 html.dark {
   --bg-color: #23272a;
+  --text-color: #eeeeee;
 }
 
 * {
@@ -71,7 +73,7 @@ body {
 
 .sp1,
 .sp2 {
-  background-color: #fff;
+  background-color: var(--text-color);
   width: 15px;
   height: 15px;
   position: absolute;
@@ -321,7 +323,7 @@ details[open] {
 
 @media (max-width: 768px) {
   details[open] {
-    padding: 10px
+    padding: 10px;
   }
 }
 
@@ -380,7 +382,6 @@ details[open] .control-icon-expand {
   background: #5865f2;
   border-color: #5865f2;
   color: rgb(255, 255, 255);
-  display: inline-block;
   min-width: 60px;
   min-height: 36px;
   max-height: 36px;
@@ -426,7 +427,8 @@ details[open] .control-icon-expand {
   color: white;
 }
 
-svg:focus {
+svg,
+input[type="search"]:focus {
   outline: none;
 }
 

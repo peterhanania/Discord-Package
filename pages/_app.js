@@ -1,5 +1,6 @@
 import "./index.css";
 import "animate.css";
+import "./toastify.css";
 import "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
@@ -25,7 +26,9 @@ export default function MyApp({ Component, pageProps }) {
       document.documentElement.classList.remove("dark");
     }
 
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
     console.log(
       `
 %c  %c
