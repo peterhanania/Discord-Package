@@ -243,11 +243,11 @@ export default function Header() {
                     This website is also deployed on{" "}
                     <a
                       className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                      href="https://netlify.com"
+                      href="https://vercel.com"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      Netlify
+                      Vercel
                     </a>{" "}
                     from the{" "}
                     <a
@@ -485,7 +485,7 @@ export default function Header() {
           </div>
         </Dialog>
       </Transition>
-      <header className="flex flex-col items-center pt-20">
+      <header className="flex flex-col items-center lg:pt-20 md:pt-16 pt-4">
         <div className="flex justify-center">
           <h1
             style={{

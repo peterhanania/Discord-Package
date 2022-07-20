@@ -361,7 +361,7 @@ export default function Data(props) {
         draggable
         pauseOnHover
       />
-      <div className="flex items-center mx-10 mt-4">
+      <div className="lg:flex sm:flex md:flex items-center lg:mx-10 md:mx-8 mx-2 lg:mt-4 md:mt-4 mt-2">
         {!data.dataFile ? (
           <Tippy
             content={
@@ -410,7 +410,7 @@ export default function Data(props) {
                   URL.revokeObjectURL(url);
                 }, 100);
               }}
-              className="button-green text-gray-200 flex items-center gap-1 h-[90px] mr-2"
+              className="button-green text-gray-200 flex items-center gap-1 h-[90px] "
             >
               <svg
                 className="fill-white cursor-pointer"
@@ -436,7 +436,7 @@ export default function Data(props) {
                 animation="scale"
                 className="shadow-xl"
               >
-                <div className="opacity-60 cursor-not-allowed button-green text-gray-200 flex items-center gap-1 h-[90px] ml-2 ">
+                <div className="opacity-60 cursor-not-allowed button-green text-gray-200 flex items-center gap-1 h-[90px] lg:ml-2 md:ml-2 sm:ml-2 lg:my-0 md:my-0 sm:my-0 my-2 ">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="24"
@@ -446,7 +446,7 @@ export default function Data(props) {
                     <path d="M11.9 20.85q-3.675 0-6.262-2.588Q3.05 15.675 3.05 12q0-3.675 2.588-6.263Q8.225 3.15 11.9 3.15q1.95 0 3.688.787 1.737.788 2.962 2.288V3.15h2.4v8.225H12.7V9h4.05q-.8-1.25-2.075-1.975Q13.4 6.3 11.9 6.3q-2.375 0-4.037 1.663Q6.2 9.625 6.2 12t1.663 4.038Q9.525 17.7 11.9 17.7q1.775 0 3.238-1.025Q16.6 15.65 17.25 14h3.275q-.725 3-3.125 4.925-2.4 1.925-5.5 1.925Z" />
                   </svg>
 
-                  <p> Regenerate Data</p>
+                  <p> Regenerating...</p>
                 </div>
               </Tippy>
             ) : (
@@ -483,11 +483,13 @@ export default function Data(props) {
                 <div
                   onClick={() => {
                     setGenerate_(true);
-                    const data___ = Utils.generateRandomData();
-                    setData(data___);
-                    setGenerate_(false);
+                    setTimeout(() => {
+                      const data___ = Utils.generateRandomData();
+                      setData(data___);
+                      setGenerate_(false);
+                    }, 1000);
                   }}
-                  className="button-green text-gray-200 flex items-center gap-1 h-[90px] ml-2 "
+                  className="button-green text-gray-200 flex items-center gap-1 h-[90px] lg:ml-2 md:ml-2 sm:ml-2 lg:my-0 md:my-0 sm:my-0 my-2 "
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -508,7 +510,7 @@ export default function Data(props) {
         )}
         <Settings />
       </div>
-      <div className="mx-10 mt-4 px-4 py-2 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg">
+      <div className="lg:mx-10 md:mx-8 mx-2 lg:mt-4 mt-2 px-4 py-2 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg">
         <div className="flex items-center space-x-4 ">
           <div
             onClick={(element) => {
@@ -563,7 +565,7 @@ export default function Data(props) {
             </div>
           </div>
           <div
-            className="space-y-1 font-medium text-gray-900 dark:text-white text-3xl uppercase  w-full"
+            className="space-y-1 font-medium text-gray-900 dark:text-white uppercase  w-full"
             style={{
               fontFamily:
                 "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
@@ -572,271 +574,278 @@ export default function Data(props) {
             }}
           >
             <div>
-              <div className="flex items-center text-gray-900 dark:text-white">
-                {data?.user?.username}#{data?.user?.discriminator}
-                {data?.messages?.characterCount &&
-                data?.messages?.messageCount ? (
-                  <Tippy
-                    content={
-                      data.messages.characterCount
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-                      " Characters & " +
-                      data.messages.messageCount
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-                      " Messages"
-                    }
-                    animation="scale"
-                    className="shadow-xl"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24"
-                      className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                      width="24"
+              <div className="lg:flex md:flex items-center text-gray-900 dark:text-white">
+                <p className="text-xl md:text-2xl lg:text-3xl">
+                  {data?.user?.username}#{data?.user?.discriminator}
+                </p>
+                <div className="flex items-center">
+                  {data?.messages?.characterCount &&
+                  data?.messages?.messageCount ? (
+                    <Tippy
+                      content={
+                        data.messages.characterCount
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+                        " Characters & " +
+                        data.messages.messageCount
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+                        " Messages"
+                      }
+                      animation="scale"
+                      className="shadow-xl"
                     >
-                      <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                    </svg>
-                  </Tippy>
-                ) : (
-                  ""
-                )}
-                {data?.messages?.favoriteWords &&
-                data?.messages?.favoriteWords.length > 0 ? (
-                  <Tippy
-                    content={`${
-                      data.messages.favoriteWords.length
-                    } Favorite Word${
-                      data.messages.favoriteWords.length > 1 ? "s" : ""
-                    }`}
-                    animation="scale"
-                    className="shadow-xl"
-                  >
-                    <svg
-                      onClick={() => {
-                        toast(
-                          <div className="Toastify__toast-body_">
-                            <span className="font-bold text-lg text-black dark:text-white">
-                              {data?.dataFile ? "Their" : "Your"}{" "}
-                              {data.messages.favoriteWords.length < 10
-                                ? "Top 10"
-                                : `${data.messages.favoriteWords.length}`}{" "}
-                              Favorite Word
-                              {data.messages.favoriteWords.length === 1
-                                ? " is"
-                                : "s are"}
-                              :
-                            </span>
-                            <br />
-                            <ul className="list-disc ml-4">
-                              {data.messages.favoriteWords.map((f, i) => {
-                                return (
-                                  <li key={i}>
-                                    {f.word}: {f.count} times
-                                  </li>
-                                );
-                              })}
-                            </ul>
-                          </div>,
-                          {
-                            position: "top-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                          }
-                        );
-                      }}
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24"
-                      width="24"
-                      className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                        width="24"
+                      >
+                        <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                      </svg>
+                    </Tippy>
+                  ) : (
+                    ""
+                  )}
+                  {data?.messages?.favoriteWords &&
+                  data?.messages?.favoriteWords.length > 0 ? (
+                    <Tippy
+                      content={`${
+                        data.messages.favoriteWords.length
+                      } Favorite Word${
+                        data.messages.favoriteWords.length > 1 ? "s" : ""
+                      }`}
+                      animation="scale"
+                      className="shadow-xl"
                     >
-                      <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
-                    </svg>
-                  </Tippy>
-                ) : (
-                  ""
-                )}
-                {data?.messages?.topCursed &&
-                data?.messages?.topCursed?.length > 0 ? (
-                  <Tippy
-                    content={
-                      data.messages.topCursed.length
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-                      " Curse Word" +
-                      (data.messages.topCursed.length > 1 ? "s" : "")
-                    }
-                    animation="scale"
-                    className="shadow-xl"
-                  >
-                    <svg
-                      onClick={() => {
-                        toast(
-                          <div className="Toastify__toast-body_">
-                            <span className="font-bold text-lg text-black dark:text-white">
-                              {data?.dataFile ? "Their" : "Your"}{" "}
-                              {data.messages.topCursed.length < 10
-                                ? "Top 10"
-                                : `${data.messages.topCursed.length}`}{" "}
-                              Curse Word
-                              {data.messages.topCursed.length === 1
-                                ? " is"
-                                : "s are"}
-                              :
-                            </span>
-                            <br />
-                            <ul className="list-disc ml-4">
-                              {data.messages.topCursed.map((f, i) => {
-                                return (
-                                  <li key={i}>
-                                    {f.word}: {f.count} times
-                                  </li>
-                                );
-                              })}
-                            </ul>
-                          </div>,
-                          {
-                            position: "top-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                          }
-                        );
-                      }}
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24"
-                      width="24"
-                      className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                      <svg
+                        onClick={() => {
+                          toast(
+                            <div className="Toastify__toast-body_">
+                              <span className="font-bold text-lg text-black dark:text-white">
+                                {data?.dataFile ? "Their" : "Your"}{" "}
+                                {data.messages.favoriteWords.length < 10
+                                  ? "Top 10"
+                                  : `${data.messages.favoriteWords.length}`}{" "}
+                                Favorite Word
+                                {data.messages.favoriteWords.length === 1
+                                  ? " is"
+                                  : "s are"}
+                                :
+                              </span>
+                              <br />
+                              <ul className="list-disc ml-4">
+                                {data.messages.favoriteWords.map((f, i) => {
+                                  return (
+                                    <li key={i}>
+                                      {f.word}: {f.count} times
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            </div>,
+                            {
+                              position: "top-right",
+                              autoClose: 5000,
+                              hideProgressBar: false,
+                              closeOnClick: true,
+                              pauseOnHover: true,
+                              draggable: true,
+                              progress: undefined,
+                            }
+                          );
+                        }}
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                      >
+                        <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                      </svg>
+                    </Tippy>
+                  ) : (
+                    ""
+                  )}
+                  {data?.messages?.topCursed &&
+                  data?.messages?.topCursed?.length > 0 ? (
+                    <Tippy
+                      content={
+                        data.messages.topCursed.length
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+                        " Curse Word" +
+                        (data.messages.topCursed.length > 1 ? "s" : "")
+                      }
+                      animation="scale"
+                      className="shadow-xl"
                     >
-                      <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                    </svg>
-                  </Tippy>
-                ) : (
-                  ""
-                )}
-                {data?.messages?.topLinks &&
-                data?.messages?.topLinks?.length > 0 ? (
-                  <Tippy
-                    content={data.messages.topLinks.length + " Links"}
-                    animation="scale"
-                    className="shadow-xl"
-                  >
-                    <svg
-                      onClick={() => {
-                        toast(
-                          <div className="Toastify__toast-body_">
-                            <span className="font-bold text-lg text-black dark:text-white">
-                              {data?.dataFile ? "Their" : "Your"}{" "}
-                              {data.messages.topLinks.length < 10
-                                ? "Top 10"
-                                : `${data.messages.topLinks.length}`}{" "}
-                              Favorite Link
-                              {data.messages.topLinks.length === 1
-                                ? " is"
-                                : "s are"}
-                              :
-                            </span>
-                            <br />
-                            <ul className="list-disc ml-4">
-                              {data.messages.topLinks.map((f, i) => {
-                                return (
-                                  <li key={i}>
-                                    {f.word}: {f.count} times
-                                  </li>
-                                );
-                              })}
-                            </ul>
-                          </div>,
-                          {
-                            position: "top-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                          }
-                        );
-                      }}
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24"
-                      width="24"
-                      className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                      <svg
+                        onClick={() => {
+                          toast(
+                            <div className="Toastify__toast-body_">
+                              <span className="font-bold text-lg text-black dark:text-white">
+                                {data?.dataFile ? "Their" : "Your"}{" "}
+                                {data.messages.topCursed.length < 10
+                                  ? "Top 10"
+                                  : `${data.messages.topCursed.length}`}{" "}
+                                Curse Word
+                                {data.messages.topCursed.length === 1
+                                  ? " is"
+                                  : "s are"}
+                                :
+                              </span>
+                              <br />
+                              <ul className="list-disc ml-4">
+                                {data.messages.topCursed.map((f, i) => {
+                                  return (
+                                    <li key={i}>
+                                      {f.word}: {f.count} times
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            </div>,
+                            {
+                              position: "top-right",
+                              autoClose: 5000,
+                              hideProgressBar: false,
+                              closeOnClick: true,
+                              pauseOnHover: true,
+                              draggable: true,
+                              progress: undefined,
+                            }
+                          );
+                        }}
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                      >
+                        <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                      </svg>
+                    </Tippy>
+                  ) : (
+                    ""
+                  )}
+                  {data?.messages?.topLinks &&
+                  data?.messages?.topLinks?.length > 0 ? (
+                    <Tippy
+                      content={data.messages.topLinks.length + " Links"}
+                      animation="scale"
+                      className="shadow-xl"
                     >
-                      <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
-                    </svg>
-                  </Tippy>
-                ) : (
-                  ""
-                )}
-                {data?.messages?.topDiscordLinks &&
-                data?.messages?.topDiscordLinks?.length > 0 ? (
-                  <Tippy
-                    content={
-                      data.messages.topDiscordLinks.length + " Discord Links"
-                    }
-                    animation="scale"
-                    className="shadow-xl"
-                  >
-                    <svg
-                      onClick={() => {
-                        toast(
-                          <div className="Toastify__toast-body_">
-                            <span className="font-bold text-lg text-black dark:text-white">
-                              {data?.dataFile ? "Their" : "Your"}{" "}
-                              {data.messages.topDiscordLinks.length < 10
-                                ? "Top 10"
-                                : `${data.messages.topDiscordLinks.length}`}{" "}
-                              Discord Link
-                              {data.messages.topDiscordLinks.length === 1
-                                ? " is"
-                                : "s are"}
-                              :
-                            </span>
-                            <br />
-                            <ul className="list-disc ml-4">
-                              {data.messages.topDiscordLinks.map((f, i) => {
-                                return (
-                                  <li key={i}>
-                                    {f.word}: {f.count} times
-                                  </li>
-                                );
-                              })}
-                            </ul>
-                          </div>,
-                          {
-                            position: "top-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                          }
-                        );
-                      }}
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24"
-                      width="24"
-                      className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                      <svg
+                        onClick={() => {
+                          toast(
+                            <div className="Toastify__toast-body_">
+                              <span className="font-bold text-lg text-black dark:text-white">
+                                {data?.dataFile ? "Their" : "Your"}{" "}
+                                {data.messages.topLinks.length < 10
+                                  ? "Top 10"
+                                  : `${data.messages.topLinks.length}`}{" "}
+                                Favorite Link
+                                {data.messages.topLinks.length === 1
+                                  ? " is"
+                                  : "s are"}
+                                :
+                              </span>
+                              <br />
+                              <ul className="list-disc ml-4">
+                                {data.messages.topLinks.map((f, i) => {
+                                  return (
+                                    <li key={i}>
+                                      {f.word}: {f.count} times
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            </div>,
+                            {
+                              position: "top-right",
+                              autoClose: 5000,
+                              hideProgressBar: false,
+                              closeOnClick: true,
+                              pauseOnHover: true,
+                              draggable: true,
+                              progress: undefined,
+                            }
+                          );
+                        }}
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                      >
+                        <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                      </svg>
+                    </Tippy>
+                  ) : (
+                    ""
+                  )}
+                  {data?.messages?.topDiscordLinks &&
+                  data?.messages?.topDiscordLinks?.length > 0 ? (
+                    <Tippy
+                      content={
+                        data.messages.topDiscordLinks.length + " Discord Links"
+                      }
+                      animation="scale"
+                      className="shadow-xl"
                     >
-                      <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
-                    </svg>
-                  </Tippy>
-                ) : (
-                  ""
-                )}
+                      <svg
+                        onClick={() => {
+                          toast(
+                            <div className="Toastify__toast-body_">
+                              <span className="font-bold text-lg text-black dark:text-white">
+                                {data?.dataFile ? "Their" : "Your"}{" "}
+                                {data.messages.topDiscordLinks.length < 10
+                                  ? "Top 10"
+                                  : `${data.messages.topDiscordLinks.length}`}{" "}
+                                Discord Link
+                                {data.messages.topDiscordLinks.length === 1
+                                  ? " is"
+                                  : "s are"}
+                                :
+                              </span>
+                              <br />
+                              <ul className="list-disc ml-4">
+                                {data.messages.topDiscordLinks.map((f, i) => {
+                                  return (
+                                    <li key={i}>
+                                      {f.word}: {f.count} times
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            </div>,
+                            {
+                              position: "top-right",
+                              autoClose: 5000,
+                              hideProgressBar: false,
+                              closeOnClick: true,
+                              pauseOnHover: true,
+                              draggable: true,
+                              progress: undefined,
+                            }
+                          );
+                        }}
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                      >
+                        <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                      </svg>
+                    </Tippy>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             </div>
-            <div className="flex items-center gap-1">
+            <p className="lg:hidden md:hidden text-sm lowercase font-mono">
+              badges are only available on larger screens
+            </p>
+            <div className="lg:flex md:flex items-center gap-1 hidden">
               {data?.user?.badges?.map((m, id) => {
                 return (
                   <Tippy
@@ -861,15 +870,19 @@ export default function Data(props) {
           </div>
         </div>
       </div>
-      <div className="lg:grid grid-rows-2 grid-flow-col gap-4 mx-10 mt-4">
-        <div className="px-4 py-2 mb-2 lg:mb-0 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg row-span-3 flex items-center justify-center ">
-          <div className="mr-14">
-            <div className="text-gray-900 dark:text-white max-w-sm font-bold text-5xl">
+      <div className="lg:grid md:grid grid-rows-2 grid-flow-col gap-4 lg:mx-10 md:mx-8 mx-2 lg:mt-4  mt-2">
+        <div className="px-4 py-2 mb-2 lg:mb-0 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg row-span-3 lg:flex items-center justify-center ">
+          <div className="lg:mr-14 lg:mb-0 mb-2">
+            <div className="text-gray-900 dark:text-white max-w-sm font-bold lg:text-5xl md:text-3xl text-xl hidden lg:block">
               {data?.dataFile ? "Their" : "Your"}
               <br />
               Favorite
               <br />
               Emojis
+            </div>{" "}
+            <div className="text-gray-900 dark:text-white max-w-sm font-bold lg:hidden text-2xl md:text-4xl">
+              {data?.dataFile ? "Their" : "Your "}
+              Favorite Emojis
             </div>
           </div>{" "}
           {!data?.settings?.recentEmojis ? (
@@ -880,7 +893,7 @@ export default function Data(props) {
           ) : (
             ""
           )}
-          <div className="grid grid-cols-10 justify-items-center ">
+          <div className="grid lg:grid-cols-10 grid-cols-6 justify-items-center ">
             {data?.settings?.recentEmojis
               .slice(0, 30)
               .sort((a, b) => {
@@ -902,7 +915,7 @@ export default function Data(props) {
                       animation="scale"
                       className="shadow-xl"
                     >
-                      <div className="cursor-pointer text-5xl opacity-90 hover:opacity-100">
+                      <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                         <Image
                           key={id}
                           src={
@@ -928,7 +941,7 @@ export default function Data(props) {
                       animation="scale"
                       className="shadow-xl"
                     >
-                      <div className="cursor-pointer text-5xl opacity-90 hover:opacity-100">
+                      <div className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100">
                         {emojis[m.name] ? emojis[m.name] : m.name}
                       </div>
                     </Tippy>
@@ -937,12 +950,12 @@ export default function Data(props) {
               })}
           </div>
         </div>
-        <div className="px-4 lg:mt-0 mt-4 py-2 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg col-span-2">
+        <div className="px-4 lg:mt-0 mt-2 py-2 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg col-span-2">
           {data?.settings?.appearance?.theme ||
           data?.settings?.appearance?.developerMode ||
           data?.settings?.folderCount ||
           data?.guilds ? (
-            <ul className="text-gray-900 dark:text-white text-xl font-bold list-disc mt-2 ml-6">
+            <ul className="text-gray-900 dark:text-white lg:text-xl md:text-xl font-bold list-disc mt-2 ml-6">
               {data?.settings?.appearance?.theme ? (
                 <li>
                   {data?.dataFile ? "They " : "You "}prefer discord{" "}
@@ -1038,7 +1051,7 @@ export default function Data(props) {
             </div>
           )}
         </div>{" "}
-        <div className="lg:mt-0 mt-4 px-4 py-2 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg row-span-2 col-span-2 ">
+        <div className="lg:mt-0 mt-2 md:mt-0 px-4 py-2 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg lg:row-span-2 md:row-span-1 col-span-2 row-span-2">
           <h3 className="text-gray-900 dark:text-white font-bold text-xl mb-2 flex items-center">
             {data?.dataFile ? "Their" : "Your"} Connections{" "}
             <Tippy
@@ -1378,10 +1391,10 @@ export default function Data(props) {
           </div>
         </div>
       </div>{" "}
-      <div className="gap-4 mx-10 mt-4">
+      <div className="gap-4 lg:mx-10 md:mx-8 mx-2 lg:mt-4 md:mt-4 mt-2">
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg text-center w-full">
           {" "}
-          <span className="text-gray-900 dark:text-white text-4xl font-bold flex items-center justify-center">
+          <span className="text-gray-900 dark:text-white lg:text-4xl  md:text-3xl text-xl font-bold flex items-center justify-center">
             Active Hours{" "}
             <Tippy
               content={
@@ -1424,7 +1437,7 @@ export default function Data(props) {
             </Tippy>
           </span>
           <div className="row-span-3 ">
-            <div className="mx-10">
+            <div className="lg:mx-10 md:mx-8 mx-2">
               <HighchartsReact
                 className="dark:fill-slate-900 fill-gray-300"
                 highcharts={Highcharts}
@@ -1515,7 +1528,7 @@ export default function Data(props) {
                   chart: {
                     type: "areaspline",
                     backgroundColor: "transparent",
-                    width: window.innerWidth - 200,
+                    width: window.innerWidth,
                   },
                 }}
               />
@@ -1523,9 +1536,9 @@ export default function Data(props) {
           </div>
         </div>
       </div>
-      <div className="lg:grid grid-cols-2 grid-flow-col gap-4 mx-10 mt-4">
+      <div className="lg:grid grid-cols-2 grid-flow-col gap-4 lg:mx-10 md:mx-8 mx-2 lg:mt-4 md:mt-4 mt-2">
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__fadeIn animate__delay-1s rounded-lg row-span-3 ">
-          <span className="text-gray-900 dark:text-white text-2xl font-bold pt-4 px-6 flex items-center mb-2">
+          <span className="text-gray-900 dark:text-white text-2xl font-bold pt-4 px-6 flex items-center">
             Top Users
             {data?.messages?.topDMs && data?.messages?.topDMs?.length > 0 ? (
               <form className="ml-4">
@@ -2175,7 +2188,7 @@ export default function Data(props) {
             </div>
           </div>
         </div>
-        <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__fadeIn animate__delay-1s rounded-lg row-span-3 ">
+        <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__fadeIn animate__delay-1s rounded-lg row-span-3 lg:mt-0 mt-4">
           {" "}
           <span className="text-gray-900 dark:text-white text-2xl font-bold pt-4 px-6 flex items-center mb-2">
             Top Channels
@@ -2853,14 +2866,17 @@ export default function Data(props) {
           </div>
         </div>
       </div>
-      <div className="lg:grid my-4 grid-rows-2 grid-flow-col gap-4 mx-10 mt-4">
-        <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__fadeIn animate__delay-1s rounded-lg row-span-3 flex items-center justify-center">
-          <div className="mr-14 ml-8">
-            <span className="text-gray-900 dark:text-white font-bold text-5xl">
+      <div className="lg:grid my-4 grid-rows-2 grid-flow-col gap-4 lg:mx-10 md:mx-8 mx-2 lg:mt-4 md:mt-4 mt-2">
+        <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__fadeIn animate__delay-1s rounded-lg row-span-3 lg:flex md:flex items-center justify-center">
+          <div className="lg:mr-14 lg:ml-8 md:mr-12 md:ml-7 mb-2 lg:mb-0 md:mb-0">
+            <span className="text-gray-900 dark:text-white font-bold lg:text-5xl md:text-3xl hidden lg:block md:block">
               {data?.dataFile ? "Their" : "Your"} <br /> Discord <br /> Bots
+            </span>{" "}
+            <span className="text-gray-900 dark:text-white font-bold lg:hidden md:hidden text-xl">
+              {data?.dataFile ? "Their" : "Your"} Discord Bots
             </span>
           </div>
-          <div className="grid grid-cols-10 justify-items-center gap-3">
+          <div className="grid lg:grid-cols-10 md:grid-cols-8 grid-cols-6 justify-items-center gap-3">
             {data?.bots && data?.bots?.length > 0
               ? data.bots
                   .sort((a, b) => {
@@ -2986,7 +3002,7 @@ export default function Data(props) {
                       } have no transactions`
                     : ""}
                 </span>
-                <ul className="text-gray-900 dark:text-white text-xl font-bold list-disc mt-2 ml-6">
+                <ul className="text-gray-900 dark:text-white lg:text-xl md:text-xl font-bold list-disc mt-2 ml-6 text-xs">
                   {data?.payments?.transactions?.map((t, i) => {
                     return (
                       <li key={i}>
@@ -3089,7 +3105,7 @@ export default function Data(props) {
           )}
         </div>
       </div>
-      <div className="gap-4 mx-10 mt-4 pb-10">
+      <div className="gap-4 lg:mx-10 md:mx-8 mx-2 lg:mt-4 md:mt-4 mt-2 pb-10">
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__fadeIn animate__delay-1s rounded-lg text-left w-full">
           <span className="text-gray-900 dark:text-white text-4xl font-bold flex items-center">
             Statistics{" "}
@@ -3129,7 +3145,7 @@ export default function Data(props) {
               </svg>
             </Tippy>
           </span>
-          <ul className="text-gray-900 dark:text-white text-xl font-bold list-disc mt-2 ml-6">
+          <ul className="text-gray-900 dark:text-white md:text-xl lg:text-xl font-bold list-disc mt-2 ml-6">
             {data?.statistics
               ? Object.keys(data?.statistics)?.map((t, i) => {
                   if (!t) return;
@@ -3273,7 +3289,8 @@ export default function Data(props) {
               </span>
             </div>
             <p className="text-gray-900 dark:text-white text-sm max-w-[200px] text-left">
-              Enjoying this Repository? Star it on Github! It means a lot.
+              Enjoying what you see? Star this repository on Github and follow
+              me! It means a lot 😊!
             </p>
           </div>
         </div>
