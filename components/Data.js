@@ -871,7 +871,7 @@ export default function Data(props) {
         </div>
       </div>
       <div className="lg:grid md:grid grid-rows-2 grid-flow-col gap-4 lg:mx-10 md:mx-8 mx-2 lg:mt-4  mt-2">
-        <div className="px-4 py-2 mb-2 lg:mb-0 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg row-span-3 lg:flex items-center justify-center ">
+        <div className="px-4 py-2 mb-2 lg:mb-0 bg-gray-300 dark:bg-[#2b2d31] animate__delay-1s rounded-lg row-span-3 lg:flex items-center justify-center ">
           <div className="lg:mr-14 lg:mb-0 mb-2">
             <div className="text-gray-900 dark:text-white max-w-sm font-bold lg:text-5xl md:text-3xl text-xl hidden lg:block">
               {data?.dataFile ? "Their" : "Your"}

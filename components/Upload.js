@@ -11,6 +11,7 @@ import { DataContext } from "./utils/context";
 import Header from "./Header";
 import Data from "./Data";
 import BitField from "./utils/Bitfield";
+import Privacy from "./privacy";
 
 export default function Upload() {
   const { dataExtracted, setDataExtracted } = useContext(DataContext);
@@ -956,6 +957,7 @@ export default function Upload() {
     <Data data={dataExtracted} />
   ) : (
     <>
+      <Privacy />
       <Header />{" "}
       <ToastContainer
         position="top-right"
