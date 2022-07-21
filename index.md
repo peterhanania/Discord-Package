@@ -11,7 +11,7 @@ Ever wondered what Data discord collects? Or did you ever want to view what's in
 
 This service **does not** use any third party services and does not collect any data. This Repo is directly hosted via vercel to discordpackage.com
 
-#### [View the Detailed Features & Steps by Clicking here](features.md)
+#### [View the Detailed Features & Steps by Clicking here](https://github.com/peterhanania/Discord-Package/blob/main/features.md)
 
 <image src="https://i.imgur.com/t6NhI2z.png" />
 <image src="https://i.imgur.com/6oyu9B8.png" />
