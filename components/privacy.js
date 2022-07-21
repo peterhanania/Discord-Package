@@ -69,7 +69,15 @@ export default function Privacy() {
                   >
                     Source Code
                   </a>{" "}
-                  is available for self hosting.
+                  is available for self hosting.{" "}
+                  <a
+                    className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1"
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://github.com/peterhanania/Discord-Package/blob/main/features.md#12"
+                  >
+                    Read more by Clicking Here.
+                  </a>
                 </div>
               </div>
             </div>
