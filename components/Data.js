@@ -1129,7 +1129,7 @@ export default function Data(props) {
                   <p className="text-white text-lg ">
                     Connections are the accounts{" "}
                     {data?.dataFile ? "they " : "you "}have connected to{" "}
-                    {data?.dataFile ? "their" : "your"}
+                    {data?.dataFile ? "their " : "your "}
                     Discord Account.
                   </p>
                 </>

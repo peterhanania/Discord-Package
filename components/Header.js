@@ -497,7 +497,7 @@ export default function Header() {
             Discord Package
           </h1>
         </div>
-        <p className="animate__animated animate__fadeIn animate__delay-1s dark:text-white text-gray-900 text-xl max-w-md text-center font-mono">
+        <p className="animate__animated animate__fadeIn animate__delay-1s dark:text-white text-gray-900 lg:text-xl md:text-xl text-sm max-w-md text-center font-mono">
           An{" "}
           <a
             target="_blank"
@@ -517,6 +517,17 @@ export default function Header() {
             ddpe.androz2091.fr
           </a>
         </p>
+        <div className="portrait:hidden lg:hidden landscape:flex md:landscape:hidden lg:text-xl md:text-xl text-sm mt-1 animate__delay-1s animate__animated animate__fadeIn flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
+          <a
+            href="/?demo=true"
+            target="_blank"
+            rel="noreferrer"
+            type="button"
+            className="button-green text-gray-200  my-2 flex items-center"
+          >
+            Click to View Demo
+          </a>
+        </div>
         <div className="flex justify-center items-center mt-2">
           <Tippy content={"Help"} animation="scale" className="shadow-xl ">
             <svg

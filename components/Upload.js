@@ -1415,7 +1415,7 @@ export default function Upload() {
             <label
               id="dropzone-label"
               htmlFor="dropzone-file"
-              className="flex flex-col justify-center items-center w-full h-64 rounded-lg border-4 border-dashed cursor-pointer border-gray-400 opacity-75 shadow-lg transition-all duration-200"
+              className="flex flex-col justify-center items-center w-full lg:h-64 md:h-64 h-52 lg:landscape:h-64 md:landscape:h-64 landscape:h-44 lg:landscape:mt-0 md:landscape:mt-0 landscape:mt-4 rounded-lg border-4 border-dashed cursor-pointer border-gray-400 opacity-75 shadow-lg transition-all duration-200"
             >
               <div className="flex flex-col justify-center items-center pt-5 pb-6">
                 <svg
@@ -1452,7 +1452,7 @@ export default function Upload() {
                 <label
                   id="dropzone-label"
                   htmlFor="dropzone-file"
-                  className="animate__animated animate__headShake flex flex-col justify-center items-center w-full h-64 rounded-lg border-4 border-dashed cursor-pointer dark:border-gray-200 dark:hover:border-gray-400 dark:hover:opacity-75 dark:hover:shadow-lg dark:hover:transition-all duration-200"
+                  className="animate__animated animate__headShake flex flex-col justify-center items-center w-full lg:h-64 md:h-64 h-52 lg:landscape:h-64 md:landscape:h-64 landscape:h-44 lg:landscape:mt-0 md:landscape:mt-0 landscape:mt-4 rounded-lg border-4 border-dashed cursor-pointer dark:border-gray-200 dark:hover:border-gray-400 dark:hover:opacity-75 dark:hover:shadow-lg dark:hover:transition-all duration-200"
                 >
                   <div className="flex flex-col justify-center items-center pt-5 pb-6">
                     <svg
@@ -1502,7 +1502,7 @@ export default function Upload() {
                     <label
                       id="dropzone-label"
                       htmlFor="dropzone-file"
-                      className="flex flex-col justify-center items-center w-full h-64 rounded-lg border-4 border-dashed cursor-pointer dark:border-gray-200 dark:hover:border-gray-400 dark:hover:opacity-75 dark:hover:shadow-lg dark:hover:transition-all duration-200"
+                      className="flex flex-col justify-center items-center w-full lg:h-64 md:h-64 h-52 lg:landscape:h-64 md:landscape:h-64 landscape:h-44 lg:landscape:mt-0 md:landscape:mt-0 landscape:mt-4 rounded-lg border-4 border-dashed cursor-pointer dark:border-gray-200 dark:hover:border-gray-400 dark:hover:opacity-75 dark:hover:shadow-lg dark:hover:transition-all duration-200"
                     >
                       <div className="flex flex-col justify-center items-center pt-5 pb-6">
                         <svg
@@ -1574,7 +1574,7 @@ export default function Upload() {
                             }}
                             id="dropzone-label"
                             htmlFor="dropzone-file"
-                            className="flex flex-col justify-center items-center w-full h-64 rounded-lg border-4 border-dashed cursor-pointer dark:border-gray-200 dark:hover:border-gray-400 dark:hover:opacity-75 dark:hover:shadow-lg dark:hover:transition-all duration-200"
+                            className="flex flex-col justify-center items-center w-full lg:h-64 md:h-64 h-52 lg:landscape:h-64 md:landscape:h-64 landscape:h-44 lg:landscape:mt-0 md:landscape:mt-0 landscape:mt-4 rounded-lg border-4 border-dashed cursor-pointer dark:border-gray-200 dark:hover:border-gray-400 dark:hover:opacity-75 dark:hover:shadow-lg dark:hover:transition-all duration-200"
                           >
                             <div className="flex flex-col justify-center items-center pt-5 pb-6">
                               <svg
@@ -1654,7 +1654,7 @@ export default function Upload() {
           )}
         </div>
       </div>
-      <div className="animate__delay-1s animate__animated animate__fadeIn flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
+      <div className="lg:landscape:flex md:landscape:flex landscape:hidden lg:text-xl md:text-xl text-sm mt-1 animate__delay-1s animate__animated animate__fadeIn flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
         Want to view a Demo?{" "}
         <a
           className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1"
@@ -1665,7 +1665,8 @@ export default function Upload() {
           Click here
         </a>
       </div>
-      <div className="animate__animated animate__fadeIn animate__delay-1s flex justify-center items-center absolute bottom-8 right-0 left-0">
+      
+      <div className="lg:landscape:flex md:landscape:flex landscape:hidden animate__animated animate__fadeIn animate__delay-1s flex justify-center items-center absolute bottom-8 right-0 left-0">
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] text-slate-800 dark:text-white font-bold flex items-center rounded-md">
           Made by{" "}
           <a
