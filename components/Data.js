@@ -863,7 +863,7 @@ export default function Data(props) {
                                 {data.messages.oldestMessages.map((f, i) => {
                                   return (
                                     <li key={i}>
-                                     <b>{f.sentence}</b>
+                                      <b>{f.sentence}</b>
                                       <ul>
                                         <li>
                                           - sent at{" "}
@@ -3235,8 +3235,8 @@ export default function Data(props) {
                   } else if (t === "averageMessages") {
                     return (
                       <li key={i}>
-                        <div className="inline-flex">
-                          You send ~{" "}
+                        <div className="lg:inline-flex md:inline-flex lg:text-xl md:text-xl text-sm">
+                          {data?.dataFile ? "They " : "You "} send ~{" "}
                           <p className="mx-1 font-extrabold text-blue-500">
                             <CountUp
                               end={data?.statistics[t].day}
@@ -3283,8 +3283,8 @@ export default function Data(props) {
                   } else if (t === "averageOpenCount") {
                     return (
                       <li key={i}>
-                        <div className="inline-flex">
-                          You open Discord ~{" "}
+                        <div className="lg:inline-flex md:inline-flex lg:text-xl md:text-xl text-sm">
+                         {data?.dataFile ? "They " : "You "} open Discord ~{" "}
                           <p className="mx-1 font-extrabold text-blue-500">
                             <CountUp
                               end={data?.statistics[t].day}
