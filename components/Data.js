@@ -598,7 +598,7 @@ export default function Data(props) {
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         height="24"
-                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                        className="dark:fill-gray-300 dark:hover:fill-white ml-2"
                         width="24"
                       >
                         <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
@@ -1733,7 +1733,7 @@ export default function Data(props) {
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     height="24"
-                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2"
                                     width="24"
                                   >
                                     <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
@@ -2006,7 +2006,7 @@ export default function Data(props) {
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     height="24"
-                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2"
                                     width="24"
                                   >
                                     <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
@@ -2389,7 +2389,7 @@ export default function Data(props) {
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
                                       height="24"
-                                      className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                      className="dark:fill-gray-300 dark:hover:fill-white ml-2"
                                       width="24"
                                     >
                                       <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
@@ -2673,7 +2673,7 @@ export default function Data(props) {
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
                                       height="24"
-                                      className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                      className="dark:fill-gray-300 dark:hover:fill-white ml-2"
                                       width="24"
                                     >
                                       <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
