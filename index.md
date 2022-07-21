@@ -7,22 +7,11 @@
 </h1>
 
 
-<div align=left>
-
-<a>[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/peterhanania/Discord-Package)</a>
-<a>
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/peterhanania/discord-package)</a>
-
-
-</div>
-
 Ever wondered what Data discord collects? Or did you ever want to view what's inside of a discord package? Discord Package is a customisable tool that allows you to view your data in a fancy way. You could also use our exporting feature to share your selected data with your friends.
 
 This service **does not** use any third party services and does not collect any data. This Repo is directly hosted via vercel to discordpackage.com
 
 #### [View the Detailed Features & Steps by Clicking here](features.md)
-
-## 
 
 <image src="https://i.imgur.com/t6NhI2z.png" />
 <image src="https://i.imgur.com/6oyu9B8.png" />
@@ -32,7 +21,7 @@ This service **does not** use any third party services and does not collect any 
 <li>View user information</li><li>View settings like device appearance, number of folders, your favorite gifs and emojis</li><li>View your connections</li><li>View how much you spent on discord, and the nitro you got gifted</li><li>View the amount of channels and users you DMed, your top DMs & channels, How much time you spent on discord, your character count, your favorite words, links, oldest messages, discord invite links, and curse words in each top dm and top channel. </li>
 <li>The amount of guilds you are in</li>
 <li>Your discord bots</li><li>Your favorite words, links, discord invite links, and curse words</li>
-<details ><summary style="cursor: pointer; margin-left: -14px" >Countless Statistics</summary><li>Accepted Instant Invites</li>
+<details ><summary style="cursor: pointer; margin-left: -14px" >- Countless Statistics</summary><li>Accepted Instant Invites</li>
 <li>Updated Activities</li>
 <li>Added Channel Recipients</li>
 <li>Reactions Added</li>
