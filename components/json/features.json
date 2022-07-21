@@ -14,6 +14,7 @@
   "messages.topChannels": "Top Channels",
   "messages.topDMs": "Top People you DMed",
   "messages.characterCount": "Number of Characters you sent",
+  "messages.oldestMessages": "1000 Oldest Messages you sent on Discord",
   "messages.hoursValues": "Hours you spent on discord",
   "guilds": "The amount of guilds you are in",
   "other.showCurseWords": "Show the amount of Curse Words in general, Top Channels & DMs",

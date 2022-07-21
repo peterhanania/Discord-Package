@@ -654,6 +654,48 @@ class Utils {
     const characterCount =
       Math.floor(Math.random() * (300000 - 1000 + 1)) + 1000;
 
+    function createSentence() {
+      const sentences = new Array(1000).fill(0).map(() => {
+        const sentence = randomWords({ min: 3, max: 10 }).join(" ");
+        return {
+          sentence,
+          timestamp: new Date(
+            2019 +
+              Math.floor(Math.random() * (new Date().getFullYear() - 2019 + 1)),
+            Math.floor(Math.random() * 12),
+            Math.floor(Math.random() * 28),
+            Math.floor(Math.random() * 24),
+            Math.floor(Math.random() * 60),
+            Math.floor(Math.random() * 60)
+          ).toISOString(),
+          author:
+            Math.random() > 0.5
+              ? "channel:" +
+                Object.values(emojis)[
+                  Math.floor(Math.random() * Object.values(emojis).length)
+                ] +
+                " | " +
+                names[Math.floor(Math.random() * names.length)] +
+                "(guild: " +
+                randomWords(1)[0] +
+                " Land" +
+                ")"
+              : "user:" +
+                names[Math.floor(Math.random() * names.length)] +
+                "#" +
+                Math.floor(Math.random() * (9999 - 1000 + 1)) +
+                "(ID: " +
+                Math.floor(
+                  Math.random() * (9999999999999999 - 100000000000000 + 1)
+                ) +
+                ")",
+        };
+      });
+      return sentences.sort(
+        (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+      );
+    }
+
     return {
       fakeInfo: true,
       user: {
@@ -727,6 +769,7 @@ class Utils {
             };
           })
           .sort((a, b) => b.count - a.count),
+        oldestMessages: createSentence(),
       },
       guilds,
       statistics,

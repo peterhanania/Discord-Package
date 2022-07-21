@@ -125,7 +125,7 @@ html.dark {
 }
 .Toastify__toast-body_ {
   max-height: 180px;
-  max-width: var(--toastify-toast-width);
+  max-width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 }

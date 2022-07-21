@@ -51,6 +51,7 @@ export default function Upload() {
     "messages.topDMs": true,
     "messages.characterCount": true,
     "messages.hoursValues": true,
+    "messages.oldestMessages": true,
     guilds: true,
     "other.showCurseWords": true,
     "other.showDiscordLinks": true,
@@ -276,6 +277,7 @@ export default function Upload() {
               characterCount: null,
               messageCount: null,
               hoursValues: [],
+              oldestMessages: null,
             },
             guilds: null,
             statistics: {
@@ -647,6 +649,64 @@ export default function Upload() {
             data.messages.messageCount = channels
               .map((channel) => channel.messages)
               .flat().length;
+          }
+
+          if (options.messages.oldestMessages) {
+            await delay(700);
+            setLoading("Loading Messages|||Getting your oldest message");
+
+            const oldestInChannel = channels
+              .filter((c) => c.data_ && c.data_.guild)
+              .map((channel) => {
+                const words = channel.messages
+                  .map((message) => {
+                    return {
+                      sentence: message.words.join(" "),
+                      timestamp: message.timestamp,
+                      author: `channel: ${channel.name} (guild: ${channel.data_.guild.name})`,
+                    };
+                  })
+                  .flat();
+
+                return words;
+              });
+
+            const oldestInChannelFlat = oldestInChannel.flat();
+            const oldestInChannelFlatSorted = oldestInChannelFlat.sort(
+              (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+            );
+
+            const oldestInDMs = channels
+              .filter(
+                (channel) =>
+                  channel.isDM && channel.name.includes("Direct Message with")
+              )
+
+              .map((channel) => {
+                const words = channel.messages
+                  .map((message) => {
+                    return {
+                      sentence: message.words.join(" "),
+                      timestamp: message.timestamp,
+                      author: `user: ${channel.name
+                        .split("Direct Message with")[1]
+                        .trim()} (ID: ${channel.dmUserID})`,
+                    };
+                  })
+                  .flat();
+                return words;
+              });
+
+            const oldestInDMsFlat = oldestInDMs.flat();
+            const oldestInDMsFlatSorted = oldestInDMsFlat.sort(
+              (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+            );
+
+            const oldestInChannelAndDMs = oldestInChannelFlatSorted
+              .concat(oldestInDMsFlatSorted)
+              .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+            data.messages.oldestMessages = oldestInChannelAndDMs.slice(0, 1000);
           }
 
           if (options.messages.hoursValues) {
