@@ -12,9 +12,14 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import EventsJSON from "./json/events.json";
 import Settings from "./settings";
+
 import HighchartsExporting from "highcharts/modules/exporting";
+import HighchartsExportData from "highcharts/modules/export-data";
+import Highchartsaccessibility from "highcharts/modules/accessibility";
 if (typeof Highcharts === "object") {
   HighchartsExporting(Highcharts);
+  HighchartsExportData(Highcharts);
+  Highchartsaccessibility(Highcharts);
 }
 
 function hasClass(el, cl) {
@@ -3844,8 +3849,8 @@ export default function Data(props) {
                         className="lg:inline-flex md:inline-flex lg:text-xl md:text-xl text-sm"
                       >
                         - {data?.dataFile ? "They " : "You "} open discord ~
-                        {data?.statistics[t].day} times per
-                        day, {data?.statistics[t].week} times per week,{" "}
+                        {data?.statistics[t].day} times per day,{" "}
+                        {data?.statistics[t].week} times per week,{" "}
                         {data?.statistics[t].month} times per month, and{" "}
                         {data?.statistics[t].year} times per year.
                       </div>
