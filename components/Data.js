@@ -342,6 +342,542 @@ function makeData(data) {
   const data_day = data.map((v, i) => [day[i], v]);
   return data_day;
 }
+
+const statIcons = {
+  acceptedInstantInvite: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      add_link
+    </span>
+  ),
+  activityUpdated: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      detection_and_zone
+    </span>
+  ),
+  addChannelRecipient: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      group_add
+    </span>
+  ),
+  addReaction: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      add_reaction
+    </span>
+  ),
+  appCrashed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      emergency_home
+    </span>
+  ),
+  applicationClosed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      phonelink_lock
+    </span>
+  ),
+  applicationCreated: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      phonelink_ring
+    </span>
+  ),
+  applicationDeleted: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      phonelink_erase
+    </span>
+  ),
+  appOpened: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      pinch_zoom_out
+    </span>
+  ),
+  botAbused: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      smart_toy
+    </span>
+  ),
+  botTokenCompromised: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      sentiment_very_dissatisfied
+    </span>
+  ),
+  callReportProblem: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      phone_disabled
+    </span>
+  ),
+  captchaServed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      add_to_home_screen
+    </span>
+  ),
+  captchaSolved: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      security_update_good
+    </span>
+  ),
+  changeLogClosed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      file_open
+    </span>
+  ),
+  changeLogOpened: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      folder_off
+    </span>
+  ),
+  channelDeleted: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      delete
+    </span>
+  ),
+  channelOpened: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      ads_click
+    </span>
+  ),
+  channelPermissionsOverwriteUpdated: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      drive_file_rename_outline
+    </span>
+  ),
+  channelUpdated: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      task
+    </span>
+  ),
+  closeTutorial: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      close_fullscreen
+    </span>
+  ),
+  copyInstantInvite: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      copy_all
+    </span>
+  ),
+  createChannel: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      create_new_folder
+    </span>
+  ),
+  createEmoji: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      face_retouching_natural
+    </span>
+  ),
+  createGuild: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      group
+    </span>
+  ),
+  createGuildViewed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      diversity_1
+    </span>
+  ),
+  createInstantInvite: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      draw
+    </span>
+  ),
+  customStatusUpdated: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      system_update
+    </span>
+  ),
+  dataRequestCompleted: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      where_to_vote
+    </span>
+  ),
+  deleteEmoji: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      face_retouching_off
+    </span>
+  ),
+  deleteGuild: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      group_off
+    </span>
+  ),
+  devPortalPageViewed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      document_scanner
+    </span>
+  ),
+  dmListViewed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      pageview
+    </span>
+  ),
+  emailOpened: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      mark_email_read
+    </span>
+  ),
+  emailSent: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      outgoing_mail
+    </span>
+  ),
+  externalDynamicLinkReceived: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      share
+    </span>
+  ),
+  friendAddViewed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      streetview
+    </span>
+  ),
+  friendRequestFailed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      person_remove
+    </span>
+  ),
+  friendsListViewed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      featured_play_list
+    </span>
+  ),
+  giftCodeCopied: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      difference
+    </span>
+  ),
+  giftCodeCreated: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      control_point_duplicate
+    </span>
+  ),
+  giftCodeRevoked: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      crisis_alert
+    </span>
+  ),
+  giftCodeSent: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      redeem
+    </span>
+  ),
+  guildBotAdded: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      precision_manufacturing
+    </span>
+  ),
+  guildDiscoveryViewed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      explore
+    </span>
+  ),
+  guildInsightsSettingsCtaClicked: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      ads_click
+    </span>
+  ),
+  guildJoined: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      groups_2
+    </span>
+  ),
+  guildMemberUpdated: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      manage_accounts
+    </span>
+  ),
+  guildRoleUpdated: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      settings_accessibility
+    </span>
+  ),
+  guildSettingsDiscoveryViewed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      settings_applications
+    </span>
+  ),
+  guildSettingsUpdated: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      settings_suggest
+    </span>
+  ),
+  guildViewed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      preview
+    </span>
+  ),
+  inboxChannelClicked: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      archive
+    </span>
+  ),
+  inviteAppOpened: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      door_open
+    </span>
+  ),
+  inviteOpened: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      pinch_zoom_out
+    </span>
+  ),
+  inviteSent: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      outbox
+    </span>
+  ),
+  inviteViewed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      preview
+    </span>
+  ),
+  joinCall: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      call
+    </span>
+  ),
+  joinGuildViewed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      preview
+    </span>
+  ),
+  joinVoiceChannel: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      record_voice_over
+    </span>
+  ),
+  keyboardModeToggled: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      keyboard
+    </span>
+  ),
+  keyboardShortcutUsed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      keyboard_hide
+    </span>
+  ),
+  leaveGuild: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      exit_to_app
+    </span>
+  ),
+  leaveVoiceChannel: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      voice_over_off
+    </span>
+  ),
+  loginAttempted: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      fmd_bad
+    </span>
+  ),
+  loginSuccessful: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      login
+    </span>
+  ),
+  memberListViewed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      preview
+    </span>
+  ),
+  messageAttachmentUpdated: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      attach_email
+    </span>
+  ),
+  messageEdited: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      edit
+    </span>
+  ),
+  messageEditUpArrow: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      arrow_drop_up
+    </span>
+  ),
+  modalDismissed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      cancel_presentation
+    </span>
+  ),
+  newLoginLocation: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      add_location_alt
+    </span>
+  ),
+  notificationClicked: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      notification_add
+    </span>
+  ),
+  notificationSettingsUpdated: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      edit_notifications
+    </span>
+  ),
+  oauth2AuthorizeAccepted: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      task_alt
+    </span>
+  ),
+  oauth2AuthorizeViewed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      pageview
+    </span>
+  ),
+  openModal: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      present_to_all
+    </span>
+  ),
+  openPopout: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      open_in_full
+    </span>
+  ),
+  permissionsRequested: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      request_page
+    </span>
+  ),
+  pinMessage: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      push_pin
+    </span>
+  ),
+  promotionViewed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      shopping_cart_checkout
+    </span>
+  ),
+  removeReaction: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      remove
+    </span>
+  ),
+  replyStarted: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      reply
+    </span>
+  ),
+  ringCall: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      ring_volume
+    </span>
+  ),
+  screenshareFailed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      cast
+    </span>
+  ),
+  searchClosed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      search_off
+    </span>
+  ),
+  searchOpened: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      search
+    </span>
+  ),
+  searchResultExpanded: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      zoom_in
+    </span>
+  ),
+  searchResultSortChanged: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      query_stats
+    </span>
+  ),
+  searchResultViewed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      manage_search
+    </span>
+  ),
+  searchStarted: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]"></span>
+  ),
+  sendMessage: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      send
+    </span>
+  ),
+  slashCommandUsed: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      extension
+    </span>
+  ),
+  startCall: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      phone_in_talk
+    </span>
+  ),
+  subscriptionCanceled: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      unsubscribe
+    </span>
+  ),
+  transactionCompleted: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      price_check
+    </span>
+  ),
+  updateNote: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      edit_note
+    </span>
+  ),
+  updateUserSettings: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      manage_accounts
+    </span>
+  ),
+  userAccountUpdated: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      admin_panel_settings
+    </span>
+  ),
+  userAvatarUpdated: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      account_circle
+    </span>
+  ),
+  userPhoneUpdated: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      mobile_friendly
+    </span>
+  ),
+  videoStreamEnded: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      stop_screen_share
+    </span>
+  ),
+  videoStreamStarted: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      connected_tv
+    </span>
+  ),
+  viewAsRolesSelected: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      view_timeline
+    </span>
+  ),
+  voiceDisconnect: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      mic_off
+    </span>
+  ),
+  webhookCreated: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      webhook
+    </span>
+  ),
+  webhookDeleted: (
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      webhook
+    </span>
+  ),
+};
 export default function Data(props) {
   const [topDMs, setTopDMs] = useState([]);
   const [topChannels, setTopChannels] = useState([]);
@@ -939,7 +1475,13 @@ export default function Data(props) {
       <div className="lg:grid md:grid grid-rows-2 grid-flow-col gap-4 lg:mx-10 md:mx-8 mx-2 lg:mt-4  mt-2">
         <div className="px-4 py-2 mb-2 lg:mb-0 bg-gray-300 dark:bg-[#2b2d31] animate__delay-1s rounded-lg row-span-3 lg:flex items-center justify-center ">
           <div className="lg:mr-14 lg:mb-0 mb-2">
-            <div className="text-gray-900 dark:text-white max-w-sm font-bold lg:text-5xl md:text-3xl text-xl hidden lg:block">
+            <div
+              className="text-gray-900 dark:text-white max-w-sm font-bold lg:text-5xl md:text-3xl text-xl hidden lg:block"
+              style={{
+                fontFamily:
+                  "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+              }}
+            >
               {data?.dataFile ? "Their" : "Your"}
               <br />
               Favorite
@@ -1460,7 +2002,13 @@ export default function Data(props) {
       <div className="gap-4 lg:mx-10 md:mx-8 mx-2 lg:mt-4 md:mt-4 mt-2">
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg text-center w-full">
           {" "}
-          <span className="text-gray-900 dark:text-white lg:text-4xl  md:text-3xl text-xl font-bold flex items-center justify-center">
+          <span
+            className="text-gray-900 dark:text-white lg:text-4xl md:text-3xl text-xl font-bold flex items-center justify-center"
+            style={{
+              fontFamily:
+                "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+            }}
+          >
             Active Hours{" "}
             <Tippy
               content={
@@ -1512,15 +2060,6 @@ export default function Data(props) {
                     text: "",
                   },
                   xAxis: {
-                    title: {
-                      text: "Hours",
-                      style: {
-                        fontSize: "14px",
-                        color: "#fff",
-                        fontFamily: "Inter",
-                        fontWeight: "bold",
-                      },
-                    },
                     labels: {
                       formatter: function () {
                         return days_[this.value];
@@ -1533,12 +2072,12 @@ export default function Data(props) {
                     },
                   },
                   yAxis: {
-                    gridLineColor: "grey",
+                    gridLineColor: "#43464A",
                     gridLineWidth: 1,
                     title: {
                       text: "Messages",
                       style: {
-                        fontSize: "14px",
+                        fontSize: "20px",
                         color: "#fff",
                         fontFamily: "Inter",
                         fontWeight: "bold",
@@ -1564,7 +2103,15 @@ export default function Data(props) {
                       pointInterval: 86400000,
                     },
                   ],
-                  plotOptions: { series: { marker: { enabled: false } } },
+                  plotOptions: {
+                    series: {
+                      fillColor: "rgba(124, 181, 236,0.1)",
+                      marker: { enabled: false },
+                      animation: {
+                        duration: 10000,
+                      },
+                    },
+                  },
                   tooltip: {
                     backgroundColor: "#212529",
                     borderWith: 5,
@@ -1594,7 +2141,6 @@ export default function Data(props) {
                   chart: {
                     type: "areaspline",
                     backgroundColor: "transparent",
-                    width: window.innerWidth,
                   },
                 }}
               />
@@ -1604,13 +2150,19 @@ export default function Data(props) {
       </div>
       <div className="lg:grid grid-cols-2 grid-flow-col gap-4 lg:mx-10 md:mx-8 mx-2 lg:mt-4 md:mt-4 mt-2">
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__fadeIn animate__delay-1s rounded-lg row-span-3 ">
-          <span className="text-gray-900 dark:text-white text-2xl font-bold pt-4 px-6 flex items-center">
+          <span
+            className="text-gray-900 dark:text-white text-2xl font-bold pt-4 px-6 flex items-center"
+            style={{
+              fontFamily:
+                "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+            }}
+          >
             Top Users
             {data?.messages?.topDMs && data?.messages?.topDMs?.length > 0 ? (
               <form className="ml-4">
                 <label
                   htmlFor="user-search"
-                  className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
+                  className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300 "
                 >
                   Search
                 </label>
@@ -1635,7 +2187,7 @@ export default function Data(props) {
                   <input
                     type="search"
                     id="user-search"
-                    className="block p-2 pl-10 w-full text-sm bg-transparent rounded-lg border-gray-300 text-gray-900 dark:text-white border-none focus:border-current focus:ring-0 bg-gray-400 dark:bg-[#23272A]"
+                    className="block p-2 pl-10 w-full text-sm bg-transparent rounded-lg border-gray-300 text-gray-900 dark:text-white border-none focus:border-current focus:ring-0 bg-gray-400 dark:bg-[#23272A] font-mono"
                     placeholder="Filter Users"
                     onChange={(e) => {
                       setTimeout(() => {
@@ -1718,7 +2270,7 @@ export default function Data(props) {
                                 </span>
                               </div>
                             </div>
-                            <div className="hidden sm:flex items-center self-center ml-auto">
+                            <div className="flex items-center self-center ml-auto">
                               {m?.messageCount ? (
                                 <Tippy
                                   content={
@@ -1991,7 +2543,7 @@ export default function Data(props) {
                                 </span>
                               </div>
                             </div>
-                            <div className="hidden sm:flex items-center self-center ml-auto">
+                            <div className="flex items-center self-center ml-auto">
                               {m?.messageCount ? (
                                 <Tippy
                                   content={
@@ -2256,7 +2808,13 @@ export default function Data(props) {
         </div>
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__fadeIn animate__delay-1s rounded-lg row-span-3 lg:mt-0 mt-4">
           {" "}
-          <span className="text-gray-900 dark:text-white text-2xl font-bold pt-4 px-6 flex items-center mb-2">
+          <span
+            className="text-gray-900 dark:text-white text-2xl font-bold pt-4 px-6 flex items-center mb-2"
+            style={{
+              fontFamily:
+                "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+            }}
+          >
             Top Channels
             {data?.messages?.topChannels &&
             data?.messages?.topChannels?.length > 0 ? (
@@ -2288,7 +2846,7 @@ export default function Data(props) {
                   <input
                     type="search"
                     id="topChannels-search"
-                    className="block p-2 pl-10 w-full text-sm bg-transparent rounded-lg border-gray-300  text-gray-900 dark:text-white border-none focus:border-current focus:ring-0 bg-gray-400 dark:bg-[#23272A]"
+                    className="font-mono block p-2 pl-10 w-full text-sm bg-transparent rounded-lg border-gray-300  text-gray-900 dark:text-white border-none focus:border-current focus:ring-0 bg-gray-400 dark:bg-[#23272A]"
                     placeholder="Filter Channels"
                     onChange={(e) => {
                       setTimeout(() => {
@@ -2374,7 +2932,7 @@ export default function Data(props) {
                                   </span>
                                 </div>
                               </div>
-                              <div className="hidden sm:flex items-center self-center ml-auto">
+                              <div className="flex items-center self-center ml-auto">
                                 {m?.messageCount ? (
                                   <Tippy
                                     content={
@@ -2658,7 +3216,7 @@ export default function Data(props) {
                                   </span>
                                 </div>
                               </div>
-                              <div className="hidden sm:flex items-center self-center ml-auto">
+                              <div className="flex items-center self-center ml-auto">
                                 {m?.messageCount ? (
                                   <Tippy
                                     content={
@@ -2935,7 +3493,13 @@ export default function Data(props) {
       <div className="lg:grid my-4 grid-rows-2 grid-flow-col gap-4 lg:mx-10 md:mx-8 mx-2 lg:mt-4 md:mt-4 mt-2">
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__fadeIn animate__delay-1s rounded-lg row-span-3 lg:flex md:flex items-center justify-center">
           <div className="lg:mr-14 lg:ml-8 md:mr-12 md:ml-7 mb-2 lg:mb-0 md:mb-0">
-            <span className="text-gray-900 dark:text-white font-bold lg:text-5xl md:text-3xl hidden lg:block md:block">
+            <span
+              className="text-gray-900 dark:text-white font-bold lg:text-5xl md:text-3xl hidden lg:block md:block "
+              style={{
+                fontFamily:
+                  "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+              }}
+            >
               {data?.dataFile ? "Their" : "Your"} <br /> Discord <br /> Bots
             </span>{" "}
             <span className="text-gray-900 dark:text-white font-bold lg:hidden md:hidden text-xl">
@@ -3173,7 +3737,13 @@ export default function Data(props) {
       </div>
       <div className="gap-4 lg:mx-10 md:mx-8 mx-2 lg:mt-4 md:mt-4 mt-2 pb-10">
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__fadeIn animate__delay-1s rounded-lg text-left w-full">
-          <span className="text-gray-900 dark:text-white text-4xl font-bold flex items-center">
+          <span
+            className="text-gray-900 dark:text-white lg:text-4xl md:text-4xl text-2xl font-bold flex items-center"
+            style={{
+              fontFamily:
+                "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+            }}
+          >
             Statistics{" "}
             <Tippy
               content={
@@ -3210,136 +3780,89 @@ export default function Data(props) {
                 <path d="M10.625 17.375h2.75V11h-2.75ZM12 9.5q.65 0 1.075-.438Q13.5 8.625 13.5 8q0-.65-.425-1.075Q12.65 6.5 12 6.5q-.625 0-1.062.425Q10.5 7.35 10.5 8q0 .625.438 1.062.437.438 1.062.438Zm0 13.35q-2.275 0-4.25-.85t-3.438-2.312Q2.85 18.225 2 16.25q-.85-1.975-.85-4.25T2 7.75q.85-1.975 2.312-3.438Q5.775 2.85 7.75 2q1.975-.85 4.25-.85t4.25.85q1.975.85 3.438 2.312Q21.15 5.775 22 7.75q.85 1.975.85 4.25T22 16.25q-.85 1.975-2.312 3.438Q18.225 21.15 16.25 22q-1.975.85-4.25.85Z" />
               </svg>
             </Tippy>
-          </span>
-          <ul className="text-gray-900 dark:text-white md:text-xl lg:text-xl font-bold list-disc mt-2 ml-6">
+          </span>{" "}
+          <p className="text-gray-900 dark:text-white font-mono text-md">
+            If emojis don&apos;t load kindly refresh the page or wait.
+          </p>
+          <div className="text-gray-900 dark:text-white md:text-xl lg:text-xl font-bold text-[16px] mt-2">
             {data?.statistics
               ? Object.keys(data?.statistics)?.map((t, i) => {
                   if (!t) return;
                   if (EventsJSON?.events[t]) {
                     return (
-                      <li key={i}>
-                        <div className="inline-flex">
-                          <p className="mx-1 font-extrabold text-blue-500">
-                            <CountUp
-                              end={data?.statistics[t]}
-                              separator=","
-                              useGrouping={true}
-                              start={0}
-                              delay={2}
-                            />
-                          </p>{" "}
-                          {EventsJSON?.events[t]}
+                      <div key={i}>
+                        <div className="flex items-center mb-4">
+                          {statIcons[t] ? (
+                            <Tippy
+                              animation="scale"
+                              className="shadow-xl"
+                              content={EventsJSON?.events[t]}
+                            >
+                              <div className="cursor-default">
+                                {statIcons[t]}
+                              </div>
+                            </Tippy>
+                          ) : (
+                            ""
+                          )}
+
+                          <div
+                            className="ml-1"
+                            dangerouslySetInnerHTML={{
+                              __html: EventsJSON?.e_dsc[t]
+                                .toLowerCase()
+                                .replace(
+                                  /{count}/g,
+                                  `<b class="text-blue-400">${data?.statistics[t]}</b>`
+                                )
+                                .replace(
+                                  /{you}/g,
+                                  data?.dataFile ? "They" : "You"
+                                ),
+                            }}
+                          />
                         </div>
-                      </li>
+                      </div>
                     );
                   } else if (t === "averageMessages") {
                     return (
-                      <li key={i}>
-                        <div className="lg:inline-flex md:inline-flex lg:text-xl md:text-xl text-sm">
-                          {data?.dataFile ? "They " : "You "} send ~{" "}
-                          <p className="mx-1 font-extrabold text-blue-500">
-                            <CountUp
-                              end={data?.statistics[t].day}
-                              separator=","
-                              useGrouping={true}
-                              start={0}
-                              delay={2}
-                            />
-                          </p>
-                          Average Messages messages per day,{" "}
-                          <p className="mx-1 font-extrabold text-blue-500">
-                            <CountUp
-                              end={data?.statistics[t].week}
-                              separator=","
-                              useGrouping={true}
-                              start={0}
-                              delay={2}
-                            />
-                          </p>{" "}
-                          messages per week,{" "}
-                          <p className="mx-1 font-extrabold text-blue-500">
-                            <CountUp
-                              end={data?.statistics[t].month}
-                              separator=","
-                              useGrouping={true}
-                              start={0}
-                              delay={2}
-                            />
-                          </p>{" "}
-                          messages per month, and{" "}
-                          <p className="mx-1 font-extrabold text-blue-500">
-                            <CountUp
-                              end={data?.statistics[t].year}
-                              separator=","
-                              useGrouping={true}
-                              start={0}
-                              delay={2}
-                            />
-                          </p>{" "}
-                          messages per year.
-                        </div>
-                      </li>
+                      <div
+                        key={i}
+                        className="lg:inline-flex md:inline-flex lg:text-xl md:text-xl text-sm"
+                      >
+                        - {data?.dataFile ? "They " : "You "} send ~
+                        {data?.statistics[t].day} Average Messages messages per
+                        day, {data?.statistics[t].week} messages per week,{" "}
+                        {data?.statistics[t].month} messages per month, and{" "}
+                        {data?.statistics[t].year} messages per year.
+                      </div>
                     );
                   } else if (t === "averageOpenCount") {
                     return (
-                      <li key={i}>
-                        <div className="lg:inline-flex md:inline-flex lg:text-xl md:text-xl text-sm">
-                         {data?.dataFile ? "They " : "You "} open Discord ~{" "}
-                          <p className="mx-1 font-extrabold text-blue-500">
-                            <CountUp
-                              end={data?.statistics[t].day}
-                              separator=","
-                              useGrouping={true}
-                              start={0}
-                              delay={2}
-                            />
-                          </p>
-                          times per day,{" "}
-                          <p className="mx-1 font-extrabold text-blue-500">
-                            <CountUp
-                              end={data?.statistics[t].week}
-                              separator=","
-                              useGrouping={true}
-                              start={0}
-                              delay={2}
-                            />
-                          </p>{" "}
-                          times per week,{" "}
-                          <p className="mx-1 font-extrabold text-blue-500">
-                            <CountUp
-                              end={data?.statistics[t].month}
-                              separator=","
-                              useGrouping={true}
-                              start={0}
-                              delay={2}
-                            />
-                          </p>{" "}
-                          times per month, and{" "}
-                          <p className="mx-1 font-extrabold text-blue-500">
-                            <CountUp
-                              end={data?.statistics[t].year}
-                              separator=","
-                              useGrouping={true}
-                              start={0}
-                              delay={2}
-                            />
-                          </p>{" "}
-                          times per year.
-                        </div>
-                      </li>
+                      <div
+                        key={i}
+                        className="lg:inline-flex md:inline-flex lg:text-xl md:text-xl text-sm"
+                      >
+                        - {data?.dataFile ? "They " : "You "} open discord ~
+                        {data?.statistics[t].day} times per
+                        day, {data?.statistics[t].week} times per week,{" "}
+                        {data?.statistics[t].month} times per month, and{" "}
+                        {data?.statistics[t].year} times per year.
+                      </div>
                     );
                   }
                 })
               : "This option was disabled"}
-          </ul>
+          </div>
         </div>
       </div>
       <a
         href="https://github.com/peterhanania/discord-package"
         target="_blank"
+        className="animate__fadeIn animate__delay-5s animate__animated"
         rel="noreferrer"
       >
-        <div className="fixed bottom-5 right-5 hidden lg:block opacity-70 hover:opacity-100 cursor-pointer">
+        <div className="fixed bottom-5 right-5 hidden lg:block opacity-70 hover:opacity-100 cursor-pointer ">
           <div className="bg-gray-300 dark:bg-[#232323] px-6 py-2">
             <div className="flex justify-start items-center">
               <svg
