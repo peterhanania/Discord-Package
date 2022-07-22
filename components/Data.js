@@ -2229,7 +2229,7 @@ export default function Data(props) {
           )}
 
           <div className="flex grow rounded-sm overflow-y-auto overflow-x-hidden h-[700px]">
-            <div className="flex flex-col w-full px-3 pb-4 ">
+            <div className="flex flex-col w-full px-3 pb-4 lg:px-3 md:px-3 lg:pt-0 md:pt-0 pt-2">
               {" "}
               {!data?.messages?.topDMs ? (
                 <div className="px-10 text-gray-900 dark:text-white text-3xl font-bold flex flex-col justify-center content-center align-center w-full h-full">
@@ -2243,7 +2243,7 @@ export default function Data(props) {
                   ? data?.messages?.topDMs.map((m, i) => {
                       return (
                         <div key={i}>
-                          <div className="flex items-center py-10 sm:flex-row h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
+                          <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg">
                             <div className="flex items-center max-w-full sm:max-w-4/6">
                               <div
                                 className="text-gray-200 dark:text-white font-bold flex h-8 w-8 rounded-full items-center justify-center bg-gray-400 dark:bg-gray-600 "
@@ -2532,7 +2532,7 @@ export default function Data(props) {
                   : topDMs?.map((m, i) => {
                       return (
                         <div key={i}>
-                          <div className="flex items-center py-10 sm:flex-row h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
+                          <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
                             <div className="flex items-center max-w-full sm:max-w-4/6">
                               <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
                                 <div className="flex items-center text-lg">
@@ -2889,7 +2889,7 @@ export default function Data(props) {
             ""
           )}
           <div className="flex grow rounded-sm overflow-y-auto overflow-x-hidden h-[700px]">
-            <div className="flex flex-col w-full px-3 pb-4 ">
+            <div className="flex flex-col w-full px-3 pb-4 lg:px-3 md:px-3 lg:pt-0 md:pt-0 pt-2">
               {" "}
               {!data?.messages?.topChannels ? (
                 <div className="px-10 text-gray-900 dark:text-white text-3xl font-bold flex flex-col justify-center content-center align-center w-full h-full">
@@ -2905,7 +2905,7 @@ export default function Data(props) {
                       return (
                         <>
                           <div key={i}>
-                            <div className="flex items-center py-10 sm:flex-row h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
+                            <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
                               <div className="flex items-center max-w-full sm:max-w-4/6">
                                 <div
                                   className="text-gray-200 font-bold flex h-8 w-8 rounded-full items-center justify-center bg-gray-400 dark:bg-gray-600 "
@@ -3205,7 +3205,7 @@ export default function Data(props) {
                       return (
                         <>
                           <div key={i}>
-                            <div className="flex items-center py-10 sm:flex-row h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
+                            <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
                               <div className="flex items-center max-w-full sm:max-w-4/6">
                                 <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
                                   <div className="flex items-center text-lg">
