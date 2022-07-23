@@ -30,6 +30,7 @@ This service **does not** use any third party services and does not collect any 
 ### Features
 <ul>
 <li>View user information</li><li>View settings like device appearance, number of folders, your favorite gifs, servers and emojis</li><li>View your connections</li><li>View how much you spent on discord, and the nitro you got gifted</li><li>View the amount of channels and users you DMed, your top DMs & channels, How much time you spent on discord, your character count, your favorite words, links, oldest messages, discord invite links, and curse words in each top dm and top channel. </li>
+<li>View user information</li><li>View settings like device appearance, your favorite emojis</li><li>View your connections</li><li>View how much you spent on discord, and the nitro you got gifted</li><li>View the amount of channels and users you DMed, your top DMs & channels, How much time you spent on discord, your character count, your favorite words, links, oldest messages, discord invite links, and curse words in each top dm and top channel. </li>
 <li>The amount of guilds you are in</li>
 <li>Your discord bots</li><li>Your favorite words, links, discord invite links, and curse words</li>
 <details ><summary style="cursor: pointer; margin-left: -14px" >Countless Statistics</summary><li>Accepted Instant Invites</li>
@@ -155,3 +156,7 @@ Discord Data Package Explorer is built with **[Next.js](https://nextjs.org/)** a
 
 ### Credits
 Huge credits to [Andros2091](https://github.com/Androz2091) for the original [source](https://github.com/Androz2091/discord-data-package-explorer). 
+
+### Contributors 
+
+![image](https://contrib.rocks/image?repo=peterhanania/Discord-Package)

@@ -412,11 +412,6 @@ class Utils {
     let guilds = Math.floor(Math.random() * 40) + 10;
     if (isNitroUser) guilds = Math.floor(Math.random() * 100) + 1;
 
-    const folderCount = Math.floor(
-      guilds /
-        Math.floor(Math.random() * (guilds - Math.floor(Math.random() * 2))) +
-        1
-    );
 
     const randomNum10to20 = Math.floor(Math.random() * 10) + 10;
     const randomNum10to20_avatars = avatars.default
@@ -715,7 +710,6 @@ class Utils {
           theme: Math.random() > 0.1 ? "DARK" : null,
           developerMode: Math.random() > 0.1 ? true : false,
         },
-        folderCount: folderCount,
         recentEmojis,
       },
       connections,
