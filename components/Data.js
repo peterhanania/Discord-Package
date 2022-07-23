@@ -1566,7 +1566,6 @@ export default function Data(props) {
         <div className="px-4 lg:mt-0 mt-2 py-2 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg col-span-2">
           {data?.settings?.appearance?.theme ||
           data?.settings?.appearance?.developerMode ||
-          data?.settings?.folderCount ||
           data?.guilds ? (
             <ul className="text-gray-900 dark:text-white lg:text-xl md:text-xl font-bold list-disc mt-2 ml-6">
               {data?.settings?.appearance?.theme ? (
@@ -1586,74 +1585,24 @@ export default function Data(props) {
                 ""
               )}
 
-              {data?.settings?.folderCount && data?.guilds ? (
+              {data?.guilds ? (
                 <li>
                   <div className="inline-flex">
-                    {data?.dataFile ? "They " : "You "}are in
+                    {data?.dataFile ? "They " : "You "}are in{" "}
                     <p className="mx-1 font-extrabold text-blue-500">
                       <CountUp
-                        start={0}
-                        delay={2}
                         end={data.guilds}
                         separator=","
                         useGrouping={true}
-                      />
-                    </p>
-                    guilds with{" "}
-                    <p className="mx-1 font-extrabold text-blue-500">
-                      <CountUp
                         start={0}
                         delay={2}
-                        end={data.settings.folderCount}
-                        separator=","
-                        useGrouping={true}
                       />
                     </p>{" "}
-                    folders
+                    guilds
                   </div>
                 </li>
               ) : (
-                <>
-                  {data?.settings?.folderCount && !data?.guilds ? (
-                    <li>
-                      <div className="inline-flex">
-                        {data?.dataFile ? "They " : "You "}have
-                        <p className="mx-1 font-extrabold text-blue-500">
-                          <CountUp
-                            end={data.settings.folderCount}
-                            separator=","
-                            useGrouping={true}
-                            start={0}
-                            delay={2}
-                          />
-                        </p>
-                        folders
-                      </div>
-                    </li>
-                  ) : (
-                    <>
-                      {!data?.settings?.folderCount && data?.guilds ? (
-                        <li>
-                          <div className="inline-flex">
-                            {data?.dataFile ? "They " : "You "}are in{" "}
-                            <p className="mx-1 font-extrabold text-blue-500">
-                              <CountUp
-                                end={data.guilds}
-                                separator=","
-                                useGrouping={true}
-                                start={0}
-                                delay={2}
-                              />
-                            </p>{" "}
-                            guilds
-                          </div>
-                        </li>
-                      ) : (
-                        ""
-                      )}
-                    </>
-                  )}
-                </>
+                ""
               )}
             </ul>
           ) : (

@@ -39,7 +39,6 @@ export default function Upload() {
     "user.premium_until": true,
     "user.badges": true,
     "settings.appearance": true,
-    "settings.folderCount": true,
     "settings.recentEmojis": true,
     connections: true,
     "payments.total": true,
@@ -259,7 +258,6 @@ export default function Upload() {
             },
             settings: {
               appearance: null,
-              folderCount: null,
               recentEmojis: null,
             },
             connections: null,
@@ -342,23 +340,23 @@ export default function Upload() {
                   userInformationData.settings.settings.appearance;
             }
 
-            if (options.settings.folderCount) {
-              if (
-                userInformationData.settings.settings.guildFolders &&
-                userInformationData.settings.settings.guildFolders.folders
-              )
-                data.settings.folderCount =
-                  userInformationData.settings.settings.guildFolders.folders.filter(
-                    (s) => {
-                      return (
-                        s.guildIds &&
-                        s.guildIds.length > 0 &&
-                        s.guildIds.length !== 1 &&
-                        s.guildIds.length <= 4
-                      );
-                    }
-                  ).length;
-            }
+            // if (options.settings.folderCount) {
+            //   if (
+            //     userInformationData.settings.settings.guildFolders &&
+            //     userInformationData.settings.settings.guildFolders.folders
+            //   )
+            //     data.settings.folderCount =
+            //       userInformationData.settings.settings.guildFolders.folders.filter(
+            //         (s) => {
+            //           return (
+            //             s.guildIds &&
+            //             s.guildIds.length > 0 &&
+            //             s.guildIds.length !== 1 &&
+            //             s.guildIds.length <= 4
+            //           );
+            //         }
+            //       ).length;
+            // }
           }
 
           await delay(700);
