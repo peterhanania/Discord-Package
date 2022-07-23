@@ -1508,7 +1508,7 @@ export default function Data(props) {
           )}
           <div className="grid lg:grid-cols-10 grid-cols-6 justify-items-center ">
             {data?.settings?.recentEmojis
-              .slice(0, 30)
+              ?.slice(0, 30)
               .sort((a, b) => {
                 if (!a?.count || !b?.count) return;
                 return b.count - a.count;
@@ -3793,7 +3793,7 @@ export default function Data(props) {
             {data?.statistics
               ? Object.keys(data?.statistics)?.map((t, i) => {
                   if (!t) return;
-                  if (EventsJSON?.events[t]) {
+                  if (EventsJSON?.events[t] && data?.statistics[t]) {
                     return (
                       <div key={i}>
                         <div className="flex items-center mb-4">
@@ -3830,31 +3830,35 @@ export default function Data(props) {
                       </div>
                     );
                   } else if (t === "averageMessages") {
-                    return (
-                      <div
-                        key={i}
-                        className="lg:inline-flex md:inline-flex lg:text-xl md:text-xl text-sm"
-                      >
-                        - {data?.dataFile ? "They " : "You "} send ~
-                        {data?.statistics[t].day} Average Messages messages per
-                        day, {data?.statistics[t].week} messages per week,{" "}
-                        {data?.statistics[t].month} messages per month, and{" "}
-                        {data?.statistics[t].year} messages per year.
-                      </div>
-                    );
+                    if (data?.statistics[t].day) {
+                      return (
+                        <div
+                          key={i}
+                          className="lg:inline-flex md:inline-flex lg:text-xl md:text-xl text-sm"
+                        >
+                          - {data?.dataFile ? "They " : "You "} send ~
+                          {data?.statistics[t].day} Average Messages messages
+                          per day, {data?.statistics[t].week} messages per week,{" "}
+                          {data?.statistics[t].month} messages per month, and{" "}
+                          {data?.statistics[t].year} messages per year.
+                        </div>
+                      );
+                    }
                   } else if (t === "averageOpenCount") {
-                    return (
-                      <div
-                        key={i}
-                        className="lg:inline-flex md:inline-flex lg:text-xl md:text-xl text-sm"
-                      >
-                        - {data?.dataFile ? "They " : "You "} open discord ~
-                        {data?.statistics[t].day} times per day,{" "}
-                        {data?.statistics[t].week} times per week,{" "}
-                        {data?.statistics[t].month} times per month, and{" "}
-                        {data?.statistics[t].year} times per year.
-                      </div>
-                    );
+                    if (data?.statistics[t].day) {
+                      return (
+                        <div
+                          key={i}
+                          className="lg:inline-flex md:inline-flex lg:text-xl md:text-xl text-sm"
+                        >
+                          - {data?.dataFile ? "They " : "You "} open discord ~
+                          {data?.statistics[t].day} times per day,{" "}
+                          {data?.statistics[t].week} times per week,{" "}
+                          {data?.statistics[t].month} times per month, and{" "}
+                          {data?.statistics[t].year} times per year.
+                        </div>
+                      );
+                    }
                   }
                 })
               : "This option was disabled"}
