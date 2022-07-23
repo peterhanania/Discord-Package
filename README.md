@@ -155,3 +155,7 @@ Discord Data Package Explorer is built with **[Next.js](https://nextjs.org/)** a
 
 ### Credits
 Huge credits to [Andros2091](https://github.com/Androz2091) for the original [source](https://github.com/Androz2091/discord-data-package-explorer). 
+
+### Contributors
+
+![image](https://contrib.rocks/image?repo=peterhanania/Discord-Package)
