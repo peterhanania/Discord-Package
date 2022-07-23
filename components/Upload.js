@@ -985,6 +985,7 @@ export default function Upload() {
             });
           })
           .catch((err) => {
+            console.log(err)
             if (err.message === "invalid_package_missing_messages") {
               setLoading(null);
               setError(

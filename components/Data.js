@@ -2238,7 +2238,7 @@ export default function Data(props) {
               {" "}
               {!data?.messages?.topDMs ? (
                 <div className="px-10 text-gray-900 dark:text-white text-3xl font-bold flex flex-col justify-center content-center align-center w-full h-full">
-                  No Data was found or this feature is disabled
+                  No Data was found or this option is disabled
                 </div>
               ) : (
                 ""
@@ -2898,7 +2898,7 @@ export default function Data(props) {
               {" "}
               {!data?.messages?.topChannels ? (
                 <div className="px-10 text-gray-900 dark:text-white text-3xl font-bold flex flex-col justify-center content-center align-center w-full h-full">
-                  No Data was found or this feature is disabled
+                  No Data was found or this option is disabled
                 </div>
               ) : (
                 ""
