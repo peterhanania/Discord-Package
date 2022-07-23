@@ -602,7 +602,8 @@ export default function Upload() {
             data.messages.topDMs = channels
               .filter(
                 (channel) =>
-                  channel.isDM && channel.name.includes("Direct Message with")
+                  channel?.isDM &&
+                  channel?.name?.includes("Direct Message with")
               )
               .sort((a, b) => b.messages.length - a.messages.length)
 
@@ -688,7 +689,8 @@ export default function Upload() {
             const oldestInDMs = channels
               .filter(
                 (channel) =>
-                  channel.isDM && channel.name.includes("Direct Message with")
+                  channel?.isDM &&
+                  channel?.name?.includes("Direct Message with")
               )
 
               .map((channel) => {
@@ -985,7 +987,7 @@ export default function Upload() {
             });
           })
           .catch((err) => {
-            console.log(err)
+            console.log(err);
             if (err.message === "invalid_package_missing_messages") {
               setLoading(null);
               setError(
