@@ -1021,7 +1021,7 @@ export default function Upload() {
           } else setError("JSON file is corrupted");
         };
         readFile_.readAsText(fileUploaded);
-      } else setError("Only zip files are supported");
+      } else setError("Only zip and json files are supported");
     }
   };
 
