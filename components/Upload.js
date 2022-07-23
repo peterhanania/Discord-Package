@@ -348,7 +348,16 @@ export default function Upload() {
                 userInformationData.settings.settings.guildFolders.folders
               )
                 data.settings.folderCount =
-                  userInformationData.settings.settings.guildFolders.folders.length;
+                  userInformationData.settings.settings.guildFolders.folders.filter(
+                    (s) => {
+                      return (
+                        s.guildIds &&
+                        s.guildIds.length > 0 &&
+                        s.guildIds.length !== 1 &&
+                        s.guildIds.length <= 4
+                      );
+                    }
+                  ).length;
             }
           }
 
