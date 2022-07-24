@@ -60,6 +60,7 @@ export default function Header() {
                   >
                     How to Retrieve your Package
                   </h3>
+                  
                   <button
                     onClick={() => {
                       setHelp(false);
@@ -81,7 +82,17 @@ export default function Header() {
                     </svg>
                   </button>
                 </div>
-
+                <p className="text-white text-lg py-2 px-8">
+                    If you need help, kindly join our
+                    <a
+                      href="https://discord.gg/W2zPcgG9F5"
+                      className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold mx-1"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Discord Server
+                    </a>
+                  </p>
                 <div className="overflow-y-auto h-[560px] ">
                   <div className="py-6 px-8">
                     <h3 className="text-xl font-medium text-white mb-2">
@@ -261,6 +272,14 @@ export default function Header() {
                     <br />
                     <br />
                     Feel free to Contribute to this project!
+                    <div className="mt-4 mb-2">Our Contributors!</div>
+                    <a href="https://github.com/peterhanania/discord-package/graphs/contributors">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src="https://contrib.rocks/image?repo=peterhanania/discord-package"
+                        alt="Contributors"
+                      />
+                    </a>
                   </div>
                 </div>
 
