@@ -16,6 +16,7 @@ import Settings from "./settings";
 import HighchartsExporting from "highcharts/modules/exporting";
 import HighchartsExportData from "highcharts/modules/export-data";
 import Highchartsaccessibility from "highcharts/modules/accessibility";
+
 if (typeof Highcharts === "object") {
   HighchartsExporting(Highcharts);
   HighchartsExportData(Highcharts);
@@ -888,6 +889,7 @@ export default function Data(props) {
   const [topChannels, setTopChannels] = useState([]);
   const [generate_, setGenerate_] = useState(false);
   const [data, setData] = useState(props.data);
+  const [graphType, setGraphType] = useState("areaspline");
 
   return data ? (
     <div className="h-screen">
@@ -1957,12 +1959,52 @@ export default function Data(props) {
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg text-center w-full">
           {" "}
           <span
-            className="text-gray-900 dark:text-white lg:text-4xl md:text-3xl text-xl font-bold flex items-center justify-center"
+            className="uppercase text-gray-900 dark:text-white lg:text-4xl md:text-3xl text-xl font-bold flex items-center justify-center"
             style={{
               fontFamily:
                 "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
             }}
           >
+            <ul className="flex items-center flex-shrink-0 space-x-6 p-2 rounded-lg bg-[#232323] mr-6">
+              <li className="flex ">
+                <Tippy
+                  content={graphType === "areaspline" ? "Bar" : "Line"}
+                  animation="scale"
+                  arrow={false}
+                  placement="bottom"
+                >
+                  <button
+                    className="rounded-md "
+                    onClick={() => {
+                      setGraphType(
+                        graphType === "areaspline" ? "bar" : "areaspline"
+                      );
+                    }}
+                    aria-label="Toggle graph mode"
+                  >
+                    {graphType === "bar" ? (
+                      <svg
+                        className="dark:fill-gray-300 dark:hover:fill-white fill-gray-900"
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                      >
+                        <path d="M3.4 18 2 16.6l7.4-7.45 4 4L18.6 8H16V6h6v6h-2V9.4L13.4 16l-4-4Z" />
+                      </svg>
+                    ) : (
+                      <svg
+                        className="dark:fill-gray-300 dark:hover:fill-white fill-gray-900"
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                      >
+                        <path d="M4 20V9h4v11Zm6 0V4h4v16Zm6 0v-7h4v7Z" />
+                      </svg>
+                    )}
+                  </button>
+                </Tippy>
+              </li>
+            </ul>
             Active Hours{" "}
             <Tippy
               content={
@@ -2093,7 +2135,7 @@ export default function Data(props) {
                   },
                   credits: { enabled: false },
                   chart: {
-                    type: "areaspline",
+                    type: graphType,
                     backgroundColor: "transparent",
                   },
                 }}
