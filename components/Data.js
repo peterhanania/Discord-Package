@@ -3482,7 +3482,7 @@ export default function Data(props) {
                           animation="scale"
                           className="shadow-xl"
                         >
-                          <div className="text-5xl p-1 rounded-full flex items-center justify-center ring-2 ring-gray-300 dark:ring-gray-500 opacity-90 hover:opacity-100">
+                          <div className="text-5xl p-1 rounded-full flex items-center justify-center ring-2 ring-gray-500 opacity-90 hover:opacity-100">
                             <Image
                               src={
                                 !b?.avatar?.endsWith("null.png")

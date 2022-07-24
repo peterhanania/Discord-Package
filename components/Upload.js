@@ -318,8 +318,14 @@ export default function Upload() {
 
           if (userInformationData.username)
             data.user.username = userInformationData.username;
-          if (userInformationData.discriminator)
-            data.user.discriminator = userInformationData.discriminator;
+          if (userInformationData.discriminator) {
+            let discriminator = userInformationData.discriminator;
+            if (discriminator > 0 && discriminator < 10) {
+              discriminator = "000" + discriminator;
+            }
+            data.user.discriminator = discriminator;
+          }
+
           if (userInformationData.avatar_hash)
             data.user.avatar = userInformationData.avatar_hash;
 
