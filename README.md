@@ -1,6 +1,6 @@
 <h1 align="left">
  <br>
-  <a href="https://github.com/peterhanania"><img src="https://i.imgur.com/y588rBZ.png"></a>
+  <a href="https://github.com/peterhanania"><img src="https://i.imgur.com/JXomrnb.png"></a>
   <br>
   Discord Package
   <br>
