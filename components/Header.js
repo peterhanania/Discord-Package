@@ -526,7 +526,7 @@ export default function Header() {
           >
             Open Sourced
           </a>{" "}
-          Discord Package Explorer influcenced by{" "}
+          Discord Package Explorer influenced by{" "}
           <a
             target="_blank"
             rel="noreferrer"

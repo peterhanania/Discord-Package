@@ -378,6 +378,18 @@ class Utils {
       .sort((a, b) => Math.random() - 0.5)
       .filter((s) => isNaN(s.name));
 
+    const topEmojis = Object.entries(emojis)
+      .map(([key, value]) => ({
+        name: key,
+        count: Math.floor(Math.random() * 200) + 1,
+      }))
+      .sort((a, b) => Math.random() - 0.5)
+      .filter((s) => isNaN(s.name))
+      .slice(
+        Math.floor(Math.random() * 40) + 40,
+        Math.floor(Math.random() * 40) + 200
+      );
+
     const connectionsPossible = [
       "youtube",
       "xbox",
@@ -411,7 +423,6 @@ class Utils {
 
     let guilds = Math.floor(Math.random() * 40) + 10;
     if (isNitroUser) guilds = Math.floor(Math.random() * 100) + 1;
-
 
     const randomNum10to20 = Math.floor(Math.random() * 10) + 10;
     const randomNum10to20_avatars = avatars.default
@@ -764,10 +775,64 @@ class Utils {
           })
           .sort((a, b) => b.count - a.count),
         oldestMessages: createSentence(),
+        topEmojis,
       },
       guilds,
       statistics,
     };
+  }
+  static getEmojiCount(text) {
+    const emojiChars = text
+      .join(" ")
+      .match(
+        /\ud83c[\udf00-\udfff]|\ud83d[\udc00-\ude4f]|\ud83d[\ude80-\udeff]/g
+      );
+
+    const emojiCount = [];
+    if (emojiChars) {
+      emojiChars.forEach((emoji) => {
+        if (!emojiCount.find((e) => e.emoji === emoji)) {
+          emojiCount.push({
+            emoji,
+            count: 1,
+          });
+        } else {
+          emojiCount.forEach((e) => {
+            if (e.emoji === emoji) {
+              e.count++;
+            }
+          });
+        }
+      });
+    }
+    return emojiCount;
+  }
+
+  static getCustomEmojiCount(text) {
+    const emojis = text
+      .join(" ")
+      .toLowerCase()
+      .match(/<a?:[a-zA-Z0-9_]+:(\d+)>/g);
+
+    const emojiCount = [];
+    if (emojis) {
+      emojis.forEach((emoji) => {
+        if (!emojiCount.find((e) => e.emoji === emoji)) {
+          emojiCount.push({
+            emoji,
+            count: 1,
+          });
+        } else {
+          emojiCount.forEach((e) => {
+            if (e.emoji === emoji) {
+              e.count++;
+            }
+          });
+        }
+      });
+    }
+
+    return emojiCount;
   }
 }
 

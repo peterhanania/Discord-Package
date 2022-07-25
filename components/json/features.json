@@ -3,7 +3,7 @@
   "user.premium_until": "Till when you are a premium user",
   "user.badges": "Your Badges",
   "settings.appearance": "Your Device Appearance",
-  "settings.recentEmojis": "Your Favorite Emojis",
+  "settings.recentEmojis": "Your Recent Emojis",
   "connections": "Your Connections",
   "payments.total": "Total Amount Paid",
   "payments.transactions": "Your Payment Transactions",
@@ -13,11 +13,13 @@
   "messages.topChannels": "Top Channels",
   "messages.topDMs": "Top People you DMed",
   "messages.characterCount": "Number of Characters you sent",
-  "messages.oldestMessages": "1000 Oldest Messages you sent on Discord",
+  "messages.topCustomEmojis": "Top Custom Emojis you used",
+  "messages.topEmojis": "Top Emojis you used",
   "messages.hoursValues": "Hours you spent on discord",
+  "messages.oldestMessages": "1000 Oldest Messages you sent on Discord",
   "guilds": "The amount of guilds you are in",
-  "other.showCurseWords": "Show the amount of Curse Words in general, Top Channels & DMs",
-  "other.showDiscordLinks": "Show the amount of Discord Links in general, Top Channels & DMs",
-  "other.showLinks": "Show the amount of normal Invites in general, Top Channels & DMs",
-  "other.favoriteWords": "Show the amount of Favorite Words in general, Top Channels & DMs"
+  "other.showCurseWords": "Show the amount of curse Words",
+  "other.showDiscordLinks": "Show the amount of Discord Links",
+  "other.showLinks": "Show the amount of normal Invites",
+  "other.favoriteWords": "Show the amount of Favorite Words"
 }

@@ -13,6 +13,7 @@ import Data from "./Data";
 import BitField from "./utils/Bitfield";
 import Privacy from "./privacy";
 import Alerts from "./Alerts";
+import moment from "moment";
 
 export default function Upload() {
   const { dataExtracted, setDataExtracted } = useContext(DataContext);
@@ -50,6 +51,8 @@ export default function Upload() {
     "messages.topChannels": true,
     "messages.topDMs": true,
     "messages.characterCount": true,
+    "messages.topCustomEmojis": true,
+    "messages.topEmojis": true,
     "messages.hoursValues": true,
     "messages.oldestMessages": true,
     guilds: true,
@@ -242,7 +245,7 @@ export default function Upload() {
 
         if (!validPackage) {
           setLoading(null);
-          setError("This package is not a valid package. Please try again. ");
+          setError("This package is not a valid package. Please try again.");
           return;
         }
 
@@ -277,6 +280,8 @@ export default function Upload() {
               messageCount: null,
               hoursValues: [],
               oldestMessages: null,
+              topCustomEmojis: null,
+              topEmojis: null,
             },
             guilds: null,
             statistics: {
@@ -573,7 +578,7 @@ export default function Upload() {
                       ? w.match(mentionRegex)[1]
                       : null;
 
-                    return w.length > 5 && !mention_;
+                    return !mention_;
                   });
 
                 const favoriteWords = Utils.getFavoriteWords(words);
@@ -622,7 +627,7 @@ export default function Upload() {
                       ? w.match(mentionRegex)[1]
                       : null;
 
-                    return w.length > 5 && !mention_;
+                    return !mention_;
                   });
 
                 const favoriteWords = Utils.getFavoriteWords(words);
@@ -725,13 +730,128 @@ export default function Upload() {
             data.messages.oldestMessages = oldestInChannelAndDMs.slice(0, 1000);
           }
 
+          if (options.messages.topEmojis) {
+            await delay(700);
+            setLoading("Loading Messages|||Getting your top emojis");
+
+            const oldestInChannel = channels
+              .filter((c) => c.data_ && c.data_.guild)
+              .map((channel) => {
+                const words = channel.messages
+                  .map((message) => {
+                    const emojis = Utils.getEmojiCount(message.words);
+                    const customEmojis = Utils.getCustomEmojiCount(
+                      message.words
+                    );
+
+                    return {
+                      emojis:
+                        emojis && Object.keys(emojis).length ? emojis : null,
+                      customEmojis:
+                        customEmojis && customEmojis.length
+                          ? customEmojis
+                          : null,
+                    };
+                  })
+                  .flat();
+
+                return words;
+              });
+
+            const mUsedEmojis = oldestInChannel
+              .flat()
+              .filter((w) => w.emojis)
+              .map((w) => w.emojis)
+              .flat();
+
+            const finalEmojiCount = [];
+            mUsedEmojis.forEach((key) => {
+              if (!finalEmojiCount.find((x) => x.emoji === key.emoji)) {
+                finalEmojiCount.push({ emoji: key.emoji, count: 1 });
+              } else {
+                const index = finalEmojiCount.findIndex(
+                  (x) => x.emoji === key.emoji
+                );
+                finalEmojiCount[index].count += 1;
+              }
+            });
+
+            data.messages.topEmojis = finalEmojiCount.sort(
+              (a, b) => b.count - a.count
+            );
+          }
+
+          if (options.messages.topCustomEmojis) {
+            await delay(700);
+            setLoading("Loading Messages|||Getting your top custom emojis");
+
+            const oldestInChannel = channels
+              .filter((c) => c.data_ && c.data_.guild)
+              .map((channel) => {
+                const words = channel.messages
+                  .map((message) => {
+                    const emojis = Utils.getEmojiCount(message.words);
+                    const customEmojis = Utils.getCustomEmojiCount(
+                      message.words
+                    );
+
+                    return {
+                      emojis:
+                        emojis && Object.keys(emojis).length ? emojis : null,
+                      customEmojis:
+                        customEmojis && customEmojis.length
+                          ? customEmojis
+                          : null,
+                    };
+                  })
+                  .flat();
+
+                return words;
+              });
+
+            const mUsedCustom = oldestInChannel
+              .flat()
+              .filter((w) => w.customEmojis)
+              .map((w) => w.customEmojis)
+              .flat();
+
+            const finalCustomCount = [];
+            mUsedCustom.forEach((key) => {
+              if (!finalCustomCount.find((x) => x.emoji === key.emoji)) {
+                finalCustomCount.push({ emoji: key.emoji, count: 1 });
+              } else {
+                const index = finalCustomCount.findIndex(
+                  (x) => x.emoji === key.emoji
+                );
+                finalCustomCount[index].count += 1;
+              }
+            });
+
+            data.messages.topCustomEmojis = finalCustomCount.sort(
+              (a, b) => b.count - a.count
+            );
+          }
+
           if (options.messages.hoursValues) {
             for (let i = 0; i < 24; i++) {
               data.messages.hoursValues.push(
                 channels
                   .map((c) => c.messages)
                   .flat()
-                  .filter((m) => new Date(m.timestamp).getHours() === i).length
+                  .filter((m) => {
+                    if (!m.timestamp) return false;
+                    const date = new Date(m.timestamp).getHours();
+                    if (date && date !== "Invalid Date") {
+                      return date === i;
+                    } else {
+                      const date_ = moment(m.timestamp).format("HH");
+                      if (date_) {
+                        return date_ == i;
+                      } else {
+                        return false;
+                      }
+                    }
+                  }).length
               );
             }
           }
@@ -747,7 +867,7 @@ export default function Upload() {
                 ? w.match(mentionRegex)[1]
                 : null;
 
-              return w.length > 5 && !mention_;
+              return !mention_;
             });
 
           if (options.other.favoriteWords) {
@@ -1013,6 +1133,7 @@ export default function Upload() {
         setLoading("Loading JSON|||reading files");
         var readFile_ = new FileReader();
         readFile_.onload = function (e) {
+          alert("loaded");
           var content = e.target.result;
           var data = JSON.parse(content);
 
@@ -1022,11 +1143,17 @@ export default function Upload() {
               setError(null);
               data.demo = true;
               setDataExtracted(data);
-            } else setError("JSON file is not valid");
-          } else setError("JSON file is corrupted");
+            } else {
+              setLoading(null);
+              setError("The JSON file you have uploaded is not valid");
+            }
+          } else {
+            setLoading(null);
+            setError("The JSON file you have uploaded is corrupted");
+          }
         };
         readFile_.readAsText(fileUploaded);
-      } else setError("Only zip and json files are supported");
+      } else setError("Only ZIP and JSON files are supported");
     }
   };
 
@@ -1531,9 +1658,17 @@ export default function Upload() {
                         >
                           <path d="M24.1 26.5q-.65 0-1.075-.425Q22.6 25.65 22.6 25v-9.45q0-.65.425-1.075.425-.425 1.075-.425.65 0 1.075.425.425.425.425 1.075V25q0 .65-.425 1.075-.425.425-1.075.425Zm-.1 7.4q-.6 0-1.05-.45-.45-.45-.45-1.05 0-.6.45-1.05.45-.45 1.05-.45.6 0 1.05.45.45.45.45 1.05 0 .6-.45 1.05-.45.45-1.05.45Zm8.2 4.9q-.75.4-1.35-.025-.6-.425-.6-1.325 0-.4.275-.825.275-.425.675-.625 3.4-1.65 5.4-4.95 2-3.3 2-7.2 0-2.7-.9-5.025t-2.95-4.175l-1.5-1.35v4.35q0 .65-.425 1.075-.425.425-1.075.425-.65 0-1.075-.425-.425-.425-.425-1.075V9.5q0-.65.425-1.075Q31.1 8 31.75 8h8.15q.65 0 1.075.425.425.425.425 1.075 0 .65-.425 1.075Q40.55 11 39.9 11h-4.7l.75.7q3.3 2.65 4.475 5.9 1.175 3.25 1.175 6.25 0 4.85-2.575 8.875T32.2 38.8ZM8.1 40q-.65 0-1.075-.425Q6.6 39.15 6.6 38.5q0-.65.425-1.075Q7.45 37 8.1 37h4.65l-.7-.7q-3.3-2.6-4.475-5.875Q6.4 27.15 6.4 24.2q0-4.9 2.575-8.9t6.875-6.05q.75-.35 1.325.025t.575 1.275q0 .4-.275.825-.275.425-.675.625-3.4 1.7-5.4 5-2 3.3-2 7.2 0 2.6.875 4.925.875 2.325 2.975 4.225l1.5 1.35v-4.35q0-.65.425-1.075.425-.425 1.075-.425.65 0 1.075.425.425.425.425 1.075v8.15q0 .65-.425 1.075Q16.9 40 16.25 40Z" />
                         </svg>
-                        <p className="max-w-lg mb-2 text-sm text-gray-500 dark:text-gray-400">
+                        <p className="max-w-md mb-2 text-sm text-gray-500 dark:text-gray-400 p-2">
                           {error}
                         </p>
+                        <a
+                          href="https://discord.gg/W2zPcgG9F5 "
+                          target="_blank"
+                          rel="noreferrer"
+                          className="lg:text-xl md:text-xl hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold mx-1"
+                        >
+                          Join the Discord Server for Help
+                        </a>
                       </div>
                       <input
                         id="dropzone-file"
