@@ -20,6 +20,7 @@ Ever wondered what Data discord collects? Or did you ever want to view what's in
 
 This service **does not** use any third party services and does not collect any data. This Repo is directly hosted via vercel to discordpackage.com
 
+#### [Join the Discord Server](https://discord.com/invite/W2zPcgG9F5)
 #### [View the Detailed Features & Steps by Clicking here](features.md)
 
 ## 
