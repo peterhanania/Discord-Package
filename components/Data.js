@@ -4321,10 +4321,11 @@ export default function Data(props) {
               target="_blank"
               rel="noreferrer"
               className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold"
-              href="https://github.com/peterhanania/discord-package"
+              href="https://github.com/peterhanania/Discord-Package/blob/main/features.md#13"
             >
               Learn More
-            </a>.
+            </a>
+            .
           </p>
           <div className="text-gray-900 dark:text-white md:text-xl lg:text-xl font-bold text-[16px] mt-2">
             {data?.statistics
