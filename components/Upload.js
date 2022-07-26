@@ -1133,7 +1133,6 @@ export default function Upload() {
         setLoading("Loading JSON|||reading files");
         var readFile_ = new FileReader();
         readFile_.onload = function (e) {
-          alert("loaded");
           var content = e.target.result;
           var data = JSON.parse(content);
 

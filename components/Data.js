@@ -2541,7 +2541,7 @@ export default function Data(props) {
                   </p>{" "}
                   <div className="flex items-center">
                     <svg
-                      className="fill-red-400 mr-2 basis-[20%]"
+                      className="fill-red-400 mr-2 basis-[40%]"
                       xmlns="http://www.w3.org/2000/svg"
                       height="24"
                       width="24"
@@ -2549,8 +2549,7 @@ export default function Data(props) {
                       <path d="M.275 21.425 12 1.15l11.725 20.275ZM12 17.925q.45 0 .788-.338.337-.337.337-.787t-.337-.775Q12.45 15.7 12 15.7t-.787.325q-.338.325-.338.775t.338.787q.337.338.787.338ZM11 15h2v-4.725h-2Z" />
                     </svg>
                     <b className="text-red-400 text-lg pt-1 ">
-                      We are working on making this graph more accurate as it is
-                      not really accurate.
+                      This is based on your device timezone. If the graph is inacurrate, make sure your device timezone is the same timezone as the usual timezone you use when sending discord messages.
                     </b>
                   </div>
                 </>
