@@ -106,7 +106,7 @@ class Utils {
         }
         if (final) {
           resolve({
-            all: eventsOccurrences,
+            all: eventsOccurrences ? eventsOccurrences : [],
           });
         }
       };
@@ -785,7 +785,7 @@ class Utils {
           .sort((a, b) => b.count - a.count),
         oldestMessages: createSentence(),
         topEmojis,
-        topCustomEmojis
+        topCustomEmojis,
       },
       guilds,
       statistics,

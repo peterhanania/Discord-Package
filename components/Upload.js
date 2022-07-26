@@ -991,8 +991,8 @@ export default function Upload() {
               options.statistics
             );
 
-            data.statistics = statistics.all;
-            if (data.statistics.appOpened) {
+            data.statistics = statistics?.all;
+            if (data?.statistics?.appOpened) {
               data.statistics.averageOpenCount = {
                 day:
                   data.statistics.appOpened &&
@@ -1041,7 +1041,7 @@ export default function Upload() {
               };
             }
 
-            if (data.statistics.sendMessage) {
+            if (data?.statistics?.sendMessage) {
               data.statistics.averageMessages = {
                 day:
                   data.statistics.sendMessage &&
