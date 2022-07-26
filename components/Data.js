@@ -4316,7 +4316,15 @@ export default function Data(props) {
             </Tippy>
           </span>{" "}
           <p className="text-gray-900 dark:text-white font-mono text-md">
-            If emojis don&apos;t load kindly refresh the page or wait.
+            Note: you can view more statistics.{" "}
+            <a
+              target="_blank"
+              rel="noreferrer"
+              className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold"
+              href="https://github.com/peterhanania/discord-package"
+            >
+              Learn More
+            </a>.
           </p>
           <div className="text-gray-900 dark:text-white md:text-xl lg:text-xl font-bold text-[16px] mt-2">
             {data?.statistics
