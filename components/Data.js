@@ -1498,71 +1498,88 @@ export default function Data(props) {
           {emojiType ? (
             <ul className="flex items-center rounded-lg mb-1">
               <li className="flex gap-2">
-                <div
-                  className="p-2 rounded-lg"
-                  style={{
-                    backgroundColor:
-                      emojiType === "topEmojis" ? "#232323" : "transparent",
-                  }}
-                  onClick={() => {
-                    setEmojiType("topEmojis");
-                  }}
-                >
-                  <Tippy content="Your Top Emojis" animation="scale">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24"
-                      width="24"
-                      className="cursor-pointer fill-black dark:fill-white"
-                    >
-                      <path d="M15.7 11.2q.75 0 1.25-.5t.5-1.25q0-.75-.5-1.25t-1.25-.5q-.75 0-1.25.5t-.5 1.25q0 .75.5 1.25t1.25.5Zm-7.4 0q.75 0 1.25-.5t.5-1.25q0-.75-.5-1.25T8.3 7.7q-.75 0-1.25.5t-.5 1.25q0 .75.5 1.25t1.25.5ZM12 18q2.075 0 3.55-1.163 1.475-1.162 2.05-2.787H6.4q.575 1.625 2.05 2.787Q9.925 18 12 18Zm0 4.8q-2.25 0-4.213-.85-1.962-.85-3.424-2.312Q2.9 18.175 2.05 16.212 1.2 14.25 1.2 12t.85-4.225Q2.9 5.8 4.363 4.338q1.462-1.463 3.424-2.301Q9.75 1.2 12 1.2t4.225.837q1.975.838 3.438 2.301 1.462 1.462 2.299 3.437Q22.8 9.75 22.8 12q0 2.25-.838 4.212-.837 1.963-2.299 3.426Q18.2 21.1 16.225 21.95q-1.975.85-4.225.85Z" />
-                    </svg>
-                  </Tippy>
-                </div>
-                <div
-                  className="p-2 rounded-lg"
-                  style={{
-                    backgroundColor:
-                      emojiType === "topCustomEmojis"
-                        ? "#232323"
-                        : "transparent",
-                  }}
-                  onClick={() => {
-                    setEmojiType("topCustomEmojis");
-                  }}
-                >
-                  <Tippy content="Your Top Custom Emojis" animation="scale">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24"
-                      width="24"
-                      className="cursor-pointer fill-black dark:fill-white"
-                    >
-                      <path d="M12 22.8q-2.225 0-4.2-.85t-3.437-2.312Q2.9 18.175 2.05 16.2 1.2 14.225 1.2 12t.85-4.2q.85-1.975 2.313-3.45Q5.825 2.875 7.8 2.025q1.975-.85 4.2-.825 1.175.025 2.163.212Q15.15 1.6 16.1 2l-4.375 1.9 5.2 3.15 1.325 2.875q-2.2.125-4.438-.675-2.237-.8-4.112-3.05-.85 2-2.338 3.462-1.487 1.463-3.512 2.188 0 3.55 2.375 5.925T12 20.15q3.4 0 5.775-2.375Q20.15 15.4 20.15 12v-.175L21.975 7.9q.425.875.625 1.95t.2 2.15q0 2.225-.85 4.2t-2.312 3.438Q18.175 21.1 16.2 21.95q-1.975.85-4.2.85Zm-3.05-8.5q-.55 0-.925-.375T7.65 13q0-.55.375-.925t.925-.375q.55 0 .925.375t.375.925q0 .55-.375.925t-.925.375Zm6.1 0q-.55 0-.925-.375T13.75 13q0-.55.375-.925t.925-.375q.55 0 .925.375t.375.925q0 .55-.375.925t-.925.375Zm4.5-6.325-1.1-2.425L16 4.425 18.45 3.3l1.1-2.425 1.1 2.425 2.45 1.125-2.45 1.125Z" />
-                    </svg>
-                  </Tippy>
-                </div>
-                <div
-                  className="p-2 rounded-lg"
-                  style={{
-                    backgroundColor:
-                      emojiType === "recentEmojis" ? "#232323" : "transparent",
-                  }}
-                  onClick={() => {
-                    setEmojiType("recentEmojis");
-                  }}
-                >
-                  <Tippy content="Your Recent Emojis" animation="scale">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24"
-                      width="24"
-                      className="cursor-pointer fill-black dark:fill-white"
-                    >
-                      <path d="m19 9-1.25-2.75L15 5l2.75-1.25L19 1l1.25 2.75L23 5l-2.75 1.25Zm0 14-1.25-2.75L15 19l2.75-1.25L19 15l1.25 2.75L23 19l-2.75 1.25ZM9 20l-2.5-5.5L1 12l5.5-2.5L9 4l2.5 5.5L17 12l-5.5 2.5Z" />
-                    </svg>
-                  </Tippy>
-                </div>
+                {data?.messages?.topEmojis &&
+                data?.messages?.topEmojis?.length > 0 ? (
+                  <div
+                    className="p-2 rounded-lg"
+                    style={{
+                      backgroundColor:
+                        emojiType === "topEmojis" ? "#232323" : "transparent",
+                    }}
+                    onClick={() => {
+                      setEmojiType("topEmojis");
+                    }}
+                  >
+                    <Tippy content="Your Top Emojis" animation="scale">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                        className="cursor-pointer fill-black dark:fill-white"
+                      >
+                        <path d="M15.7 11.2q.75 0 1.25-.5t.5-1.25q0-.75-.5-1.25t-1.25-.5q-.75 0-1.25.5t-.5 1.25q0 .75.5 1.25t1.25.5Zm-7.4 0q.75 0 1.25-.5t.5-1.25q0-.75-.5-1.25T8.3 7.7q-.75 0-1.25.5t-.5 1.25q0 .75.5 1.25t1.25.5ZM12 18q2.075 0 3.55-1.163 1.475-1.162 2.05-2.787H6.4q.575 1.625 2.05 2.787Q9.925 18 12 18Zm0 4.8q-2.25 0-4.213-.85-1.962-.85-3.424-2.312Q2.9 18.175 2.05 16.212 1.2 14.25 1.2 12t.85-4.225Q2.9 5.8 4.363 4.338q1.462-1.463 3.424-2.301Q9.75 1.2 12 1.2t4.225.837q1.975.838 3.438 2.301 1.462 1.462 2.299 3.437Q22.8 9.75 22.8 12q0 2.25-.838 4.212-.837 1.963-2.299 3.426Q18.2 21.1 16.225 21.95q-1.975.85-4.225.85Z" />
+                      </svg>
+                    </Tippy>
+                  </div>
+                ) : (
+                  ""
+                )}
+                {data?.messages?.topCustomEmojis &&
+                data?.messages?.topCustomEmojis?.length > 0 ? (
+                  <div
+                    className="p-2 rounded-lg"
+                    style={{
+                      backgroundColor:
+                        emojiType === "topCustomEmojis"
+                          ? "#232323"
+                          : "transparent",
+                    }}
+                    onClick={() => {
+                      setEmojiType("topCustomEmojis");
+                    }}
+                  >
+                    <Tippy content="Your Top Custom Emojis" animation="scale">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                        className="cursor-pointer fill-black dark:fill-white"
+                      >
+                        <path d="M12 22.8q-2.225 0-4.2-.85t-3.437-2.312Q2.9 18.175 2.05 16.2 1.2 14.225 1.2 12t.85-4.2q.85-1.975 2.313-3.45Q5.825 2.875 7.8 2.025q1.975-.85 4.2-.825 1.175.025 2.163.212Q15.15 1.6 16.1 2l-4.375 1.9 5.2 3.15 1.325 2.875q-2.2.125-4.438-.675-2.237-.8-4.112-3.05-.85 2-2.338 3.462-1.487 1.463-3.512 2.188 0 3.55 2.375 5.925T12 20.15q3.4 0 5.775-2.375Q20.15 15.4 20.15 12v-.175L21.975 7.9q.425.875.625 1.95t.2 2.15q0 2.225-.85 4.2t-2.312 3.438Q18.175 21.1 16.2 21.95q-1.975.85-4.2.85Zm-3.05-8.5q-.55 0-.925-.375T7.65 13q0-.55.375-.925t.925-.375q.55 0 .925.375t.375.925q0 .55-.375.925t-.925.375Zm6.1 0q-.55 0-.925-.375T13.75 13q0-.55.375-.925t.925-.375q.55 0 .925.375t.375.925q0 .55-.375.925t-.925.375Zm4.5-6.325-1.1-2.425L16 4.425 18.45 3.3l1.1-2.425 1.1 2.425 2.45 1.125-2.45 1.125Z" />
+                      </svg>
+                    </Tippy>
+                  </div>
+                ) : (
+                  ""
+                )}
+                {data?.settings?.recentEmojis &&
+                data?.settings?.recentEmojis?.length > 0 ? (
+                  <div
+                    className="p-2 rounded-lg"
+                    style={{
+                      backgroundColor:
+                        emojiType === "recentEmojis"
+                          ? "#232323"
+                          : "transparent",
+                    }}
+                    onClick={() => {
+                      setEmojiType("recentEmojis");
+                    }}
+                  >
+                    <Tippy content="Your Recent Emojis" animation="scale">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                        className="cursor-pointer fill-black dark:fill-white"
+                      >
+                        <path d="m19 9-1.25-2.75L15 5l2.75-1.25L19 1l1.25 2.75L23 5l-2.75 1.25Zm0 14-1.25-2.75L15 19l2.75-1.25L19 15l1.25 2.75L23 19l-2.75 1.25ZM9 20l-2.5-5.5L1 12l5.5-2.5L9 4l2.5 5.5L17 12l-5.5 2.5Z" />
+                      </svg>
+                    </Tippy>
+                  </div>
+                ) : (
+                  ""
+                )}
               </li>
             </ul>
           ) : (
