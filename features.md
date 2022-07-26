@@ -16,6 +16,7 @@
 * [How to cancel the upload while uploading](#10)
 * [How to view a demonstration of the website](#11)
 * [Can I trust this Website?](#12)
+* [How to show or hide some statistics](#13)
 
 
 ### introduction
@@ -131,3 +132,8 @@ We understand that most websites shared on Discord are scams. They tend to steal
 - No database, no storage or any other form of data is stored.
 
 If you find a security issue or have any other questions, please contact me at peter@pogy.xyz
+
+##### 13
+### How to show/hide some statistics
+
+If you would like to remove certain statistics from your data, or look at some more. Click on `more options` on the main page, scroll down to `statistics` open it and toggle what you wanna see or hide. You can press `select all` then `deselect all` to hide them all in a fast way, or `default` to set the default statistics.
