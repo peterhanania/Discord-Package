@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  swcMinify: true,
   images: {
     domains: [
       "upload.wikimedia.org",
@@ -9,6 +10,6 @@ const nextConfig = {
       "better-default-discord.netlify.app",
     ],
   },
-};
+}
 
 module.exports = nextConfig

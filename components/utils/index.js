@@ -601,6 +601,13 @@ class Utils {
             };
           })
           .sort((a, b) => b.count - a.count),
+        oldestMessages: [
+          {
+            sentence: "This Feature is only available when uploading a package",
+            date: new Date(Date.now()),
+            author: "SYSTEM",
+          },
+        ],
       });
     }
 
@@ -657,6 +664,13 @@ class Utils {
             };
           })
           .sort((a, b) => b.count - a.count),
+        oldestMessages: [
+          {
+            sentence: "This Feature is only available when uploading a package",
+            date: new Date(Date.now()),
+            author: "SYSTEM",
+          },
+        ],
       });
     }
 
@@ -669,8 +683,8 @@ class Utils {
     const characterCount =
       Math.floor(Math.random() * (300000 - 1000 + 1)) + 1000;
 
-    function createSentence() {
-      const sentences = new Array(1000).fill(0).map(() => {
+    function createSentence(s) {
+      const sentences = new Array(s ? s : 1000).fill(0).map(() => {
         const sentence = randomWords({ min: 3, max: 10 }).join(" ");
         return {
           sentence,

@@ -1,5 +1,4 @@
 import Upload from "../components/Upload";
-
 import Head from "next/head";
 
 export default function Home() {

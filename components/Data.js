@@ -1501,11 +1501,12 @@ export default function Data(props) {
                 {data?.messages?.topEmojis &&
                 data?.messages?.topEmojis?.length > 0 ? (
                   <div
-                    className="p-2 rounded-lg"
-                    style={{
-                      backgroundColor:
-                        emojiType === "topEmojis" ? "#232323" : "transparent",
-                    }}
+                    className={
+                      "p-2 rounded-lg" +
+                      (emojiType !== "topEmojis"
+                        ? ""
+                        : " bg-gray-400 dark:bg-[#232323]")
+                    }
                     onClick={() => {
                       setEmojiType("topEmojis");
                     }}
@@ -1527,13 +1528,12 @@ export default function Data(props) {
                 {data?.messages?.topCustomEmojis &&
                 data?.messages?.topCustomEmojis?.length > 0 ? (
                   <div
-                    className="p-2 rounded-lg"
-                    style={{
-                      backgroundColor:
-                        emojiType === "topCustomEmojis"
-                          ? "#232323"
-                          : "transparent",
-                    }}
+                    className={
+                      "p-2 rounded-lg" +
+                      (emojiType !== "topCustomEmojis"
+                        ? ""
+                        : " bg-gray-400 dark:bg-[#232323]")
+                    }
                     onClick={() => {
                       setEmojiType("topCustomEmojis");
                     }}
@@ -1555,13 +1555,12 @@ export default function Data(props) {
                 {data?.settings?.recentEmojis &&
                 data?.settings?.recentEmojis?.length > 0 ? (
                   <div
-                    className="p-2 rounded-lg"
-                    style={{
-                      backgroundColor:
-                        emojiType === "recentEmojis"
-                          ? "#232323"
-                          : "transparent",
-                    }}
+                    className={
+                      "p-2 rounded-lg" +
+                      (emojiType !== "recentEmojis"
+                        ? ""
+                        : " bg-gray-400 dark:bg-[#232323]")
+                    }
                     onClick={() => {
                       setEmojiType("recentEmojis");
                     }}
@@ -2487,7 +2486,7 @@ export default function Data(props) {
                 "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
             }}
           >
-            <ul className="flex items-center flex-shrink-0 space-x-6 p-2 rounded-lg bg-[#232323] mr-6">
+            <ul className="flex items-center flex-shrink-0 space-x-6 p-2 rounded-lg bg-gray-400 dark:bg-[#232323] mr-6">
               <li className="flex ">
                 <Tippy
                   content={graphType === "areaspline" ? "Bar" : "Line"}
