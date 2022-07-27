@@ -2549,7 +2549,10 @@ export default function Data(props) {
                       <path d="M.275 21.425 12 1.15l11.725 20.275ZM12 17.925q.45 0 .788-.338.337-.337.337-.787t-.337-.775Q12.45 15.7 12 15.7t-.787.325q-.338.325-.338.775t.338.787q.337.338.787.338ZM11 15h2v-4.725h-2Z" />
                     </svg>
                     <b className="text-red-400 text-lg pt-1 ">
-                      This is based on your device timezone. If the graph is inacurrate, make sure your device timezone is the same timezone as the usual timezone you use when sending discord messages.
+                      This is based on your device timezone. If the graph is
+                      inacurrate, make sure your device timezone is the same
+                      timezone as the usual timezone you use when sending
+                      discord messages.
                     </b>
                   </div>
                 </>
@@ -3045,6 +3048,86 @@ export default function Data(props) {
                               ) : (
                                 ""
                               )}
+                              {m?.oldestMessages &&
+                              m?.oldestMessages?.length > 0 ? (
+                                <Tippy
+                                  content={`${
+                                    m.oldestMessages.length
+                                  } Oldest Message${
+                                    m.oldestMessages.length > 1 ? "s" : ""
+                                  }`}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <svg
+                                    onClick={() => {
+                                      toast(
+                                        <div className="Toastify__toast-body_">
+                                          <span className="font-bold text-lg text-black dark:text-white">
+                                            {data?.dataFile ? "Their" : "Your"}{" "}
+                                            {m.oldestMessages.length < 10
+                                              ? "Top 10"
+                                              : `${m.oldestMessages.length}`}{" "}
+                                            Oldest Message
+                                            {m.favoriteWords.length === 1
+                                              ? " is"
+                                              : "s are"}
+                                            :
+                                          </span>
+                                          <br />
+                                          <ul className="list-disc ml-4">
+                                            {m.oldestMessages.map((f, i) => {
+                                              return (
+                                                <li key={i}>
+                                                  <b>{f.sentence}</b>
+                                                  <ul>
+                                                    <li>
+                                                      - sent at{" "}
+                                                      {moment(
+                                                        f.timestamp
+                                                      ).format(
+                                                        "MMMM Do YYYY, h:mm:ss a"
+                                                      )}{" "}
+                                                      <b>
+                                                        (
+                                                        {moment(
+                                                          f.timestamp
+                                                        ).fromNow()}
+                                                        )
+                                                      </b>
+                                                    </li>
+                                                    <li>
+                                                      - sent to{" "}
+                                                      <b>{f.author}</b>
+                                                    </li>
+                                                  </ul>
+                                                </li>
+                                              );
+                                            })}
+                                          </ul>
+                                        </div>,
+                                        {
+                                          position: "top-right",
+                                          autoClose: 5000,
+                                          hideProgressBar: false,
+                                          closeOnClick: true,
+                                          pauseOnHover: true,
+                                          draggable: true,
+                                          progress: undefined,
+                                        }
+                                      );
+                                    }}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24"
+                                    width="24"
+                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                  >
+                                    <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
+                                  </svg>
+                                </Tippy>
+                              ) : (
+                                ""
+                              )}
                             </div>
                           </div>
                         </div>
@@ -3317,6 +3400,86 @@ export default function Data(props) {
                                     className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
                                   >
                                     <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                  </svg>
+                                </Tippy>
+                              ) : (
+                                ""
+                              )}
+                              {m?.oldestMessages &&
+                              m?.oldestMessages?.length > 0 ? (
+                                <Tippy
+                                  content={`${
+                                    m.oldestMessages.length
+                                  } Oldest Message${
+                                    m.oldestMessages.length > 1 ? "s" : ""
+                                  }`}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <svg
+                                    onClick={() => {
+                                      toast(
+                                        <div className="Toastify__toast-body_">
+                                          <span className="font-bold text-lg text-black dark:text-white">
+                                            {data?.dataFile ? "Their" : "Your"}{" "}
+                                            {m.oldestMessages.length < 10
+                                              ? "Top 10"
+                                              : `${m.oldestMessages.length}`}{" "}
+                                            Oldest Message
+                                            {m.favoriteWords.length === 1
+                                              ? " is"
+                                              : "s are"}
+                                            :
+                                          </span>
+                                          <br />
+                                          <ul className="list-disc ml-4">
+                                            {m.oldestMessages.map((f, i) => {
+                                              return (
+                                                <li key={i}>
+                                                  <b>{f.sentence}</b>
+                                                  <ul>
+                                                    <li>
+                                                      - sent at{" "}
+                                                      {moment(
+                                                        f.timestamp
+                                                      ).format(
+                                                        "MMMM Do YYYY, h:mm:ss a"
+                                                      )}{" "}
+                                                      <b>
+                                                        (
+                                                        {moment(
+                                                          f.timestamp
+                                                        ).fromNow()}
+                                                        )
+                                                      </b>
+                                                    </li>
+                                                    <li>
+                                                      - sent to{" "}
+                                                      <b>{f.author}</b>
+                                                    </li>
+                                                  </ul>
+                                                </li>
+                                              );
+                                            })}
+                                          </ul>
+                                        </div>,
+                                        {
+                                          position: "top-right",
+                                          autoClose: 5000,
+                                          hideProgressBar: false,
+                                          closeOnClick: true,
+                                          pauseOnHover: true,
+                                          draggable: true,
+                                          progress: undefined,
+                                        }
+                                      );
+                                    }}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24"
+                                    width="24"
+                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                  >
+                                    <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
                                   </svg>
                                 </Tippy>
                               ) : (
@@ -3724,6 +3887,88 @@ export default function Data(props) {
                                 ) : (
                                   ""
                                 )}
+                                {m?.oldestMessages &&
+                                m?.oldestMessages?.length > 0 ? (
+                                  <Tippy
+                                    content={`${
+                                      m.oldestMessages.length
+                                    } Oldest Message${
+                                      m.oldestMessages.length > 1 ? "s" : ""
+                                    }`}
+                                    animation="scale"
+                                    className="shadow-xl"
+                                  >
+                                    <svg
+                                      onClick={() => {
+                                        toast(
+                                          <div className="Toastify__toast-body_">
+                                            <span className="font-bold text-lg text-black dark:text-white">
+                                              {data?.dataFile
+                                                ? "Their"
+                                                : "Your"}{" "}
+                                              {m.oldestMessages.length < 10
+                                                ? "Top 10"
+                                                : `${m.oldestMessages.length}`}{" "}
+                                              Oldest Message
+                                              {m.favoriteWords.length === 1
+                                                ? " is"
+                                                : "s are"}
+                                              :
+                                            </span>
+                                            <br />
+                                            <ul className="list-disc ml-4">
+                                              {m.oldestMessages.map((f, i) => {
+                                                return (
+                                                  <li key={i}>
+                                                    <b>{f.sentence}</b>
+                                                    <ul>
+                                                      <li>
+                                                        - sent at{" "}
+                                                        {moment(
+                                                          f.timestamp
+                                                        ).format(
+                                                          "MMMM Do YYYY, h:mm:ss a"
+                                                        )}{" "}
+                                                        <b>
+                                                          (
+                                                          {moment(
+                                                            f.timestamp
+                                                          ).fromNow()}
+                                                          )
+                                                        </b>
+                                                      </li>
+                                                      <li>
+                                                        - sent to{" "}
+                                                        <b>{f.author}</b>
+                                                      </li>
+                                                    </ul>
+                                                  </li>
+                                                );
+                                              })}
+                                            </ul>
+                                          </div>,
+                                          {
+                                            position: "top-right",
+                                            autoClose: 5000,
+                                            hideProgressBar: false,
+                                            closeOnClick: true,
+                                            pauseOnHover: true,
+                                            draggable: true,
+                                            progress: undefined,
+                                          }
+                                        );
+                                      }}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      height="24"
+                                      width="24"
+                                      className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                    >
+                                      <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
+                                    </svg>
+                                  </Tippy>
+                                ) : (
+                                  ""
+                                )}
                               </div>
                             </div>
                           </div>
@@ -4007,6 +4252,88 @@ export default function Data(props) {
                                       className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
                                     >
                                       <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                    </svg>
+                                  </Tippy>
+                                ) : (
+                                  ""
+                                )}
+                                {m?.oldestMessages &&
+                                m?.oldestMessages?.length > 0 ? (
+                                  <Tippy
+                                    content={`${
+                                      m.oldestMessages.length
+                                    } Oldest Message${
+                                      m.oldestMessages.length > 1 ? "s" : ""
+                                    }`}
+                                    animation="scale"
+                                    className="shadow-xl"
+                                  >
+                                    <svg
+                                      onClick={() => {
+                                        toast(
+                                          <div className="Toastify__toast-body_">
+                                            <span className="font-bold text-lg text-black dark:text-white">
+                                              {data?.dataFile
+                                                ? "Their"
+                                                : "Your"}{" "}
+                                              {m.oldestMessages.length < 10
+                                                ? "Top 10"
+                                                : `${m.oldestMessages.length}`}{" "}
+                                              Oldest Message
+                                              {m.favoriteWords.length === 1
+                                                ? " is"
+                                                : "s are"}
+                                              :
+                                            </span>
+                                            <br />
+                                            <ul className="list-disc ml-4">
+                                              {m.oldestMessages.map((f, i) => {
+                                                return (
+                                                  <li key={i}>
+                                                    <b>{f.sentence}</b>
+                                                    <ul>
+                                                      <li>
+                                                        - sent at{" "}
+                                                        {moment(
+                                                          f.timestamp
+                                                        ).format(
+                                                          "MMMM Do YYYY, h:mm:ss a"
+                                                        )}{" "}
+                                                        <b>
+                                                          (
+                                                          {moment(
+                                                            f.timestamp
+                                                          ).fromNow()}
+                                                          )
+                                                        </b>
+                                                      </li>
+                                                      <li>
+                                                        - sent to{" "}
+                                                        <b>{f.author}</b>
+                                                      </li>
+                                                    </ul>
+                                                  </li>
+                                                );
+                                              })}
+                                            </ul>
+                                          </div>,
+                                          {
+                                            position: "top-right",
+                                            autoClose: 5000,
+                                            hideProgressBar: false,
+                                            closeOnClick: true,
+                                            pauseOnHover: true,
+                                            draggable: true,
+                                            progress: undefined,
+                                          }
+                                        );
+                                      }}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      height="24"
+                                      width="24"
+                                      className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                    >
+                                      <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
                                     </svg>
                                   </Tippy>
                                 ) : (

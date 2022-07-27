@@ -60,6 +60,7 @@ export default function Upload() {
     "other.showDiscordLinks": true,
     "other.showLinks": true,
     "other.favoriteWords": true,
+    "other.oldestMessages": true,
     statistics: EventsJSON.defaultEvents,
   });
 
@@ -581,6 +582,18 @@ export default function Upload() {
                     return !mention_;
                   });
 
+                const oldestMessages = channel.messages
+                  .map((message) => {
+                    return {
+                      sentence: message.words.join(" "),
+                      timestamp: message.timestamp,
+                      author: `channel: ${channel.name} (guild: ${channel.data_.guild.name})`,
+                    };
+                  })
+                  .flat()
+                  .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+                  .slice(0, 100);
+
                 const favoriteWords = Utils.getFavoriteWords(words);
                 const curseWords = Utils.getCursedWords(words);
                 const topCursed = curseWords;
@@ -600,6 +613,9 @@ export default function Upload() {
                   topLinks: options.other.showLinks ? topLinks : null,
                   topDiscordLinks: options.other.showDiscordLinks
                     ? topDiscordLinks
+                    : null,
+                  oldestMessages: options.other.oldestMessages
+                    ? oldestMessages
                     : null,
                 };
               });
@@ -630,8 +646,21 @@ export default function Upload() {
                     return !mention_;
                   });
 
-                const favoriteWords = Utils.getFavoriteWords(words);
+                const oldestMessages = channel.messages
+                  .map((message) => {
+                    return {
+                      sentence: message.words.join(" "),
+                      timestamp: message.timestamp,
+                      author: `user: ${channel.name
+                        .split("Direct Message with")[1]
+                        .trim()} (id: ${channel.dmUserID})`,
+                    };
+                  })
+                  .flat()
+                  .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+                  .slice(0, 100);
 
+                const favoriteWords = Utils.getFavoriteWords(words);
                 const curseWords = Utils.getCursedWords(words);
                 const topCursed = curseWords;
                 const links = Utils.getTopLinks(words);
@@ -652,6 +681,7 @@ export default function Upload() {
                   topDiscordLinks: options.other.showDiscordLinks
                     ? topDiscordLinks
                     : null,
+                  oldestMessages,
                 };
               });
           }

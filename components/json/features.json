@@ -21,5 +21,6 @@
   "other.showCurseWords": "Show the amount of curse Words",
   "other.showDiscordLinks": "Show the amount of Discord Links",
   "other.showLinks": "Show the amount of normal Invites",
-  "other.favoriteWords": "Show the amount of Favorite Words"
+  "other.favoriteWords": "Show the amount of Favorite Words",
+  "other.oldestMessages": "Show the 100 Oldest Messages"
 }
