@@ -2789,7 +2789,7 @@ export default function Data(props) {
                                 </span>
                               </div>
                             </div>
-                            <div className="flex items-center self-center ml-auto">
+                            <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
                               {m?.messageCount ? (
                                 <Tippy
                                   content={
@@ -3127,6 +3127,195 @@ export default function Data(props) {
                               ) : (
                                 ""
                               )}
+                              {m?.topEmojis && m?.topEmojis?.length > 0 ? (
+                                <Tippy
+                                  content={`${m.topEmojis.length} Top Emoji${
+                                    m.topEmojis.length > 1 ? "s" : ""
+                                  }`}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <svg
+                                    onClick={() => {
+                                      toast(
+                                        <div className="Toastify__toast-body_">
+                                          <span className="font-bold text-lg text-black dark:text-white">
+                                            {data?.dataFile ? "Their" : "Your"}{" "}
+                                            {m.topEmojis.length < 10
+                                              ? "Top 10"
+                                              : `${m.topEmojis.length}`}{" "}
+                                            Top Emoji
+                                            {m.topEmojis.length === 1
+                                              ? " is"
+                                              : "s are"}
+                                            :
+                                          </span>
+                                          <br />
+                                          <ul className="list-disc ml-4">
+                                            {m.topEmojis.map((f, i) => {
+                                              return (
+                                                <li key={i}>
+                                                  <b>
+                                                    {f.emoji}: {f.count} time
+                                                    {f.count > 1 ? "s" : ""}
+                                                  </b>
+                                                </li>
+                                              );
+                                            })}
+                                          </ul>
+                                        </div>,
+                                        {
+                                          position: "top-right",
+                                          autoClose: 5000,
+                                          hideProgressBar: false,
+                                          closeOnClick: true,
+                                          pauseOnHover: true,
+                                          draggable: true,
+                                          progress: undefined,
+                                        }
+                                      );
+                                    }}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24"
+                                    width="24"
+                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                  >
+                                    <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                  </svg>
+                                </Tippy>
+                              ) : (
+                                ""
+                              )}
+                              {m?.topCustomEmojis &&
+                              m?.topCustomEmojis?.length > 0 ? (
+                                <Tippy
+                                  content={`${
+                                    m.topCustomEmojis.length
+                                  } Top Custom Emoji${
+                                    m.topCustomEmojis.length > 1 ? "s" : ""
+                                  }`}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <svg
+                                    onClick={() => {
+                                      toast(
+                                        <div className="Toastify__toast-body_">
+                                          <span className="font-bold text-lg text-black dark:text-white">
+                                            {data?.dataFile ? "Their" : "Your"}{" "}
+                                            {m.topCustomEmojis.length < 10
+                                              ? "Top 10"
+                                              : `${m.topCustomEmojis.length}`}{" "}
+                                            Top Custom Emoji
+                                            {m.topCustomEmojis.length === 1
+                                              ? " is"
+                                              : "s are"}
+                                            :
+                                          </span>
+                                          <br />
+                                          <ul className="list-disc ml-4">
+                                            {m.topCustomEmojis.map((f, i) => {
+                                              return (
+                                                <li
+                                                  key={i}
+                                                  className="flex items-center"
+                                                >
+                                                  {/<:.*?:(\d+)>/g.exec(
+                                                    f.emoji
+                                                  ) ? (
+                                                    <Tippy
+                                                      content={`${
+                                                        f.emoji
+                                                      } used ${f.count} time${
+                                                        f.count === 1 ? "" : "s"
+                                                      }`}
+                                                      animation="scale"
+                                                      className="shadow-xl"
+                                                    >
+                                                      <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                        <Image
+                                                          src={
+                                                            "https://cdn.discordapp.com/emojis/" +
+                                                            /<:.*?:(\d+)>/g.exec(
+                                                              f.emoji
+                                                            )[1] +
+                                                            ".png"
+                                                          }
+                                                          alt="emoji"
+                                                          height="50px"
+                                                          width="50px"
+                                                          draggable={false}
+                                                        />
+                                                      </div>
+                                                    </Tippy>
+                                                  ) : (
+                                                    <>
+                                                      {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                        f.emoji
+                                                      ) ? (
+                                                        <Tippy
+                                                          content={`${
+                                                            f.emoji
+                                                          } used ${
+                                                            f.count
+                                                          } time${
+                                                            f.count === 1
+                                                              ? ""
+                                                              : "s"
+                                                          }`}
+                                                          animation="scale"
+                                                          className="shadow-xl"
+                                                        >
+                                                          <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                            <Image
+                                                              src={
+                                                                "https://cdn.discordapp.com/emojis/" +
+                                                                /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                                  f.emoji
+                                                                )[2] +
+                                                                ".gif"
+                                                              }
+                                                              alt="emoji"
+                                                              height="50px"
+                                                              width="50px"
+                                                              draggable={false}
+                                                            />
+                                                          </div>
+                                                        </Tippy>
+                                                      ) : (
+                                                        ""
+                                                      )}{" "}
+                                                    </>
+                                                  )}
+                                                  : {f.count} time
+                                                  {f.count > 1 ? "s" : ""}
+                                                </li>
+                                              );
+                                            })}
+                                          </ul>
+                                        </div>,
+                                        {
+                                          position: "top-right",
+                                          autoClose: 5000,
+                                          hideProgressBar: false,
+                                          closeOnClick: true,
+                                          pauseOnHover: true,
+                                          draggable: true,
+                                          progress: undefined,
+                                        }
+                                      );
+                                    }}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24"
+                                    width="24"
+                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                  >
+                                    <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                  </svg>
+                                </Tippy>
+                              ) : (
+                                ""
+                              )}
                             </div>
                           </div>
                         </div>
@@ -3146,7 +3335,7 @@ export default function Data(props) {
                                 </span>
                               </div>
                             </div>
-                            <div className="flex items-center self-center ml-auto">
+                            <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
                               {m?.messageCount ? (
                                 <Tippy
                                   content={
@@ -3484,6 +3673,195 @@ export default function Data(props) {
                               ) : (
                                 ""
                               )}
+                              {m?.topEmojis && m?.topEmojis?.length > 0 ? (
+                                <Tippy
+                                  content={`${m.topEmojis.length} Top Emoji${
+                                    m.topEmojis.length > 1 ? "s" : ""
+                                  }`}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <svg
+                                    onClick={() => {
+                                      toast(
+                                        <div className="Toastify__toast-body_">
+                                          <span className="font-bold text-lg text-black dark:text-white">
+                                            {data?.dataFile ? "Their" : "Your"}{" "}
+                                            {m.topEmojis.length < 10
+                                              ? "Top 10"
+                                              : `${m.topEmojis.length}`}{" "}
+                                            Top Emoji
+                                            {m.topEmojis.length === 1
+                                              ? " is"
+                                              : "s are"}
+                                            :
+                                          </span>
+                                          <br />
+                                          <ul className="list-disc ml-4">
+                                            {m.topEmojis.map((f, i) => {
+                                              return (
+                                                <li key={i}>
+                                                  <b>
+                                                    {f.emoji}: {f.count} time
+                                                    {f.count > 1 ? "s" : ""}
+                                                  </b>
+                                                </li>
+                                              );
+                                            })}
+                                          </ul>
+                                        </div>,
+                                        {
+                                          position: "top-right",
+                                          autoClose: 5000,
+                                          hideProgressBar: false,
+                                          closeOnClick: true,
+                                          pauseOnHover: true,
+                                          draggable: true,
+                                          progress: undefined,
+                                        }
+                                      );
+                                    }}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24"
+                                    width="24"
+                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                  >
+                                    <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                  </svg>
+                                </Tippy>
+                              ) : (
+                                ""
+                              )}
+                              {m?.topCustomEmojis &&
+                              m?.topCustomEmojis?.length > 0 ? (
+                                <Tippy
+                                  content={`${
+                                    m.topCustomEmojis.length
+                                  } Top Custom Emoji${
+                                    m.topCustomEmojis.length > 1 ? "s" : ""
+                                  }`}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <svg
+                                    onClick={() => {
+                                      toast(
+                                        <div className="Toastify__toast-body_">
+                                          <span className="font-bold text-lg text-black dark:text-white">
+                                            {data?.dataFile ? "Their" : "Your"}{" "}
+                                            {m.topCustomEmojis.length < 10
+                                              ? "Top 10"
+                                              : `${m.topCustomEmojis.length}`}{" "}
+                                            Top Custom Emoji
+                                            {m.topCustomEmojis.length === 1
+                                              ? " is"
+                                              : "s are"}
+                                            :
+                                          </span>
+                                          <br />
+                                          <ul className="list-disc ml-4">
+                                            {m.topCustomEmojis.map((f, i) => {
+                                              return (
+                                                <li
+                                                  key={i}
+                                                  className="flex items-center"
+                                                >
+                                                  {/<:.*?:(\d+)>/g.exec(
+                                                    f.emoji
+                                                  ) ? (
+                                                    <Tippy
+                                                      content={`${
+                                                        f.emoji
+                                                      } used ${f.count} time${
+                                                        f.count === 1 ? "" : "s"
+                                                      }`}
+                                                      animation="scale"
+                                                      className="shadow-xl"
+                                                    >
+                                                      <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                        <Image
+                                                          src={
+                                                            "https://cdn.discordapp.com/emojis/" +
+                                                            /<:.*?:(\d+)>/g.exec(
+                                                              f.emoji
+                                                            )[1] +
+                                                            ".png"
+                                                          }
+                                                          alt="emoji"
+                                                          height="50px"
+                                                          width="50px"
+                                                          draggable={false}
+                                                        />
+                                                      </div>
+                                                    </Tippy>
+                                                  ) : (
+                                                    <>
+                                                      {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                        f.emoji
+                                                      ) ? (
+                                                        <Tippy
+                                                          content={`${
+                                                            f.emoji
+                                                          } used ${
+                                                            f.count
+                                                          } time${
+                                                            f.count === 1
+                                                              ? ""
+                                                              : "s"
+                                                          }`}
+                                                          animation="scale"
+                                                          className="shadow-xl"
+                                                        >
+                                                          <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                            <Image
+                                                              src={
+                                                                "https://cdn.discordapp.com/emojis/" +
+                                                                /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                                  f.emoji
+                                                                )[2] +
+                                                                ".gif"
+                                                              }
+                                                              alt="emoji"
+                                                              height="50px"
+                                                              width="50px"
+                                                              draggable={false}
+                                                            />
+                                                          </div>
+                                                        </Tippy>
+                                                      ) : (
+                                                        ""
+                                                      )}{" "}
+                                                    </>
+                                                  )}
+                                                  : {f.count} time
+                                                  {f.count > 1 ? "s" : ""}
+                                                </li>
+                                              );
+                                            })}
+                                          </ul>
+                                        </div>,
+                                        {
+                                          position: "top-right",
+                                          autoClose: 5000,
+                                          hideProgressBar: false,
+                                          closeOnClick: true,
+                                          pauseOnHover: true,
+                                          draggable: true,
+                                          progress: undefined,
+                                        }
+                                      );
+                                    }}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24"
+                                    width="24"
+                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                  >
+                                    <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                  </svg>
+                                </Tippy>
+                              ) : (
+                                ""
+                              )}
                             </div>
                           </div>
                         </div>
@@ -3619,7 +3997,7 @@ export default function Data(props) {
                                   </span>
                                 </div>
                               </div>
-                              <div className="flex items-center self-center ml-auto">
+                              <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
                                 {m?.messageCount ? (
                                   <Tippy
                                     content={
@@ -3968,6 +4346,203 @@ export default function Data(props) {
                                 ) : (
                                   ""
                                 )}
+                                {m?.topEmojis && m?.topEmojis?.length > 0 ? (
+                                  <Tippy
+                                    content={`${m.topEmojis.length} Top Emoji${
+                                      m.topEmojis.length > 1 ? "s" : ""
+                                    }`}
+                                    animation="scale"
+                                    className="shadow-xl"
+                                  >
+                                    <svg
+                                      onClick={() => {
+                                        toast(
+                                          <div className="Toastify__toast-body_">
+                                            <span className="font-bold text-lg text-black dark:text-white">
+                                              {data?.dataFile
+                                                ? "Their"
+                                                : "Your"}{" "}
+                                              {m.topEmojis.length < 10
+                                                ? "Top 10"
+                                                : `${m.topEmojis.length}`}{" "}
+                                              Top Emoji
+                                              {m.topEmojis.length === 1
+                                                ? " is"
+                                                : "s are"}
+                                              :
+                                            </span>
+                                            <br />
+                                            <ul className="list-disc ml-4">
+                                              {m.topEmojis.map((f, i) => {
+                                                return (
+                                                  <li key={i}>
+                                                    <b>
+                                                      {f.emoji}: {f.count} time
+                                                      {f.count > 1 ? "s" : ""}
+                                                    </b>
+                                                  </li>
+                                                );
+                                              })}
+                                            </ul>
+                                          </div>,
+                                          {
+                                            position: "top-right",
+                                            autoClose: 5000,
+                                            hideProgressBar: false,
+                                            closeOnClick: true,
+                                            pauseOnHover: true,
+                                            draggable: true,
+                                            progress: undefined,
+                                          }
+                                        );
+                                      }}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      height="24"
+                                      width="24"
+                                      className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                    >
+                                      <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                    </svg>
+                                  </Tippy>
+                                ) : (
+                                  ""
+                                )}
+                                {m?.topCustomEmojis &&
+                                m?.topCustomEmojis?.length > 0 ? (
+                                  <Tippy
+                                    content={`${
+                                      m.topCustomEmojis.length
+                                    } Top Custom Emoji${
+                                      m.topCustomEmojis.length > 1 ? "s" : ""
+                                    }`}
+                                    animation="scale"
+                                    className="shadow-xl"
+                                  >
+                                    <svg
+                                      onClick={() => {
+                                        toast(
+                                          <div className="Toastify__toast-body_">
+                                            <span className="font-bold text-lg text-black dark:text-white">
+                                              {data?.dataFile
+                                                ? "Their"
+                                                : "Your"}{" "}
+                                              {m.topCustomEmojis.length < 10
+                                                ? "Top 10"
+                                                : `${m.topCustomEmojis.length}`}{" "}
+                                              Top Custom Emoji
+                                              {m.topCustomEmojis.length === 1
+                                                ? " is"
+                                                : "s are"}
+                                              :
+                                            </span>
+                                            <br />
+                                            <ul className="list-disc ml-4">
+                                              {m.topCustomEmojis.map((f, i) => {
+                                                return (
+                                                  <li
+                                                    key={i}
+                                                    className="flex items-center"
+                                                  >
+                                                    {/<:.*?:(\d+)>/g.exec(
+                                                      f.emoji
+                                                    ) ? (
+                                                      <Tippy
+                                                        content={`${
+                                                          f.emoji
+                                                        } used ${f.count} time${
+                                                          f.count === 1
+                                                            ? ""
+                                                            : "s"
+                                                        }`}
+                                                        animation="scale"
+                                                        className="shadow-xl"
+                                                      >
+                                                        <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                          <Image
+                                                            src={
+                                                              "https://cdn.discordapp.com/emojis/" +
+                                                              /<:.*?:(\d+)>/g.exec(
+                                                                f.emoji
+                                                              )[1] +
+                                                              ".png"
+                                                            }
+                                                            alt="emoji"
+                                                            height="50px"
+                                                            width="50px"
+                                                            draggable={false}
+                                                          />
+                                                        </div>
+                                                      </Tippy>
+                                                    ) : (
+                                                      <>
+                                                        {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                          f.emoji
+                                                        ) ? (
+                                                          <Tippy
+                                                            content={`${
+                                                              f.emoji
+                                                            } used ${
+                                                              f.count
+                                                            } time${
+                                                              f.count === 1
+                                                                ? ""
+                                                                : "s"
+                                                            }`}
+                                                            animation="scale"
+                                                            className="shadow-xl"
+                                                          >
+                                                            <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                              <Image
+                                                                src={
+                                                                  "https://cdn.discordapp.com/emojis/" +
+                                                                  /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                                    f.emoji
+                                                                  )[2] +
+                                                                  ".gif"
+                                                                }
+                                                                alt="emoji"
+                                                                height="50px"
+                                                                width="50px"
+                                                                draggable={
+                                                                  false
+                                                                }
+                                                              />
+                                                            </div>
+                                                          </Tippy>
+                                                        ) : (
+                                                          ""
+                                                        )}{" "}
+                                                      </>
+                                                    )}
+                                                    : {f.count} time
+                                                    {f.count > 1 ? "s" : ""}
+                                                  </li>
+                                                );
+                                              })}
+                                            </ul>
+                                          </div>,
+                                          {
+                                            position: "top-right",
+                                            autoClose: 5000,
+                                            hideProgressBar: false,
+                                            closeOnClick: true,
+                                            pauseOnHover: true,
+                                            draggable: true,
+                                            progress: undefined,
+                                          }
+                                        );
+                                      }}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      height="24"
+                                      width="24"
+                                      className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                    >
+                                      <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                    </svg>
+                                  </Tippy>
+                                ) : (
+                                  ""
+                                )}
                               </div>
                             </div>
                           </div>
@@ -3989,7 +4564,7 @@ export default function Data(props) {
                                   </span>
                                 </div>
                               </div>
-                              <div className="flex items-center self-center ml-auto">
+                              <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
                                 {m?.messageCount ? (
                                   <Tippy
                                     content={
@@ -4333,6 +4908,203 @@ export default function Data(props) {
                                       className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
                                     >
                                       <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
+                                    </svg>
+                                  </Tippy>
+                                ) : (
+                                  ""
+                                )}
+                                {m?.topEmojis && m?.topEmojis?.length > 0 ? (
+                                  <Tippy
+                                    content={`${m.topEmojis.length} Top Emoji${
+                                      m.topEmojis.length > 1 ? "s" : ""
+                                    }`}
+                                    animation="scale"
+                                    className="shadow-xl"
+                                  >
+                                    <svg
+                                      onClick={() => {
+                                        toast(
+                                          <div className="Toastify__toast-body_">
+                                            <span className="font-bold text-lg text-black dark:text-white">
+                                              {data?.dataFile
+                                                ? "Their"
+                                                : "Your"}{" "}
+                                              {m.topEmojis.length < 10
+                                                ? "Top 10"
+                                                : `${m.topEmojis.length}`}{" "}
+                                              Top Emoji
+                                              {m.topEmojis.length === 1
+                                                ? " is"
+                                                : "s are"}
+                                              :
+                                            </span>
+                                            <br />
+                                            <ul className="list-disc ml-4">
+                                              {m.topEmojis.map((f, i) => {
+                                                return (
+                                                  <li key={i}>
+                                                    <b>
+                                                      {f.emoji}: {f.count} time
+                                                      {f.count > 1 ? "s" : ""}
+                                                    </b>
+                                                  </li>
+                                                );
+                                              })}
+                                            </ul>
+                                          </div>,
+                                          {
+                                            position: "top-right",
+                                            autoClose: 5000,
+                                            hideProgressBar: false,
+                                            closeOnClick: true,
+                                            pauseOnHover: true,
+                                            draggable: true,
+                                            progress: undefined,
+                                          }
+                                        );
+                                      }}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      height="24"
+                                      width="24"
+                                      className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                    >
+                                      <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                    </svg>
+                                  </Tippy>
+                                ) : (
+                                  ""
+                                )}
+                                {m?.topCustomEmojis &&
+                                m?.topCustomEmojis?.length > 0 ? (
+                                  <Tippy
+                                    content={`${
+                                      m.topCustomEmojis.length
+                                    } Top Custom Emoji${
+                                      m.topCustomEmojis.length > 1 ? "s" : ""
+                                    }`}
+                                    animation="scale"
+                                    className="shadow-xl"
+                                  >
+                                    <svg
+                                      onClick={() => {
+                                        toast(
+                                          <div className="Toastify__toast-body_">
+                                            <span className="font-bold text-lg text-black dark:text-white">
+                                              {data?.dataFile
+                                                ? "Their"
+                                                : "Your"}{" "}
+                                              {m.topCustomEmojis.length < 10
+                                                ? "Top 10"
+                                                : `${m.topCustomEmojis.length}`}{" "}
+                                              Top Custom Emoji
+                                              {m.topCustomEmojis.length === 1
+                                                ? " is"
+                                                : "s are"}
+                                              :
+                                            </span>
+                                            <br />
+                                            <ul className="list-disc ml-4">
+                                              {m.topCustomEmojis.map((f, i) => {
+                                                return (
+                                                  <li
+                                                    key={i}
+                                                    className="flex items-center"
+                                                  >
+                                                    {/<:.*?:(\d+)>/g.exec(
+                                                      f.emoji
+                                                    ) ? (
+                                                      <Tippy
+                                                        content={`${
+                                                          f.emoji
+                                                        } used ${f.count} time${
+                                                          f.count === 1
+                                                            ? ""
+                                                            : "s"
+                                                        }`}
+                                                        animation="scale"
+                                                        className="shadow-xl"
+                                                      >
+                                                        <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                          <Image
+                                                            src={
+                                                              "https://cdn.discordapp.com/emojis/" +
+                                                              /<:.*?:(\d+)>/g.exec(
+                                                                f.emoji
+                                                              )[1] +
+                                                              ".png"
+                                                            }
+                                                            alt="emoji"
+                                                            height="50px"
+                                                            width="50px"
+                                                            draggable={false}
+                                                          />
+                                                        </div>
+                                                      </Tippy>
+                                                    ) : (
+                                                      <>
+                                                        {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                          f.emoji
+                                                        ) ? (
+                                                          <Tippy
+                                                            content={`${
+                                                              f.emoji
+                                                            } used ${
+                                                              f.count
+                                                            } time${
+                                                              f.count === 1
+                                                                ? ""
+                                                                : "s"
+                                                            }`}
+                                                            animation="scale"
+                                                            className="shadow-xl"
+                                                          >
+                                                            <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                              <Image
+                                                                src={
+                                                                  "https://cdn.discordapp.com/emojis/" +
+                                                                  /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                                    f.emoji
+                                                                  )[2] +
+                                                                  ".gif"
+                                                                }
+                                                                alt="emoji"
+                                                                height="50px"
+                                                                width="50px"
+                                                                draggable={
+                                                                  false
+                                                                }
+                                                              />
+                                                            </div>
+                                                          </Tippy>
+                                                        ) : (
+                                                          ""
+                                                        )}{" "}
+                                                      </>
+                                                    )}
+                                                    : {f.count} time
+                                                    {f.count > 1 ? "s" : ""}
+                                                  </li>
+                                                );
+                                              })}
+                                            </ul>
+                                          </div>,
+                                          {
+                                            position: "top-right",
+                                            autoClose: 5000,
+                                            hideProgressBar: false,
+                                            closeOnClick: true,
+                                            pauseOnHover: true,
+                                            draggable: true,
+                                            progress: undefined,
+                                          }
+                                        );
+                                      }}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      height="24"
+                                      width="24"
+                                      className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                    >
+                                      <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
                                     </svg>
                                   </Tippy>
                                 ) : (

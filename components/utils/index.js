@@ -608,6 +608,26 @@ class Utils {
             author: "SYSTEM",
           },
         ],
+        topEmojis: Object.entries(emojis)
+          .sort((a, b) => Math.random() - 0.5)
+          .slice(
+            Math.floor(Math.random() * 40) + 40,
+            Math.floor(Math.random() * 40) + 200
+          )
+          .map(([key, value]) => ({
+            emoji: value,
+            count: Math.floor(Math.random() * 200) + 1,
+          }))
+          .sort((a, b) => b.count - a.count),
+
+        topCustomEmojis:
+          "<:KEKW:890722659283910696> <:PepeHands:785757397440397313> <a:ablobwave:607305059482468400> <a:Doingthesexydance:393572602570080277> <:PepeYikes:785757359749595156> <:elonLOL:618824563693715487> <a:excuseme:458967685401935872> <a:dogdance:581559691721834554> <a:zoopthedoop:494260256239517716> <a🦜393572600619597824> <a:yeet:581560888910151680> <a:someone_is_wrong_on_the_internet:468835376312745985> <:angryeyes:586288876734382080> <:drake_dope:581333915923513344> <:drake_nope:581333905412718593> <a:gravydance:782759371468832799> <:hypebeast:642125649842012160> <a:nou:609507306740252675> <a:gj:581561843043270666> <a:peeporain:593080847775825942> <a:rick:813876036088365136> <a:hyperkappa:393578024794062848> <a:gangnamstyle:879802244499910676> <a:madlad:538976368273260545> <a:h2ocasper:471117492614332426><a:lmaoception:459848100857774132> <:dankfingers:581630874462978059> <:ffs:581332266374922280> <a:igneous:582319796922875907>  <:itsgravy:773579468283183104> <:no:892324133055131698> <a:sus:768523962899890177> <a:tobysmells:719990406552617020> <a:i_hate_php:562866393796706304> <:ight:618073210319011870>"
+            .split(" ")
+            .map((s) => ({
+              emoji: s,
+              count: Math.floor(Math.random() * 200) + 1,
+            }))
+            .sort((a, b) => b.count - a.count),
       });
     }
 
@@ -671,6 +691,26 @@ class Utils {
             author: "SYSTEM",
           },
         ],
+        topEmojis: Object.entries(emojis)
+          .sort((a, b) => Math.random() - 0.5)
+          .slice(
+            Math.floor(Math.random() * 40) + 40,
+            Math.floor(Math.random() * 40) + 200
+          )
+          .map(([key, value]) => ({
+            emoji: value,
+            count: Math.floor(Math.random() * 200) + 1,
+          }))
+          .sort((a, b) => b.count - a.count),
+
+        topCustomEmojis:
+          "<:KEKW:890722659283910696> <:PepeHands:785757397440397313> <a:ablobwave:607305059482468400> <a:Doingthesexydance:393572602570080277> <:PepeYikes:785757359749595156> <:elonLOL:618824563693715487> <a:excuseme:458967685401935872> <a:dogdance:581559691721834554> <a:zoopthedoop:494260256239517716> <a🦜393572600619597824> <a:yeet:581560888910151680> <a:someone_is_wrong_on_the_internet:468835376312745985> <:angryeyes:586288876734382080> <:drake_dope:581333915923513344> <:drake_nope:581333905412718593> <a:gravydance:782759371468832799> <:hypebeast:642125649842012160> <a:nou:609507306740252675> <a:gj:581561843043270666> <a:peeporain:593080847775825942> <a:rick:813876036088365136> <a:hyperkappa:393578024794062848> <a:gangnamstyle:879802244499910676> <a:madlad:538976368273260545> <a:h2ocasper:471117492614332426><a:lmaoception:459848100857774132> <:dankfingers:581630874462978059> <:ffs:581332266374922280> <a:igneous:582319796922875907>  <:itsgravy:773579468283183104> <:no:892324133055131698> <a:sus:768523962899890177> <a:tobysmells:719990406552617020> <a:i_hate_php:562866393796706304> <:ight:618073210319011870>"
+            .split(" ")
+            .map((s) => ({
+              emoji: s,
+              count: Math.floor(Math.random() * 200) + 1,
+            }))
+            .sort((a, b) => b.count - a.count),
       });
     }
 

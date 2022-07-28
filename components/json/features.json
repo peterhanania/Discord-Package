@@ -22,5 +22,7 @@
   "other.showDiscordLinks": "Show the amount of Discord Links",
   "other.showLinks": "Show the amount of normal Invites",
   "other.favoriteWords": "Show the amount of Favorite Words",
-  "other.oldestMessages": "Show the 100 Oldest Messages"
+  "other.oldestMessages": "Show the 100 Oldest Messages",
+  "other.topEmojis": "Show your Top Emojis",
+  "other.topCustomEmojis": "Show your Top Custom Emojis"
 }

@@ -61,6 +61,8 @@ export default function Upload() {
     "other.showLinks": true,
     "other.favoriteWords": true,
     "other.oldestMessages": true,
+    "other.topEmojis": true,
+    "other.topCustomEmojis": true,
     statistics: EventsJSON.defaultEvents,
   });
 
@@ -594,6 +596,60 @@ export default function Upload() {
                   .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
                   .slice(0, 100);
 
+                const topEmojisANDcustom = channel.messages
+                  .map((message) => {
+                    const emojis = Utils.getEmojiCount(message.words);
+                    const customEmojis = Utils.getCustomEmojiCount(
+                      message.words
+                    );
+
+                    return {
+                      emojis:
+                        emojis && Object.keys(emojis).length ? emojis : null,
+                      customEmojis:
+                        customEmojis && customEmojis.length
+                          ? customEmojis
+                          : null,
+                    };
+                  })
+                  .flat();
+
+                const topEmojis_ = topEmojisANDcustom
+                  .flat()
+                  .filter((w) => w.emojis)
+                  .map((w) => w.emojis)
+                  .flat();
+
+                const topEmojis = [];
+                topEmojis_.forEach((key) => {
+                  if (!topEmojis.find((x) => x.emoji === key.emoji)) {
+                    topEmojis.push({ emoji: key.emoji, count: 1 });
+                  } else {
+                    const index = topEmojis.findIndex(
+                      (x) => x.emoji === key.emoji
+                    );
+                    topEmojis[index].count += 1;
+                  }
+                });
+
+                const topCustomEmojis_ = topEmojisANDcustom
+                  .flat()
+                  .filter((w) => w.customEmojis)
+                  .map((w) => w.customEmojis)
+                  .flat();
+
+                const topCustomEmojis = [];
+                topCustomEmojis_.forEach((key) => {
+                  if (!topCustomEmojis.find((x) => x.emoji === key.emoji)) {
+                    topCustomEmojis.push({ emoji: key.emoji, count: 1 });
+                  } else {
+                    const index = topCustomEmojis.findIndex(
+                      (x) => x.emoji === key.emoji
+                    );
+                    topCustomEmojis[index].count += 1;
+                  }
+                });
+
                 const favoriteWords = Utils.getFavoriteWords(words);
                 const curseWords = Utils.getCursedWords(words);
                 const topCursed = curseWords;
@@ -616,6 +672,12 @@ export default function Upload() {
                     : null,
                   oldestMessages: options.other.oldestMessages
                     ? oldestMessages
+                    : null,
+                  topEmojis: options.other.topEmojis
+                    ? topEmojis.sort((a, b) => b.count - a.count)
+                    : null,
+                  topCustomEmojis: options.other.topCustomEmojis
+                    ? topCustomEmojis.sort((a, b) => b.count - a.count)
                     : null,
                 };
               });
@@ -660,6 +722,59 @@ export default function Upload() {
                   .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
                   .slice(0, 100);
 
+                const topEmojisANDcustom = channel.messages
+                  .map((message) => {
+                    const emojis = Utils.getEmojiCount(message.words);
+                    const customEmojis = Utils.getCustomEmojiCount(
+                      message.words
+                    );
+
+                    return {
+                      emojis:
+                        emojis && Object.keys(emojis).length ? emojis : null,
+                      customEmojis:
+                        customEmojis && customEmojis.length
+                          ? customEmojis
+                          : null,
+                    };
+                  })
+                  .flat();
+
+                const topEmojis_ = topEmojisANDcustom
+                  .flat()
+                  .filter((w) => w.emojis)
+                  .map((w) => w.emojis)
+                  .flat();
+
+                const topEmojis = [];
+                topEmojis_.forEach((key) => {
+                  if (!topEmojis.find((x) => x.emoji === key.emoji)) {
+                    topEmojis.push({ emoji: key.emoji, count: 1 });
+                  } else {
+                    const index = topEmojis.findIndex(
+                      (x) => x.emoji === key.emoji
+                    );
+                    topEmojis[index].count += 1;
+                  }
+                });
+
+                const topCustomEmojis_ = topEmojisANDcustom
+                  .flat()
+                  .filter((w) => w.customEmojis)
+                  .map((w) => w.customEmojis)
+                  .flat();
+
+                const topCustomEmojis = [];
+                topCustomEmojis_.forEach((key) => {
+                  if (!topCustomEmojis.find((x) => x.emoji === key.emoji)) {
+                    topCustomEmojis.push({ emoji: key.emoji, count: 1 });
+                  } else {
+                    const index = topCustomEmojis.findIndex(
+                      (x) => x.emoji === key.emoji
+                    );
+                    topCustomEmojis[index].count += 1;
+                  }
+                });
                 const favoriteWords = Utils.getFavoriteWords(words);
                 const curseWords = Utils.getCursedWords(words);
                 const topCursed = curseWords;
@@ -682,6 +797,12 @@ export default function Upload() {
                     ? topDiscordLinks
                     : null,
                   oldestMessages,
+                  topEmojis: options.other.topEmojis
+                    ? topEmojis.sort((a, b) => b.count - a.count)
+                    : null,
+                  topCustomEmojis: options.other.topCustomEmojis
+                    ? topCustomEmojis.sort((a, b) => b.count - a.count)
+                    : null,
                 };
               });
           }
