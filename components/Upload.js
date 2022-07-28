@@ -46,10 +46,10 @@ export default function Upload() {
     "payments.total": true,
     "payments.transactions": true,
     "payments.giftedNitro": true,
-    "messages.channelCount": true,
-    "messages.dmChannelCount": true,
     "messages.topChannels": true,
     "messages.topDMs": true,
+    "messages.topGuilds": true,
+    "messages.topGroupDMs": true,
     "messages.characterCount": true,
     "messages.topCustomEmojis": true,
     "messages.topEmojis": true,
@@ -275,8 +275,6 @@ export default function Upload() {
               giftedNitro: null,
             },
             messages: {
-              channelCount: null,
-              dmChannelCount: null,
               topChannels: null,
               topDMs: null,
               characterCount: null,
@@ -555,18 +553,8 @@ export default function Upload() {
             throw new Error("invalid_package_missing_messages");
 
           await delay(700);
-
-          if (options.messages.channelCount) {
-            setLoading("Loading Messages|||Calculating Channel Count");
-            data.messages.channelCount = channels.filter((c) => !c.isDM).length;
-          }
-
-          if (options.messages.dmChannelCount) {
-            data.messages.dmChannelCount =
-              channels.length - data.messages.channelCount;
-          }
-
           if (options.messages.topChannels) {
+            setLoading("Loading Messages|||Calculating top Channels");
             data.messages.topChannels = channels
               .filter((c) => c.data_ && c.data_.guild)
               .sort((a, b) => b.messages.length - a.messages.length)
@@ -684,7 +672,6 @@ export default function Upload() {
           }
 
           if (options.messages.topDMs) {
-            await delay(600);
             setLoading("Loading Messages|||Calculating top DMs");
 
             data.messages.topDMs = channels
@@ -805,6 +792,321 @@ export default function Upload() {
                     : null,
                 };
               });
+          }
+
+          if (options.messages.topGuilds) {
+            setLoading("Loading Messages|||Calculating top Guilds");
+            const topGuilds = channels
+              .filter((c) => c.data_ && c.data_.guild)
+              .sort((a, b) => b.messages.length - a.messages.length)
+
+              .map((channel) => {
+                const words = channel.messages
+                  .map((message) => message.words)
+                  .flat()
+                  .filter((w) => {
+                    const mentionRegex = /^<@!?(\d+)>$/;
+                    const mention_ = mentionRegex.test(w)
+                      ? w.match(mentionRegex)[1]
+                      : null;
+
+                    return !mention_;
+                  });
+
+                const oldestMessages = channel.messages
+                  .map((message) => {
+                    return {
+                      sentence: message.words.join(" "),
+                      timestamp: message.timestamp,
+                      author: `channel: ${channel.name} (guild: ${channel.data_.guild.name})`,
+                    };
+                  })
+                  .flat()
+                  .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+                  .slice(0, 100);
+
+                const topEmojisANDcustom = channel.messages
+                  .map((message) => {
+                    const emojis = Utils.getEmojiCount(message.words);
+                    const customEmojis = Utils.getCustomEmojiCount(
+                      message.words
+                    );
+
+                    return {
+                      emojis:
+                        emojis && Object.keys(emojis).length ? emojis : null,
+                      customEmojis:
+                        customEmojis && customEmojis.length
+                          ? customEmojis
+                          : null,
+                    };
+                  })
+                  .flat();
+
+                const topEmojis_ = topEmojisANDcustom
+                  .flat()
+                  .filter((w) => w.emojis)
+                  .map((w) => w.emojis)
+                  .flat();
+
+                const topEmojis = [];
+                topEmojis_.forEach((key) => {
+                  if (!topEmojis.find((x) => x.emoji === key.emoji)) {
+                    topEmojis.push({ emoji: key.emoji, count: 1 });
+                  } else {
+                    const index = topEmojis.findIndex(
+                      (x) => x.emoji === key.emoji
+                    );
+                    topEmojis[index].count += 1;
+                  }
+                });
+
+                const topCustomEmojis_ = topEmojisANDcustom
+                  .flat()
+                  .filter((w) => w.customEmojis)
+                  .map((w) => w.customEmojis)
+                  .flat();
+
+                const topCustomEmojis = [];
+                topCustomEmojis_.forEach((key) => {
+                  if (!topCustomEmojis.find((x) => x.emoji === key.emoji)) {
+                    topCustomEmojis.push({ emoji: key.emoji, count: 1 });
+                  } else {
+                    const index = topCustomEmojis.findIndex(
+                      (x) => x.emoji === key.emoji
+                    );
+                    topCustomEmojis[index].count += 1;
+                  }
+                });
+
+                const favoriteWords = Utils.getFavoriteWords(words);
+                const curseWords = Utils.getCursedWords(words);
+                const topCursed = curseWords;
+                const links = Utils.getTopLinks(words);
+                const topLinks = links;
+                const discordLink = Utils.getDiscordLinks(words);
+                const topDiscordLinks = discordLink;
+
+                return {
+                  name: channel.name,
+                  messageCount: channel.messages.length,
+                  guildName: channel.data_.guild.name,
+                  favoriteWords: options.other.favoriteWords
+                    ? favoriteWords
+                    : null,
+                  topCursed: options.other.showCurseWords ? topCursed : null,
+                  topLinks: options.other.showLinks ? topLinks : null,
+                  topDiscordLinks: options.other.showDiscordLinks
+                    ? topDiscordLinks
+                    : null,
+                  oldestMessages: options.other.oldestMessages
+                    ? oldestMessages
+                    : null,
+                  topEmojis: options.other.topEmojis
+                    ? topEmojis.sort((a, b) => b.count - a.count)
+                    : null,
+                  topCustomEmojis: options.other.topCustomEmojis
+                    ? topCustomEmojis.sort((a, b) => b.count - a.count)
+                    : null,
+                };
+              });
+
+            const guilds = [];
+
+            function merge(a, b) {
+              return a.concat(b);
+            }
+
+            topGuilds.forEach((ch) => {
+              if (!guilds.find((x) => x.guildName === ch.guildName)) {
+                ch.name = [ch.name];
+                guilds.push(ch);
+              } else {
+                const index = guilds.findIndex(
+                  (x) => x.guildName === ch.guildName
+                );
+
+                guilds[index].name.push(ch.name);
+                guilds[index].messageCount += ch.messageCount;
+
+                if (options.other.favoriteWords) {
+                  guilds[index].favoriteWords = merge(
+                    guilds[index].favoriteWords,
+                    ch.favoriteWords
+                  );
+                }
+
+                if (options.other.showCurseWords) {
+                  guilds[index].topCursed = merge(
+                    guilds[index].topCursed,
+                    ch.topCursed
+                  );
+                }
+
+                if (options.other.showLinks) {
+                  guilds[index].topLinks = merge(
+                    guilds[index].topLinks,
+                    ch.topLinks
+                  );
+                }
+
+                if (options.other.showDiscordLinks) {
+                  guilds[index].topDiscordLinks = merge(
+                    guilds[index].topDiscordLinks,
+                    ch.topDiscordLinks
+                  );
+                }
+
+                if (options.other.oldestMessages) {
+                  guilds[index].oldestMessages = merge(
+                    guilds[index].oldestMessages,
+                    ch.oldestMessages
+                  );
+                }
+
+                if (options.other.topEmojis) {
+                  guilds[index].topEmojis = merge(
+                    guilds[index].topEmojis,
+                    ch.topEmojis
+                  );
+                }
+
+                if (options.other.topCustomEmojis) {
+                  guilds[index].topCustomEmojis = merge(
+                    guilds[index].topCustomEmojis,
+                    ch.topCustomEmojis
+                  );
+                }
+              }
+            });
+
+            data.messages.topGuilds = guilds.sort(
+              (a, b) => b.messageCount - a.messageCount
+            );
+          }
+
+          if (options.messages.topGroupDMs) {
+            setLoading("Loading Messages|||Calculating top Group DMs");
+            const channel_ = channels
+              .filter(
+                (c) =>
+                  c?.data_ &&
+                  !c?.data_?.guild &&
+                  !c?.isDM &&
+                  c?.data_?.recipients?.length > 1 &&
+                  !c?.dmUserID
+              )
+              .sort((a, b) => b.messages.length - a.messages.length);
+
+            const channel__ = channel_.map((channel) => {
+              const words = channel.messages
+                .map((message) => message.words)
+                .flat()
+                .filter((w) => {
+                  const mentionRegex = /^<@!?(\d+)>$/;
+                  const mention_ = mentionRegex.test(w)
+                    ? w.match(mentionRegex)[1]
+                    : null;
+
+                  return !mention_;
+                });
+
+              const oldestMessages = channel.messages
+                .map((message) => {
+                  return {
+                    sentence: message.words.join(" "),
+                    timestamp: message.timestamp,
+                  };
+                })
+                .flat()
+                .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+                .slice(0, 100);
+
+              const topEmojisANDcustom = channel.messages
+                .map((message) => {
+                  const emojis = Utils.getEmojiCount(message.words);
+                  const customEmojis = Utils.getCustomEmojiCount(message.words);
+
+                  return {
+                    emojis:
+                      emojis && Object.keys(emojis).length ? emojis : null,
+                    customEmojis:
+                      customEmojis && customEmojis.length ? customEmojis : null,
+                  };
+                })
+                .flat();
+
+              const topEmojis_ = topEmojisANDcustom
+                .flat()
+                .filter((w) => w.emojis)
+                .map((w) => w.emojis)
+                .flat();
+
+              const topEmojis = [];
+              topEmojis_.forEach((key) => {
+                if (!topEmojis.find((x) => x.emoji === key.emoji)) {
+                  topEmojis.push({ emoji: key.emoji, count: 1 });
+                } else {
+                  const index = topEmojis.findIndex(
+                    (x) => x.emoji === key.emoji
+                  );
+                  topEmojis[index].count += 1;
+                }
+              });
+
+              const topCustomEmojis_ = topEmojisANDcustom
+                .flat()
+                .filter((w) => w.customEmojis)
+                .map((w) => w.customEmojis)
+                .flat();
+
+              const topCustomEmojis = [];
+              topCustomEmojis_.forEach((key) => {
+                if (!topCustomEmojis.find((x) => x.emoji === key.emoji)) {
+                  topCustomEmojis.push({ emoji: key.emoji, count: 1 });
+                } else {
+                  const index = topCustomEmojis.findIndex(
+                    (x) => x.emoji === key.emoji
+                  );
+                  topCustomEmojis[index].count += 1;
+                }
+              });
+
+              const favoriteWords = Utils.getFavoriteWords(words);
+              const curseWords = Utils.getCursedWords(words);
+              const topCursed = curseWords;
+              const links = Utils.getTopLinks(words);
+              const topLinks = links;
+              const discordLink = Utils.getDiscordLinks(words);
+              const topDiscordLinks = discordLink;
+
+              return {
+                name: channel.name,
+                messageCount: channel.messages.length,
+                recipients: channel.data_.recipients.length,
+                favoriteWords: options.other.favoriteWords
+                  ? favoriteWords
+                  : null,
+                topCursed: options.other.showCurseWords ? topCursed : null,
+                topLinks: options.other.showLinks ? topLinks : null,
+                topDiscordLinks: options.other.showDiscordLinks
+                  ? topDiscordLinks
+                  : null,
+                oldestMessages: options.other.oldestMessages
+                  ? oldestMessages
+                  : null,
+                topEmojis: options.other.topEmojis
+                  ? topEmojis.sort((a, b) => b.count - a.count)
+                  : null,
+                topCustomEmojis: options.other.topCustomEmojis
+                  ? topCustomEmojis.sort((a, b) => b.count - a.count)
+                  : null,
+              };
+            });
+
+            data.messages.topGroupDMs = channel__.sort(
+              (a, b) => b.messageCount - a.messageCount
+            );
           }
 
           if (options.messages.characterCount) {

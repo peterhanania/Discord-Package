@@ -430,8 +430,8 @@ class Utils {
       name: username + Math.floor(Math.random() * 10) + 1,
     }));
 
-    let guilds = Math.floor(Math.random() * 40) + 10;
-    if (isNitroUser) guilds = Math.floor(Math.random() * 100) + 1;
+    let guildCount = Math.floor(Math.random() * 40) + 10;
+    if (isNitroUser) guildCount = Math.floor(Math.random() * 100) + 1;
 
     const randomNum10to20 = Math.floor(Math.random() * 10) + 10;
     const randomNum10to20_avatars = avatars.default
@@ -714,6 +714,115 @@ class Utils {
       });
     }
 
+    const topGroupDMs = [];
+    for (let i = 0; i < Math.floor(Math.random() * (10 - 20 + 1)) + 20; i++) {
+      const randomG =
+        Math.random() > 0.5
+          ? randomWords(2).join(" ")
+          : randomWords(1)[0] + " group";
+      topGroupDMs.push({
+        name: randomG,
+        recipients: Math.floor(Math.random() * (10 - 2 + 1)) + 2,
+        messageCount: Math.floor(Math.random() * (30000 - 1000 + 1)) + 1000,
+        favoriteWords: randomWords({ min: 100, max: 700 })
+          .map((s) => {
+            return {
+              count: Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000,
+              word: s,
+            };
+          })
+          .sort((a, b) => b.count - a.count),
+        topCursed: curseWords
+          .sort(() => Math.random() - 0.5)
+          .slice(0, Math.floor(Math.random() * (100 - 10 + 1)) + 10)
+          .map((s) => {
+            return {
+              count: Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000,
+              word: s,
+            };
+          })
+          .sort((a, b) => b.count - a.count),
+        topLinks: generateRandomLink()
+          .map((s) => {
+            return {
+              count: Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000,
+              word: s,
+            };
+          })
+          .sort((a, b) => b.count - a.count),
+        topDiscordLinks: generateRandomDiscordLink()
+          .map((s) => {
+            return {
+              count: Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000,
+              word: s,
+            };
+          })
+          .sort((a, b) => b.count - a.count),
+        oldestMessages: [
+          {
+            sentence: "This Feature is only available when uploading a package",
+            date: new Date(Date.now()),
+            author: "SYSTEM",
+          },
+        ],
+        topEmojis: Object.entries(emojis)
+          .sort((a, b) => Math.random() - 0.5)
+          .slice(
+            Math.floor(Math.random() * 40) + 40,
+            Math.floor(Math.random() * 40) + 200
+          )
+          .map(([key, value]) => ({
+            emoji: value,
+            count: Math.floor(Math.random() * 200) + 1,
+          }))
+          .sort((a, b) => b.count - a.count),
+
+        topCustomEmojis:
+          "<:KEKW:890722659283910696> <:PepeHands:785757397440397313> <a:ablobwave:607305059482468400> <a:Doingthesexydance:393572602570080277> <:PepeYikes:785757359749595156> <:elonLOL:618824563693715487> <a:excuseme:458967685401935872> <a:dogdance:581559691721834554> <a:zoopthedoop:494260256239517716> <a🦜393572600619597824> <a:yeet:581560888910151680> <a:someone_is_wrong_on_the_internet:468835376312745985> <:angryeyes:586288876734382080> <:drake_dope:581333915923513344> <:drake_nope:581333905412718593> <a:gravydance:782759371468832799> <:hypebeast:642125649842012160> <a:nou:609507306740252675> <a:gj:581561843043270666> <a:peeporain:593080847775825942> <a:rick:813876036088365136> <a:hyperkappa:393578024794062848> <a:gangnamstyle:879802244499910676> <a:madlad:538976368273260545> <a:h2ocasper:471117492614332426><a:lmaoception:459848100857774132> <:dankfingers:581630874462978059> <:ffs:581332266374922280> <a:igneous:582319796922875907>  <:itsgravy:773579468283183104> <:no:892324133055131698> <a:sus:768523962899890177> <a:tobysmells:719990406552617020> <a:i_hate_php:562866393796706304> <:ight:618073210319011870>"
+            .split(" ")
+            .map((s) => ({
+              emoji: s,
+              count: Math.floor(Math.random() * 200) + 1,
+            }))
+            .sort((a, b) => b.count - a.count),
+      });
+    }
+
+    const guilds = [];
+    function merge(a, b) {
+      return a.concat(b);
+    }
+
+    topChannels.forEach((ch) => {
+      if (!guilds.find((x) => x.guildName === ch.guildName)) {
+        ch.name = [ch.name];
+        guilds.push(ch);
+      } else {
+        const index = guilds.findIndex((x) => x.guildName === ch.guildName);
+        guilds[index].name.push(ch.name);
+        guilds[index].messageCount += ch.messageCount;
+        guilds[index].favoriteWords = merge(
+          guilds[index].favoriteWords,
+          ch.favoriteWords
+        );
+        guilds[index].topCursed = merge(guilds[index].topCursed, ch.topCursed);
+        guilds[index].topLinks = merge(guilds[index].topLinks, ch.topLinks);
+        guilds[index].topDiscordLinks = merge(
+          guilds[index].topDiscordLinks,
+          ch.topDiscordLinks
+        );
+        guilds[index].oldestMessages = merge(
+          guilds[index].oldestMessages,
+          ch.oldestMessages
+        );
+        guilds[index].topEmojis = merge(guilds[index].topEmojis, ch.topEmojis);
+        guilds[index].topCustomEmojis = merge(
+          guilds[index].topCustomEmojis,
+          ch.topCustomEmojis
+        );
+      }
+    });
+
     const possibleStats = Object.keys(Events.events);
     const statistics = {};
     possibleStats.forEach((stat) => {
@@ -794,12 +903,12 @@ class Utils {
         giftedNitro,
       },
       messages: {
-        channelCount: topChannels.length,
-        dmChannelCount: topDMs.length,
         topChannels: topChannels.sort(
           (a, b) => b.messageCount - a.messageCount
         ),
         topDMs: topDMs.sort((a, b) => b.messageCount - a.messageCount),
+        topGuilds: guilds.sort((a, b) => b.messageCount - a.messageCount),
+        topGroupDMs,
         characterCount: characterCount,
         messageCount: Math.floor(characterCount / (Math.random() * 3) + 1),
         hoursValues,
@@ -841,7 +950,7 @@ class Utils {
         topEmojis,
         topCustomEmojis,
       },
-      guilds,
+      guilds: guildCount,
       statistics,
     };
   }
