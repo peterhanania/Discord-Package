@@ -1359,7 +1359,7 @@ export default function Upload() {
             const guilds = JSON.parse(
               await Utils.readFile("servers/index.json", files)
             );
-            data.guilds = Object.keys(guilds).length;
+            data.guilds = guilds;
             await delay(700);
             setLoading("Loading Guilds|||Loaded Guilds");
           }

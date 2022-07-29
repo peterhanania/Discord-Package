@@ -2115,15 +2115,51 @@ export default function Data(props) {
                 <li>
                   <div className="inline-flex">
                     {data?.dataFile ? "They " : "You "}are in{" "}
-                    <p className="mx-1 font-extrabold text-blue-500">
-                      <CountUp
-                        end={data.guilds}
-                        separator=","
-                        useGrouping={true}
-                        start={0}
-                        delay={2}
-                      />
-                    </p>{" "}
+                    {typeof guilds === "string" ? (
+                      <p className="mx-1 font-extrabold text-blue-500">
+                        <CountUp
+                          end={data?.guilds}
+                          separator=","
+                          useGrouping={true}
+                          start={0}
+                          delay={2}
+                        />
+                      </p>
+                    ) : (
+                      <Tippy
+                        placement="bottom"
+                        trigger={"click"}
+                        content={
+                          <div className="h-[400px] overflow-y-auto">
+                            <div className="text-gray-900 dark:text-gray-200 font-bold text-xl">
+                              Your Counted Guilds
+                            </div>
+                            <ul className="text-gray-900 dark:text-gray-200 font-bold text-md list-disc ml-4">
+                              {typeof data?.guilds === "object"
+                                ? Object.keys(data?.guilds)?.map((g, id) => {
+                                    return (
+                                      <li key={id}>
+                                        {data?.guilds[g]} <b>({g})</b>
+                                      </li>
+                                    );
+                                  })
+                                : "Please re-upload your discord package."}
+                            </ul>
+                          </div>
+                        }
+                        animation="scale"
+                      >
+                        <p className="mx-1 font-extrabold text-blue-500 cursor-pointer">
+                          <CountUp
+                            end={Object.keys(data?.guilds).length}
+                            separator=","
+                            useGrouping={true}
+                            start={0}
+                            delay={2}
+                          />
+                        </p>
+                      </Tippy>
+                    )}
                     guilds
                   </div>
                 </li>

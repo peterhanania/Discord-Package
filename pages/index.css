@@ -476,3 +476,7 @@ input[type="search"]:focus {
 .toggle input:checked + label {
   color: rgb(255, 255, 255);
 }
+
+.tippy-content {
+  pointer-events: all !important;
+}
