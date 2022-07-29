@@ -1142,12 +1142,9 @@ export default function Upload() {
                   .flat();
 
                 return words;
-              });
-
-            const oldestInChannelFlat = oldestInChannel.flat();
-            const oldestInChannelFlatSorted = oldestInChannelFlat.sort(
-              (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
-            );
+              })
+              .flat()
+              .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 
             const oldestInDMs = channels
               .filter(
@@ -1169,18 +1166,42 @@ export default function Upload() {
                   })
                   .flat();
                 return words;
-              });
-
-            const oldestInDMsFlat = oldestInDMs.flat();
-            const oldestInDMsFlatSorted = oldestInDMsFlat.sort(
-              (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
-            );
-
-            const oldestInChannelAndDMs = oldestInChannelFlatSorted
-              .concat(oldestInDMsFlatSorted)
+              })
+              .flat()
               .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 
-            data.messages.oldestMessages = oldestInChannelAndDMs.slice(0, 1000);
+            const oldestInGroupDM = channels
+              .filter(
+                (c) =>
+                  c?.data_ &&
+                  !c?.data_?.guild &&
+                  !c?.isDM &&
+                  c?.data_?.recipients?.length > 1 &&
+                  !c?.dmUserID
+              )
+              .map((channel) => {
+                const words = channel.messages
+                  .map((message) => {
+                    return {
+                      sentence: message.words.join(" "),
+                      timestamp: message.timestamp,
+                      author: `Group Name: ${
+                        channel.name ? channel.name : "Unknown DM"
+                      }`,
+                    };
+                  })
+                  .flat();
+                return words;
+              })
+              .flat()
+              .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+            const oldestInTotal = oldestInChannel
+              .concat(oldestInDMs)
+              .concat(oldestInGroupDM)
+              .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+            data.messages.oldestMessages = oldestInTotal.slice(0, 1000);
           }
 
           if (options.messages.topEmojis) {
@@ -1188,7 +1209,6 @@ export default function Upload() {
             setLoading("Loading Messages|||Getting your top emojis");
 
             const oldestInChannel = channels
-              .filter((c) => c.data_ && c.data_.guild)
               .map((channel) => {
                 const words = channel.messages
                   .map((message) => {
@@ -1209,10 +1229,10 @@ export default function Upload() {
                   .flat();
 
                 return words;
-              });
+              })
+              .flat();
 
             const mUsedEmojis = oldestInChannel
-              .flat()
               .filter((w) => w.emojis)
               .map((w) => w.emojis)
               .flat();
@@ -1239,7 +1259,6 @@ export default function Upload() {
             setLoading("Loading Messages|||Getting your top custom emojis");
 
             const oldestInChannel = channels
-              .filter((c) => c.data_ && c.data_.guild)
               .map((channel) => {
                 const words = channel.messages
                   .map((message) => {
@@ -1260,10 +1279,10 @@ export default function Upload() {
                   .flat();
 
                 return words;
-              });
+              })
+              .flat();
 
             const mUsedCustom = oldestInChannel
-              .flat()
               .filter((w) => w.customEmojis)
               .map((w) => w.customEmojis)
               .flat();
