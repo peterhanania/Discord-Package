@@ -60,7 +60,7 @@ export default function Header() {
                   >
                     How to Retrieve your Package
                   </h3>
-                  
+
                   <button
                     onClick={() => {
                       setHelp(false);
@@ -83,16 +83,16 @@ export default function Header() {
                   </button>
                 </div>
                 <p className="text-white text-lg py-2 px-8">
-                    If you need help, kindly join our
-                    <a
-                      href="https://discord.gg/W2zPcgG9F5"
-                      className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold mx-1"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Discord Server
-                    </a>
-                  </p>
+                  If you need help, kindly join our
+                  <a
+                    href="https://discord.gg/W2zPcgG9F5"
+                    className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold mx-1"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Discord Server
+                  </a>
+                </p>
                 <div className="overflow-y-auto h-[560px] ">
                   <div className="py-6 px-8">
                     <h3 className="text-xl font-medium text-white mb-2">
@@ -355,32 +355,36 @@ export default function Header() {
                   <div className="py-6 px-8 text-white font-bold text-lg">
                     THEME
                     <br />
-                    <div className="toggle">
+                    <div
+                      className="toggle"
+                      onClick={(e) => {
+                        document.documentElement.classList.add("dark");
+                        setTheme("dark");
+                        localStorage.setItem("theme", "dark");
+                      }}
+                    >
                       <input
                         type="radio"
                         name="theme"
                         id="dark"
                         value="dark"
                         checked={theme === "dark"}
-                        onChange={(e) => {
-                          document.documentElement.classList.add("dark");
-                          setTheme("dark");
-                          localStorage.setItem("theme", "dark");
-                        }}
                       />
                       <label htmlFor="dark">Dark</label>
                     </div>
-                    <div className="toggle">
+                    <div
+                      className="toggle"
+                      onClick={() => {
+                        document.documentElement.classList.remove("dark");
+                        setTheme("light");
+                        localStorage.setItem("theme", "light");
+                      }}
+                    >
                       <input
                         type="radio"
                         name="theme"
                         id="light"
                         value="light"
-                        onChange={(e) => {
-                          document.documentElement.classList.remove("dark");
-                          setTheme("light");
-                          localStorage.setItem("theme", "light");
-                        }}
                         checked={theme === "light"}
                       />
                       <label htmlFor="light">Light</label>
