@@ -368,6 +368,7 @@ export default function Header() {
                         name="theme"
                         id="dark"
                         value="dark"
+                        onChange={()=>{}}
                         checked={theme === "dark"}
                       />
                       <label htmlFor="dark">Dark</label>
@@ -385,6 +386,7 @@ export default function Header() {
                         name="theme"
                         id="light"
                         value="light"
+                        onChange={()=>{}}
                         checked={theme === "light"}
                       />
                       <label htmlFor="light">Light</label>
@@ -488,6 +490,34 @@ export default function Header() {
                           )}
                         </Listbox>
                       </span>
+                    </div>
+                    <br />
+                    <div>
+                      <div className="flex items-center cursor-pointer">
+                        <input
+                          defaultChecked={localStorage.getItem("debug") === "true"}
+                          onChange={(e) => {
+                            if (localStorage.getItem("debug") === "true") {
+                              localStorage.setItem("debug", "false");
+                            } else {
+                              localStorage.setItem("debug", "true");
+                            }
+                          }}
+                          id={"debug"}
+                          type="checkbox"
+                          defaultValue
+                          className="w-4 h-4 text-blue-600 bg-gray-100 rounded  border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        />
+                        <label
+                          htmlFor={"debug"}
+                          className="pl-2 font-medium text-white font-mono"
+                          style={{
+                            fontSize: "18px",
+                          }}
+                        >
+                          Turn debug mode on
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>

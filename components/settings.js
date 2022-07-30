@@ -84,32 +84,39 @@ export default function Settings() {
                   <div className="py-6 px-8 text-white font-bold text-lg">
                     THEME
                     <br />
-                    <div className="toggle">
+                    <div
+                      className="toggle"
+                      onClick={(e) => {
+                        document.documentElement.classList.add("dark");
+                        setTheme("dark");
+                        localStorage.setItem("theme", "dark");
+                      }}
+                    >
                       <input
                         type="radio"
                         name="theme"
                         id="dark"
                         value="dark"
+                        onChange={()=>{}}
                         checked={theme === "dark"}
-                        onChange={(e) => {
-                          document.documentElement.classList.add("dark");
-                          setTheme("dark");
-                          localStorage.setItem("theme", "dark");
-                        }}
                       />
                       <label htmlFor="dark">Dark</label>
                     </div>
-                    <div className="toggle">
+                    <div
+                      className="toggle"
+                      onClick={(e) => {
+                        document.documentElement.classList.remove("dark");
+                        setTheme("light");
+                        localStorage.setItem("theme", "light");
+                      }}
+                      
+                    >
                       <input
                         type="radio"
                         name="theme"
                         id="light"
                         value="light"
-                        onChange={(e) => {
-                          document.documentElement.classList.remove("dark");
-                          setTheme("light");
-                          localStorage.setItem("theme", "light");
-                        }}
+                        onChange={()=>{}}
                         checked={theme === "light"}
                       />
                       <label htmlFor="light">Light</label>

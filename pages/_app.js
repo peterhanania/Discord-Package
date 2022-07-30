@@ -16,6 +16,10 @@ export default function MyApp({ Component, pageProps }) {
       localStorage.setItem("theme", "dark");
     }
 
+    if (!localStorage.getItem("debug")) {
+      localStorage.setItem("debug", "true");
+    }
+
     if (
       localStorage.theme === "dark" ||
       (!("theme" in localStorage) &&
@@ -30,7 +34,7 @@ export default function MyApp({ Component, pageProps }) {
       setLoading(false);
     }, 1000);
     console.log(
-      "%c🚀  Welcome to Discord Package\nPlease Report bugs to Peter_#4444",
+      "%c🚀 Welcome to Discord Package 🚀\nPlease Report bugs to Peter_#4444",
       "font-size: 1.5rem; font-weight: bold; color: #fff; background: #000; padding: 0.5rem;"
     );
   }, []);

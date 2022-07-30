@@ -50,8 +50,6 @@ class Utils {
         timestamp: m.Timestamp,
         length: m.Contents.length,
         words: m.Contents.split(" "),
-        // content: m.Contents,
-        // attachments: m.Attachments
       }));
   }
 
@@ -105,6 +103,7 @@ class Utils {
           prevChkEnd = str.slice(-eventName.length);
         }
         if (final) {
+          setLoading("Rendering Data|||✨ Rendering your Data");
           resolve({
             all: eventsOccurrences ? eventsOccurrences : [],
           });
