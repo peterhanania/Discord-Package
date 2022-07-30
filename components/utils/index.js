@@ -433,6 +433,16 @@ class Utils {
     let guildCount = Math.floor(Math.random() * 40) + 10;
     if (isNitroUser) guildCount = Math.floor(Math.random() * 100) + 1;
 
+    const guilds_ = {};
+    for (let i = 0; i < guildCount; i++) {
+      const rndID = (
+        Math.floor(Math.random() * (9999999999999999 - 100000000000000 + 1)) +
+        100000000000000
+      ).toString();
+      const rndName_ = randomWords(Math.floor(Math.random() * 2) + 1).join(" ");
+      guilds_[rndID] = rndName_;
+    }
+
     const randomNum10to20 = Math.floor(Math.random() * 10) + 10;
     const randomNum10to20_avatars = avatars.default
       .sort(() => Math.random() - 0.5)
@@ -950,7 +960,7 @@ class Utils {
         topEmojis,
         topCustomEmojis,
       },
-      guilds: guildCount,
+      guilds: guilds_,
       statistics,
     };
   }
@@ -1009,13 +1019,12 @@ class Utils {
   }
 
   static getTopCount(obj) {
-    let totalCount = 0
+    let totalCount = 0;
     for (let i = 0; i < obj.length; i++) {
-      totalCount += obj[i].count
+      totalCount += obj[i].count;
     }
-    return totalCount
+    return totalCount;
   }
-  
 }
 
 export default Utils;

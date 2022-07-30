@@ -2124,7 +2124,7 @@ export default function Data(props) {
                 <li>
                   <div className="inline-flex">
                     {data?.dataFile ? "They " : "You "}are in{" "}
-                    {typeof guilds === "string" ? (
+                    {typeof data?.guilds === "number" ? (
                       <p className="mx-1 font-extrabold text-blue-500">
                         <CountUp
                           end={data?.guilds}
