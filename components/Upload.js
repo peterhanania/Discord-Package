@@ -639,7 +639,7 @@ export default function Upload() {
                 });
 
                 const favoriteWords = Utils.getFavoriteWords(words);
-                const curseWords = Utils.getCursedWords(words);
+                const curseWords = Utils.getCursedWords(words.filter(w => w.length < 10));
                 const topCursed = curseWords;
                 const links = Utils.getTopLinks(words);
                 const topLinks = links;
@@ -763,7 +763,7 @@ export default function Upload() {
                   }
                 });
                 const favoriteWords = Utils.getFavoriteWords(words);
-                const curseWords = Utils.getCursedWords(words);
+                const curseWords = Utils.getCursedWords(words.filter(w => w.length < 10));
                 const topCursed = curseWords;
                 const links = Utils.getTopLinks(words);
                 const topLinks = links;
@@ -880,7 +880,7 @@ export default function Upload() {
                 });
 
                 const favoriteWords = Utils.getFavoriteWords(words);
-                const curseWords = Utils.getCursedWords(words);
+                const curseWords = Utils.getCursedWords(words.filter(w => w.length < 10));
                 const topCursed = curseWords;
                 const links = Utils.getTopLinks(words);
                 const topLinks = links;
@@ -1073,7 +1073,7 @@ export default function Upload() {
               });
 
               const favoriteWords = Utils.getFavoriteWords(words);
-              const curseWords = Utils.getCursedWords(words);
+              const curseWords = Utils.getCursedWords(words.filter(w => w.length < 10));
               const topCursed = curseWords;
               const links = Utils.getTopLinks(words);
               const topLinks = links;
@@ -1351,7 +1351,7 @@ export default function Upload() {
           if (options.other.showCurseWords) {
             await delay(700);
             setLoading("Loading Messages|||Calculating your curse words");
-            const curseWords = Utils.getCursedWords(words);
+            const curseWords = Utils.getCursedWords(words.filter(w => w.length < 10));
             data.messages.topCursed = curseWords;
           }
 

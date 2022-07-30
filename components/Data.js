@@ -1230,8 +1230,9 @@ export default function Data(props) {
                         data.messages.topCursed.length
                           .toString()
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-                        " Curse Word" +
-                        (data.messages.topCursed.length > 1 ? "s" : "")
+                        " Curse Word | Cursed " +
+                        Utils.getTopCount(data.messages.topCursed) +
+                        " times"
                       }
                       animation="scale"
                       className="shadow-xl"
@@ -1288,7 +1289,12 @@ export default function Data(props) {
                   {data?.messages?.topLinks &&
                   data?.messages?.topLinks?.length > 0 ? (
                     <Tippy
-                      content={data.messages.topLinks.length + " Links"}
+                      content={
+                        data.messages.topLinks.length +
+                        " Links | Sent " +
+                        Utils.getTopCount(data.messages.topLinks) +
+                        " Total Links"
+                      }
                       animation="scale"
                       className="shadow-xl"
                     >
@@ -1345,7 +1351,10 @@ export default function Data(props) {
                   data?.messages?.topDiscordLinks?.length > 0 ? (
                     <Tippy
                       content={
-                        data.messages.topDiscordLinks.length + " Discord Links"
+                        data.messages.topDiscordLinks.length +
+                        " Discord Links | Sent " +
+                        Utils.getTopCount(data.messages.topDiscordLinks) +
+                        " Total Discord Links"
                       }
                       animation="scale"
                       className="shadow-xl"

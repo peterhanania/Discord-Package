@@ -1007,6 +1007,15 @@ class Utils {
 
     return emojiCount;
   }
+
+  static getTopCount(obj) {
+    let totalCount = 0
+    for (let i = 0; i < obj.length; i++) {
+      totalCount += obj[i].count
+    }
+    return totalCount
+  }
+  
 }
 
 export default Utils;
