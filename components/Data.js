@@ -1474,6 +1474,134 @@ export default function Data(props) {
                   ) : (
                     ""
                   )}
+                  {data?.messages?.attachmentCount &&
+                  data?.messages?.attachmentCount?.length > 0 ? (
+                    <Tippy
+                      content={
+                        data.messages.attachmentCount.length + " Attachments"
+                      }
+                      animation="scale"
+                      className="shadow-xl"
+                    >
+                      <svg
+                        onClick={() => {
+                          toast(
+                            <div className="Toastify__toast-body_">
+                              <span className="font-bold text-lg text-black dark:text-white">
+                                {data?.dataFile ? "Their" : "Your"} total
+                                attachment
+                                {data.messages.oldestMessages.length === 1
+                                  ? " is"
+                                  : "s are"}
+                                :
+                              </span>
+                              <br />
+                              <ul className="list-disc ml-4">
+                                {data.messages.attachmentCount.map((f, i) => {
+                                  return (
+                                    <li key={i}>
+                                      <b>{f}</b>
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            </div>,
+                            {
+                              position: "top-right",
+                              autoClose: 5000,
+                              hideProgressBar: false,
+                              closeOnClick: true,
+                              pauseOnHover: true,
+                              draggable: true,
+                              progress: undefined,
+                            }
+                          );
+                        }}
+                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                      >
+                        <path d="M7.5 17.5H18V16H7.5q-1.65 0-2.825-1.175Q3.5 13.65 3.5 12q0-1.65 1.175-2.825Q5.85 8 7.5 8H18q1.05 0 1.775.725.725.725.725 1.775 0 1.05-.725 1.775Q19.05 13 18 13H8.5q-.425 0-.712-.288Q7.5 12.425 7.5 12t.288-.713Q8.075 11 8.5 11H18V9.5H8.5q-1.05 0-1.775.725Q6 10.95 6 12q0 1.05.725 1.775.725.725 1.775.725H18q1.65 0 2.825-1.175Q22 12.15 22 10.5q0-1.65-1.175-2.825Q19.65 6.5 18 6.5H7.5q-2.3 0-3.9 1.6T2 12q0 2.3 1.6 3.9t3.9 1.6Z" />
+                      </svg>
+                    </Tippy>
+                  ) : (
+                    ""
+                  )}
+                  {data?.messages?.mentionCount &&
+                  Object.keys(data?.messages?.mentionCount)?.length > 0 ? (
+                    <Tippy
+                      content={
+                        Object.values(data.messages.mentionCount).reduce(
+                          (a, b) => a + b
+                        ) + " Mentions"
+                      }
+                      animation="scale"
+                      className="shadow-xl"
+                    >
+                      <svg
+                        onClick={() => {
+                          toast(
+                            <div className="Toastify__toast-body_">
+                              <span className="font-bold text-lg text-black dark:text-white">
+                                {data?.dataFile ? "Their" : "Your"} classified
+                                mention
+                                {data.messages.oldestMessages.length === 1
+                                  ? " is"
+                                  : "s are"}
+                                :
+                              </span>
+                              <br />
+                              <ul className="list-disc ml-4">
+                                <li>
+                                  {data.messages.mentionCount.everyone
+                                    ? `@everyone: ${data.messages.mentionCount.everyone} times`
+                                    : ""}
+                                </li>
+                                <li>
+                                  {data.messages.mentionCount.here
+                                    ? `@here: ${data.messages.mentionCount.here} times`
+                                    : ""}
+                                </li>
+                                <li>
+                                  {data.messages.mentionCount.user
+                                    ? `User: ${data.messages.mentionCount.user} times`
+                                    : ""}
+                                </li>
+                                <li>
+                                  {data.messages.mentionCount.channel
+                                    ? `Channel: ${data.messages.mentionCount.channel} times`
+                                    : ""}
+                                </li>
+                                <li>
+                                  {data.messages.mentionCount.role
+                                    ? `Role: ${data.messages.mentionCount.role} times`
+                                    : ""}
+                                </li>
+                              </ul>
+                            </div>,
+                            {
+                              position: "top-right",
+                              autoClose: 5000,
+                              hideProgressBar: false,
+                              closeOnClick: true,
+                              pauseOnHover: true,
+                              draggable: true,
+                              progress: undefined,
+                            }
+                          );
+                        }}
+                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                      >
+                        <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.075.788-3.887.787-1.813 2.15-3.175Q6.3 3.575 8.125 2.787 9.95 2 12 2q2.075 0 3.887.787 1.813.788 3.175 2.151 1.363 1.362 2.15 3.175Q22 9.925 22 12v1.45q0 1.475-1.012 2.512Q19.975 17 18.5 17q-.9 0-1.675-.4t-1.275-1.05q-.675.675-1.587 1.063Q13.05 17 12 17q-2.075 0-3.537-1.463Q7 14.075 7 12t1.463-3.538Q9.925 7 12 7t3.538 1.462Q17 9.925 17 12v1.45q0 .725.45 1.137.45.413 1.05.413.6 0 1.05-.413.45-.412.45-1.137V12q0-3.275-2.363-5.638Q15.275 4 12 4 8.725 4 6.362 6.362 4 8.725 4 12t2.362 5.637Q8.725 20 12 20h5v2Zm0-7q1.25 0 2.125-.875T15 12q0-1.25-.875-2.125T12 9q-1.25 0-2.125.875T9 12q0 1.25.875 2.125T12 15Z" />
+                      </svg>
+                    </Tippy>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>

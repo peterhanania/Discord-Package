@@ -3,7 +3,6 @@
     "activityUpdated",
     "addReaction",
     "appOpened",
-    "applicationCommandUsed",
     "channelDeleted",
     "channelOpened",
     "createGuild",

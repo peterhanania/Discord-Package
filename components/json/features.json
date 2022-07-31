@@ -17,6 +17,8 @@
   "messages.topEmojis": "Top Emojis you used",
   "messages.hoursValues": "Hours you spent on discord",
   "messages.oldestMessages": "1000 Oldest Messages you sent on Discord",
+  "messages.attachmentCount": "Show the amount of Attachments you sent",
+  "messages.mentionCount": "Show the amount of Mentions you sent",
   "guilds": "The amount of guilds you are in",
   "other.showCurseWords": "Show the amount of curse Words",
   "other.showDiscordLinks": "Show the amount of Discord Links",
@@ -25,4 +27,5 @@
   "other.oldestMessages": "Show the 100 Oldest Messages",
   "other.topEmojis": "Show your Top Emojis",
   "other.topCustomEmojis": "Show your Top Custom Emojis"
+
 }

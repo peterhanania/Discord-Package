@@ -21,6 +21,7 @@ export default function Upload() {
   const [dragging, setDragging] = React.useState(false);
   const [error, setError] = React.useState(null);
   const [loading, setLoading] = React.useState("Loading...|||");
+  const [saveToDevice, setSaveToDevice] = React.useState(false);
 
   const classifyOBJ = (obj) => {
     let newObj = {};
@@ -37,46 +38,120 @@ export default function Upload() {
     return newObj;
   };
 
-  const defaultOptions = classifyOBJ({
-    bots: true,
-    "user.premium_until": true,
-    "user.badges": true,
-    "settings.appearance": true,
-    "settings.recentEmojis": true,
-    connections: true,
-    "payments.total": true,
-    "payments.transactions": true,
-    "payments.giftedNitro": true,
-    "messages.topChannels": true,
-    "messages.topDMs": true,
-    "messages.topGuilds": true,
-    "messages.topGroupDMs": true,
-    "messages.characterCount": true,
-    "messages.topCustomEmojis": true,
-    "messages.topEmojis": true,
-    "messages.hoursValues": true,
-    "messages.oldestMessages": true,
-    guilds: true,
-    "other.showCurseWords": true,
-    "other.showDiscordLinks": true,
-    "other.showLinks": true,
-    "other.favoriteWords": true,
-    "other.oldestMessages": true,
-    "other.topEmojis": true,
-    "other.topCustomEmojis": true,
-    statistics: EventsJSON.defaultEvents,
-  });
+  let [defaultOptions, setDefaultOptions] = React.useState(
+    classifyOBJ({
+      bots: true,
+      "user.premium_until": true,
+      "user.badges": true,
+      "settings.appearance": true,
+      "settings.recentEmojis": true,
+      connections: true,
+      "payments.total": true,
+      "payments.transactions": true,
+      "payments.giftedNitro": true,
+      "messages.topChannels": true,
+      "messages.topDMs": true,
+      "messages.topGuilds": true,
+      "messages.topGroupDMs": true,
+      "messages.characterCount": true,
+      "messages.topCustomEmojis": true,
+      "messages.topEmojis": true,
+      "messages.hoursValues": true,
+      "messages.oldestMessages": true,
+      "messages.attachmentCount": true,
+      "messages.mentionCount": true,
+      guilds: true,
+      "other.showCurseWords": true,
+      "other.showDiscordLinks": true,
+      "other.showLinks": true,
+      "other.favoriteWords": true,
+      "other.oldestMessages": true,
+      "other.topEmojis": true,
+      "other.topCustomEmojis": true,
+      statistics: EventsJSON.defaultEvents,
+    })
+  );
 
+  const [demo, setDemo] = React.useState(false);
   const [oldSelected, setOldSelected] = React.useState(null);
   const [selectedFeatures, setSelectedFeatures] =
     React.useState(defaultOptions);
-
-  const [demo, setDemo] = React.useState(false);
 
   React.useEffect(() => {
     if (window.location.href.includes("demo=true") && dataExtracted) {
       setDemo(true);
     } else setLoading(false);
+
+    if (localStorage.getItem("defaultOptions_enabled") === "true") {
+      setSaveToDevice(true);
+
+      if (localStorage.getItem("defaultOptions")) {
+        try {
+          const data_d = JSON.parse(localStorage.getItem("defaultOptions"));
+          if (!data_d) return;
+          const obj = {
+            bots: true,
+            user: { premium_until: true, badges: true },
+            settings: { appearance: true, recentEmojis: true },
+            connections: true,
+            payments: { total: true, transactions: true, giftedNitro: true },
+            messages: {
+              topChannels: true,
+              topDMs: true,
+              topGuilds: true,
+              topGroupDMs: true,
+              characterCount: true,
+              topCustomEmojis: true,
+              topEmojis: true,
+              hoursValues: true,
+              oldestMessages: true,
+            },
+            guilds: true,
+            other: {
+              showCurseWords: true,
+              showDiscordLinks: true,
+              showLinks: true,
+              favoriteWords: true,
+              oldestMessages: true,
+              topEmojis: true,
+              topCustomEmojis: true,
+            },
+            statistics: [],
+          };
+
+          const categories = Object.keys(obj);
+          if (
+            JSON.stringify(categories) !== JSON.stringify(Object.keys(data_d))
+          )
+            return;
+
+          let val = true;
+          Object.keys(obj)
+            .filter((category) => category !== "statistics")
+            .forEach((category) => {
+              if (
+                JSON.stringify(Object.keys(data_d[category])) !==
+                JSON.stringify(Object.keys(obj[category]))
+              )
+                val = false;
+            });
+
+          if (!val) return;
+
+          const validStatistics = Object.keys(EventsJSON.events);
+          let val2 = false;
+          data_d.statistics.forEach((stat) => {
+            if (!validStatistics.includes(stat)) val2 = true;
+          });
+
+          if (val2) return;
+
+          setSelectedFeatures(data_d);
+        } catch (e) {
+          return;
+        }
+      }
+    }
   }, [dataExtracted]);
 
   React.useEffect(() => {
@@ -646,13 +721,14 @@ export default function Upload() {
           const channels = [];
           let messagesRead = 0;
 
+          if (isDebug) await delay(600);
+          setLoading("Loading Messages|||Scanning Messages");
           console.log(
             chalk.bold.blue(`[DEBUG] `) +
               chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Began message scan!`)}`
+              `  ${chalk.yellow(`Started message scan`)}`
           );
-          if (isDebug) await delay(600);
-          setLoading("Loading Messages|||Scanning Messages");
+          
           await Promise.all(
             channelsIDs.map((channelID) => {
               return new Promise((resolve) => {
@@ -702,7 +778,7 @@ export default function Upload() {
           console.log(
             chalk.bold.blue(`[DEBUG] `) +
               chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Loaded ${messagesRead} messages!`)}`
+              `  ${chalk.yellow(`Loaded ${messagesRead} message files`)}`
           );
           if (isDebug) await delay(700);
 
@@ -1444,6 +1520,170 @@ export default function Upload() {
             );
           }
 
+          console.log(
+            chalk.bold.blue(`[DEBUG] `) +
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Loading your attachment Count`)}`
+          );
+          setLoading("Loading Messages|||Getting your attachment Count");
+
+          if (options.messages.attachmentCount) {
+            const oldestInChannel = channels
+              .map((channel) => {
+                const words = channel.messages
+                  .map((message) => {
+                    const regex =
+                      /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|mp4|pdf|zip|wmv|mp3|nitf|doc|docx))/gi;
+                    const attachments = message.words.filter((word) => {
+                      return regex.test(word);
+                    });
+
+                    //remove everything before the http and after the extension example .pmg
+                    const attachmentsClean = attachments.map((attachment) => {
+                      return attachment.replace(
+                        /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|mp4|pdf|zip|wmv|mp3|nitf|doc|docx))/gi,
+                        "$1"
+                      );
+                    });
+                    return attachmentsClean;
+                  })
+                  .flat();
+
+                return words;
+              })
+              .flat();
+
+            data.messages.attachmentCount = oldestInChannel;
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(
+                  `Loaded ${data?.messages?.attachmentCount?.length} attachments`
+                )}`
+            );
+          }
+
+          console.log(
+            chalk.bold.blue(`[DEBUG] `) +
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Loading your mention Count`)}`
+          );
+          setLoading("Loading Messages|||Getting your mention Count");
+
+          if (options.messages.mentionCount) {
+            const oldestInChannel = channels
+              .map((channel) => {
+                const words = channel.messages
+                  .map((message) => {
+                    const discordChannelMentionRegex = /<#[0-9]*>/gi;
+                    const discordUserMentionRegex = /<@[0-9]*>/gi;
+                    const discordRoleMentionRegex = /<@&[0-9]*>/gi;
+
+                    const mentions = message.words.map((word) => {
+                      const o = {
+                        channel: message.words.filter((word) =>
+                          discordChannelMentionRegex.test(word)
+                        ).length,
+                        user: message.words.filter((word) =>
+                          discordUserMentionRegex.test(word)
+                        ).length,
+                        role: message.words.filter((word) =>
+                          discordRoleMentionRegex.test(word)
+                        ).length,
+                        here: message.words.filter((word) =>
+                          /@here/g.test(word)
+                        ).length,
+                        everyone: message.words.filter((word) =>
+                          /@everyone/g.test(word)
+                        ).length,
+                      };
+
+                      //if all the keys length are 0 return
+                      if (
+                        o.channel === 0 &&
+                        o.user === 0 &&
+                        o.role === 0 &&
+                        o.here === 0 &&
+                        o.everyone === 0
+                      ) {
+                        return false;
+                      } else {
+                        return o;
+                      }
+                    });
+
+                    return mentions;
+                  })
+                  .flat();
+
+                return words;
+              })
+              .flat()
+              .filter((x) => x)
+              .sort(
+                (a, b) =>
+                  a.channel +
+                  a.user +
+                  a.role +
+                  a.here +
+                  a.everyone -
+                  b.channel +
+                  b.user +
+                  b.role +
+                  b.here +
+                  b.everyone
+              );
+
+            const top = {};
+            oldestInChannel.forEach((mention) => {
+              if (mention.channel > 0) {
+                if (top.channel) {
+                  top.channel += mention.channel;
+                } else {
+                  top.channel = mention.channel;
+                }
+              }
+              if (mention.user > 0) {
+                if (top.user) {
+                  top.user += mention.user;
+                } else {
+                  top.user = mention.user;
+                }
+              }
+              if (mention.role > 0) {
+                if (top.role) {
+                  top.role += mention.role;
+                } else {
+                  top.role = mention.role;
+                }
+              }
+
+              if (mention.here > 0) {
+                if (top.here) {
+                  top.here += mention.here;
+                } else {
+                  top.here = mention.here;
+                }
+              }
+
+              if (mention.everyone > 0) {
+                if (top.everyone) {
+                  top.everyone += mention.everyone;
+                } else {
+                  top.everyone = mention.everyone;
+                }
+              }
+            });
+
+            console.log(top);
+            data.messages.mentionCount = top;
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Loaded mentions`)}`
+            );
+          }
+
           if (options.messages.topEmojis) {
             if (isDebug) await delay(700);
             console.log(
@@ -2045,7 +2285,7 @@ export default function Upload() {
                     }}
                   >
                     Customize Options
-                    {oldSelected ? (
+                    {oldSelected || saveToDevice ? (
                       <span
                         onClick={() => {
                           setOldSelected(null);
@@ -2246,7 +2486,7 @@ export default function Upload() {
                             <path d="M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6Z" />
                           </svg>
                         </summary>
-                        {selectedFeatures.statistics.length ===
+                        {selectedFeatures?.statistics?.length ===
                         Object.keys(EventsJSON.events).length ? (
                           <span
                             onClick={() => {
@@ -2272,7 +2512,7 @@ export default function Upload() {
                             select all
                           </span>
                         )}
-                        {selectedFeatures.statistics !==
+                        {selectedFeatures?.statistics !==
                         EventsJSON.defaultEvents ? (
                           <span
                             onClick={() => {
@@ -2296,7 +2536,7 @@ export default function Upload() {
                               key={i}
                             >
                               <input
-                                checked={selectedFeatures.statistics.includes(
+                                checked={selectedFeatures?.statistics?.includes(
                                   Object.keys(EventsJSON.events).find(
                                     (key) => EventsJSON.events[key] === item
                                   )
@@ -2306,7 +2546,7 @@ export default function Upload() {
                                     setSelectedFeatures({
                                       ...selectedFeatures,
                                       statistics: [
-                                        ...selectedFeatures.statistics,
+                                        ...selectedFeatures?.statistics,
                                         Object.keys(EventsJSON.events).find(
                                           (key) =>
                                             EventsJSON.events[key] === item
@@ -2317,7 +2557,7 @@ export default function Upload() {
                                     setSelectedFeatures({
                                       ...selectedFeatures,
                                       statistics:
-                                        selectedFeatures.statistics.filter(
+                                        selectedFeatures?.statistics.filter(
                                           (item_) =>
                                             item_ !==
                                             Object.keys(EventsJSON.events).find(
@@ -2347,44 +2587,91 @@ export default function Upload() {
                   </div>{" "}
                 </div>
 
-                <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
-                  <button
-                    onClick={() => {
-                      if (
-                        JSON.stringify(selectedFeatures) ===
-                        JSON.stringify(defaultOptions)
-                      ) {
-                        return setShowLargeModal(false);
-                      }
-                      setOldSelected(selectedFeatures);
-                      setShowLargeModal(false);
-                      toast.success("Successfully saved options", {
-                        position: "top-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                      });
-                    }}
-                    type="button"
-                    className="button-green text-gray-200"
-                  >
-                    Save
-                  </button>
-                  <button
-                    onClick={() => {
-                      setSelectedFeatures(
-                        oldSelected ? oldSelected : defaultOptions
-                      );
-                      setShowLargeModal(false);
-                    }}
-                    type="button"
-                    className="button-cancel text-gray-200"
-                  >
-                    Cancel
-                  </button>
+                <div className="lg:p-6 md:p-6 sm:p-6 p-3 rounded-b bg-[#2b2d31]">
+                  <div className="flex items-center cursor-pointer mb-4">
+                    <input
+                      onChange={(e) => {
+                        if (saveToDevice) {
+                          setSaveToDevice(false);
+                          localStorage.setItem(
+                            "defaultOptions_enabled",
+                            "false"
+                          );
+                        } else {
+                          setSaveToDevice(true);
+                          localStorage.setItem(
+                            "defaultOptions_enabled",
+                            "true"
+                          );
+                        }
+                      }}
+                      checked={saveToDevice}
+                      id={"defaultOptions_enabled"}
+                      type="checkbox"
+                      className="w-[21px] h-[21px] text-blue-600 bg-gray-100 rounded  border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor={"defaultOptions_enabled"}
+                      className="pl-2 text-white font-mono"
+                      style={{
+                        fontSize: "18px",
+                      }}
+                    >
+                      Save options to device
+                    </label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => {
+                        if (
+                          JSON.stringify(selectedFeatures) ===
+                          JSON.stringify(defaultOptions)
+                        ) {
+                          return setShowLargeModal(false);
+                        }
+                        setOldSelected(selectedFeatures);
+                        setShowLargeModal(false);
+                        const savetodevice =
+                          localStorage.getItem("defaultOptions_enabled") ===
+                          "true";
+                        if (savetodevice) {
+                          localStorage.setItem(
+                            "defaultOptions",
+                            JSON.stringify(selectedFeatures)
+                          );
+                        }
+                        toast.success(
+                          "Successfully saved options" +
+                            (savetodevice ? " to device" : ""),
+                          {
+                            position: "top-right",
+                            autoClose: 3000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                          }
+                        );
+                      }}
+                      type="button"
+                      className="button-green text-gray-200"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => {
+                        setSelectedFeatures(
+                          oldSelected ? oldSelected : defaultOptions
+                        );
+                        setShowLargeModal(false);
+                      }}
+                      type="button"
+                      className="button-cancel text-gray-200"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

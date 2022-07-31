@@ -883,6 +883,17 @@ class Utils {
       );
     }
 
+    const attachmentCount = [];
+    for (let i = 0; i < Math.floor(Math.random() * (100 - 10 + 1)) + 10; i++) {
+      attachmentCount.push(
+        "https://media.discordapp.net/attachments/" +
+          Math.random().toString(36).substring(7) +
+          "/" +
+          Math.random().toString(36).substring(7) +
+          "/attachment.jpg"
+      );
+    }
+
     return {
       fakeInfo: true,
       user: {
@@ -958,6 +969,14 @@ class Utils {
         oldestMessages: createSentence(),
         topEmojis,
         topCustomEmojis,
+        attachmentCount,
+        mentionCount: {
+          everyone: Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000,
+          here: Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000,
+          role: Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000,
+          user: Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000,
+          channel: Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000,
+        },
       },
       guilds: guilds_,
       statistics,
