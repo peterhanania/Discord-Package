@@ -515,7 +515,7 @@ export default function Header() {
                             fontSize: "18px",
                           }}
                         >
-                          Turn debug mode on
+                          Turn debug mode on (recommended)
                         </label>
                       </div>
                     </div>

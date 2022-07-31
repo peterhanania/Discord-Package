@@ -279,26 +279,30 @@ export default function Upload() {
       async function startUpload() {
         const isDebug = localStorage.getItem("debug") === "true";
         const startTime = Date.now();
-        if (isDebug)
-          if (isDebug)
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loading in Debug Mode`)}`
-            );
-        setLoading(`Loading Package|||${isDebug ? "debug mode enabled" : ""}`);
-        await delay(2000);
 
+        if (isDebug) {
+          setLoading(
+            `Loading Package|||${isDebug ? "debug mode enabled" : ""}`
+          );
+          console.log(
+            chalk.bold.blue(`[DEBUG] `) +
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Loading in Debug Mode`)}`
+          );
+          await delay(2000);
+        } else {
+          setLoading("Loading Your Package");
+          await delay(2000);
+        }
         const reader = new Unzip();
-
         if (isDebug)
-          if (isDebug)
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loading your package`)}`
-            );
-        setLoading("Loading Package|||Registering Package");
+          console.log(
+            chalk.bold.blue(`[DEBUG] `) +
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Loading your package`)}`
+          );
+        if (isDebug) setLoading("Loading Package|||Registering Package");
+
         reader.register(AsyncUnzipInflate);
         if (isDebug)
           console.log(
@@ -321,14 +325,16 @@ export default function Upload() {
           return;
         }
 
-        if (isDebug)
+        if (isDebug) {
           console.log(
             chalk.bold.blue(`[DEBUG] `) +
               chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
               `  ${chalk.yellow(`Initializing file reader`)}`
           );
-        if (isDebug) await delay(50);
-        setLoading("Loading Package|||Initializing file reader");
+          await delay(50);
+          setLoading("Loading Package|||Initializing file reader");
+        }
+
         const fileReader = fileUploaded.stream().getReader();
         while (true) {
           const { done, value } = await fileReader.read();
@@ -341,14 +347,16 @@ export default function Upload() {
           }
         }
 
-        if (isDebug)
+        if (isDebug) {
           console.log(
             chalk.bold.blue(`[DEBUG] `) +
               chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
               `  ${chalk.yellow(`Checking package validity`)}`
           );
-        if (isDebug) await delay(50);
-        setLoading("Loading Package|||Checking for Valid Package");
+          await delay(50);
+          setLoading("Loading Package|||Checking for Valid Package");
+        } else await delay(100);
+
         let validPackage = true;
 
         const requiredFiles = [
@@ -441,27 +449,31 @@ export default function Upload() {
 
           setPercent(5);
           setLoading("Loading User Information|||");
-          if (isDebug) await delay(1000);
 
-          if (isDebug)
+          if (isDebug) {
+            await delay(1000);
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
                 chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
                 `  ${chalk.yellow(`Parsing account/user.json`)}`
             );
+          } else await delay(100);
+
           const userInformationData = JSON.parse(
             await Utils.readFile("account/user.json", files)
           );
 
-          if (isDebug)
+          if (isDebug) {
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
                 chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
                 `  ${chalk.yellow(`Loading main information`)}`
             );
-          setPercent(6);
-          setLoading("Loading User Information|||Loading Main Information");
 
+            setLoading("Loading User Information|||Loading Main Information");
+          } else await delay(100);
+
+          setPercent(6);
           if (userInformationData.id) {
             data.user.id = userInformationData.id;
             if (isDebug)
@@ -524,15 +536,20 @@ export default function Upload() {
               );
           }
 
-          if (isDebug)
+          if (isDebug) {
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
                 chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
                 `  ${chalk.yellow(`Preparing to load settings`)}`
             );
-          if (isDebug) await delay(400);
+            await delay(400);
+            setLoading(
+              "Loading User Information|||Loading Setting Information"
+            );
+          } else await delay(100);
           setPercent(11);
-          setLoading("Loading User Information|||Loading Setting Information");
+
+          if (!isDebug) setLoading("Loading User Settings|||");
           if (
             userInformationData.settings &&
             userInformationData.settings.settings
@@ -570,15 +587,17 @@ export default function Upload() {
             // }
           }
 
-          if (isDebug)
+          if (isDebug) {
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
                 chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
                 `  ${chalk.yellow(`Loading setting Frecency`)}`
             );
-          if (isDebug) await delay(700);
+            await delay(700);
+            setLoading("Loading User Information|||Loading Setting Frecency");
+          } else await delay(100);
           setPercent(13);
-          setLoading("Loading User Information|||Loading Setting Frecency");
+
           if (
             userInformationData.settings &&
             userInformationData.settings.frecency
@@ -617,10 +636,17 @@ export default function Upload() {
             }
           }
 
-          if (isDebug) await delay(600);
           setPercent(15);
+
           if (options.connections) {
-            setLoading("Loading User Information|||Loading User Connections");
+            if (isDebug) {
+              setLoading("Loading User Information|||Loading User Connections");
+              await delay(600);
+            } else {
+              setLoading("Loading User Connections|||");
+              await delay(100);
+            }
+
             if (
               userInformationData.connections &&
               userInformationData.connections.length
@@ -658,8 +684,14 @@ export default function Upload() {
                 `  ${chalk.yellow(`Loading payments`)}`
             );
           setPercent(20);
-          if (isDebug) await delay(700);
-          setLoading("Loading User Information|||Loading User Payments");
+          if (isDebug) {
+            setLoading("Loading User Information|||Loading User Payments");
+            await delay(700);
+          } else {
+            setLoading("Loading User Payments|||");
+            await delay(100);
+          }
+
           if (
             userInformationData.entitlements &&
             options.payments.giftedNitro
@@ -728,17 +760,18 @@ export default function Upload() {
           }
 
           setPercent(22);
-          if (isDebug)
+          if (isDebug) {
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
                 chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
                 `  ${chalk.yellow(`Loaded user information`)}`
             );
-          if (isDebug) await delay(2000);
-          setLoading("Loading User Information|||Loaded User Information");
-          if (isDebug) await delay(1000);
+            setLoading("Loading User Information|||Loaded User Information");
+            await delay(2000);
+          } else await delay(100);
           setPercent(25);
-          if (isDebug)
+          setLoading("Loading Messages");
+          if (isDebug) {
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
                 chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
@@ -746,7 +779,8 @@ export default function Upload() {
                   `Preparing to load messages [messages/index.json]`
                 )}`
             );
-          setLoading("Loading Messages");
+          } else await delay(100);
+
           setPercent(27);
           const userMessages = JSON.parse(
             await Utils.readFile("messages/index.json", files)
@@ -768,9 +802,13 @@ export default function Upload() {
           const channels = [];
           let messagesRead = 0;
 
-          if (isDebug) await delay(600);
+          if (isDebug) {
+            setLoading("Loading Messages|||Scanning Messages");
+            await delay(600);
+          } else await delay(100);
+
           setPercent(32);
-          setLoading("Loading Messages|||Scanning Messages");
+
           if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
@@ -818,8 +856,11 @@ export default function Upload() {
             })
           );
 
-          if (isDebug) await delay(600);
-          setLoading("Loading Messages|||Finished Message Scan");
+          if (isDebug) {
+            setLoading("Loading Messages|||Finished Message Scan");
+            await delay(600);
+          } else await delay(100);
+
           setPercent(34);
           if (messagesRead === 0)
             throw new Error("invalid_package_missing_messages");
@@ -830,9 +871,10 @@ export default function Upload() {
                 chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
                 `  ${chalk.yellow(`Loaded ${messagesRead} message files`)}`
             );
-          if (isDebug) await delay(700);
+
           setPercent(35);
-          if (isDebug)
+          if (isDebug) {
+            await delay(700);
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
                 chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
@@ -840,10 +882,11 @@ export default function Upload() {
                   `Preparing to load Channels (Channels, DMs, Groups)`
                 )}`
             );
+          } else await delay(100);
 
           if (options.messages.topChannels) {
             setPercent(38);
-            if (isDebug)
+            if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
                   chalk.bold.cyan(
@@ -851,7 +894,9 @@ export default function Upload() {
                   ) +
                   `  ${chalk.yellow(`Calculating top channels`)}`
               );
-            setLoading("Loading Messages|||Calculating top Channels");
+              setLoading("Loading Messages|||Calculating top Channels");
+            } else await delay(100);
+
             data.messages.topChannels = channels
               .filter((c) => c.data_ && c.data_.guild)
               .sort((a, b) => b.messages.length - a.messages.length)
@@ -983,7 +1028,7 @@ export default function Upload() {
 
           if (options.messages.topDMs) {
             setPercent(42);
-            if (isDebug)
+            if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
                   chalk.bold.cyan(
@@ -991,7 +1036,8 @@ export default function Upload() {
                   ) +
                   `  ${chalk.yellow(`Loading top DMs`)}`
               );
-            setLoading("Loading Messages|||Calculating top DMs");
+              setLoading("Loading Messages|||Calculating top DMs");
+            } else await delay(100);
 
             data.messages.topDMs = channels
               .filter(
@@ -1128,7 +1174,7 @@ export default function Upload() {
 
           if (options.messages.topGuilds) {
             setPercent(45);
-            if (isDebug)
+            if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
                   chalk.bold.cyan(
@@ -1136,7 +1182,9 @@ export default function Upload() {
                   ) +
                   `  ${chalk.yellow(`Loading top Guilds`)}`
               );
-            setLoading("Loading Messages|||Calculating top Guilds");
+              setLoading("Loading Messages|||Calculating top Guilds");
+            } else await delay(100);
+
             const topGuilds = channels
               .filter((c) => c.data_ && c.data_.guild)
               .sort((a, b) => b.messages.length - a.messages.length)
@@ -1341,7 +1389,7 @@ export default function Upload() {
 
           if (options.messages.topGroupDMs) {
             setPercent(48);
-            if (isDebug)
+            if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
                   chalk.bold.cyan(
@@ -1349,7 +1397,9 @@ export default function Upload() {
                   ) +
                   `  ${chalk.yellow(`Loading top group DMs`)}`
               );
-            setLoading("Loading Messages|||Calculating top Group DMs");
+              setLoading("Loading Messages|||Calculating top Group DMs");
+            } else await delay(100);
+
             const channel_ = channels
               .filter(
                 (c) =>
@@ -1486,9 +1536,8 @@ export default function Upload() {
           }
 
           if (options.messages.characterCount) {
-            if (isDebug) await delay(700);
             setPercent(52);
-            if (isDebug)
+            if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
                   chalk.bold.cyan(
@@ -1498,7 +1547,9 @@ export default function Upload() {
                     `Calculating character count & message count`
                   )}`
               );
-            setLoading("Loading Messages|||Getting your character Count");
+              setLoading("Loading Messages|||Getting your character Count");
+              await delay(700);
+            } else await delay(100);
 
             data.messages.characterCount = channels
               .map((channel) => channel.messages)
@@ -1512,9 +1563,8 @@ export default function Upload() {
           }
 
           if (options.messages.oldestMessages) {
-            if (isDebug) await delay(700);
             setPercent(56);
-            if (isDebug)
+            if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
                   chalk.bold.cyan(
@@ -1524,7 +1574,9 @@ export default function Upload() {
                     `Calculating your old messages on discord`
                   )}`
               );
-            setLoading("Loading Messages|||Getting your oldest messages");
+              setLoading("Loading Messages|||Getting your oldest messages");
+              await delay(700);
+            } else await delay(100);
 
             const oldestInChannel = channels
               .filter((c) => c.data_ && c.data_.guild)
@@ -1613,7 +1665,8 @@ export default function Upload() {
           }
 
           if (options.messages.attachmentCount) {
-            if (isDebug)
+            if (isDebug) {
+              setLoading("Loading Messages|||Getting your attachment Count");
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
                   chalk.bold.cyan(
@@ -1621,7 +1674,8 @@ export default function Upload() {
                   ) +
                   `  ${chalk.yellow(`Loading your attachment Count`)}`
               );
-            setLoading("Loading Messages|||Getting your attachment Count");
+            } else await delay(100);
+
             setPercent(58);
             const oldestInChannel = channels
               .map((channel) => {
@@ -1662,7 +1716,7 @@ export default function Upload() {
           }
 
           if (options.messages.mentionCount) {
-            if (isDebug)
+            if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
                   chalk.bold.cyan(
@@ -1670,7 +1724,9 @@ export default function Upload() {
                   ) +
                   `  ${chalk.yellow(`Loading your mention Count`)}`
               );
-            setLoading("Loading Messages|||Getting your mention Count");
+              setLoading("Loading Messages|||Getting your mention Count");
+            } else await delay(100);
+
             setPercent(62);
             const oldestInChannel = channels
               .map((channel) => {
@@ -1790,7 +1846,7 @@ export default function Upload() {
           if (options.messages.topEmojis) {
             if (isDebug) await delay(700);
             setPercent(68);
-            if (isDebug)
+            if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
                   chalk.bold.cyan(
@@ -1798,7 +1854,8 @@ export default function Upload() {
                   ) +
                   `  ${chalk.yellow(`Calculating your top emojis`)}`
               );
-            setLoading("Loading Messages|||Getting your top emojis");
+              setLoading("Loading Messages|||Getting your top emojis");
+            } else await delay(100);
 
             const oldestInChannel = channels
               .map((channel) => {
@@ -1860,7 +1917,7 @@ export default function Upload() {
           if (options.messages.topCustomEmojis) {
             if (isDebug) await delay(700);
             setPercent(70);
-            if (isDebug)
+            if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
                   chalk.bold.cyan(
@@ -1868,7 +1925,8 @@ export default function Upload() {
                   ) +
                   `  ${chalk.yellow(`Calculating your top custom emojis`)}`
               );
-            setLoading("Loading Messages|||Getting your top custom emojis");
+              setLoading("Loading Messages|||Getting your top custom emojis");
+            } else await delay(100);
 
             const oldestInChannel = channels
               .map((channel) => {
@@ -1992,9 +2050,12 @@ export default function Upload() {
             });
 
           if (options.other.favoriteWords) {
-            if (isDebug) await delay(600);
+            if (isDebug) {
+              setLoading("Loading Messages|||Calculating your favorite words");
+              await delay(600);
+            } else await delay(100);
             setPercent(74);
-            setLoading("Loading Messages|||Calculating your favorite words");
+
             data.messages.favoriteWords = Utils.getFavoriteWords(words);
             if (isDebug)
               console.log(
@@ -2009,9 +2070,12 @@ export default function Upload() {
           }
 
           if (options.other.showCurseWords) {
-            if (isDebug) await delay(700);
+            if (isDebug) {
+              setLoading("Loading Messages|||Calculating your curse words");
+              await delay(700);
+            } else await delay(100);
             setPercent(76);
-            setLoading("Loading Messages|||Calculating your curse words");
+
             const curseWords = Utils.getCursedWords(
               words.filter((w) => w.length < 10)
             );
@@ -2030,8 +2094,11 @@ export default function Upload() {
 
           if (options.other.showLinks) {
             setPercent(77);
-            if (isDebug) await delay(600);
-            setLoading("Loading Messages|||Calculating your general links");
+            if (isDebug) {
+              setLoading("Loading Messages|||Calculating your general links");
+              await delay(600);
+            } else await delay(100);
+
             const links = Utils.getTopLinks(words);
             data.messages.topLinks = links;
             if (isDebug)
@@ -2048,8 +2115,11 @@ export default function Upload() {
 
           if (options.other.showDiscordLinks) {
             setPercent(79);
-            if (isDebug) await delay(700);
-            setLoading("Loading Messages|||Calculating your discord links");
+            if (isDebug) {
+              setLoading("Loading Messages|||Calculating your discord links");
+              await delay(700);
+            } else await delay(100);
+
             const discordLink = Utils.getDiscordLinks(words);
             data.messages.topDiscordLinks = discordLink;
             if (isDebug)
@@ -2076,10 +2146,7 @@ export default function Upload() {
                     `Loading your guilds and their respective data`
                   )}`
               );
-            if (isDebug) await delay(2000);
-            setLoading("Loading Guilds|||");
-
-            if (isDebug)
+            if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
                   chalk.bold.cyan(
@@ -2087,13 +2154,21 @@ export default function Upload() {
                   ) +
                   `  ${chalk.yellow(`Scanning [servers/index.json]`)}`
               );
+              setLoading("Loading Guilds|||");
+              await delay(2000);
+            } else await delay(100);
+
             const guilds = JSON.parse(
               await Utils.readFile("servers/index.json", files)
             );
             data.guilds = guilds;
-            if (isDebug) await delay(700);
+            if (isDebug) {
+              setLoading("Loading Guilds|||Loaded Guilds");
+              await delay(700);
+            } else await delay(100);
+
             setPercent(84);
-            setLoading("Loading Guilds|||Loaded Guilds");
+
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
@@ -2120,8 +2195,14 @@ export default function Upload() {
             if (isDebug) await delay(2000);
             setLoading("Loading User Bots|||");
 
-            if (isDebug) await delay(600);
-            setLoading("Loading User Bots|||Scanning Bots");
+            if (isDebug) {
+              setLoading("Loading User Bots|||Scanning Bots");
+              await delay(600);
+            } else {
+              setLoading("Loading Your Bots");
+              await delay(100);
+            }
+
             const bots = files.filter(
               (file) =>
                 file.name.startsWith("account/applications/") &&
@@ -2129,8 +2210,11 @@ export default function Upload() {
             );
 
             if (bots.length) {
-              if (isDebug) await delay(1000);
-              setLoading("Loading User Bots|||Bots Found");
+              if (isDebug) {
+                setLoading("Loading User Bots|||Bots Found");
+                await delay(1000);
+              } else await delay(100);
+
               if (isDebug) await delay(700);
               const botsArr = [];
               for (let i = 0; i < bots.length; i++) {
@@ -2151,8 +2235,11 @@ export default function Upload() {
                   });
                 }
               }
-              if (isDebug) await delay(700);
-              setLoading("Loading User Bots|||Loaded Bots");
+              if (isDebug) {
+                setLoading("Loading User Bots|||Loaded Bots");
+                await delay(700);
+              } else await delay(100);
+
               data.bots = botsArr;
               if (isDebug)
                 console.log(
@@ -2163,8 +2250,10 @@ export default function Upload() {
                     `  ${chalk.yellow(`Loaded ${botsArr.length} bots`)}`
                 );
             } else {
-              if (isDebug) await delay(700);
-              setLoading("Loading User Bots|||Bots not Found");
+              if (isDebug) {
+                setLoading("Loading User Bots|||Bots not Found");
+                await delay(700);
+              }
             }
           }
 
@@ -2174,6 +2263,9 @@ export default function Upload() {
                 chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
                 `  ${chalk.yellow(`Calculating your badges`)}`
             );
+
+          if (!isDebug) setLoading("Loading Your Flags");
+          await delay(100);
 
           setPercent(88);
           if (userInformationData.flags && options.user.badges) {
