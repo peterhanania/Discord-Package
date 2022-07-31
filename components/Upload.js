@@ -15,6 +15,7 @@ import Privacy from "./privacy";
 import Alerts from "./Alerts";
 import moment from "moment";
 import chalk from "chalk";
+import { Line } from "rc-progress";
 
 export default function Upload() {
   const { dataExtracted, setDataExtracted } = useContext(DataContext);
@@ -22,6 +23,7 @@ export default function Upload() {
   const [error, setError] = React.useState(null);
   const [loading, setLoading] = React.useState("Loading...|||");
   const [saveToDevice, setSaveToDevice] = React.useState(false);
+  const [percent, setPercent] = React.useState(90);
 
   const classifyOBJ = (obj) => {
     let newObj = {};
@@ -80,7 +82,10 @@ export default function Upload() {
   React.useEffect(() => {
     if (window.location.href.includes("demo=true") && dataExtracted) {
       setDemo(true);
-    } else setLoading(false);
+    } else {
+      setLoading(false);
+      setPercent(0);
+    }
 
     if (localStorage.getItem("defaultOptions_enabled") === "true") {
       setSaveToDevice(true);
@@ -275,29 +280,32 @@ export default function Upload() {
         const isDebug = localStorage.getItem("debug") === "true";
         const startTime = Date.now();
         if (isDebug)
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Loading in Debug Mode`)}`
-          );
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Loading in Debug Mode`)}`
+            );
         setLoading(`Loading Package|||${isDebug ? "debug mode enabled" : ""}`);
         await delay(2000);
 
         const reader = new Unzip();
 
         if (isDebug)
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Loading your package`)}`
+            );
+        setLoading("Loading Package|||Registering Package");
+        reader.register(AsyncUnzipInflate);
+        if (isDebug)
           console.log(
             chalk.bold.blue(`[DEBUG] `) +
               chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Loading your package`)}`
+              `  ${chalk.yellow(`Package registered`)}`
           );
-        setLoading("Loading Package|||Registering Package");
-        reader.register(AsyncUnzipInflate);
-        console.log(
-          chalk.bold.blue(`[DEBUG] `) +
-            chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-            `  ${chalk.yellow(`Package registered`)}`
-        );
 
         const files = [];
 
@@ -313,11 +321,12 @@ export default function Upload() {
           return;
         }
 
-        console.log(
-          chalk.bold.blue(`[DEBUG] `) +
-            chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-            `  ${chalk.yellow(`Initializing file reader`)}`
-        );
+        if (isDebug)
+          console.log(
+            chalk.bold.blue(`[DEBUG] `) +
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Initializing file reader`)}`
+          );
         if (isDebug) await delay(50);
         setLoading("Loading Package|||Initializing file reader");
         const fileReader = fileUploaded.stream().getReader();
@@ -332,11 +341,12 @@ export default function Upload() {
           }
         }
 
-        console.log(
-          chalk.bold.blue(`[DEBUG] `) +
-            chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-            `  ${chalk.yellow(`Checking package validity`)}`
-        );
+        if (isDebug)
+          console.log(
+            chalk.bold.blue(`[DEBUG] `) +
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Checking package validity`)}`
+          );
         if (isDebug) await delay(50);
         setLoading("Loading Package|||Checking for Valid Package");
         let validPackage = true;
@@ -360,11 +370,12 @@ export default function Upload() {
         }
 
         async function extractData(files, options) {
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Preparing to extract Data`)}`
-          );
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Preparing to extract Data`)}`
+            );
           let data = {
             user: {
               id: null,
@@ -420,38 +431,49 @@ export default function Upload() {
             },
           };
 
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Loading user information`)}`
-          );
+          setPercent(2);
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Loading user information`)}`
+            );
 
+          setPercent(5);
           setLoading("Loading User Information|||");
           if (isDebug) await delay(1000);
 
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Parsing account/user.json`)}`
-          );
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Parsing account/user.json`)}`
+            );
           const userInformationData = JSON.parse(
             await Utils.readFile("account/user.json", files)
           );
 
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Loading main information`)}`
-          );
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Loading main information`)}`
+            );
+          setPercent(6);
           setLoading("Loading User Information|||Loading Main Information");
 
           if (userInformationData.id) {
             data.user.id = userInformationData.id;
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loaded user ID ${userInformationData.id}`)}`
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loaded user ID ${userInformationData.id}`
+                  )}`
+              );
           } else throw new Error("User ID not found");
 
           const userId = data.user.id;
@@ -466,54 +488,64 @@ export default function Upload() {
             data.user.discriminator = discriminator;
           }
 
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(
-                `Loaded user ${userInformationData?.username}#${userInformationData?.discriminator}`
-              )}`
-          );
+          setPercent(8);
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(
+                  `Loaded user ${userInformationData?.username}#${userInformationData?.discriminator}`
+                )}`
+            );
 
           if (userInformationData.avatar_hash)
             data.user.avatar = userInformationData.avatar_hash;
 
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(
-                `Loaded user avatar hash ${userInformationData?.avatar_hash}`
-              )}`
-          );
-
-          if (options.user.premium_until) {
-            if (userInformationData.premium_until)
-              data.user.premium_until = userInformationData.premium_until;
+          if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
                 chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loaded user premium until`)}`
+                `  ${chalk.yellow(
+                  `Loaded user avatar hash ${userInformationData?.avatar_hash}`
+                )}`
             );
+
+          setPercent(10);
+          if (options.user.premium_until) {
+            if (userInformationData.premium_until)
+              data.user.premium_until = userInformationData.premium_until;
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Loaded user premium until`)}`
+              );
           }
 
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Preparing to load settings`)}`
-          );
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Preparing to load settings`)}`
+            );
           if (isDebug) await delay(400);
+          setPercent(11);
           setLoading("Loading User Information|||Loading Setting Information");
           if (
             userInformationData.settings &&
             userInformationData.settings.settings
           ) {
             if (options.settings.appearance) {
-              console.log(
-                chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Loaded settings appearance`)}`
-              );
+              if (isDebug)
+                console.log(
+                  chalk.bold.blue(`[DEBUG] `) +
+                    chalk.bold.cyan(
+                      `[${moment(Date.now()).format("h:mm:ss a")}]`
+                    ) +
+                    `  ${chalk.yellow(`Loaded settings appearance`)}`
+                );
               if (userInformationData.settings.settings.appearance)
                 data.settings.appearance =
                   userInformationData.settings.settings.appearance;
@@ -538,12 +570,14 @@ export default function Upload() {
             // }
           }
 
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Loading setting Frecency`)}`
-          );
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Loading setting Frecency`)}`
+            );
           if (isDebug) await delay(700);
+          setPercent(13);
           setLoading("Loading User Information|||Loading Setting Frecency");
           if (
             userInformationData.settings &&
@@ -569,18 +603,22 @@ export default function Upload() {
                 });
 
                 data.settings.recentEmojis = emojis;
-                console.log(
-                  chalk.bold.blue(`[DEBUG] `) +
-                    chalk.bold.cyan(
-                      `[${moment(Date.now()).format("h:mm:ss a")}]`
-                    ) +
-                    `  ${chalk.yellow(`Loaded ${emojis.length} recent emojis`)}`
-                );
+                if (isDebug)
+                  console.log(
+                    chalk.bold.blue(`[DEBUG] `) +
+                      chalk.bold.cyan(
+                        `[${moment(Date.now()).format("h:mm:ss a")}]`
+                      ) +
+                      `  ${chalk.yellow(
+                        `Loaded ${emojis.length} recent emojis`
+                      )}`
+                  );
               }
             }
           }
 
           if (isDebug) await delay(600);
+          setPercent(15);
           if (options.connections) {
             setLoading("Loading User Information|||Loading User Connections");
             if (
@@ -601,22 +639,25 @@ export default function Upload() {
                     };
                   });
                 data.connections = cncs;
-                console.log(
-                  chalk.bold.blue(`[DEBUG] `) +
-                    chalk.bold.cyan(
-                      `[${moment(Date.now()).format("h:mm:ss a")}]`
-                    ) +
-                    `  ${chalk.yellow(`Loaded ${cncs.length} connections`)}`
-                );
+                if (isDebug)
+                  console.log(
+                    chalk.bold.blue(`[DEBUG] `) +
+                      chalk.bold.cyan(
+                        `[${moment(Date.now()).format("h:mm:ss a")}]`
+                      ) +
+                      `  ${chalk.yellow(`Loaded ${cncs.length} connections`)}`
+                  );
               }
             }
           }
 
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Loading payments`)}`
-          );
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Loading payments`)}`
+            );
+          setPercent(20);
           if (isDebug) await delay(700);
           setLoading("Loading User Information|||Loading User Payments");
           if (
@@ -635,15 +676,16 @@ export default function Upload() {
                   }
                 }
               });
-              console.log(
-                chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loaded ${Object.keys(types).length} payments`
-                  )}`
-              );
+              if (isDebug)
+                console.log(
+                  chalk.bold.blue(`[DEBUG] `) +
+                    chalk.bold.cyan(
+                      `[${moment(Date.now()).format("h:mm:ss a")}]`
+                    ) +
+                    `  ${chalk.yellow(
+                      `Loaded ${Object.keys(types).length} payments`
+                    )}`
+                );
               data.payments.giftedNitro = types;
             }
           }
@@ -674,33 +716,38 @@ export default function Upload() {
                   };
                 });
               data.payments.transactions = trns;
-              console.log(
-                chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Loaded ${trns.length} transactions`)}`
-              );
+              if (isDebug)
+                console.log(
+                  chalk.bold.blue(`[DEBUG] `) +
+                    chalk.bold.cyan(
+                      `[${moment(Date.now()).format("h:mm:ss a")}]`
+                    ) +
+                    `  ${chalk.yellow(`Loaded ${trns.length} transactions`)}`
+                );
             }
           }
 
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Loaded user information`)}`
-          );
+          setPercent(22);
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Loaded user information`)}`
+            );
           if (isDebug) await delay(2000);
           setLoading("Loading User Information|||Loaded User Information");
           if (isDebug) await delay(1000);
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(
-                `Preparing to load messages [messages/index.json]`
-              )}`
-          );
+          setPercent(25);
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(
+                  `Preparing to load messages [messages/index.json]`
+                )}`
+            );
           setLoading("Loading Messages");
-
+          setPercent(27);
           const userMessages = JSON.parse(
             await Utils.readFile("messages/index.json", files)
           );
@@ -722,13 +769,15 @@ export default function Upload() {
           let messagesRead = 0;
 
           if (isDebug) await delay(600);
+          setPercent(32);
           setLoading("Loading Messages|||Scanning Messages");
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Started message scan`)}`
-          );
-          
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Started message scan`)}`
+            );
+
           await Promise.all(
             channelsIDs.map((channelID) => {
               return new Promise((resolve) => {
@@ -771,31 +820,37 @@ export default function Upload() {
 
           if (isDebug) await delay(600);
           setLoading("Loading Messages|||Finished Message Scan");
-
+          setPercent(34);
           if (messagesRead === 0)
             throw new Error("invalid_package_missing_messages");
 
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Loaded ${messagesRead} message files`)}`
-          );
-          if (isDebug) await delay(700);
-
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(
-                `Preparing to load Channels (Channels, DMs, Groups)`
-              )}`
-          );
-
-          if (options.messages.topChannels) {
+          if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
                 chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Calculating top channels`)}`
+                `  ${chalk.yellow(`Loaded ${messagesRead} message files`)}`
             );
+          if (isDebug) await delay(700);
+          setPercent(35);
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(
+                  `Preparing to load Channels (Channels, DMs, Groups)`
+                )}`
+            );
+
+          if (options.messages.topChannels) {
+            setPercent(38);
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Calculating top channels`)}`
+              );
             setLoading("Loading Messages|||Calculating top Channels");
             data.messages.topChannels = channels
               .filter((c) => c.data_ && c.data_.guild)
@@ -914,21 +969,28 @@ export default function Upload() {
                 };
               });
 
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded ${data?.messages?.topChannels?.length} channels`
-                )}`
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loaded ${data?.messages?.topChannels?.length} channels`
+                  )}`
+              );
           }
 
           if (options.messages.topDMs) {
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loading top DMs`)}`
-            );
+            setPercent(42);
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Loading top DMs`)}`
+              );
             setLoading("Loading Messages|||Calculating top DMs");
 
             data.messages.topDMs = channels
@@ -1052,21 +1114,28 @@ export default function Upload() {
                 };
               });
 
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded ${data?.messages?.topDMs?.length} DMs`
-                )}`
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loaded ${data?.messages?.topDMs?.length} DMs`
+                  )}`
+              );
           }
 
           if (options.messages.topGuilds) {
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loading top Guilds`)}`
-            );
+            setPercent(45);
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Loading top Guilds`)}`
+              );
             setLoading("Loading Messages|||Calculating top Guilds");
             const topGuilds = channels
               .filter((c) => c.data_ && c.data_.guild)
@@ -1258,21 +1327,28 @@ export default function Upload() {
               (a, b) => b.messageCount - a.messageCount
             );
 
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded ${data?.messages?.topGuilds?.length} guilds`
-                )} `
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loaded ${data?.messages?.topGuilds?.length} guilds`
+                  )} `
+              );
           }
 
           if (options.messages.topGroupDMs) {
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loading top group DMs`)}`
-            );
+            setPercent(48);
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Loading top group DMs`)}`
+              );
             setLoading("Loading Messages|||Calculating top Group DMs");
             const channel_ = channels
               .filter(
@@ -1397,24 +1473,31 @@ export default function Upload() {
               (a, b) => b.messageCount - a.messageCount
             );
 
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded ${data?.messages?.topGroupDMs?.length} group DMs`
-                )} `
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loaded ${data?.messages?.topGroupDMs?.length} group DMs`
+                  )} `
+              );
           }
 
           if (options.messages.characterCount) {
             if (isDebug) await delay(700);
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Calculating character count & message count`
-                )}`
-            );
+            setPercent(52);
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Calculating character count & message count`
+                  )}`
+              );
             setLoading("Loading Messages|||Getting your character Count");
 
             data.messages.characterCount = channels
@@ -1430,11 +1513,17 @@ export default function Upload() {
 
           if (options.messages.oldestMessages) {
             if (isDebug) await delay(700);
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Calculating your old messages on discord`)}`
-            );
+            setPercent(56);
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Calculating your old messages on discord`
+                  )}`
+              );
             setLoading("Loading Messages|||Getting your oldest messages");
 
             const oldestInChannel = channels
@@ -1511,23 +1600,29 @@ export default function Upload() {
               .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 
             data.messages.oldestMessages = oldestInTotal.slice(0, 1000);
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded ${data?.messages?.oldestMessages?.length} oldest messages`
-                )}`
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loaded ${data?.messages?.oldestMessages?.length} oldest messages`
+                  )}`
+              );
           }
 
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Loading your attachment Count`)}`
-          );
-          setLoading("Loading Messages|||Getting your attachment Count");
-
           if (options.messages.attachmentCount) {
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Loading your attachment Count`)}`
+              );
+            setLoading("Loading Messages|||Getting your attachment Count");
+            setPercent(58);
             const oldestInChannel = channels
               .map((channel) => {
                 const words = channel.messages
@@ -1554,23 +1649,29 @@ export default function Upload() {
               .flat();
 
             data.messages.attachmentCount = oldestInChannel;
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded ${data?.messages?.attachmentCount?.length} attachments`
-                )}`
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loaded ${data?.messages?.attachmentCount?.length} attachments`
+                  )}`
+              );
           }
 
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Loading your mention Count`)}`
-          );
-          setLoading("Loading Messages|||Getting your mention Count");
-
           if (options.messages.mentionCount) {
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Loading your mention Count`)}`
+              );
+            setLoading("Loading Messages|||Getting your mention Count");
+            setPercent(62);
             const oldestInChannel = channels
               .map((channel) => {
                 const words = channel.messages
@@ -1675,22 +1776,28 @@ export default function Upload() {
               }
             });
 
-            console.log(top);
             data.messages.mentionCount = top;
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loaded mentions`)}`
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Loaded mentions`)}`
+              );
           }
 
           if (options.messages.topEmojis) {
             if (isDebug) await delay(700);
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Calculating your top emojis`)}`
-            );
+            setPercent(68);
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Calculating your top emojis`)}`
+              );
             setLoading("Loading Messages|||Getting your top emojis");
 
             const oldestInChannel = channels
@@ -1738,22 +1845,29 @@ export default function Upload() {
               (a, b) => b.count - a.count
             );
 
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded ${data?.messages?.topEmojis?.length} top emojis`
-                )}`
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loaded ${data?.messages?.topEmojis?.length} top emojis`
+                  )}`
+              );
           }
 
           if (options.messages.topCustomEmojis) {
             if (isDebug) await delay(700);
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Calculating your top custom emojis`)}`
-            );
+            setPercent(70);
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Calculating your top custom emojis`)}`
+              );
             setLoading("Loading Messages|||Getting your top custom emojis");
 
             const oldestInChannel = channels
@@ -1801,21 +1915,28 @@ export default function Upload() {
               (a, b) => b.count - a.count
             );
 
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded ${data?.messages?.topCustomEmojis?.length} top custom emojis`
-                )}`
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loaded ${data?.messages?.topCustomEmojis?.length} top custom emojis`
+                  )}`
+              );
           }
 
           if (options.messages.hoursValues) {
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Calculating your top hours on discord`)}`
-            );
+            setPercent(72);
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Calculating your top hours on discord`)}`
+              );
             for (let i = 0; i < 24; i++) {
               data.messages.hoursValues.push(
                 channels
@@ -1837,18 +1958,24 @@ export default function Upload() {
                   }).length
               );
             }
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Calculated your top hours on discord`)}`
+              );
+          }
+
+          setPercent(73);
+
+          if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
                 chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Calculated your top hours on discord`)}`
+                `  ${chalk.yellow(`Loading "other" data `)}`
             );
-          }
-
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Loading "other" data `)}`
-          );
 
           const words = channels
             .map((channel) => channel.messages)
@@ -1866,100 +1993,129 @@ export default function Upload() {
 
           if (options.other.favoriteWords) {
             if (isDebug) await delay(600);
+            setPercent(74);
             setLoading("Loading Messages|||Calculating your favorite words");
             data.messages.favoriteWords = Utils.getFavoriteWords(words);
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded ${data?.messages?.favoriteWords?.length} favorite words`
-                )}`
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loaded ${data?.messages?.favoriteWords?.length} favorite words`
+                  )}`
+              );
           }
 
           if (options.other.showCurseWords) {
             if (isDebug) await delay(700);
+            setPercent(76);
             setLoading("Loading Messages|||Calculating your curse words");
             const curseWords = Utils.getCursedWords(
               words.filter((w) => w.length < 10)
             );
             data.messages.topCursed = curseWords;
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded ${data?.messages?.topCursed?.length} curse words`
-                )}`
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loaded ${data?.messages?.topCursed?.length} curse words`
+                  )}`
+              );
           }
 
           if (options.other.showLinks) {
+            setPercent(77);
             if (isDebug) await delay(600);
             setLoading("Loading Messages|||Calculating your general links");
             const links = Utils.getTopLinks(words);
             data.messages.topLinks = links;
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded ${data?.messages?.topLinks?.length} general links`
-                )}`
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loaded ${data?.messages?.topLinks?.length} general links`
+                  )}`
+              );
           }
 
           if (options.other.showDiscordLinks) {
+            setPercent(79);
             if (isDebug) await delay(700);
             setLoading("Loading Messages|||Calculating your discord links");
             const discordLink = Utils.getDiscordLinks(words);
             data.messages.topDiscordLinks = discordLink;
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded ${data?.messages?.topDiscordLinks?.length} discord links`
-                )}`
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loaded ${data?.messages?.topDiscordLinks?.length} discord links`
+                  )}`
+              );
           }
 
           if (options.guilds) {
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loading your guilds and their respective data`
-                )}`
-            );
+            setPercent(82);
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loading your guilds and their respective data`
+                  )}`
+              );
             if (isDebug) await delay(2000);
             setLoading("Loading Guilds|||");
 
-            if (isDebug) await delay(600);
-            setLoading("Loading Guilds|||Scanning Guilds");
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Scanning [servers/index.json]`)}`
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Scanning [servers/index.json]`)}`
+              );
             const guilds = JSON.parse(
               await Utils.readFile("servers/index.json", files)
             );
             data.guilds = guilds;
             if (isDebug) await delay(700);
+            setPercent(84);
             setLoading("Loading Guilds|||Loaded Guilds");
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded ${Object.keys(data?.guilds)?.length} guilds`
-                )}`
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loaded ${Object.keys(data?.guilds)?.length} guilds`
+                  )}`
+              );
           }
 
           if (options.bots) {
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loading your discord bots`)}`
-            );
+            setPercent(86);
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Loading your discord bots`)}`
+              );
 
             if (isDebug) await delay(2000);
             setLoading("Loading User Bots|||");
@@ -1998,24 +2154,28 @@ export default function Upload() {
               if (isDebug) await delay(700);
               setLoading("Loading User Bots|||Loaded Bots");
               data.bots = botsArr;
-              console.log(
-                chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Loaded ${botsArr.length} bots`)}`
-              );
+              if (isDebug)
+                console.log(
+                  chalk.bold.blue(`[DEBUG] `) +
+                    chalk.bold.cyan(
+                      `[${moment(Date.now()).format("h:mm:ss a")}]`
+                    ) +
+                    `  ${chalk.yellow(`Loaded ${botsArr.length} bots`)}`
+                );
             } else {
               if (isDebug) await delay(700);
               setLoading("Loading User Bots|||Bots not Found");
             }
           }
 
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Calculating your badges`)}`
-          );
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Calculating your badges`)}`
+            );
+
+          setPercent(88);
           if (userInformationData.flags && options.user.badges) {
             data.user.flags = userInformationData.flags;
             const badges = BitField.calculate(userInformationData.flags);
@@ -2038,14 +2198,19 @@ export default function Upload() {
             data.user.badges = badges;
           }
 
+          setPercent(90);
           if (options.statistics.length) {
+            setPercent(100);
             if (isDebug) await delay(1000);
             setLoading("Loading Analytics|||Initializing Files");
-            console.log(
-              chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Calculating your analytics`)}`
-            );
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Calculating your analytics`)}`
+              );
             if (isDebug) await delay(2000);
             const statistics = await Utils.readAnalyticsFile(
               files.find((file) =>
@@ -2157,19 +2322,21 @@ export default function Upload() {
             }
           }
 
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(
-                `Loaded all data in ${Date.now() - startTime}ms `
-              )}`
-          );
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(
+                  `Loaded all data in ${Date.now() - startTime}ms `
+                )}`
+            );
 
-          console.log(
-            chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Preparing to render data`)}`
-          );
+          if (isDebug)
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Preparing to render data`)}`
+            );
 
           return data;
         }
@@ -2193,7 +2360,7 @@ export default function Upload() {
             });
           })
           .catch((err) => {
-            console.log(err);
+            if (isDebug) console.log(err);
             if (err.message === "invalid_package_missing_messages") {
               setLoading(null);
               setError(
@@ -2871,6 +3038,13 @@ export default function Upload() {
                               <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">
                                 {loading.split("|||")[1]}
                               </p>
+                            </div>
+                            <div className="w-[200px] m-1">
+                              <Line
+                                percent={percent}
+                                strokeWidth={4}
+                                strokeColor="#D3D3D3"
+                              />
                             </div>
                           </label>
 
