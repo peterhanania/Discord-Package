@@ -907,15 +907,13 @@ export default function Data(props) {
   return data ? (
     <div className="h-screen">
       <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
+        position="top-right"
+        autoClose={false}
         newestOnTop={false}
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable
-        pauseOnHover
       />
       <div className="lg:flex sm:flex md:flex items-center lg:mx-10 md:mx-8 mx-2 lg:mt-4 md:mt-4 mt-2">
         {!data.dataFile ? (
@@ -1200,16 +1198,7 @@ export default function Data(props) {
                                   );
                                 })}
                               </ul>
-                            </div>,
-                            {
-                              position: "top-right",
-                              autoClose: 5000,
-                              hideProgressBar: false,
-                              closeOnClick: true,
-                              pauseOnHover: true,
-                              draggable: true,
-                              progress: undefined,
-                            }
+                            </div>
                           );
                         }}
                         xmlns="http://www.w3.org/2000/svg"
@@ -1263,16 +1252,7 @@ export default function Data(props) {
                                   );
                                 })}
                               </ul>
-                            </div>,
-                            {
-                              position: "top-right",
-                              autoClose: 5000,
-                              hideProgressBar: false,
-                              closeOnClick: true,
-                              pauseOnHover: true,
-                              draggable: true,
-                              progress: undefined,
-                            }
+                            </div>
                           );
                         }}
                         xmlns="http://www.w3.org/2000/svg"
@@ -1324,16 +1304,7 @@ export default function Data(props) {
                                   );
                                 })}
                               </ul>
-                            </div>,
-                            {
-                              position: "top-right",
-                              autoClose: 5000,
-                              hideProgressBar: false,
-                              closeOnClick: true,
-                              pauseOnHover: true,
-                              draggable: true,
-                              progress: undefined,
-                            }
+                            </div>
                           );
                         }}
                         xmlns="http://www.w3.org/2000/svg"
@@ -1385,16 +1356,7 @@ export default function Data(props) {
                                   );
                                 })}
                               </ul>
-                            </div>,
-                            {
-                              position: "top-right",
-                              autoClose: 5000,
-                              hideProgressBar: false,
-                              closeOnClick: true,
-                              pauseOnHover: true,
-                              draggable: true,
-                              progress: undefined,
-                            }
+                            </div>
                           );
                         }}
                         xmlns="http://www.w3.org/2000/svg"
@@ -1451,16 +1413,7 @@ export default function Data(props) {
                                   );
                                 })}
                               </ul>
-                            </div>,
-                            {
-                              position: "top-right",
-                              autoClose: 5000,
-                              hideProgressBar: false,
-                              closeOnClick: true,
-                              pauseOnHover: true,
-                              draggable: true,
-                              progress: undefined,
-                            }
+                            </div>
                           );
                         }}
                         className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
@@ -1505,16 +1458,7 @@ export default function Data(props) {
                                   );
                                 })}
                               </ul>
-                            </div>,
-                            {
-                              position: "top-right",
-                              autoClose: 5000,
-                              hideProgressBar: false,
-                              closeOnClick: true,
-                              pauseOnHover: true,
-                              draggable: true,
-                              progress: undefined,
-                            }
+                            </div>
                           );
                         }}
                         className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
@@ -1579,16 +1523,7 @@ export default function Data(props) {
                                     : ""}
                                 </li>
                               </ul>
-                            </div>,
-                            {
-                              position: "top-right",
-                              autoClose: 5000,
-                              hideProgressBar: false,
-                              closeOnClick: true,
-                              pauseOnHover: true,
-                              draggable: true,
-                              progress: undefined,
-                            }
+                            </div>
                           );
                         }}
                         className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
@@ -1894,16 +1829,7 @@ export default function Data(props) {
                                             );
                                           })}
                                       </ul>
-                                    </div>,
-                                    {
-                                      position: "top-right",
-                                      autoClose: 5000,
-                                      hideProgressBar: false,
-                                      closeOnClick: true,
-                                      pauseOnHover: true,
-                                      draggable: true,
-                                      progress: undefined,
-                                    }
+                                    </div>
                                   );
                                 }}
                                 className="cursor-pointer flex justify-center items-center text-md p-1 mt-2 py-1 px-2 font-medium text-white bg-gray-700 rounded-full border-2 border-white hover:bg-gray-600 dark:border-gray-800"
@@ -2129,16 +2055,7 @@ export default function Data(props) {
                                             );
                                           })}
                                       </ul>
-                                    </div>,
-                                    {
-                                      position: "top-right",
-                                      autoClose: 5000,
-                                      hideProgressBar: false,
-                                      closeOnClick: true,
-                                      pauseOnHover: true,
-                                      draggable: true,
-                                      progress: undefined,
-                                    }
+                                    </div>
                                   );
                                 }}
                                 className="cursor-pointer flex justify-center items-center text-md p-1 py-2 px-2 font-medium text-white bg-gray-700 rounded-full border-2 border-white hover:bg-gray-600 dark:border-gray-800"
@@ -3031,16 +2948,7 @@ export default function Data(props) {
                                               );
                                             })}
                                           </ul>
-                                        </div>,
-                                        {
-                                          position: "top-right",
-                                          autoClose: 5000,
-                                          hideProgressBar: false,
-                                          closeOnClick: true,
-                                          pauseOnHover: true,
-                                          draggable: true,
-                                          progress: undefined,
-                                        }
+                                        </div>
                                       );
                                     }}
                                     xmlns="http://www.w3.org/2000/svg"
@@ -3092,16 +3000,7 @@ export default function Data(props) {
                                               );
                                             })}
                                           </ul>
-                                        </div>,
-                                        {
-                                          position: "top-right",
-                                          autoClose: 5000,
-                                          hideProgressBar: false,
-                                          closeOnClick: true,
-                                          pauseOnHover: true,
-                                          draggable: true,
-                                          progress: undefined,
-                                        }
+                                        </div>
                                       );
                                     }}
                                     xmlns="http://www.w3.org/2000/svg"
@@ -3147,16 +3046,7 @@ export default function Data(props) {
                                               );
                                             })}
                                           </ul>
-                                        </div>,
-                                        {
-                                          position: "top-right",
-                                          autoClose: 5000,
-                                          hideProgressBar: false,
-                                          closeOnClick: true,
-                                          pauseOnHover: true,
-                                          draggable: true,
-                                          progress: undefined,
-                                        }
+                                        </div>
                                       );
                                     }}
                                     xmlns="http://www.w3.org/2000/svg"
@@ -3205,16 +3095,7 @@ export default function Data(props) {
                                               );
                                             })}
                                           </ul>
-                                        </div>,
-                                        {
-                                          position: "top-right",
-                                          autoClose: 5000,
-                                          hideProgressBar: false,
-                                          closeOnClick: true,
-                                          pauseOnHover: true,
-                                          draggable: true,
-                                          progress: undefined,
-                                        }
+                                        </div>
                                       );
                                     }}
                                     xmlns="http://www.w3.org/2000/svg"
@@ -3285,16 +3166,7 @@ export default function Data(props) {
                                               );
                                             })}
                                           </ul>
-                                        </div>,
-                                        {
-                                          position: "top-right",
-                                          autoClose: 5000,
-                                          hideProgressBar: false,
-                                          closeOnClick: true,
-                                          pauseOnHover: true,
-                                          draggable: true,
-                                          progress: undefined,
-                                        }
+                                        </div>
                                       );
                                     }}
                                     xmlns="http://www.w3.org/2000/svg"
@@ -3344,16 +3216,7 @@ export default function Data(props) {
                                               );
                                             })}
                                           </ul>
-                                        </div>,
-                                        {
-                                          position: "top-right",
-                                          autoClose: 5000,
-                                          hideProgressBar: false,
-                                          closeOnClick: true,
-                                          pauseOnHover: true,
-                                          draggable: true,
-                                          progress: undefined,
-                                        }
+                                        </div>
                                       );
                                     }}
                                     xmlns="http://www.w3.org/2000/svg"
@@ -3474,16 +3337,7 @@ export default function Data(props) {
                                               );
                                             })}
                                           </ul>
-                                        </div>,
-                                        {
-                                          position: "top-right",
-                                          autoClose: 5000,
-                                          hideProgressBar: false,
-                                          closeOnClick: true,
-                                          pauseOnHover: true,
-                                          draggable: true,
-                                          progress: undefined,
-                                        }
+                                        </div>
                                       );
                                     }}
                                     xmlns="http://www.w3.org/2000/svg"
@@ -3583,16 +3437,7 @@ export default function Data(props) {
                                                   );
                                                 })}
                                               </ul>
-                                            </div>,
-                                            {
-                                              position: "top-right",
-                                              autoClose: 5000,
-                                              hideProgressBar: false,
-                                              closeOnClick: true,
-                                              pauseOnHover: true,
-                                              draggable: true,
-                                              progress: undefined,
-                                            }
+                                            </div>
                                           );
                                         }}
                                         xmlns="http://www.w3.org/2000/svg"
@@ -3649,16 +3494,7 @@ export default function Data(props) {
                                                   );
                                                 })}
                                               </ul>
-                                            </div>,
-                                            {
-                                              position: "top-right",
-                                              autoClose: 5000,
-                                              hideProgressBar: false,
-                                              closeOnClick: true,
-                                              pauseOnHover: true,
-                                              draggable: true,
-                                              progress: undefined,
-                                            }
+                                            </div>
                                           );
                                         }}
                                         xmlns="http://www.w3.org/2000/svg"
@@ -3706,16 +3542,7 @@ export default function Data(props) {
                                                   );
                                                 })}
                                               </ul>
-                                            </div>,
-                                            {
-                                              position: "top-right",
-                                              autoClose: 5000,
-                                              hideProgressBar: false,
-                                              closeOnClick: true,
-                                              pauseOnHover: true,
-                                              draggable: true,
-                                              progress: undefined,
-                                            }
+                                            </div>
                                           );
                                         }}
                                         xmlns="http://www.w3.org/2000/svg"
@@ -3769,16 +3596,7 @@ export default function Data(props) {
                                                   }
                                                 )}
                                               </ul>
-                                            </div>,
-                                            {
-                                              position: "top-right",
-                                              autoClose: 5000,
-                                              hideProgressBar: false,
-                                              closeOnClick: true,
-                                              pauseOnHover: true,
-                                              draggable: true,
-                                              progress: undefined,
-                                            }
+                                            </div>
                                           );
                                         }}
                                         xmlns="http://www.w3.org/2000/svg"
@@ -3853,16 +3671,7 @@ export default function Data(props) {
                                                   }
                                                 )}
                                               </ul>
-                                            </div>,
-                                            {
-                                              position: "top-right",
-                                              autoClose: 5000,
-                                              hideProgressBar: false,
-                                              closeOnClick: true,
-                                              pauseOnHover: true,
-                                              draggable: true,
-                                              progress: undefined,
-                                            }
+                                            </div>
                                           );
                                         }}
                                         xmlns="http://www.w3.org/2000/svg"
@@ -3917,16 +3726,7 @@ export default function Data(props) {
                                                   );
                                                 })}
                                               </ul>
-                                            </div>,
-                                            {
-                                              position: "top-right",
-                                              autoClose: 5000,
-                                              hideProgressBar: false,
-                                              closeOnClick: true,
-                                              pauseOnHover: true,
-                                              draggable: true,
-                                              progress: undefined,
-                                            }
+                                            </div>
                                           );
                                         }}
                                         xmlns="http://www.w3.org/2000/svg"
@@ -4059,16 +3859,7 @@ export default function Data(props) {
                                                   }
                                                 )}
                                               </ul>
-                                            </div>,
-                                            {
-                                              position: "top-right",
-                                              autoClose: 5000,
-                                              hideProgressBar: false,
-                                              closeOnClick: true,
-                                              pauseOnHover: true,
-                                              draggable: true,
-                                              progress: undefined,
-                                            }
+                                            </div>
                                           );
                                         }}
                                         xmlns="http://www.w3.org/2000/svg"
@@ -4455,16 +4246,7 @@ export default function Data(props) {
                                                     }
                                                   )}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -4522,16 +4304,7 @@ export default function Data(props) {
                                                     );
                                                   })}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -4579,16 +4352,7 @@ export default function Data(props) {
                                                     );
                                                   })}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -4646,16 +4410,7 @@ export default function Data(props) {
                                                     }
                                                   )}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -4730,16 +4485,7 @@ export default function Data(props) {
                                                     }
                                                   )}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -4797,16 +4543,7 @@ export default function Data(props) {
                                                     );
                                                   })}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -4945,16 +4682,7 @@ export default function Data(props) {
                                                     }
                                                   )}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -5067,16 +4795,7 @@ export default function Data(props) {
                                                       }
                                                     )}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -5137,16 +4856,7 @@ export default function Data(props) {
                                                       );
                                                     })}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -5198,16 +4908,7 @@ export default function Data(props) {
                                                       );
                                                     })}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -5266,16 +4967,7 @@ export default function Data(props) {
                                                       }
                                                     )}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -5356,16 +5048,7 @@ export default function Data(props) {
                                                       }
                                                     )}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -5423,16 +5106,7 @@ export default function Data(props) {
                                                       );
                                                     })}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -5572,16 +5246,7 @@ export default function Data(props) {
                                                       }
                                                     )}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -5755,16 +5420,7 @@ export default function Data(props) {
                                                     }
                                                   )}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -5822,16 +5478,7 @@ export default function Data(props) {
                                                     );
                                                   })}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -5879,16 +5526,7 @@ export default function Data(props) {
                                                     );
                                                   })}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -5946,16 +5584,7 @@ export default function Data(props) {
                                                     }
                                                   )}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -6030,16 +5659,7 @@ export default function Data(props) {
                                                     }
                                                   )}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -6097,16 +5717,7 @@ export default function Data(props) {
                                                     );
                                                   })}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -6245,16 +5856,7 @@ export default function Data(props) {
                                                     }
                                                   )}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -6369,16 +5971,7 @@ export default function Data(props) {
                                                       }
                                                     )}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -6439,16 +6032,7 @@ export default function Data(props) {
                                                       );
                                                     })}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -6500,16 +6084,7 @@ export default function Data(props) {
                                                       );
                                                     })}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -6568,16 +6143,7 @@ export default function Data(props) {
                                                       }
                                                     )}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -6658,16 +6224,7 @@ export default function Data(props) {
                                                       }
                                                     )}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -6725,16 +6282,7 @@ export default function Data(props) {
                                                       );
                                                     })}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -6874,16 +6422,7 @@ export default function Data(props) {
                                                       }
                                                     )}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -7051,16 +6590,7 @@ export default function Data(props) {
                                                     }
                                                   )}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -7118,16 +6648,7 @@ export default function Data(props) {
                                                     );
                                                   })}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -7175,16 +6696,7 @@ export default function Data(props) {
                                                     );
                                                   })}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -7242,16 +6754,7 @@ export default function Data(props) {
                                                     }
                                                   )}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -7326,16 +6829,7 @@ export default function Data(props) {
                                                     }
                                                   )}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -7393,16 +6887,7 @@ export default function Data(props) {
                                                     );
                                                   })}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -7541,16 +7026,7 @@ export default function Data(props) {
                                                     }
                                                   )}
                                                 </ul>
-                                              </div>,
-                                              {
-                                                position: "top-right",
-                                                autoClose: 5000,
-                                                hideProgressBar: false,
-                                                closeOnClick: true,
-                                                pauseOnHover: true,
-                                                draggable: true,
-                                                progress: undefined,
-                                              }
+                                              </div>
                                             );
                                           }}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -7659,16 +7135,7 @@ export default function Data(props) {
                                                       }
                                                     )}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -7729,16 +7196,7 @@ export default function Data(props) {
                                                       );
                                                     })}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -7790,16 +7248,7 @@ export default function Data(props) {
                                                       );
                                                     })}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -7858,16 +7307,7 @@ export default function Data(props) {
                                                       }
                                                     )}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -7948,16 +7388,7 @@ export default function Data(props) {
                                                       }
                                                     )}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -8015,16 +7446,7 @@ export default function Data(props) {
                                                       );
                                                     })}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
@@ -8164,16 +7586,7 @@ export default function Data(props) {
                                                       }
                                                     )}
                                                   </ul>
-                                                </div>,
-                                                {
-                                                  position: "top-right",
-                                                  autoClose: 5000,
-                                                  hideProgressBar: false,
-                                                  closeOnClick: true,
-                                                  pauseOnHover: true,
-                                                  draggable: true,
-                                                  progress: undefined,
-                                                }
+                                                </div>
                                               );
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
