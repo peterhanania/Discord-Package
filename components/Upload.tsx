@@ -32,7 +32,7 @@ interface objectInterface extends IObjectKeys {
   other?: any;
 }
 
-export default function Upload(): ReactElement | "" {
+export default function Upload(): ReactElement {
   const { dataExtracted, setDataExtracted } = useContext<any>(DataContext);
   const [dragging, setDragging] = React.useState(false);
   const [error, setError] = React.useState<String | boolean | null>(null);
