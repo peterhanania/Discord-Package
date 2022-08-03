@@ -1,14 +1,15 @@
-import "./index.css";
+import "./styles/index.css";
 import "animate.css";
-import "./toastify.css";
+import "./styles/toastify.css";
 import "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import React from "react";
 import Loading from "../components/Loading";
 import { DataProvider } from "../components/utils/context";
+import { AppProps } from "next/app";
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {

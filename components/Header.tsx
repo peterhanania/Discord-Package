@@ -9,7 +9,7 @@ export default function Header() {
   const [settings, setSettings] = useState(false);
   const [info, setInfo] = useState(false);
 
-  function classNames(...classes) {
+  function classNames(...classes: any): any {
     return classes.filter(Boolean).join(" ");
   }
 
@@ -22,7 +22,7 @@ export default function Header() {
     },
   ];
   const [selected, setSelected] = useState(countries[0]);
-  const [theme, setTheme] = useState(null);
+  const [theme, setTheme] = useState<string | null>(null)
 
   useEffect(() => {
     setTheme(localStorage.theme);
@@ -146,7 +146,7 @@ export default function Header() {
                 <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
                   <button
                     onClick={() => {
-                      setCancel(false);
+                      setHelp(false);
                     }}
                     type="button"
                     className="button-green text-gray-200"
@@ -368,7 +368,7 @@ export default function Header() {
                         name="theme"
                         id="dark"
                         value="dark"
-                        onChange={()=>{}}
+                        onChange={() => {}}
                         checked={theme === "dark"}
                       />
                       <label htmlFor="dark">Dark</label>
@@ -386,7 +386,7 @@ export default function Header() {
                         name="theme"
                         id="light"
                         value="light"
-                        onChange={()=>{}}
+                        onChange={() => {}}
                         checked={theme === "light"}
                       />
                       <label htmlFor="light">Light</label>
@@ -495,7 +495,9 @@ export default function Header() {
                     <div>
                       <div className="flex items-center cursor-pointer">
                         <input
-                          defaultChecked={localStorage.getItem("debug") === "true"}
+                          defaultChecked={
+                            localStorage.getItem("debug") === "true"
+                          }
                           onChange={(e) => {
                             if (localStorage.getItem("debug") === "true") {
                               localStorage.setItem("debug", "false");
@@ -504,8 +506,7 @@ export default function Header() {
                             }
                           }}
                           id={"debug"}
-                          type="checkbox"
-                          defaultValue
+                          type="checkbox"  
                           className="w-4 h-4 text-blue-600 bg-gray-100 rounded  border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                         />
                         <label

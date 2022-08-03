@@ -1,9 +1,9 @@
 import React from "react";
 import Tippy from "@tippyjs/react";
-import Utils from "../components/utils";
+import Utils from "./utils";
 import { Unzip, AsyncUnzipInflate } from "fflate";
 import { Transition, Dialog } from "@headlessui/react";
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, ReactElement } from "react";
 import Features from "./json/features.json";
 import EventsJSON from "./json/events.json";
 import { ToastContainer, toast } from "react-toastify";
@@ -17,19 +17,36 @@ import moment from "moment";
 import chalk from "chalk";
 import { Line } from "rc-progress";
 
-export default function Upload() {
-  const { dataExtracted, setDataExtracted } = useContext(DataContext);
-  const [dragging, setDragging] = React.useState(false);
-  const [error, setError] = React.useState(null);
-  const [loading, setLoading] = React.useState("Loading...|||");
-  const [saveToDevice, setSaveToDevice] = React.useState(false);
-  const [percent, setPercent] = React.useState(90);
+interface IObjectKeys {
+  [key: string]: any;
+}
 
-  const classifyOBJ = (obj) => {
-    let newObj = {};
+interface objectInterface extends IObjectKeys {
+  bots?: any;
+  user?: any;
+  settings?: any;
+  connections?: any;
+  payments?: any;
+  messages?: any;
+  guilds?: any;
+  other?: any;
+}
+
+export default function Upload(): ReactElement | "" {
+  const { dataExtracted, setDataExtracted } = useContext<any>(DataContext);
+  const [dragging, setDragging] = React.useState(false);
+  const [error, setError] = React.useState<String | boolean | null>(null);
+  const [loading, setLoading] = React.useState<String | boolean | null>(
+    "Loading...|||"
+  );
+  const [saveToDevice, setSaveToDevice] = React.useState<boolean>(false);
+  const [percent, setPercent] = React.useState<number>(90);
+
+  const classifyOBJ = (obj: any): any => {
+    let newObj: any = {};
     for (let key in obj) {
       if (key.includes(".")) {
-        let newKey = key.split(".")[0];
+        let newKey: string = key.split(".")[0];
         if (!newObj[newKey]) newObj[newKey] = {};
         newObj[newKey][key.split(".")[1]] = obj[key];
       } else {
@@ -40,7 +57,7 @@ export default function Upload() {
     return newObj;
   };
 
-  let [defaultOptions, setDefaultOptions] = React.useState(
+  let [defaultOptions, setDefaultOptions] = React.useState<any>(
     classifyOBJ({
       bots: true,
       "user.premium_until": true,
@@ -74,10 +91,11 @@ export default function Upload() {
     })
   );
 
-  const [demo, setDemo] = React.useState(false);
-  const [oldSelected, setOldSelected] = React.useState(null);
-  const [selectedFeatures, setSelectedFeatures] =
-    React.useState(defaultOptions);
+  const [demo, setDemo] = React.useState<boolean>(false);
+  const [oldSelected, setOldSelected] = React.useState<any | null>(null);
+  const [selectedFeatures, setSelectedFeatures] = React.useState<any | null>(
+    defaultOptions
+  );
 
   React.useEffect(() => {
     if (window.location.href.includes("demo=true") && dataExtracted) {
@@ -87,14 +105,17 @@ export default function Upload() {
       setPercent(0);
     }
 
-    if (localStorage.getItem("defaultOptions_enabled") === "true") {
+    const itm = localStorage.getItem("defaultOptions_enabled");
+    if (itm === "true") {
       setSaveToDevice(true);
 
-      if (localStorage.getItem("defaultOptions")) {
+      if (itm) {
         try {
-          const data_d = JSON.parse(localStorage.getItem("defaultOptions"));
+          const data_d = JSON.parse(
+            localStorage.getItem("defaultOptions") as any
+          );
           if (!data_d) return;
-          const obj = {
+          const obj: objectInterface = {
             bots: true,
             user: { premium_until: true, badges: true },
             settings: { appearance: true, recentEmojis: true },
@@ -110,6 +131,8 @@ export default function Upload() {
               topEmojis: true,
               hoursValues: true,
               oldestMessages: true,
+              attachmentCount: true,
+              mentionCount: true,
             },
             guilds: true,
             other: {
@@ -124,34 +147,12 @@ export default function Upload() {
             statistics: [],
           };
 
-          const categories = Object.keys(obj);
-          if (
-            JSON.stringify(categories) !== JSON.stringify(Object.keys(data_d))
-          )
-            return;
-
-          let val = true;
-          Object.keys(obj)
-            .filter((category) => category !== "statistics")
-            .forEach((category) => {
-              if (
-                JSON.stringify(Object.keys(data_d[category])) !==
-                JSON.stringify(Object.keys(obj[category]))
-              )
-                val = false;
-            });
-
-          if (!val) return;
-
-          const validStatistics = Object.keys(EventsJSON.events);
-          let val2 = false;
-          data_d.statistics.forEach((stat) => {
-            if (!validStatistics.includes(stat)) val2 = true;
-          });
-
-          if (val2) return;
-
-          setSelectedFeatures(data_d);
+          async function validateData_() {
+            const validateOptions = await Utils.validateOptions(obj, data_d);
+            if (!validateOptions) return;
+            setSelectedFeatures(data_d);
+          }
+          validateData_();
         } catch (e) {
           return;
         }
@@ -178,11 +179,11 @@ export default function Upload() {
     };
   });
 
-  const delay = (ms) => {
+  const delay = (ms: number) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
-  const handleDragEnter = (e) => {
+  const handleDragEnter = (e: any) => {
     setError(null);
     e.preventDefault();
     e.stopPropagation();
@@ -190,20 +191,20 @@ export default function Upload() {
     setDragging(true);
   };
 
-  const handleDragLeave = (e) => {
+  const handleDragLeave = (e: any) => {
     setError(null);
     e.preventDefault();
     e.stopPropagation();
 
     setDragging(false);
   };
-  const handleDragOver = (e) => {
+  const handleDragOver = (e: any) => {
     setError(null);
     e.preventDefault();
     e.stopPropagation();
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: any) => {
     setError(null);
     e.preventDefault();
     e.stopPropagation();
@@ -215,12 +216,12 @@ export default function Upload() {
     }
   };
 
-  const [cancel, setCancel] = React.useState(false);
-  const [showLargeModal, setShowLargeModal] = React.useState(false);
+  const [cancel, setCancel] = React.useState<boolean>(false);
+  const [showLargeModal, setShowLargeModal] = React.useState<boolean>(false);
 
-  const onUpload = (files) => {
+  const onUpload = (files: any) => {
     if (loading) {
-      function hasClass(el, cl) {
+      function hasClass(el: any, cl: any): boolean {
         return el.classList
           ? el.classList.contains(cl)
           : !!el.className &&
@@ -311,7 +312,7 @@ export default function Upload() {
               `  ${chalk.yellow(`Package registered`)}`
           );
 
-        const files = [];
+        const files: Array<any> = [];
 
         reader.onfile = (f) => {
           return files.push(f);
@@ -377,14 +378,14 @@ export default function Upload() {
           return;
         }
 
-        async function extractData(files, options) {
+        async function extractData(files: any, options: any) {
           if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
                 chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
                 `  ${chalk.yellow(`Preparing to extract Data`)}`
             );
-          let data = {
+          let data: objectInterface = {
             user: {
               id: null,
               username: null,
@@ -488,7 +489,7 @@ export default function Upload() {
               );
           } else throw new Error("User ID not found");
 
-          const userId = data.user.id;
+          const userId: any = data.user.id;
 
           if (userInformationData.username)
             data.user.username = userInformationData.username;
@@ -607,10 +608,10 @@ export default function Upload() {
                 userInformationData.settings.frecency.emojiFrecency &&
                 userInformationData.settings.frecency.emojiFrecency.emojis
               ) {
-                const emojis = [];
+                const emojis: Array<any> = [];
                 Object.keys(
                   userInformationData.settings.frecency.emojiFrecency.emojis
-                ).forEach((key) => {
+                ).forEach((key: any) => {
                   const key_e =
                     userInformationData.settings.frecency.emojiFrecency.emojis[
                       key
@@ -653,12 +654,12 @@ export default function Upload() {
             ) {
               if (
                 Object.values(userInformationData.connections).filter(
-                  (s) => s.type !== "contacts"
+                  (s: any): boolean => s.type !== "contacts"
                 ).length
               ) {
                 const cncs = Object.values(userInformationData.connections)
-                  .filter((s) => s.type !== "contacts")
-                  .map((e) => {
+                  .filter((s: any): any => s.type !== "contacts")
+                  .map((e: any): any => {
                     return {
                       type: e.type,
                       name: e.name,
@@ -698,8 +699,8 @@ export default function Upload() {
           ) {
             const gifted = Object.values(userInformationData.entitlements);
             if (gifted.length) {
-              const types = {};
-              gifted.forEach((e) => {
+              const types: any = {};
+              gifted.forEach((e: any): any => {
                 if (e.subscription_plan && e.subscription_plan.name) {
                   if (e.subscription_plan.name in types) {
                     types[e.subscription_plan.name] += 1;
@@ -723,23 +724,23 @@ export default function Upload() {
           }
 
           const confirmedPayments = userInformationData?.payments.filter(
-            (p) => p.status === 1
+            (p: any): boolean => p.status === 1
           );
           if (confirmedPayments.length) {
             if (options.payments.total) {
               data.payments.total += confirmedPayments
-                .map((p) => p.amount / 100)
-                .reduce((p, c) => p + c);
+                .map((p: any): number => p.amount / 100)
+                .reduce((p: number, c: number): number => p + c);
             }
 
             if (options.payments.transactions) {
               const trns = confirmedPayments
                 .sort(
-                  (a, b) =>
+                  (a: any, b: any): number =>
                     new Date(a.created_at).getTime() -
                     new Date(b.created_at).getTime()
                 )
-                .map((p) => {
+                .map((p: any): object => {
                   return {
                     information: p.description,
                     amount: p.amount / 100,
@@ -786,7 +787,7 @@ export default function Upload() {
             await Utils.readFile("messages/index.json", files)
           );
           const messagesREGEX = /messages\/c?([0-9]{16,32})\/$/;
-          const channelsIDFILE = files.filter((file) =>
+          const channelsIDFILE = files.filter((file: any): boolean =>
             messagesREGEX.test(file.name)
           );
 
@@ -796,10 +797,10 @@ export default function Upload() {
             )[1] === undefined;
 
           const channelsIDs = channelsIDFILE.map(
-            (file) => file.name.match(messagesREGEX)[1]
+            (file: any) => file.name.match(messagesREGEX)[1]
           );
 
-          const channels = [];
+          const channels: Array<any> = [];
           let messagesRead = 0;
 
           if (isDebug) {
@@ -817,7 +818,7 @@ export default function Upload() {
             );
 
           await Promise.all(
-            channelsIDs.map((channelID) => {
+            channelsIDs.map((channelID: any): any => {
               return new Promise((resolve) => {
                 const channelDataPath = `messages/${
                   isOldPackage ? "" : "c"
@@ -831,7 +832,7 @@ export default function Upload() {
                   Utils.readFile(channelMessagesPath, files),
                 ]).then(([rawData, rawMessages]) => {
                   if (!rawData || !rawMessages) {
-                    return resolve();
+                    return resolve([rawData, rawMessages]);
                   } else messagesRead++;
 
                   const data_ = JSON.parse(rawData);
@@ -840,7 +841,9 @@ export default function Upload() {
                   const isDM =
                     data_.recipients && data_.recipients.length === 2;
                   const dmUserID = isDM
-                    ? data_.recipients.find((userID) => userID !== userId)
+                    ? data_.recipients.find(
+                        (userID: any): boolean => userID !== userId
+                      )
                     : undefined;
                   channels.push({
                     data_,
@@ -850,7 +853,7 @@ export default function Upload() {
                     dmUserID,
                   });
 
-                  resolve();
+                  resolve([rawData, rawMessages]);
                 });
               });
             })
@@ -903,9 +906,9 @@ export default function Upload() {
 
               .map((channel) => {
                 const words = channel.messages
-                  .map((message) => message.words)
+                  .map((message: any): any => message.words)
                   .flat()
-                  .filter((w) => {
+                  .filter((w: any): any => {
                     const mentionRegex = /^<@!?(\d+)>$/;
                     const mention_ = mentionRegex.test(w)
                       ? w.match(mentionRegex)[1]
@@ -915,7 +918,7 @@ export default function Upload() {
                   });
 
                 const oldestMessages = channel.messages
-                  .map((message) => {
+                  .map((message: any): any => {
                     return {
                       sentence: message.words.join(" "),
                       timestamp: message.timestamp,
@@ -923,11 +926,16 @@ export default function Upload() {
                     };
                   })
                   .flat()
-                  .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+                  .sort((a: any, b: any): any => {
+                    const date1: any = new Date(a.timestamp);
+                    const date2: any = new Date(b.timestamp);
+
+                    return date1 - date2;
+                  })
                   .slice(0, 100);
 
                 const topEmojisANDcustom = channel.messages
-                  .map((message) => {
+                  .map((message: any): any => {
                     const emojis = Utils.getEmojiCount(message.words);
                     const customEmojis = Utils.getCustomEmojiCount(
                       message.words
@@ -946,12 +954,12 @@ export default function Upload() {
 
                 const topEmojis_ = topEmojisANDcustom
                   .flat()
-                  .filter((w) => w.emojis)
-                  .map((w) => w.emojis)
+                  .filter((w: any) => w.emojis)
+                  .map((w: any) => w.emojis)
                   .flat();
 
-                const topEmojis = [];
-                topEmojis_.forEach((key) => {
+                const topEmojis: Array<any> = [];
+                topEmojis_.forEach((key: any) => {
                   if (!topEmojis.find((x) => x.emoji === key.emoji)) {
                     topEmojis.push({ emoji: key.emoji, count: 1 });
                   } else {
@@ -964,12 +972,12 @@ export default function Upload() {
 
                 const topCustomEmojis_ = topEmojisANDcustom
                   .flat()
-                  .filter((w) => w.customEmojis)
-                  .map((w) => w.customEmojis)
+                  .filter((w: any) => w.customEmojis)
+                  .map((w: any) => w.customEmojis)
                   .flat();
 
-                const topCustomEmojis = [];
-                topCustomEmojis_.forEach((key) => {
+                const topCustomEmojis: Array<any> = [];
+                topCustomEmojis_.forEach((key: any) => {
                   if (!topCustomEmojis.find((x) => x.emoji === key.emoji)) {
                     topCustomEmojis.push({ emoji: key.emoji, count: 1 });
                   } else {
@@ -982,7 +990,7 @@ export default function Upload() {
 
                 const favoriteWords = Utils.getFavoriteWords(words);
                 const curseWords = Utils.getCursedWords(
-                  words.filter((w) => w.length < 10)
+                  words.filter((w: any) => w.length < 10)
                 );
                 const topCursed = curseWords;
                 const links = Utils.getTopLinks(words);
@@ -1049,9 +1057,9 @@ export default function Upload() {
 
               .map((channel) => {
                 const words = channel.messages
-                  .map((message) => message.words)
+                  .map((message: any) => message.words)
                   .flat()
-                  .filter((w) => {
+                  .filter((w: any) => {
                     const mentionRegex = /^<@!?(\d+)>$/;
                     const mention_ = mentionRegex.test(w)
                       ? w.match(mentionRegex)[1]
@@ -1061,7 +1069,7 @@ export default function Upload() {
                   });
 
                 const oldestMessages = channel.messages
-                  .map((message) => {
+                  .map((message: any) => {
                     return {
                       sentence: message.words.join(" "),
                       timestamp: message.timestamp,
@@ -1071,11 +1079,16 @@ export default function Upload() {
                     };
                   })
                   .flat()
-                  .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+                  .sort((a: any, b: any): any => {
+                    const date1: any = new Date(a.timestamp);
+                    const date2: any = new Date(b.timestamp);
+
+                    return date1 - date2;
+                  })
                   .slice(0, 100);
 
                 const topEmojisANDcustom = channel.messages
-                  .map((message) => {
+                  .map((message: any) => {
                     const emojis = Utils.getEmojiCount(message.words);
                     const customEmojis = Utils.getCustomEmojiCount(
                       message.words
@@ -1094,12 +1107,12 @@ export default function Upload() {
 
                 const topEmojis_ = topEmojisANDcustom
                   .flat()
-                  .filter((w) => w.emojis)
-                  .map((w) => w.emojis)
+                  .filter((w: any) => w.emojis)
+                  .map((w: any) => w.emojis)
                   .flat();
 
-                const topEmojis = [];
-                topEmojis_.forEach((key) => {
+                const topEmojis: Array<any> = [];
+                topEmojis_.forEach((key: any) => {
                   if (!topEmojis.find((x) => x.emoji === key.emoji)) {
                     topEmojis.push({ emoji: key.emoji, count: 1 });
                   } else {
@@ -1112,12 +1125,12 @@ export default function Upload() {
 
                 const topCustomEmojis_ = topEmojisANDcustom
                   .flat()
-                  .filter((w) => w.customEmojis)
-                  .map((w) => w.customEmojis)
+                  .filter((w: any) => w.customEmojis)
+                  .map((w: any) => w.customEmojis)
                   .flat();
 
-                const topCustomEmojis = [];
-                topCustomEmojis_.forEach((key) => {
+                const topCustomEmojis: Array<any> = [];
+                topCustomEmojis_.forEach((key: any) => {
                   if (!topCustomEmojis.find((x) => x.emoji === key.emoji)) {
                     topCustomEmojis.push({ emoji: key.emoji, count: 1 });
                   } else {
@@ -1129,7 +1142,7 @@ export default function Upload() {
                 });
                 const favoriteWords = Utils.getFavoriteWords(words);
                 const curseWords = Utils.getCursedWords(
-                  words.filter((w) => w.length < 10)
+                  words.filter((w: any) => w.length < 10)
                 );
                 const topCursed = curseWords;
                 const links = Utils.getTopLinks(words);
@@ -1191,9 +1204,9 @@ export default function Upload() {
 
               .map((channel) => {
                 const words = channel.messages
-                  .map((message) => message.words)
+                  .map((message: any) => message.words)
                   .flat()
-                  .filter((w) => {
+                  .filter((w: any) => {
                     const mentionRegex = /^<@!?(\d+)>$/;
                     const mention_ = mentionRegex.test(w)
                       ? w.match(mentionRegex)[1]
@@ -1203,7 +1216,7 @@ export default function Upload() {
                   });
 
                 const oldestMessages = channel.messages
-                  .map((message) => {
+                  .map((message: any) => {
                     return {
                       sentence: message.words.join(" "),
                       timestamp: message.timestamp,
@@ -1211,11 +1224,16 @@ export default function Upload() {
                     };
                   })
                   .flat()
-                  .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+                  .sort((a: any, b: any): any => {
+                    const date1: any = new Date(a.timestamp);
+                    const date2: any = new Date(b.timestamp);
+
+                    return date1 - date2;
+                  })
                   .slice(0, 100);
 
                 const topEmojisANDcustom = channel.messages
-                  .map((message) => {
+                  .map((message: any) => {
                     const emojis = Utils.getEmojiCount(message.words);
                     const customEmojis = Utils.getCustomEmojiCount(
                       message.words
@@ -1234,12 +1252,12 @@ export default function Upload() {
 
                 const topEmojis_ = topEmojisANDcustom
                   .flat()
-                  .filter((w) => w.emojis)
-                  .map((w) => w.emojis)
+                  .filter((w: any) => w.emojis)
+                  .map((w: any) => w.emojis)
                   .flat();
 
-                const topEmojis = [];
-                topEmojis_.forEach((key) => {
+                const topEmojis: Array<any> = [];
+                topEmojis_.forEach((key: any) => {
                   if (!topEmojis.find((x) => x.emoji === key.emoji)) {
                     topEmojis.push({ emoji: key.emoji, count: 1 });
                   } else {
@@ -1252,12 +1270,12 @@ export default function Upload() {
 
                 const topCustomEmojis_ = topEmojisANDcustom
                   .flat()
-                  .filter((w) => w.customEmojis)
-                  .map((w) => w.customEmojis)
+                  .filter((w: any) => w.customEmojis)
+                  .map((w: any) => w.customEmojis)
                   .flat();
 
-                const topCustomEmojis = [];
-                topCustomEmojis_.forEach((key) => {
+                const topCustomEmojis: Array<any> = [];
+                topCustomEmojis_.forEach((key: any) => {
                   if (!topCustomEmojis.find((x) => x.emoji === key.emoji)) {
                     topCustomEmojis.push({ emoji: key.emoji, count: 1 });
                   } else {
@@ -1270,7 +1288,7 @@ export default function Upload() {
 
                 const favoriteWords = Utils.getFavoriteWords(words);
                 const curseWords = Utils.getCursedWords(
-                  words.filter((w) => w.length < 10)
+                  words.filter((w: any) => w.length < 10)
                 );
                 const topCursed = curseWords;
                 const links = Utils.getTopLinks(words);
@@ -1302,13 +1320,13 @@ export default function Upload() {
                 };
               });
 
-            const guilds = [];
+            const guilds: Array<any> = [];
 
-            function merge(a, b) {
+            function merge(a: Array<any>, b: Array<any>) {
               return a.concat(b);
             }
 
-            topGuilds.forEach((ch) => {
+            topGuilds.forEach((ch: any): any => {
               if (!guilds.find((x) => x.guildName === ch.guildName)) {
                 ch.name = [ch.name];
                 guilds.push(ch);
@@ -1413,9 +1431,9 @@ export default function Upload() {
 
             const channel__ = channel_.map((channel) => {
               const words = channel.messages
-                .map((message) => message.words)
+                .map((message: any) => message.words)
                 .flat()
-                .filter((w) => {
+                .filter((w: any) => {
                   const mentionRegex = /^<@!?(\d+)>$/;
                   const mention_ = mentionRegex.test(w)
                     ? w.match(mentionRegex)[1]
@@ -1425,18 +1443,23 @@ export default function Upload() {
                 });
 
               const oldestMessages = channel.messages
-                .map((message) => {
+                .map((message: any) => {
                   return {
                     sentence: message.words.join(" "),
                     timestamp: message.timestamp,
                   };
                 })
                 .flat()
-                .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+                .sort((a: any, b: any): any => {
+                  const date1: any = new Date(a.timestamp);
+                  const date2: any = new Date(b.timestamp);
+
+                  return date1 - date2;
+                })
                 .slice(0, 100);
 
               const topEmojisANDcustom = channel.messages
-                .map((message) => {
+                .map((message: any) => {
                   const emojis = Utils.getEmojiCount(message.words);
                   const customEmojis = Utils.getCustomEmojiCount(message.words);
 
@@ -1451,12 +1474,12 @@ export default function Upload() {
 
               const topEmojis_ = topEmojisANDcustom
                 .flat()
-                .filter((w) => w.emojis)
-                .map((w) => w.emojis)
+                .filter((w: any) => w.emojis)
+                .map((w: any) => w.emojis)
                 .flat();
 
-              const topEmojis = [];
-              topEmojis_.forEach((key) => {
+              const topEmojis: Array<any> = [];
+              topEmojis_.forEach((key: any) => {
                 if (!topEmojis.find((x) => x.emoji === key.emoji)) {
                   topEmojis.push({ emoji: key.emoji, count: 1 });
                 } else {
@@ -1469,12 +1492,12 @@ export default function Upload() {
 
               const topCustomEmojis_ = topEmojisANDcustom
                 .flat()
-                .filter((w) => w.customEmojis)
-                .map((w) => w.customEmojis)
+                .filter((w: any) => w.customEmojis)
+                .map((w: any) => w.customEmojis)
                 .flat();
 
-              const topCustomEmojis = [];
-              topCustomEmojis_.forEach((key) => {
+              const topCustomEmojis: Array<any> = [];
+              topCustomEmojis_.forEach((key: any) => {
                 if (!topCustomEmojis.find((x) => x.emoji === key.emoji)) {
                   topCustomEmojis.push({ emoji: key.emoji, count: 1 });
                 } else {
@@ -1487,7 +1510,7 @@ export default function Upload() {
 
               const favoriteWords = Utils.getFavoriteWords(words);
               const curseWords = Utils.getCursedWords(
-                words.filter((w) => w.length < 10)
+                words.filter((w: any) => w.length < 10)
               );
               const topCursed = curseWords;
               const links = Utils.getTopLinks(words);
@@ -1554,7 +1577,7 @@ export default function Upload() {
             data.messages.characterCount = channels
               .map((channel) => channel.messages)
               .flat()
-              .map((message) => message.length)
+              .map((message: any) => message.length)
               .reduce((p, c) => p + c);
 
             data.messages.messageCount = channels
@@ -1582,7 +1605,7 @@ export default function Upload() {
               .filter((c) => c.data_ && c.data_.guild)
               .map((channel) => {
                 const words = channel.messages
-                  .map((message) => {
+                  .map((message: any) => {
                     return {
                       sentence: message.words.join(" "),
                       timestamp: message.timestamp,
@@ -1594,7 +1617,12 @@ export default function Upload() {
                 return words;
               })
               .flat()
-              .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+              .sort((a: any, b: any): any => {
+                const date1: any = new Date(a.timestamp);
+                const date2: any = new Date(b.timestamp);
+
+                return date1 - date2;
+              });
 
             const oldestInDMs = channels
               .filter(
@@ -1605,7 +1633,7 @@ export default function Upload() {
 
               .map((channel) => {
                 const words = channel.messages
-                  .map((message) => {
+                  .map((message: any) => {
                     return {
                       sentence: message.words.join(" "),
                       timestamp: message.timestamp,
@@ -1618,7 +1646,12 @@ export default function Upload() {
                 return words;
               })
               .flat()
-              .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+              .sort((a: any, b: any): any => {
+                const date1: any = new Date(a.timestamp);
+                const date2: any = new Date(b.timestamp);
+
+                return date1 - date2;
+              });
 
             const oldestInGroupDM = channels
               .filter(
@@ -1631,7 +1664,7 @@ export default function Upload() {
               )
               .map((channel) => {
                 const words = channel.messages
-                  .map((message) => {
+                  .map((message: any) => {
                     return {
                       sentence: message.words.join(" "),
                       timestamp: message.timestamp,
@@ -1644,12 +1677,22 @@ export default function Upload() {
                 return words;
               })
               .flat()
-              .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+              .sort((a: any, b: any): any => {
+                const date1: any = new Date(a.timestamp);
+                const date2: any = new Date(b.timestamp);
+
+                return date1 - date2;
+              });
 
             const oldestInTotal = oldestInChannel
               .concat(oldestInDMs)
               .concat(oldestInGroupDM)
-              .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+              .sort((a: any, b: any): number => {
+                const date1: any = new Date(a.timestamp);
+                const date2: any = new Date(b.timestamp);
+
+                return date1 - date2;
+              });
 
             data.messages.oldestMessages = oldestInTotal.slice(0, 1000);
             if (isDebug)
@@ -1680,20 +1723,22 @@ export default function Upload() {
             const oldestInChannel = channels
               .map((channel) => {
                 const words = channel.messages
-                  .map((message) => {
+                  .map((message: any) => {
                     const regex =
                       /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|mp4|pdf|zip|wmv|mp3|nitf|doc|docx))/gi;
-                    const attachments = message.words.filter((word) => {
+                    const attachments = message.words.filter((word: any) => {
                       return regex.test(word);
                     });
 
                     //remove everything before the http and after the extension example .pmg
-                    const attachmentsClean = attachments.map((attachment) => {
-                      return attachment.replace(
-                        /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|mp4|pdf|zip|wmv|mp3|nitf|doc|docx))/gi,
-                        "$1"
-                      );
-                    });
+                    const attachmentsClean = attachments.map(
+                      (attachment: any) => {
+                        return attachment.replace(
+                          /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|mp4|pdf|zip|wmv|mp3|nitf|doc|docx))/gi,
+                          "$1"
+                        );
+                      }
+                    );
                     return attachmentsClean;
                   })
                   .flat();
@@ -1731,26 +1776,26 @@ export default function Upload() {
             const oldestInChannel = channels
               .map((channel) => {
                 const words = channel.messages
-                  .map((message) => {
+                  .map((message: any) => {
                     const discordChannelMentionRegex = /<#[0-9]*>/gi;
                     const discordUserMentionRegex = /<@[0-9]*>/gi;
                     const discordRoleMentionRegex = /<@&[0-9]*>/gi;
 
-                    const mentions = message.words.map((word) => {
+                    const mentions = message.words.map((word: any) => {
                       const o = {
-                        channel: message.words.filter((word) =>
+                        channel: message.words.filter((word: any) =>
                           discordChannelMentionRegex.test(word)
                         ).length,
-                        user: message.words.filter((word) =>
+                        user: message.words.filter((word: any) =>
                           discordUserMentionRegex.test(word)
                         ).length,
-                        role: message.words.filter((word) =>
+                        role: message.words.filter((word: any) =>
                           discordRoleMentionRegex.test(word)
                         ).length,
-                        here: message.words.filter((word) =>
+                        here: message.words.filter((word: any) =>
                           /@here/g.test(word)
                         ).length,
-                        everyone: message.words.filter((word) =>
+                        everyone: message.words.filter((word: any) =>
                           /@everyone/g.test(word)
                         ).length,
                       };
@@ -1791,7 +1836,7 @@ export default function Upload() {
                   b.everyone
               );
 
-            const top = {};
+            const top: any = {};
             oldestInChannel.forEach((mention) => {
               if (mention.channel > 0) {
                 if (top.channel) {
@@ -1860,7 +1905,7 @@ export default function Upload() {
             const oldestInChannel = channels
               .map((channel) => {
                 const words = channel.messages
-                  .map((message) => {
+                  .map((message: any) => {
                     const emojis = Utils.getEmojiCount(message.words);
                     const customEmojis = Utils.getCustomEmojiCount(
                       message.words
@@ -1882,12 +1927,12 @@ export default function Upload() {
               .flat();
 
             const mUsedEmojis = oldestInChannel
-              .filter((w) => w.emojis)
-              .map((w) => w.emojis)
+              .filter((w: any) => w.emojis)
+              .map((w: any) => w.emojis)
               .flat();
 
-            const finalEmojiCount = [];
-            mUsedEmojis.forEach((key) => {
+            const finalEmojiCount: Array<any> = [];
+            mUsedEmojis.forEach((key: any) => {
               if (!finalEmojiCount.find((x) => x.emoji === key.emoji)) {
                 finalEmojiCount.push({ emoji: key.emoji, count: 1 });
               } else {
@@ -1931,7 +1976,7 @@ export default function Upload() {
             const oldestInChannel = channels
               .map((channel) => {
                 const words = channel.messages
-                  .map((message) => {
+                  .map((message: any) => {
                     const emojis = Utils.getEmojiCount(message.words);
                     const customEmojis = Utils.getCustomEmojiCount(
                       message.words
@@ -1953,12 +1998,12 @@ export default function Upload() {
               .flat();
 
             const mUsedCustom = oldestInChannel
-              .filter((w) => w.customEmojis)
-              .map((w) => w.customEmojis)
+              .filter((w: any) => w.customEmojis)
+              .map((w: any) => w.customEmojis)
               .flat();
 
-            const finalCustomCount = [];
-            mUsedCustom.forEach((key) => {
+            const finalCustomCount: Array<any> = [];
+            mUsedCustom.forEach((key: any) => {
               if (!finalCustomCount.find((x) => x.emoji === key.emoji)) {
                 finalCustomCount.push({ emoji: key.emoji, count: 1 });
               } else {
@@ -2002,11 +2047,11 @@ export default function Upload() {
                   .flat()
                   .filter((m) => {
                     if (!m.timestamp) return false;
-                    const date = new Date(m.timestamp).getHours();
+                    const date: any = new Date(m.timestamp).getHours();
                     if (date && date !== "Invalid Date") {
                       return date === i;
                     } else {
-                      const date_ = moment(m.timestamp).format("HH");
+                      const date_: any = moment(m.timestamp).format("HH");
                       if (date_) {
                         return date_ == i;
                       } else {
@@ -2038,9 +2083,9 @@ export default function Upload() {
           const words = channels
             .map((channel) => channel.messages)
             .flat()
-            .map((message) => message.words)
+            .map((message: any) => message.words)
             .flat()
-            .filter((w) => {
+            .filter((w: any) => {
               const mentionRegex = /^<@!?(\d+)>$/;
               const mention_ = mentionRegex.test(w)
                 ? w.match(mentionRegex)[1]
@@ -2077,7 +2122,7 @@ export default function Upload() {
             setPercent(76);
 
             const curseWords = Utils.getCursedWords(
-              words.filter((w) => w.length < 10)
+              words.filter((w: any) => w.length < 10)
             );
             data.messages.topCursed = curseWords;
             if (isDebug)
@@ -2204,7 +2249,7 @@ export default function Upload() {
             }
 
             const bots = files.filter(
-              (file) =>
+              (file: any) =>
                 file.name.startsWith("account/applications/") &&
                 file.name.endsWith(".json")
             );
@@ -2216,7 +2261,7 @@ export default function Upload() {
               } else await delay(100);
 
               if (isDebug) await delay(700);
-              const botsArr = [];
+              const botsArr: Array<any> = [];
               for (let i = 0; i < bots.length; i++) {
                 const bot = JSON.parse(
                   await Utils.readFile(bots[i].name, files)
@@ -2281,7 +2326,7 @@ export default function Upload() {
             }
 
             if (
-              data?.bots?.filter((bot) => bot.verified)?.length > 0 &&
+              data?.bots?.filter((bot: any) => bot.verified)?.length > 0 &&
               !badges.includes("VERIFIED_BOT_DEVELOPER")
             ) {
               badges.push("VERIFIED_TRUE");
@@ -2304,8 +2349,8 @@ export default function Upload() {
                   `  ${chalk.yellow(`Calculating your analytics`)}`
               );
             if (isDebug) await delay(2000);
-            const statistics = await Utils.readAnalyticsFile(
-              files.find((file) =>
+            const statistics: any = await Utils.readAnalyticsFile(
+              files.find((file: any) =>
                 /activity\/analytics\/events-[0-9]{4}-[0-9]{5}-of-[0-9]{5}\.json/.test(
                   file.name
                 )
@@ -2317,100 +2362,17 @@ export default function Upload() {
 
             data.statistics = statistics?.all;
             if (data?.statistics?.appOpened) {
-              data.statistics.averageOpenCount = {
-                day:
-                  data.statistics.appOpened &&
-                  parseInt(
-                    data.statistics.appOpened /
-                      ((Date.now() - (userId / 4194304 + 1420070400000)) /
-                        24 /
-                        60 /
-                        60 /
-                        1000)
-                  ),
-
-                week:
-                  data.statistics.appOpened &&
-                  parseInt(
-                    data.statistics.appOpened /
-                      ((Date.now() - (userId / 4194304 + 1420070400000)) /
-                        7 /
-                        24 /
-                        60 /
-                        60 /
-                        1000)
-                  ),
-                month:
-                  data.statistics.appOpened &&
-                  parseInt(
-                    data.statistics.appOpened /
-                      ((Date.now() - (userId / 4194304 + 1420070400000)) /
-                        30 /
-                        24 /
-                        60 /
-                        60 /
-                        1000)
-                  ),
-                year:
-                  data.statistics.appOpened &&
-                  parseInt(
-                    data.statistics.appOpened /
-                      ((Date.now() - (userId / 4194304 + 1420070400000)) /
-                        365 /
-                        24 /
-                        60 /
-                        60 /
-                        1000)
-                  ),
-              };
+              data.statistics.averageOpenCount = Utils.getAVGCount(
+                data.statistics.appOpened,
+                userId
+              );
             }
 
             if (data?.statistics?.sendMessage) {
-              data.statistics.averageMessages = {
-                day:
-                  data.statistics.sendMessage &&
-                  parseInt(
-                    data.statistics.sendMessage /
-                      ((Date.now() - (userId / 4194304 + 1420070400000)) /
-                        24 /
-                        60 /
-                        60 /
-                        1000)
-                  ),
-                week:
-                  data.statistics.sendMessage &&
-                  parseInt(
-                    data.statistics.sendMessage /
-                      ((Date.now() - (userId / 4194304 + 1420070400000)) /
-                        7 /
-                        24 /
-                        60 /
-                        60 /
-                        1000)
-                  ),
-                month:
-                  data.statistics.sendMessage &&
-                  parseInt(
-                    data.statistics.sendMessage /
-                      ((Date.now() - (userId / 4194304 + 1420070400000)) /
-                        30 /
-                        24 /
-                        60 /
-                        60 /
-                        1000)
-                  ),
-                year:
-                  data.statistics.sendMessage &&
-                  parseInt(
-                    data.statistics.sendMessage /
-                      ((Date.now() - (userId / 4194304 + 1420070400000)) /
-                        365 /
-                        24 /
-                        60 /
-                        60 /
-                        1000)
-                  ),
-              };
+              data.statistics.averageMessages = Utils.getAVGCount(
+                data.statistics.sendMessage,
+                userId
+              );
             }
           }
 
@@ -2472,7 +2434,7 @@ export default function Upload() {
       if (fileUploaded.type === "application/json") {
         setLoading("Loading JSON|||reading files");
         var readFile_ = new FileReader();
-        readFile_.onload = function (e) {
+        readFile_.onload = function (e: any) {
           var content = e.target.result;
           var data = JSON.parse(content);
 
@@ -2550,6 +2512,7 @@ export default function Upload() {
                           setOldSelected(null);
                           setShowLargeModal(false);
                           setSelectedFeatures(defaultOptions);
+                          localStorage.removeItem("defaultOptions");
 
                           toast.success("Successfully set options to default", {
                             position: "top-right",
@@ -2654,7 +2617,6 @@ export default function Upload() {
                                         [item].split(" ")
                                         .join("")}
                                       type="checkbox"
-                                      defaultValue
                                       className="w-4 h-4 text-blue-600 bg-gray-100 rounded  border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                     />
                                     <label
@@ -2671,7 +2633,7 @@ export default function Upload() {
                                 <>
                                   {Object.values(
                                     classifyOBJ(Features)[item]
-                                  ).map((item_, i) => {
+                                  ).map((item_: any, i: number): any => {
                                     return (
                                       <div
                                         className="flex items-center cursor-pointer pb-1"
@@ -2682,6 +2644,8 @@ export default function Upload() {
                                             Object.values(
                                               selectedFeatures[item]
                                             )[i]
+                                              ? true
+                                              : false
                                           }
                                           onChange={(e) => {
                                             const key = Object.keys(
@@ -2697,7 +2661,8 @@ export default function Upload() {
                                               ...selectedFeatures,
                                               [item]: {
                                                 ...selectedFeatures[item],
-                                                [key]: e.target.checked
+                                                [key as string]: e.target
+                                                  .checked
                                                   ? true
                                                   : null,
                                               },
@@ -2705,7 +2670,6 @@ export default function Upload() {
                                           }}
                                           id={item_.split(" ").join("")}
                                           type="checkbox"
-                                          defaultValue
                                           className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                         />
                                         <label
@@ -2795,10 +2759,9 @@ export default function Upload() {
                               key={i}
                             >
                               <input
-                                checked={selectedFeatures?.statistics?.includes(
-                                  Object.keys(EventsJSON.events).find(
-                                    (key) => EventsJSON.events[key] === item
-                                  )
+                                checked={Utils.isCheckedStats(
+                                  selectedFeatures,
+                                  item
                                 )}
                                 onChange={(e) => {
                                   if (e.target.checked) {
@@ -2806,30 +2769,21 @@ export default function Upload() {
                                       ...selectedFeatures,
                                       statistics: [
                                         ...selectedFeatures?.statistics,
-                                        Object.keys(EventsJSON.events).find(
-                                          (key) =>
-                                            EventsJSON.events[key] === item
-                                        ),
+                                        Utils.findSelectedStats(item),
                                       ],
                                     });
                                   } else {
                                     setSelectedFeatures({
                                       ...selectedFeatures,
-                                      statistics:
-                                        selectedFeatures?.statistics.filter(
-                                          (item_) =>
-                                            item_ !==
-                                            Object.keys(EventsJSON.events).find(
-                                              (key) =>
-                                                EventsJSON.events[key] === item
-                                            )
-                                        ),
+                                      statistics: Utils.filterStatistics(
+                                        item,
+                                        selectedFeatures
+                                      ),
                                     });
                                   }
                                 }}
                                 id={item.split(" ").join("")}
                                 type="checkbox"
-                                defaultValue
                                 className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                               />
                               <label
@@ -3070,7 +3024,7 @@ export default function Upload() {
                         <>
                           <label
                             onClick={(e) => {
-                              function hasClass(el, cl) {
+                              function hasClass(el: any, cl: any): boolean {
                                 return el.classList
                                   ? el.classList.contains(cl)
                                   : !!el.className &&
@@ -3125,10 +3079,14 @@ export default function Upload() {
                                 <path d="M24.1 40.55q-6.6 0-11.4-4.625Q7.9 31.3 7.6 24.75v-2.2l-3.7 3.7-2.4-2.45 7.95-7.95 7.95 7.95-2.4 2.45-3.7-3.75v2.2q.2 5 3.9 8.6 3.7 3.6 8.9 3.6 1.5 0 2.85-.275t2.45-.775l2.6 2.6q-1.95 1.1-3.9 1.6t-4 .5Zm14.55-8.45-7.95-7.95 2.4-2.45 3.7 3.65v-2q-.25-4.95-3.95-8.55-3.7-3.6-8.85-3.6-1.55 0-2.9.3-1.35.3-2.4.7l-2.6-2.6q1.9-1.1 3.85-1.575Q21.9 7.55 24 7.55q6.55 0 11.35 4.625t5.1 11.175v2.1l3.7-3.7 2.45 2.4Z" />
                               </svg>
                               <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                {loading.split("|||")[0]}
+                                {typeof loading === "string"
+                                  ? loading.split("|||")[0]
+                                  : ""}
                               </p>{" "}
                               <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">
-                                {loading.split("|||")[1]}
+                                {typeof loading === "string"
+                                  ? loading.split("|||")[1]
+                                  : ""}
                               </p>
                             </div>
                             <div className="w-[200px] m-1">

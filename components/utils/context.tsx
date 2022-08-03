@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from "react";
 import Utils from "./index";
 
-export const DataContext = React.createContext();
+export const DataContext = React.createContext<any | null>(null);
 
-export const DataProvider = ({ children }) => {
+export const DataProvider = ({ children }: any) => {
   const [dataExtracted, setDataExtracted] = useState(
     Utils.generateRandomData()
   );

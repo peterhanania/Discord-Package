@@ -1043,6 +1043,125 @@ class Utils {
     }
     return totalCount;
   }
+
+  static getAVGCount(statistics, userId) {
+    return {
+      day:
+        statistics &&
+        parseInt(
+          statistics /
+            ((Date.now() - (userId / 4194304 + 1420070400000)) /
+              24 /
+              60 /
+              60 /
+              1000)
+        ),
+
+      week:
+        statistics &&
+        parseInt(
+          statistics /
+            ((Date.now() - (userId / 4194304 + 1420070400000)) /
+              7 /
+              24 /
+              60 /
+              60 /
+              1000)
+        ),
+      month:
+        statistics &&
+        parseInt(
+          statistics /
+            ((Date.now() - (userId / 4194304 + 1420070400000)) /
+              30 /
+              24 /
+              60 /
+              60 /
+              1000)
+        ),
+      year:
+        statistics &&
+        parseInt(
+          statistics /
+            ((Date.now() - (userId / 4194304 + 1420070400000)) /
+              365 /
+              24 /
+              60 /
+              60 /
+              1000)
+        ),
+    };
+  }
+
+  static isCheckedStats(selectedFeatures, item) {
+    return selectedFeatures?.statistics?.includes(
+      Object.keys(Events.events).find((key) => Events.events[key] === item)
+    );
+  }
+
+  static findSelectedStats(item) {
+    return Object.keys(Events.events).find(
+      (key) => Events.events[key] === item
+    );
+  }
+
+  static filterStatistics(item, selectedFeatures) {
+    return selectedFeatures?.statistics.filter(
+      (item_) =>
+        item_ !==
+        Object.keys(Events.events).find((key) => Events.events[key] === item)
+    );
+  }
+
+  static createEmoji(emoji) {
+    return (
+      "https://cdn.discordapp.com/emojis/" +
+      /<:.*?:(\d+)>/g.exec(emoji)[1] +
+      ".png"
+    );
+  }
+
+  static createCustomEmoji(emoji) {
+    return (
+      "https://cdn.discordapp.com/emojis/" +
+      /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(emoji)[2] +
+      ".gif"
+    );
+  }
+
+  static async validateOptions(obj, data_d) {
+    try {
+      const categories = Object.keys(obj);
+      if (JSON.stringify(categories) !== JSON.stringify(Object.keys(data_d)))
+        return false;
+
+      let val = true;
+      Object.keys(obj)
+        .filter((category) => category !== "statistics")
+        .forEach((category) => {
+          if (data_d[category]) {
+            if (
+              JSON.stringify(Object.keys(data_d[category])) !==
+              JSON.stringify(Object.keys(obj[category]))
+            ) {
+              val = false;
+            }
+          }
+        });
+
+      if (!val) return false;
+      const validStatistics = Object.keys(Events.events);
+      let val2 = false;
+      data_d.statistics.forEach((stat) => {
+        if (!validStatistics.includes(stat)) val2 = true;
+      });
+
+      if (val2) return false;
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
 }
 
 export default Utils;

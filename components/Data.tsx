@@ -12,10 +12,10 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import EventsJSON from "./json/events.json";
 import Settings from "./settings";
-
 import HighchartsExporting from "highcharts/modules/exporting";
 import HighchartsExportData from "highcharts/modules/export-data";
 import Highchartsaccessibility from "highcharts/modules/accessibility";
+import ReactElement from "react";
 
 if (typeof Highcharts === "object") {
   HighchartsExporting(Highcharts);
@@ -23,7 +23,7 @@ if (typeof Highcharts === "object") {
   Highchartsaccessibility(Highcharts);
 }
 
-function hasClass(el, cl) {
+function hasClass(el: any, cl: any): boolean {
   return el.classList
     ? el.classList.contains(cl)
     : !!el.className &&
@@ -343,9 +343,9 @@ const icons = {
   ),
 };
 
-function makeData(data) {
+function makeData(data: any): Array<any> {
   const day = new Array(24).fill(0).map((v, i) => v + i);
-  const data_day = data.map((v, i) => [day[i], v]);
+  const data_day = data.map((v: any, i: number): any => [day[i], v]);
   return data_day;
 }
 
@@ -884,15 +884,15 @@ const statIcons = {
     </span>
   ),
 };
-export default function Data(props) {
-  const [topDMs, setTopDMs] = useState([]);
-  const [topChannels, setTopChannels] = useState([]);
-  const [topGuilds, setTopGuilds] = useState([]);
-  const [topGroupDMs, setTopGroupDMs] = useState([]);
-  const [generate_, setGenerate_] = useState(false);
-  const [data, setData] = useState(props.data);
-  const [graphType, setGraphType] = useState("areaspline");
-  const [emojiType, setEmojiType] = useState(
+export default function Data(props: any): JSX.Element {
+  const [topDMs, setTopDMs] = useState<any>([]);
+  const [topChannels, setTopChannels] = useState<any>([]);
+  const [topGuilds, setTopGuilds] = useState<any>([]);
+  const [topGroupDMs, setTopGroupDMs] = useState<any>([]);
+  const [generate_, setGenerate_] = useState<any>(false);
+  const [data, setData] = useState<any>(props.data);
+  const [graphType, setGraphType] = useState<any>("areaspline");
+  const [emojiType, setEmojiType] = useState<any>(
     data?.messages?.topEmojis && data?.messages?.topEmojis.length
       ? "topEmojis"
       : data?.messages?.topCustomEmojis &&
@@ -902,7 +902,7 @@ export default function Data(props) {
       ? "recentEmojis"
       : null
   );
-  const [messageType, setMessageType] = useState("channelMode");
+  const [messageType, setMessageType] = useState<any>("channelMode");
 
   return data ? (
     <div className="h-screen">
@@ -1068,24 +1068,24 @@ export default function Data(props) {
         <div className="flex items-center space-x-4 ">
           <div
             onClick={(element) => {
-              const check = hasClass(element.target, "animate__animated");
-
+              const target = element.target as Element;
+              const check = hasClass(target, "animate__animated");
               if (check) {
-                element.target.classList.remove(
+                target.classList.remove(
                   "animate__animated",
                   "animate__flash",
                   "animate__headShake"
                 );
 
                 setTimeout(() => {
-                  element.target.classList.add(
+                  target.classList.add(
                     "animate__animated",
                     "animate__flash",
                     "animate__headShake"
                   );
                 }, 100);
               } else {
-                element.target.classList.add(
+                target.classList.add(
                   "animate__animated",
                   "animate__flash",
                   "animate__headShake"
@@ -1189,14 +1189,16 @@ export default function Data(props) {
                               </span>
                               <br />
                               <ul className="list-disc ml-4">
-                                {data.messages.favoriteWords.map((f, i) => {
-                                  return (
-                                    <li key={i}>
-                                      {f.word}: {f.count} time
-                                      {f.count > 1 ? "s" : ""}
-                                    </li>
-                                  );
-                                })}
+                                {data.messages.favoriteWords.map(
+                                  (f: any, i: number) => {
+                                    return (
+                                      <li key={i}>
+                                        {f.word}: {f.count} time
+                                        {f.count > 1 ? "s" : ""}
+                                      </li>
+                                    );
+                                  }
+                                )}
                               </ul>
                             </div>
                           );
@@ -1243,14 +1245,16 @@ export default function Data(props) {
                               </span>
                               <br />
                               <ul className="list-disc ml-4">
-                                {data.messages.topCursed.map((f, i) => {
-                                  return (
-                                    <li key={i}>
-                                      {f.word}: {f.count} time
-                                      {f.count > 1 ? "s" : ""}
-                                    </li>
-                                  );
-                                })}
+                                {data.messages.topCursed.map(
+                                  (f: any, i: number) => {
+                                    return (
+                                      <li key={i}>
+                                        {f.word}: {f.count} time
+                                        {f.count > 1 ? "s" : ""}
+                                      </li>
+                                    );
+                                  }
+                                )}
                               </ul>
                             </div>
                           );
@@ -1295,14 +1299,16 @@ export default function Data(props) {
                               </span>
                               <br />
                               <ul className="list-disc ml-4">
-                                {data.messages.topLinks.map((f, i) => {
-                                  return (
-                                    <li key={i}>
-                                      {f.word}: {f.count} time
-                                      {f.count > 1 ? "s" : ""}
-                                    </li>
-                                  );
-                                })}
+                                {data.messages.topLinks.map(
+                                  (f: any, i: number) => {
+                                    return (
+                                      <li key={i}>
+                                        {f.word}: {f.count} time
+                                        {f.count > 1 ? "s" : ""}
+                                      </li>
+                                    );
+                                  }
+                                )}
                               </ul>
                             </div>
                           );
@@ -1347,14 +1353,16 @@ export default function Data(props) {
                               </span>
                               <br />
                               <ul className="list-disc ml-4">
-                                {data.messages.topDiscordLinks.map((f, i) => {
-                                  return (
-                                    <li key={i}>
-                                      {f.word}: {f.count} time
-                                      {f.count > 1 ? "s" : ""}
-                                    </li>
-                                  );
-                                })}
+                                {data.messages.topDiscordLinks.map(
+                                  (f: any, i: number) => {
+                                    return (
+                                      <li key={i}>
+                                        {f.word}: {f.count} time
+                                        {f.count > 1 ? "s" : ""}
+                                      </li>
+                                    );
+                                  }
+                                )}
                               </ul>
                             </div>
                           );
@@ -1391,27 +1399,29 @@ export default function Data(props) {
                               </span>
                               <br />
                               <ul className="list-disc ml-4">
-                                {data.messages.oldestMessages.map((f, i) => {
-                                  return (
-                                    <li key={i}>
-                                      <b>{f.sentence}</b>
-                                      <ul>
-                                        <li>
-                                          - sent at{" "}
-                                          {moment(f.timestamp).format(
-                                            "MMMM Do YYYY, h:mm:ss a"
-                                          )}{" "}
-                                          <b>
-                                            ({moment(f.timestamp).fromNow()})
-                                          </b>
-                                        </li>
-                                        <li>
-                                          - sent to <b>{f.author}</b>
-                                        </li>
-                                      </ul>
-                                    </li>
-                                  );
-                                })}
+                                {data.messages.oldestMessages.map(
+                                  (f: any, i: number) => {
+                                    return (
+                                      <li key={i}>
+                                        <b>{f.sentence}</b>
+                                        <ul>
+                                          <li>
+                                            - sent at{" "}
+                                            {moment(f.timestamp).format(
+                                              "MMMM Do YYYY, h:mm:ss a"
+                                            )}{" "}
+                                            <b>
+                                              ({moment(f.timestamp).fromNow()})
+                                            </b>
+                                          </li>
+                                          <li>
+                                            - sent to <b>{f.author}</b>
+                                          </li>
+                                        </ul>
+                                      </li>
+                                    );
+                                  }
+                                )}
                               </ul>
                             </div>
                           );
@@ -1450,13 +1460,15 @@ export default function Data(props) {
                               </span>
                               <br />
                               <ul className="list-disc ml-4">
-                                {data.messages.attachmentCount.map((f, i) => {
-                                  return (
-                                    <li key={i}>
-                                      <b>{f}</b>
-                                    </li>
-                                  );
-                                })}
+                                {data.messages.attachmentCount.map(
+                                  (f: any, i: number) => {
+                                    return (
+                                      <li key={i}>
+                                        <b>{f}</b>
+                                      </li>
+                                    );
+                                  }
+                                )}
                               </ul>
                             </div>
                           );
@@ -1477,7 +1489,7 @@ export default function Data(props) {
                     <Tippy
                       content={
                         Object.values(data.messages.mentionCount).reduce(
-                          (a, b) => a + b
+                          (a: any, b: any): number => a + b
                         ) + " Mentions"
                       }
                       animation="scale"
@@ -1544,11 +1556,11 @@ export default function Data(props) {
               badges are only available on larger screens
             </p>
             <div className="lg:flex md:flex items-center gap-1 hidden">
-              {data?.user?.badges?.map((m, id) => {
+              {data?.user?.badges?.map((m: any, id: number) => {
                 return (
                   <Tippy
                     key={id}
-                    content={Badges[m].description
+                    content={(Badges as any)[m].description
                       .replace(
                         /{until}/g,
                         moment(data?.user?.premium_until).format("MMMM Do YYYY")
@@ -1559,7 +1571,7 @@ export default function Data(props) {
                     className="shadow-xl"
                   >
                     <div className="flex cursor-pointer opacity-90 hover:opacity-100">
-                      {icons[m]}
+                      {(icons as any)[m]}
                     </div>
                   </Tippy>
                 );
@@ -1705,11 +1717,11 @@ export default function Data(props) {
                 <>
                   {data?.settings?.recentEmojis
                     ?.slice(0, 30)
-                    .sort((a, b) => {
+                    .sort((a: any, b: any) => {
                       if (!a?.count || !b?.count) return;
                       return b.count - a.count;
                     })
-                    .map((m, id) => {
+                    .map((m: any, id: number) => {
                       if (!m.name) return;
                       if (!m.count) return;
                       const isCustomEmoji = !isNaN(m.name) && m.name.length > 7;
@@ -1751,7 +1763,9 @@ export default function Data(props) {
                             className="shadow-xl"
                           >
                             <div className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100">
-                              {emojis[m.name] ? emojis[m.name] : m.name}
+                              {(emojis as any)[m.name]
+                                ? (emojis as any)[m.name]
+                                : m.name}
                             </div>
                           </Tippy>
                         );
@@ -1773,7 +1787,7 @@ export default function Data(props) {
                             " more",
                           count: "ignore",
                         })
-                        .map((m, id) => {
+                        .map((m: any, id: number) => {
                           if (!m) return;
                           if (!m.emoji) return;
                           if (!m.count) return;
@@ -1820,7 +1834,7 @@ export default function Data(props) {
                                             29,
                                             data?.messages?.topEmojis?.length
                                           )
-                                          .map((f, i) => {
+                                          .map((f: any, i: number) => {
                                             return (
                                               <li key={i}>
                                                 {f.emoji}: {f.count} time
@@ -1839,26 +1853,28 @@ export default function Data(props) {
                             </Tippy>
                           );
                         })
-                    : data?.messages?.topEmojis?.slice(0, 30).map((m, id) => {
-                        if (!m) return;
-                        if (!m.emoji) return;
-                        if (!m.count) return;
+                    : data?.messages?.topEmojis
+                        ?.slice(0, 30)
+                        .map((m: any, id: number) => {
+                          if (!m) return;
+                          if (!m.emoji) return;
+                          if (!m.count) return;
 
-                        return (
-                          <Tippy
-                            key={id}
-                            content={`${m.emoji} used ${m.count} time${
-                              m.count === 1 ? "" : "s"
-                            }`}
-                            animation="scale"
-                            className="shadow-xl"
-                          >
-                            <div className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100">
-                              {m.emoji}
-                            </div>
-                          </Tippy>
-                        );
-                      })}
+                          return (
+                            <Tippy
+                              key={id}
+                              content={`${m.emoji} used ${m.count} time${
+                                m.count === 1 ? "" : "s"
+                              }`}
+                              animation="scale"
+                              className="shadow-xl"
+                            >
+                              <div className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100">
+                                {m.emoji}
+                              </div>
+                            </Tippy>
+                          );
+                        })}
                 </>
               ) : (
                 ""
@@ -1875,7 +1891,7 @@ export default function Data(props) {
                             " more",
                           count: "ignore",
                         })
-                        .map((m, id) => {
+                        .map((m: any, id: number) => {
                           if (!m) return;
                           if (!m.emoji) return;
                           if (!m.count) return;
@@ -1894,11 +1910,7 @@ export default function Data(props) {
                                   <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                     <Image
                                       key={id}
-                                      src={
-                                        "https://cdn.discordapp.com/emojis/" +
-                                        /<:.*?:(\d+)>/g.exec(m.emoji)[1] +
-                                        ".png"
-                                      }
+                                      src={Utils.createEmoji(m.emoji)}
                                       alt="emoji"
                                       height="50px"
                                       width="50px"
@@ -1922,13 +1934,7 @@ export default function Data(props) {
                                       <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100 m-2">
                                         <Image
                                           key={id}
-                                          src={
-                                            "https://cdn.discordapp.com/emojis/" +
-                                            /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                              m.emoji
-                                            )[2] +
-                                            ".gif"
-                                          }
+                                          src={Utils.createCustomEmoji(m.emoji)}
                                           alt="emoji"
                                           height="50px"
                                           width="50px"
@@ -1974,7 +1980,7 @@ export default function Data(props) {
                                             data?.messages?.topCustomEmojis
                                               ?.length
                                           )
-                                          .map((f, i) => {
+                                          .map((f: any, i: number) => {
                                             return (
                                               <li
                                                 key={i}
@@ -1996,13 +2002,9 @@ export default function Data(props) {
                                                     <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                       <Image
                                                         key={id}
-                                                        src={
-                                                          "https://cdn.discordapp.com/emojis/" +
-                                                          /<:.*?:(\d+)>/g.exec(
-                                                            f.emoji
-                                                          )[1] +
-                                                          ".png"
-                                                        }
+                                                        src={Utils.createEmoji(
+                                                          f.emoji
+                                                        )}
                                                         alt="emoji"
                                                         height="50px"
                                                         width="50px"
@@ -2030,13 +2032,9 @@ export default function Data(props) {
                                                         <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100 m-2">
                                                           <Image
                                                             key={id}
-                                                            src={
-                                                              "https://cdn.discordapp.com/emojis/" +
-                                                              /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                                                f.emoji
-                                                              )[2] +
-                                                              ".gif"
-                                                            }
+                                                            src={Utils.createCustomEmoji(
+                                                              f.emoji
+                                                            )}
                                                             alt="emoji"
                                                             height="50px"
                                                             width="50px"
@@ -2067,7 +2065,7 @@ export default function Data(props) {
                         })
                     : data?.messages?.topCustomEmojis
                         ?.slice(0, 30)
-                        .map((m, id) => {
+                        .map((m: any, id: number) => {
                           if (!m) return;
                           if (!m.emoji) return;
                           if (!m.count) return;
@@ -2086,11 +2084,7 @@ export default function Data(props) {
                                   <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                     <Image
                                       key={id}
-                                      src={
-                                        "https://cdn.discordapp.com/emojis/" +
-                                        /<:.*?:(\d+)>/g.exec(m.emoji)[1] +
-                                        ".png"
-                                      }
+                                      src={Utils.createEmoji(m.emoji)}
                                       alt="emoji"
                                       height="50px"
                                       width="50px"
@@ -2114,13 +2108,7 @@ export default function Data(props) {
                                       <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                         <Image
                                           key={id}
-                                          src={
-                                            "https://cdn.discordapp.com/emojis/" +
-                                            /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                              m.emoji
-                                            )[2] +
-                                            ".gif"
-                                          }
+                                          src={Utils.createCustomEmoji(m.emoji)}
                                           alt="emoji"
                                           height="50px"
                                           width="50px"
@@ -2265,7 +2253,7 @@ export default function Data(props) {
                 ? `${data?.dataFile ? "They " : "You "} have no connections`
                 : ""}
             </span>
-            {data?.connections?.map((m, i) => {
+            {data?.connections?.map((m: any, i: number) => {
               const obj = {
                 youtube: (
                   <svg
@@ -2275,9 +2263,9 @@ export default function Data(props) {
                     x="0px"
                     y="0px"
                     viewBox="0 0 461.001 461.001"
-                    style={{
-                      enableBackground: "new 0 0 461.001 461.001",
-                    }}
+                    // style={{
+                    //   enableBackground: "new 0 0 461.001 461.001",
+                    // }}
                   >
                     <g>
                       <path
@@ -2329,9 +2317,9 @@ export default function Data(props) {
                     x="0px"
                     y="0px"
                     viewBox="0 0 512.002 512.002"
-                    style={{
-                      enableBackground: "new 0 0 512.002 512.002",
-                    }}
+                    // style={{
+                    //   enableBackground: "new 0 0 512.002 512.002",
+                    // }}
                   >
                     <path
                       style={{
@@ -2501,9 +2489,9 @@ export default function Data(props) {
                     x="0px"
                     y="0px"
                     viewBox="0 0 455.73 455.73"
-                    style={{
-                      enableBackground: "new 0 0 455.73 455.73",
-                    }}
+                    // style={{
+                    //   enableBackground: "new 0 0 455.73 455.73",
+                    // }}
                   >
                     <path
                       style={{
@@ -2560,7 +2548,7 @@ export default function Data(props) {
                     className="shadow-xl"
                   >
                     <div className="opacity-90 hover:opacity-100 ">
-                      {obj[m.type]}
+                      {(obj as any)[m.type]}
                     </div>
                   </Tippy>
                 </div>
@@ -2673,8 +2661,8 @@ export default function Data(props) {
                   },
                   xAxis: {
                     labels: {
-                      formatter: function () {
-                        return days_[this.value];
+                      formatter: function (a: any): string {
+                        return days_[a.value];
                       },
                       style: {
                         fontSize: "9px",
@@ -2728,7 +2716,9 @@ export default function Data(props) {
                     backgroundColor: "#212529",
                     borderWith: 5,
                     className: "tooltip-hov",
-                    formatter: function () {
+                    formatter: function (
+                      this: any
+                    ): string {
                       return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
                         this.y
                       }</b> messages ${
@@ -2813,7 +2803,7 @@ export default function Data(props) {
                           return;
                         }
                         const filtered = possibilities.filter(
-                          (p) =>
+                          (p: any) =>
                             p.user_tag.toLowerCase().includes(search) ||
                             p.user_id.toLowerCase().includes(search)
                         );
@@ -2856,8 +2846,8 @@ export default function Data(props) {
                 ""
               )}
               {data?.messages?.topDMs && data?.messages?.topDMs?.length > 0
-                ? !topDMs.length > 0 && topDMs[0] !== "noresults"
-                  ? data?.messages?.topDMs.map((m, i) => {
+                ? !(topDMs.length > 0) && topDMs[0] !== "noresults"
+                  ? data?.messages?.topDMs.map((m: any, i: number) => {
                       return (
                         <div key={i}>
                           <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg">
@@ -2939,14 +2929,16 @@ export default function Data(props) {
                                           </span>
                                           <br />
                                           <ul className="list-disc ml-4">
-                                            {m.favoriteWords.map((f, i) => {
-                                              return (
-                                                <li key={i}>
-                                                  {f.word}: {f.count} time
-                                                  {f.count > 1 ? "s" : ""}
-                                                </li>
-                                              );
-                                            })}
+                                            {m.favoriteWords.map(
+                                              (f: any, i: number) => {
+                                                return (
+                                                  <li key={i}>
+                                                    {f.word}: {f.count} time
+                                                    {f.count > 1 ? "s" : ""}
+                                                  </li>
+                                                );
+                                              }
+                                            )}
                                           </ul>
                                         </div>
                                       );
@@ -2991,14 +2983,16 @@ export default function Data(props) {
                                           </span>
                                           <br />
                                           <ul className="list-disc ml-4">
-                                            {m.topCursed.map((f, i) => {
-                                              return (
-                                                <li key={i}>
-                                                  {f.word}: {f.count} time
-                                                  {f.count > 1 ? "s" : ""}
-                                                </li>
-                                              );
-                                            })}
+                                            {m.topCursed.map(
+                                              (f: any, i: number) => {
+                                                return (
+                                                  <li key={i}>
+                                                    {f.word}: {f.count} time
+                                                    {f.count > 1 ? "s" : ""}
+                                                  </li>
+                                                );
+                                              }
+                                            )}
                                           </ul>
                                         </div>
                                       );
@@ -3037,14 +3031,16 @@ export default function Data(props) {
                                           </span>
                                           <br />
                                           <ul className="list-disc ml-4">
-                                            {m.topLinks.map((f, i) => {
-                                              return (
-                                                <li key={i}>
-                                                  {f.word}: {f.count} time
-                                                  {f.count > 1 ? "s" : ""}
-                                                </li>
-                                              );
-                                            })}
+                                            {m.topLinks.map(
+                                              (f: any, i: number) => {
+                                                return (
+                                                  <li key={i}>
+                                                    {f.word}: {f.count} time
+                                                    {f.count > 1 ? "s" : ""}
+                                                  </li>
+                                                );
+                                              }
+                                            )}
                                           </ul>
                                         </div>
                                       );
@@ -3086,14 +3082,16 @@ export default function Data(props) {
                                           </span>
                                           <br />
                                           <ul className="list-disc ml-4">
-                                            {m.topDiscordLinks.map((f, i) => {
-                                              return (
-                                                <li key={i}>
-                                                  {f.word}: {f.count} time
-                                                  {f.count > 1 ? "s" : ""}
-                                                </li>
-                                              );
-                                            })}
+                                            {m.topDiscordLinks.map(
+                                              (f: any, i: number) => {
+                                                return (
+                                                  <li key={i}>
+                                                    {f.word}: {f.count} time
+                                                    {f.count > 1 ? "s" : ""}
+                                                  </li>
+                                                );
+                                              }
+                                            )}
                                           </ul>
                                         </div>
                                       );
@@ -3137,34 +3135,36 @@ export default function Data(props) {
                                           </span>
                                           <br />
                                           <ul className="list-disc ml-4">
-                                            {m.oldestMessages.map((f, i) => {
-                                              return (
-                                                <li key={i}>
-                                                  <b>{f.sentence}</b>
-                                                  <ul>
-                                                    <li>
-                                                      - sent at{" "}
-                                                      {moment(
-                                                        f.timestamp
-                                                      ).format(
-                                                        "MMMM Do YYYY, h:mm:ss a"
-                                                      )}{" "}
-                                                      <b>
-                                                        (
+                                            {m.oldestMessages.map(
+                                              (f: any, i: number) => {
+                                                return (
+                                                  <li key={i}>
+                                                    <b>{f.sentence}</b>
+                                                    <ul>
+                                                      <li>
+                                                        - sent at{" "}
                                                         {moment(
                                                           f.timestamp
-                                                        ).fromNow()}
-                                                        )
-                                                      </b>
-                                                    </li>
-                                                    <li>
-                                                      - sent to{" "}
-                                                      <b>{f.author}</b>
-                                                    </li>
-                                                  </ul>
-                                                </li>
-                                              );
-                                            })}
+                                                        ).format(
+                                                          "MMMM Do YYYY, h:mm:ss a"
+                                                        )}{" "}
+                                                        <b>
+                                                          (
+                                                          {moment(
+                                                            f.timestamp
+                                                          ).fromNow()}
+                                                          )
+                                                        </b>
+                                                      </li>
+                                                      <li>
+                                                        - sent to{" "}
+                                                        <b>{f.author}</b>
+                                                      </li>
+                                                    </ul>
+                                                  </li>
+                                                );
+                                              }
+                                            )}
                                           </ul>
                                         </div>
                                       );
@@ -3205,16 +3205,18 @@ export default function Data(props) {
                                           </span>
                                           <br />
                                           <ul className="list-disc ml-4">
-                                            {m.topEmojis.map((f, i) => {
-                                              return (
-                                                <li key={i}>
-                                                  <b>
-                                                    {f.emoji}: {f.count} time
-                                                    {f.count > 1 ? "s" : ""}
-                                                  </b>
-                                                </li>
-                                              );
-                                            })}
+                                            {m.topEmojis.map(
+                                              (f: any, i: number) => {
+                                                return (
+                                                  <li key={i}>
+                                                    <b>
+                                                      {f.emoji}: {f.count} time
+                                                      {f.count > 1 ? "s" : ""}
+                                                    </b>
+                                                  </li>
+                                                );
+                                              }
+                                            )}
                                           </ul>
                                         </div>
                                       );
@@ -3258,84 +3260,82 @@ export default function Data(props) {
                                           </span>
                                           <br />
                                           <ul className="list-disc ml-4">
-                                            {m.topCustomEmojis.map((f, i) => {
-                                              return (
-                                                <li
-                                                  key={i}
-                                                  className="flex items-center"
-                                                >
-                                                  {/<:.*?:(\d+)>/g.exec(
-                                                    f.emoji
-                                                  ) ? (
-                                                    <Tippy
-                                                      content={`${
-                                                        f.emoji
-                                                      } used ${f.count} time${
-                                                        f.count === 1 ? "" : "s"
-                                                      }`}
-                                                      animation="scale"
-                                                      className="shadow-xl"
-                                                    >
-                                                      <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                                        <Image
-                                                          src={
-                                                            "https://cdn.discordapp.com/emojis/" +
-                                                            /<:.*?:(\d+)>/g.exec(
+                                            {m.topCustomEmojis.map(
+                                              (f: any, i: number) => {
+                                                return (
+                                                  <li
+                                                    key={i}
+                                                    className="flex items-center"
+                                                  >
+                                                    {/<:.*?:(\d+)>/g.exec(
+                                                      f.emoji
+                                                    ) ? (
+                                                      <Tippy
+                                                        content={`${
+                                                          f.emoji
+                                                        } used ${f.count} time${
+                                                          f.count === 1
+                                                            ? ""
+                                                            : "s"
+                                                        }`}
+                                                        animation="scale"
+                                                        className="shadow-xl"
+                                                      >
+                                                        <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                          <Image
+                                                            src={Utils.createEmoji(
                                                               f.emoji
-                                                            )[1] +
-                                                            ".png"
-                                                          }
-                                                          alt="emoji"
-                                                          height="50px"
-                                                          width="50px"
-                                                          draggable={false}
-                                                        />
-                                                      </div>
-                                                    </Tippy>
-                                                  ) : (
-                                                    <>
-                                                      {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                                        f.emoji
-                                                      ) ? (
-                                                        <Tippy
-                                                          content={`${
-                                                            f.emoji
-                                                          } used ${
-                                                            f.count
-                                                          } time${
-                                                            f.count === 1
-                                                              ? ""
-                                                              : "s"
-                                                          }`}
-                                                          animation="scale"
-                                                          className="shadow-xl"
-                                                        >
-                                                          <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                                            <Image
-                                                              src={
-                                                                "https://cdn.discordapp.com/emojis/" +
-                                                                /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                            )}
+                                                            alt="emoji"
+                                                            height="50px"
+                                                            width="50px"
+                                                            draggable={false}
+                                                          />
+                                                        </div>
+                                                      </Tippy>
+                                                    ) : (
+                                                      <>
+                                                        {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                          f.emoji
+                                                        ) ? (
+                                                          <Tippy
+                                                            content={`${
+                                                              f.emoji
+                                                            } used ${
+                                                              f.count
+                                                            } time${
+                                                              f.count === 1
+                                                                ? ""
+                                                                : "s"
+                                                            }`}
+                                                            animation="scale"
+                                                            className="shadow-xl"
+                                                          >
+                                                            <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                              <Image
+                                                                src={Utils.createCustomEmoji(
                                                                   f.emoji
-                                                                )[2] +
-                                                                ".gif"
-                                                              }
-                                                              alt="emoji"
-                                                              height="50px"
-                                                              width="50px"
-                                                              draggable={false}
-                                                            />
-                                                          </div>
-                                                        </Tippy>
-                                                      ) : (
-                                                        ""
-                                                      )}{" "}
-                                                    </>
-                                                  )}
-                                                  : {f.count} time
-                                                  {f.count > 1 ? "s" : ""}
-                                                </li>
-                                              );
-                                            })}
+                                                                )}
+                                                                alt="emoji"
+                                                                height="50px"
+                                                                width="50px"
+                                                                draggable={
+                                                                  false
+                                                                }
+                                                              />
+                                                            </div>
+                                                          </Tippy>
+                                                        ) : (
+                                                          ""
+                                                        )}{" "}
+                                                      </>
+                                                    )}
+                                                    : {f.count} time
+                                                    {f.count > 1 ? "s" : ""}
+                                                  </li>
+                                                );
+                                              }
+                                            )}
                                           </ul>
                                         </div>
                                       );
@@ -3356,7 +3356,7 @@ export default function Data(props) {
                         </div>
                       );
                     })
-                  : topDMs?.map((m, i) => {
+                  : topDMs?.map((m: any, i: number) => {
                       return (
                         <>
                           {m !== "noresults" ? (
@@ -3428,14 +3428,16 @@ export default function Data(props) {
                                               </span>
                                               <br />
                                               <ul className="list-disc ml-4">
-                                                {m.favoriteWords.map((f, i) => {
-                                                  return (
-                                                    <li key={i}>
-                                                      {f.word}: {f.count} time
-                                                      {f.count > 1 ? "s" : ""}
-                                                    </li>
-                                                  );
-                                                })}
+                                                {m.favoriteWords.map(
+                                                  (f: any, i: number) => {
+                                                    return (
+                                                      <li key={i}>
+                                                        {f.word}: {f.count} time
+                                                        {f.count > 1 ? "s" : ""}
+                                                      </li>
+                                                    );
+                                                  }
+                                                )}
                                               </ul>
                                             </div>
                                           );
@@ -3485,14 +3487,16 @@ export default function Data(props) {
                                               </span>
                                               <br />
                                               <ul className="list-disc ml-4">
-                                                {m.topCursed.map((f, i) => {
-                                                  return (
-                                                    <li key={i}>
-                                                      {f.word}: {f.count} time
-                                                      {f.count > 1 ? "s" : ""}
-                                                    </li>
-                                                  );
-                                                })}
+                                                {m.topCursed.map(
+                                                  (f: any, i: number) => {
+                                                    return (
+                                                      <li key={i}>
+                                                        {f.word}: {f.count} time
+                                                        {f.count > 1 ? "s" : ""}
+                                                      </li>
+                                                    );
+                                                  }
+                                                )}
                                               </ul>
                                             </div>
                                           );
@@ -3533,14 +3537,16 @@ export default function Data(props) {
                                               </span>
                                               <br />
                                               <ul className="list-disc ml-4">
-                                                {m.topLinks.map((f, i) => {
-                                                  return (
-                                                    <li key={i}>
-                                                      {f.word}: {f.count} time
-                                                      {f.count > 1 ? "s" : ""}
-                                                    </li>
-                                                  );
-                                                })}
+                                                {m.topLinks.map(
+                                                  (f: any, i: number) => {
+                                                    return (
+                                                      <li key={i}>
+                                                        {f.word}: {f.count} time
+                                                        {f.count > 1 ? "s" : ""}
+                                                      </li>
+                                                    );
+                                                  }
+                                                )}
                                               </ul>
                                             </div>
                                           );
@@ -3586,7 +3592,7 @@ export default function Data(props) {
                                               <br />
                                               <ul className="list-disc ml-4">
                                                 {m.topDiscordLinks.map(
-                                                  (f, i) => {
+                                                  (f: any, i: number) => {
                                                     return (
                                                       <li key={i}>
                                                         {f.word}: {f.count} time
@@ -3641,7 +3647,7 @@ export default function Data(props) {
                                               <br />
                                               <ul className="list-disc ml-4">
                                                 {m.oldestMessages.map(
-                                                  (f, i) => {
+                                                  (f: any, i: number) => {
                                                     return (
                                                       <li key={i}>
                                                         <b>{f.sentence}</b>
@@ -3714,17 +3720,21 @@ export default function Data(props) {
                                               </span>
                                               <br />
                                               <ul className="list-disc ml-4">
-                                                {m.topEmojis.map((f, i) => {
-                                                  return (
-                                                    <li key={i}>
-                                                      <b>
-                                                        {f.emoji}: {f.count}{" "}
-                                                        time
-                                                        {f.count > 1 ? "s" : ""}
-                                                      </b>
-                                                    </li>
-                                                  );
-                                                })}
+                                                {m.topEmojis.map(
+                                                  (f: any, i: number) => {
+                                                    return (
+                                                      <li key={i}>
+                                                        <b>
+                                                          {f.emoji}: {f.count}{" "}
+                                                          time
+                                                          {f.count > 1
+                                                            ? "s"
+                                                            : ""}
+                                                        </b>
+                                                      </li>
+                                                    );
+                                                  }
+                                                )}
                                               </ul>
                                             </div>
                                           );
@@ -3771,7 +3781,7 @@ export default function Data(props) {
                                               <br />
                                               <ul className="list-disc ml-4">
                                                 {m.topCustomEmojis.map(
-                                                  (f, i) => {
+                                                  (f: any, i: number) => {
                                                     return (
                                                       <li
                                                         key={i}
@@ -3795,13 +3805,9 @@ export default function Data(props) {
                                                           >
                                                             <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                               <Image
-                                                                src={
-                                                                  "https://cdn.discordapp.com/emojis/" +
-                                                                  /<:.*?:(\d+)>/g.exec(
-                                                                    f.emoji
-                                                                  )[1] +
-                                                                  ".png"
-                                                                }
+                                                                src={Utils.createEmoji(
+                                                                  f.emoji
+                                                                )}
                                                                 alt="emoji"
                                                                 height="50px"
                                                                 width="50px"
@@ -3831,13 +3837,9 @@ export default function Data(props) {
                                                               >
                                                                 <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                   <Image
-                                                                    src={
-                                                                      "https://cdn.discordapp.com/emojis/" +
-                                                                      /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                                                        f.emoji
-                                                                      )[2] +
-                                                                      ".gif"
-                                                                    }
+                                                                    src={Utils.createCustomEmoji(
+                                                                      f.emoji
+                                                                    )}
                                                                     alt="emoji"
                                                                     height="50px"
                                                                     width="50px"
@@ -3958,7 +3960,7 @@ export default function Data(props) {
                               setTopChannels([]);
                               return;
                             }
-                            const filtered = possibilities.filter((p) =>
+                            const filtered = possibilities.filter((p: any) =>
                               typeof p.name === "object"
                                 ? p.name[0].toLowerCase().includes(search) ||
                                   p.guildName.toLowerCase().includes(search)
@@ -3980,7 +3982,7 @@ export default function Data(props) {
                               setTopGuilds([]);
                               return;
                             }
-                            const filtered = possibilities.filter((p) =>
+                            const filtered = possibilities.filter((p: any) =>
                               p.guildName.toLowerCase().includes(search)
                             );
 
@@ -3999,7 +4001,7 @@ export default function Data(props) {
                               return;
                             }
                             const filtered = possibilities.filter(
-                              (p) =>
+                              (p: any) =>
                                 p?.name?.toLowerCase()?.includes(search) ||
                                 p?.recipients?.toString()?.includes(search)
                             );
@@ -4029,7 +4031,7 @@ export default function Data(props) {
                         : "")
                     }
                     onClick={() => {
-                      const el = document.getElementById("search");
+                      const el: any = document.getElementById("search");
                       if (el) el.value = "";
                       setTopChannels([]);
                       setMessageType("channelMode");
@@ -4059,7 +4061,7 @@ export default function Data(props) {
                         : "")
                     }
                     onClick={() => {
-                      const el = document.getElementById("search");
+                      const el: any = document.getElementById("search");
                       if (el) el.value = "";
                       setTopGuilds([]);
                       setMessageType("guildMode");
@@ -4089,7 +4091,7 @@ export default function Data(props) {
                         : "")
                     }
                     onClick={() => {
-                      const el = document.getElementById("search");
+                      const el: any = document.getElementById("search");
                       if (el) el.value = "";
                       setTopGroupDMs([]);
                       setMessageType("dmMode");
@@ -4140,8 +4142,9 @@ export default function Data(props) {
                   )}
                   {data?.messages?.topChannels &&
                   data?.messages?.topChannels?.length > 0
-                    ? !topChannels.length > 0 && topChannels[0] !== "noresults"
-                      ? data?.messages?.topChannels.map((m, i) => {
+                    ? !(topChannels.length > 0) &&
+                      topChannels[0] !== "noresults"
+                      ? data?.messages?.topChannels.map((m: any, i: number) => {
                           return (
                             <>
                               <div key={i}>
@@ -4233,7 +4236,7 @@ export default function Data(props) {
                                                 <br />
                                                 <ul className="list-disc ml-4">
                                                   {m.favoriteWords.map(
-                                                    (f, i) => {
+                                                    (f: any, i: number) => {
                                                       return (
                                                         <li key={i}>
                                                           {f.word}: {f.count}{" "}
@@ -4295,14 +4298,19 @@ export default function Data(props) {
                                                 </span>
                                                 <br />
                                                 <ul className="list-disc ml-4">
-                                                  {m.topCursed.map((f, i) => {
-                                                    return (
-                                                      <li key={i}>
-                                                        {f.word}: {f.count} time
-                                                        {f.count > 1 ? "s" : ""}
-                                                      </li>
-                                                    );
-                                                  })}
+                                                  {m.topCursed.map(
+                                                    (f: any, i: number) => {
+                                                      return (
+                                                        <li key={i}>
+                                                          {f.word}: {f.count}{" "}
+                                                          time
+                                                          {f.count > 1
+                                                            ? "s"
+                                                            : ""}
+                                                        </li>
+                                                      );
+                                                    }
+                                                  )}
                                                 </ul>
                                               </div>
                                             );
@@ -4343,14 +4351,19 @@ export default function Data(props) {
                                                 </span>
                                                 <br />
                                                 <ul className="list-disc ml-4">
-                                                  {m.topLinks.map((f, i) => {
-                                                    return (
-                                                      <li key={i}>
-                                                        {f.word}: {f.count} time
-                                                        {f.count > 1 ? "s" : ""}
-                                                      </li>
-                                                    );
-                                                  })}
+                                                  {m.topLinks.map(
+                                                    (f: any, i: number) => {
+                                                      return (
+                                                        <li key={i}>
+                                                          {f.word}: {f.count}{" "}
+                                                          time
+                                                          {f.count > 1
+                                                            ? "s"
+                                                            : ""}
+                                                        </li>
+                                                      );
+                                                    }
+                                                  )}
                                                 </ul>
                                               </div>
                                             );
@@ -4397,7 +4410,7 @@ export default function Data(props) {
                                                 <br />
                                                 <ul className="list-disc ml-4">
                                                   {m.topDiscordLinks.map(
-                                                    (f, i) => {
+                                                    (f: any, i: number) => {
                                                       return (
                                                         <li key={i}>
                                                           {f.word}: {f.count}{" "}
@@ -4455,7 +4468,7 @@ export default function Data(props) {
                                                 <br />
                                                 <ul className="list-disc ml-4">
                                                   {m.oldestMessages.map(
-                                                    (f, i) => {
+                                                    (f: any, i: number) => {
                                                       return (
                                                         <li key={i}>
                                                           <b>{f.sentence}</b>
@@ -4529,19 +4542,21 @@ export default function Data(props) {
                                                 </span>
                                                 <br />
                                                 <ul className="list-disc ml-4">
-                                                  {m.topEmojis.map((f, i) => {
-                                                    return (
-                                                      <li key={i}>
-                                                        <b>
-                                                          {f.emoji}: {f.count}{" "}
-                                                          time
-                                                          {f.count > 1
-                                                            ? "s"
-                                                            : ""}
-                                                        </b>
-                                                      </li>
-                                                    );
-                                                  })}
+                                                  {m.topEmojis.map(
+                                                    (f: any, i: number) => {
+                                                      return (
+                                                        <li key={i}>
+                                                          <b>
+                                                            {f.emoji}: {f.count}{" "}
+                                                            time
+                                                            {f.count > 1
+                                                              ? "s"
+                                                              : ""}
+                                                          </b>
+                                                        </li>
+                                                      );
+                                                    }
+                                                  )}
                                                 </ul>
                                               </div>
                                             );
@@ -4591,7 +4606,7 @@ export default function Data(props) {
                                                 <br />
                                                 <ul className="list-disc ml-4">
                                                   {m.topCustomEmojis.map(
-                                                    (f, i) => {
+                                                    (f: any, i: number) => {
                                                       return (
                                                         <li
                                                           key={i}
@@ -4615,13 +4630,9 @@ export default function Data(props) {
                                                             >
                                                               <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                 <Image
-                                                                  src={
-                                                                    "https://cdn.discordapp.com/emojis/" +
-                                                                    /<:.*?:(\d+)>/g.exec(
-                                                                      f.emoji
-                                                                    )[1] +
-                                                                    ".png"
-                                                                  }
+                                                                  src={Utils.createEmoji(
+                                                                    f.emoji
+                                                                  )}
                                                                   alt="emoji"
                                                                   height="50px"
                                                                   width="50px"
@@ -4652,13 +4663,9 @@ export default function Data(props) {
                                                                 >
                                                                   <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                     <Image
-                                                                      src={
-                                                                        "https://cdn.discordapp.com/emojis/" +
-                                                                        /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                                                          f.emoji
-                                                                        )[2] +
-                                                                        ".gif"
-                                                                      }
+                                                                      src={Utils.createCustomEmoji(
+                                                                        f.emoji
+                                                                      )}
                                                                       alt="emoji"
                                                                       height="50px"
                                                                       width="50px"
@@ -4702,7 +4709,7 @@ export default function Data(props) {
                             </>
                           );
                         })
-                      : topChannels?.map((m, i) => {
+                      : topChannels?.map((m: any, i: number) => {
                           return (
                             <>
                               {m !== "noresults" ? (
@@ -4782,7 +4789,7 @@ export default function Data(props) {
                                                   <br />
                                                   <ul className="list-disc ml-4">
                                                     {m.favoriteWords.map(
-                                                      (f, i) => {
+                                                      (f: any, i: number) => {
                                                         return (
                                                           <li key={i}>
                                                             {f.word}: {f.count}{" "}
@@ -4844,17 +4851,19 @@ export default function Data(props) {
                                                   </span>
                                                   <br />
                                                   <ul className="list-disc ml-4">
-                                                    {m.topCursed.map((f, i) => {
-                                                      return (
-                                                        <li key={i}>
-                                                          {f.word}: {f.count}{" "}
-                                                          time
-                                                          {f.count > 1
-                                                            ? "s"
-                                                            : ""}
-                                                        </li>
-                                                      );
-                                                    })}
+                                                    {m.topCursed.map(
+                                                      (f: any, i: number) => {
+                                                        return (
+                                                          <li key={i}>
+                                                            {f.word}: {f.count}{" "}
+                                                            time
+                                                            {f.count > 1
+                                                              ? "s"
+                                                              : ""}
+                                                          </li>
+                                                        );
+                                                      }
+                                                    )}
                                                   </ul>
                                                 </div>
                                               );
@@ -4896,17 +4905,19 @@ export default function Data(props) {
                                                   </span>
                                                   <br />
                                                   <ul className="list-disc ml-4">
-                                                    {m.topLinks.map((f, i) => {
-                                                      return (
-                                                        <li key={i}>
-                                                          {f.word}: {f.count}{" "}
-                                                          time
-                                                          {f.count > 1
-                                                            ? "s"
-                                                            : ""}
-                                                        </li>
-                                                      );
-                                                    })}
+                                                    {m.topLinks.map(
+                                                      (f: any, i: number) => {
+                                                        return (
+                                                          <li key={i}>
+                                                            {f.word}: {f.count}{" "}
+                                                            time
+                                                            {f.count > 1
+                                                              ? "s"
+                                                              : ""}
+                                                          </li>
+                                                        );
+                                                      }
+                                                    )}
                                                   </ul>
                                                 </div>
                                               );
@@ -4954,7 +4965,7 @@ export default function Data(props) {
                                                   <br />
                                                   <ul className="list-disc ml-4">
                                                     {m.topDiscordLinks.map(
-                                                      (f, i) => {
+                                                      (f: any, i: number) => {
                                                         return (
                                                           <li key={i}>
                                                             {f.word}: {f.count}{" "}
@@ -5016,7 +5027,7 @@ export default function Data(props) {
                                                   <br />
                                                   <ul className="list-disc ml-4">
                                                     {m.oldestMessages.map(
-                                                      (f, i) => {
+                                                      (f: any, i: number) => {
                                                         return (
                                                           <li key={i}>
                                                             <b>{f.sentence}</b>
@@ -5092,19 +5103,21 @@ export default function Data(props) {
                                                   </span>
                                                   <br />
                                                   <ul className="list-disc ml-4">
-                                                    {m.topEmojis.map((f, i) => {
-                                                      return (
-                                                        <li key={i}>
-                                                          <b>
-                                                            {f.emoji}: {f.count}{" "}
-                                                            time
-                                                            {f.count > 1
-                                                              ? "s"
-                                                              : ""}
-                                                          </b>
-                                                        </li>
-                                                      );
-                                                    })}
+                                                    {m.topEmojis.map(
+                                                      (f: any, i: number) => {
+                                                        return (
+                                                          <li key={i}>
+                                                            <b>
+                                                              {f.emoji}:{" "}
+                                                              {f.count} time
+                                                              {f.count > 1
+                                                                ? "s"
+                                                                : ""}
+                                                            </b>
+                                                          </li>
+                                                        );
+                                                      }
+                                                    )}
                                                   </ul>
                                                 </div>
                                               );
@@ -5155,7 +5168,7 @@ export default function Data(props) {
                                                   <br />
                                                   <ul className="list-disc ml-4">
                                                     {m.topCustomEmojis.map(
-                                                      (f, i) => {
+                                                      (f: any, i: number) => {
                                                         return (
                                                           <li
                                                             key={i}
@@ -5179,13 +5192,9 @@ export default function Data(props) {
                                                               >
                                                                 <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                   <Image
-                                                                    src={
-                                                                      "https://cdn.discordapp.com/emojis/" +
-                                                                      /<:.*?:(\d+)>/g.exec(
-                                                                        f.emoji
-                                                                      )[1] +
-                                                                      ".png"
-                                                                    }
+                                                                    src={Utils.createEmoji(
+                                                                      f.emoji
+                                                                    )}
                                                                     alt="emoji"
                                                                     height="50px"
                                                                     width="50px"
@@ -5216,13 +5225,9 @@ export default function Data(props) {
                                                                   >
                                                                     <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                       <Image
-                                                                        src={
-                                                                          "https://cdn.discordapp.com/emojis/" +
-                                                                          /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                                                            f.emoji
-                                                                          )[2] +
-                                                                          ".gif"
-                                                                        }
+                                                                        src={Utils.createCustomEmoji(
+                                                                          f.emoji
+                                                                        )}
                                                                         alt="emoji"
                                                                         height="50px"
                                                                         width="50px"
@@ -5312,8 +5317,8 @@ export default function Data(props) {
                   )}
                   {data?.messages?.topGuilds &&
                   data?.messages?.topGuilds?.length > 0
-                    ? !topGuilds.length > 0 && topGuilds[0] !== "noresults"
-                      ? data?.messages?.topGuilds.map((m, i) => {
+                    ? !(topGuilds.length > 0) && topGuilds[0] !== "noresults"
+                      ? data?.messages?.topGuilds.map((m: any, i: number) => {
                           return (
                             <>
                               <div key={i}>
@@ -5407,7 +5412,7 @@ export default function Data(props) {
                                                 <br />
                                                 <ul className="list-disc ml-4">
                                                   {m.favoriteWords.map(
-                                                    (f, i) => {
+                                                    (f: any, i: number) => {
                                                       return (
                                                         <li key={i}>
                                                           {f.word}: {f.count}{" "}
@@ -5469,14 +5474,19 @@ export default function Data(props) {
                                                 </span>
                                                 <br />
                                                 <ul className="list-disc ml-4">
-                                                  {m.topCursed.map((f, i) => {
-                                                    return (
-                                                      <li key={i}>
-                                                        {f.word}: {f.count} time
-                                                        {f.count > 1 ? "s" : ""}
-                                                      </li>
-                                                    );
-                                                  })}
+                                                  {m.topCursed.map(
+                                                    (f: any, i: number) => {
+                                                      return (
+                                                        <li key={i}>
+                                                          {f.word}: {f.count}{" "}
+                                                          time
+                                                          {f.count > 1
+                                                            ? "s"
+                                                            : ""}
+                                                        </li>
+                                                      );
+                                                    }
+                                                  )}
                                                 </ul>
                                               </div>
                                             );
@@ -5517,14 +5527,19 @@ export default function Data(props) {
                                                 </span>
                                                 <br />
                                                 <ul className="list-disc ml-4">
-                                                  {m.topLinks.map((f, i) => {
-                                                    return (
-                                                      <li key={i}>
-                                                        {f.word}: {f.count} time
-                                                        {f.count > 1 ? "s" : ""}
-                                                      </li>
-                                                    );
-                                                  })}
+                                                  {m.topLinks.map(
+                                                    (f: any, i: number) => {
+                                                      return (
+                                                        <li key={i}>
+                                                          {f.word}: {f.count}{" "}
+                                                          time
+                                                          {f.count > 1
+                                                            ? "s"
+                                                            : ""}
+                                                        </li>
+                                                      );
+                                                    }
+                                                  )}
                                                 </ul>
                                               </div>
                                             );
@@ -5571,7 +5586,7 @@ export default function Data(props) {
                                                 <br />
                                                 <ul className="list-disc ml-4">
                                                   {m.topDiscordLinks.map(
-                                                    (f, i) => {
+                                                    (f: any, i: number) => {
                                                       return (
                                                         <li key={i}>
                                                           {f.word}: {f.count}{" "}
@@ -5629,7 +5644,7 @@ export default function Data(props) {
                                                 <br />
                                                 <ul className="list-disc ml-4">
                                                   {m.oldestMessages.map(
-                                                    (f, i) => {
+                                                    (f: any, i: number) => {
                                                       return (
                                                         <li key={i}>
                                                           <b>{f.sentence}</b>
@@ -5703,19 +5718,21 @@ export default function Data(props) {
                                                 </span>
                                                 <br />
                                                 <ul className="list-disc ml-4">
-                                                  {m.topEmojis.map((f, i) => {
-                                                    return (
-                                                      <li key={i}>
-                                                        <b>
-                                                          {f.emoji}: {f.count}{" "}
-                                                          time
-                                                          {f.count > 1
-                                                            ? "s"
-                                                            : ""}
-                                                        </b>
-                                                      </li>
-                                                    );
-                                                  })}
+                                                  {m.topEmojis.map(
+                                                    (f: any, i: number) => {
+                                                      return (
+                                                        <li key={i}>
+                                                          <b>
+                                                            {f.emoji}: {f.count}{" "}
+                                                            time
+                                                            {f.count > 1
+                                                              ? "s"
+                                                              : ""}
+                                                          </b>
+                                                        </li>
+                                                      );
+                                                    }
+                                                  )}
                                                 </ul>
                                               </div>
                                             );
@@ -5765,7 +5782,7 @@ export default function Data(props) {
                                                 <br />
                                                 <ul className="list-disc ml-4">
                                                   {m.topCustomEmojis.map(
-                                                    (f, i) => {
+                                                    (f: any, i: number) => {
                                                       return (
                                                         <li
                                                           key={i}
@@ -5789,13 +5806,9 @@ export default function Data(props) {
                                                             >
                                                               <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                 <Image
-                                                                  src={
-                                                                    "https://cdn.discordapp.com/emojis/" +
-                                                                    /<:.*?:(\d+)>/g.exec(
-                                                                      f.emoji
-                                                                    )[1] +
-                                                                    ".png"
-                                                                  }
+                                                                  src={Utils.createEmoji(
+                                                                    f.emoji
+                                                                  )}
                                                                   alt="emoji"
                                                                   height="50px"
                                                                   width="50px"
@@ -5826,13 +5839,9 @@ export default function Data(props) {
                                                                 >
                                                                   <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                     <Image
-                                                                      src={
-                                                                        "https://cdn.discordapp.com/emojis/" +
-                                                                        /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                                                          f.emoji
-                                                                        )[2] +
-                                                                        ".gif"
-                                                                      }
+                                                                      src={Utils.createCustomEmoji(
+                                                                        f.emoji
+                                                                      )}
                                                                       alt="emoji"
                                                                       height="50px"
                                                                       width="50px"
@@ -5876,7 +5885,7 @@ export default function Data(props) {
                             </>
                           );
                         })
-                      : topGuilds?.map((m, i) => {
+                      : topGuilds?.map((m: any, i: number) => {
                           return (
                             <>
                               {m !== "noresults" ? (
@@ -5958,7 +5967,7 @@ export default function Data(props) {
                                                   <br />
                                                   <ul className="list-disc ml-4">
                                                     {m.favoriteWords.map(
-                                                      (f, i) => {
+                                                      (f: any, i: number) => {
                                                         return (
                                                           <li key={i}>
                                                             {f.word}: {f.count}{" "}
@@ -6020,17 +6029,19 @@ export default function Data(props) {
                                                   </span>
                                                   <br />
                                                   <ul className="list-disc ml-4">
-                                                    {m.topCursed.map((f, i) => {
-                                                      return (
-                                                        <li key={i}>
-                                                          {f.word}: {f.count}{" "}
-                                                          time
-                                                          {f.count > 1
-                                                            ? "s"
-                                                            : ""}
-                                                        </li>
-                                                      );
-                                                    })}
+                                                    {m.topCursed.map(
+                                                      (f: any, i: number) => {
+                                                        return (
+                                                          <li key={i}>
+                                                            {f.word}: {f.count}{" "}
+                                                            time
+                                                            {f.count > 1
+                                                              ? "s"
+                                                              : ""}
+                                                          </li>
+                                                        );
+                                                      }
+                                                    )}
                                                   </ul>
                                                 </div>
                                               );
@@ -6072,17 +6083,19 @@ export default function Data(props) {
                                                   </span>
                                                   <br />
                                                   <ul className="list-disc ml-4">
-                                                    {m.topLinks.map((f, i) => {
-                                                      return (
-                                                        <li key={i}>
-                                                          {f.word}: {f.count}{" "}
-                                                          time
-                                                          {f.count > 1
-                                                            ? "s"
-                                                            : ""}
-                                                        </li>
-                                                      );
-                                                    })}
+                                                    {m.topLinks.map(
+                                                      (f: any, i: number) => {
+                                                        return (
+                                                          <li key={i}>
+                                                            {f.word}: {f.count}{" "}
+                                                            time
+                                                            {f.count > 1
+                                                              ? "s"
+                                                              : ""}
+                                                          </li>
+                                                        );
+                                                      }
+                                                    )}
                                                   </ul>
                                                 </div>
                                               );
@@ -6130,7 +6143,7 @@ export default function Data(props) {
                                                   <br />
                                                   <ul className="list-disc ml-4">
                                                     {m.topDiscordLinks.map(
-                                                      (f, i) => {
+                                                      (f: any, i: number) => {
                                                         return (
                                                           <li key={i}>
                                                             {f.word}: {f.count}{" "}
@@ -6192,7 +6205,7 @@ export default function Data(props) {
                                                   <br />
                                                   <ul className="list-disc ml-4">
                                                     {m.oldestMessages.map(
-                                                      (f, i) => {
+                                                      (f: any, i: number) => {
                                                         return (
                                                           <li key={i}>
                                                             <b>{f.sentence}</b>
@@ -6268,19 +6281,21 @@ export default function Data(props) {
                                                   </span>
                                                   <br />
                                                   <ul className="list-disc ml-4">
-                                                    {m.topEmojis.map((f, i) => {
-                                                      return (
-                                                        <li key={i}>
-                                                          <b>
-                                                            {f.emoji}: {f.count}{" "}
-                                                            time
-                                                            {f.count > 1
-                                                              ? "s"
-                                                              : ""}
-                                                          </b>
-                                                        </li>
-                                                      );
-                                                    })}
+                                                    {m.topEmojis.map(
+                                                      (f: any, i: number) => {
+                                                        return (
+                                                          <li key={i}>
+                                                            <b>
+                                                              {f.emoji}:{" "}
+                                                              {f.count} time
+                                                              {f.count > 1
+                                                                ? "s"
+                                                                : ""}
+                                                            </b>
+                                                          </li>
+                                                        );
+                                                      }
+                                                    )}
                                                   </ul>
                                                 </div>
                                               );
@@ -6331,7 +6346,7 @@ export default function Data(props) {
                                                   <br />
                                                   <ul className="list-disc ml-4">
                                                     {m.topCustomEmojis.map(
-                                                      (f, i) => {
+                                                      (f: any, i: number) => {
                                                         return (
                                                           <li
                                                             key={i}
@@ -6355,13 +6370,9 @@ export default function Data(props) {
                                                               >
                                                                 <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                   <Image
-                                                                    src={
-                                                                      "https://cdn.discordapp.com/emojis/" +
-                                                                      /<:.*?:(\d+)>/g.exec(
-                                                                        f.emoji
-                                                                      )[1] +
-                                                                      ".png"
-                                                                    }
+                                                                    src={Utils.createEmoji(
+                                                                      f.emoji
+                                                                    )}
                                                                     alt="emoji"
                                                                     height="50px"
                                                                     width="50px"
@@ -6392,13 +6403,9 @@ export default function Data(props) {
                                                                   >
                                                                     <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                       <Image
-                                                                        src={
-                                                                          "https://cdn.discordapp.com/emojis/" +
-                                                                          /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                                                            f.emoji
-                                                                          )[2] +
-                                                                          ".gif"
-                                                                        }
+                                                                        src={Utils.createCustomEmoji(
+                                                                          f.emoji
+                                                                        )}
                                                                         alt="emoji"
                                                                         height="50px"
                                                                         width="50px"
@@ -6488,8 +6495,9 @@ export default function Data(props) {
                   )}
                   {data?.messages?.topGroupDMs &&
                   data?.messages?.topGroupDMs?.length > 0
-                    ? !topGroupDMs.length > 0 && topChannels[0] !== "noresults"
-                      ? data?.messages?.topGroupDMs.map((m, i) => {
+                    ? !(topGroupDMs.length > 0) &&
+                      topChannels[0] !== "noresults"
+                      ? data?.messages?.topGroupDMs.map((m: any, i: number) => {
                           return (
                             <>
                               <div key={i}>
@@ -6577,7 +6585,7 @@ export default function Data(props) {
                                                 <br />
                                                 <ul className="list-disc ml-4">
                                                   {m.favoriteWords.map(
-                                                    (f, i) => {
+                                                    (f: any, i: number) => {
                                                       return (
                                                         <li key={i}>
                                                           {f.word}: {f.count}{" "}
@@ -6639,14 +6647,19 @@ export default function Data(props) {
                                                 </span>
                                                 <br />
                                                 <ul className="list-disc ml-4">
-                                                  {m.topCursed.map((f, i) => {
-                                                    return (
-                                                      <li key={i}>
-                                                        {f.word}: {f.count} time
-                                                        {f.count > 1 ? "s" : ""}
-                                                      </li>
-                                                    );
-                                                  })}
+                                                  {m.topCursed.map(
+                                                    (f: any, i: number) => {
+                                                      return (
+                                                        <li key={i}>
+                                                          {f.word}: {f.count}{" "}
+                                                          time
+                                                          {f.count > 1
+                                                            ? "s"
+                                                            : ""}
+                                                        </li>
+                                                      );
+                                                    }
+                                                  )}
                                                 </ul>
                                               </div>
                                             );
@@ -6687,14 +6700,19 @@ export default function Data(props) {
                                                 </span>
                                                 <br />
                                                 <ul className="list-disc ml-4">
-                                                  {m.topLinks.map((f, i) => {
-                                                    return (
-                                                      <li key={i}>
-                                                        {f.word}: {f.count} time
-                                                        {f.count > 1 ? "s" : ""}
-                                                      </li>
-                                                    );
-                                                  })}
+                                                  {m.topLinks.map(
+                                                    (f: any, i: number) => {
+                                                      return (
+                                                        <li key={i}>
+                                                          {f.word}: {f.count}{" "}
+                                                          time
+                                                          {f.count > 1
+                                                            ? "s"
+                                                            : ""}
+                                                        </li>
+                                                      );
+                                                    }
+                                                  )}
                                                 </ul>
                                               </div>
                                             );
@@ -6741,7 +6759,7 @@ export default function Data(props) {
                                                 <br />
                                                 <ul className="list-disc ml-4">
                                                   {m.topDiscordLinks.map(
-                                                    (f, i) => {
+                                                    (f: any, i: number) => {
                                                       return (
                                                         <li key={i}>
                                                           {f.word}: {f.count}{" "}
@@ -6799,7 +6817,7 @@ export default function Data(props) {
                                                 <br />
                                                 <ul className="list-disc ml-4">
                                                   {m.oldestMessages.map(
-                                                    (f, i) => {
+                                                    (f: any, i: number) => {
                                                       return (
                                                         <li key={i}>
                                                           <b>{f.sentence}</b>
@@ -6873,19 +6891,21 @@ export default function Data(props) {
                                                 </span>
                                                 <br />
                                                 <ul className="list-disc ml-4">
-                                                  {m.topEmojis.map((f, i) => {
-                                                    return (
-                                                      <li key={i}>
-                                                        <b>
-                                                          {f.emoji}: {f.count}{" "}
-                                                          time
-                                                          {f.count > 1
-                                                            ? "s"
-                                                            : ""}
-                                                        </b>
-                                                      </li>
-                                                    );
-                                                  })}
+                                                  {m.topEmojis.map(
+                                                    (f: any, i: number) => {
+                                                      return (
+                                                        <li key={i}>
+                                                          <b>
+                                                            {f.emoji}: {f.count}{" "}
+                                                            time
+                                                            {f.count > 1
+                                                              ? "s"
+                                                              : ""}
+                                                          </b>
+                                                        </li>
+                                                      );
+                                                    }
+                                                  )}
                                                 </ul>
                                               </div>
                                             );
@@ -6935,7 +6955,7 @@ export default function Data(props) {
                                                 <br />
                                                 <ul className="list-disc ml-4">
                                                   {m.topCustomEmojis.map(
-                                                    (f, i) => {
+                                                    (f: any, i: number) => {
                                                       return (
                                                         <li
                                                           key={i}
@@ -6959,13 +6979,9 @@ export default function Data(props) {
                                                             >
                                                               <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                 <Image
-                                                                  src={
-                                                                    "https://cdn.discordapp.com/emojis/" +
-                                                                    /<:.*?:(\d+)>/g.exec(
-                                                                      f.emoji
-                                                                    )[1] +
-                                                                    ".png"
-                                                                  }
+                                                                  src={Utils.createEmoji(
+                                                                    f.emoji
+                                                                  )}
                                                                   alt="emoji"
                                                                   height="50px"
                                                                   width="50px"
@@ -6996,13 +7012,9 @@ export default function Data(props) {
                                                                 >
                                                                   <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                     <Image
-                                                                      src={
-                                                                        "https://cdn.discordapp.com/emojis/" +
-                                                                        /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                                                          f.emoji
-                                                                        )[2] +
-                                                                        ".gif"
-                                                                      }
+                                                                      src={Utils.createCustomEmoji(
+                                                                        f.emoji
+                                                                      )}
                                                                       alt="emoji"
                                                                       height="50px"
                                                                       width="50px"
@@ -7046,7 +7058,7 @@ export default function Data(props) {
                             </>
                           );
                         })
-                      : topGroupDMs?.map((m, i) => {
+                      : topGroupDMs?.map((m: any, i: number) => {
                           return (
                             <>
                               {m !== "noresults" ? (
@@ -7122,7 +7134,7 @@ export default function Data(props) {
                                                   <br />
                                                   <ul className="list-disc ml-4">
                                                     {m.favoriteWords.map(
-                                                      (f, i) => {
+                                                      (f: any, i: number) => {
                                                         return (
                                                           <li key={i}>
                                                             {f.word}: {f.count}{" "}
@@ -7184,17 +7196,19 @@ export default function Data(props) {
                                                   </span>
                                                   <br />
                                                   <ul className="list-disc ml-4">
-                                                    {m.topCursed.map((f, i) => {
-                                                      return (
-                                                        <li key={i}>
-                                                          {f.word}: {f.count}{" "}
-                                                          time
-                                                          {f.count > 1
-                                                            ? "s"
-                                                            : ""}
-                                                        </li>
-                                                      );
-                                                    })}
+                                                    {m.topCursed.map(
+                                                      (f: any, i: number) => {
+                                                        return (
+                                                          <li key={i}>
+                                                            {f.word}: {f.count}{" "}
+                                                            time
+                                                            {f.count > 1
+                                                              ? "s"
+                                                              : ""}
+                                                          </li>
+                                                        );
+                                                      }
+                                                    )}
                                                   </ul>
                                                 </div>
                                               );
@@ -7236,17 +7250,19 @@ export default function Data(props) {
                                                   </span>
                                                   <br />
                                                   <ul className="list-disc ml-4">
-                                                    {m.topLinks.map((f, i) => {
-                                                      return (
-                                                        <li key={i}>
-                                                          {f.word}: {f.count}{" "}
-                                                          time
-                                                          {f.count > 1
-                                                            ? "s"
-                                                            : ""}
-                                                        </li>
-                                                      );
-                                                    })}
+                                                    {m.topLinks.map(
+                                                      (f: any, i: number) => {
+                                                        return (
+                                                          <li key={i}>
+                                                            {f.word}: {f.count}{" "}
+                                                            time
+                                                            {f.count > 1
+                                                              ? "s"
+                                                              : ""}
+                                                          </li>
+                                                        );
+                                                      }
+                                                    )}
                                                   </ul>
                                                 </div>
                                               );
@@ -7294,7 +7310,7 @@ export default function Data(props) {
                                                   <br />
                                                   <ul className="list-disc ml-4">
                                                     {m.topDiscordLinks.map(
-                                                      (f, i) => {
+                                                      (f: any, i: number) => {
                                                         return (
                                                           <li key={i}>
                                                             {f.word}: {f.count}{" "}
@@ -7356,7 +7372,7 @@ export default function Data(props) {
                                                   <br />
                                                   <ul className="list-disc ml-4">
                                                     {m.oldestMessages.map(
-                                                      (f, i) => {
+                                                      (f: any, i: number) => {
                                                         return (
                                                           <li key={i}>
                                                             <b>{f.sentence}</b>
@@ -7432,19 +7448,21 @@ export default function Data(props) {
                                                   </span>
                                                   <br />
                                                   <ul className="list-disc ml-4">
-                                                    {m.topEmojis.map((f, i) => {
-                                                      return (
-                                                        <li key={i}>
-                                                          <b>
-                                                            {f.emoji}: {f.count}{" "}
-                                                            time
-                                                            {f.count > 1
-                                                              ? "s"
-                                                              : ""}
-                                                          </b>
-                                                        </li>
-                                                      );
-                                                    })}
+                                                    {m.topEmojis.map(
+                                                      (f: any, i: number) => {
+                                                        return (
+                                                          <li key={i}>
+                                                            <b>
+                                                              {f.emoji}:{" "}
+                                                              {f.count} time
+                                                              {f.count > 1
+                                                                ? "s"
+                                                                : ""}
+                                                            </b>
+                                                          </li>
+                                                        );
+                                                      }
+                                                    )}
                                                   </ul>
                                                 </div>
                                               );
@@ -7495,7 +7513,7 @@ export default function Data(props) {
                                                   <br />
                                                   <ul className="list-disc ml-4">
                                                     {m.topCustomEmojis.map(
-                                                      (f, i) => {
+                                                      (f: any, i: number) => {
                                                         return (
                                                           <li
                                                             key={i}
@@ -7519,13 +7537,9 @@ export default function Data(props) {
                                                               >
                                                                 <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                   <Image
-                                                                    src={
-                                                                      "https://cdn.discordapp.com/emojis/" +
-                                                                      /<:.*?:(\d+)>/g.exec(
-                                                                        f.emoji
-                                                                      )[1] +
-                                                                      ".png"
-                                                                    }
+                                                                    src={Utils.createEmoji(
+                                                                      f.emoji
+                                                                    )}
                                                                     alt="emoji"
                                                                     height="50px"
                                                                     width="50px"
@@ -7556,13 +7570,9 @@ export default function Data(props) {
                                                                   >
                                                                     <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                       <Image
-                                                                        src={
-                                                                          "https://cdn.discordapp.com/emojis/" +
-                                                                          /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                                                            f.emoji
-                                                                          )[2] +
-                                                                          ".gif"
-                                                                        }
+                                                                        src={Utils.createCustomEmoji(
+                                                                          f.emoji
+                                                                        )}
                                                                         alt="emoji"
                                                                         height="50px"
                                                                         width="50px"
@@ -7645,7 +7655,7 @@ export default function Data(props) {
           <div className="grid lg:grid-cols-10 md:grid-cols-8 grid-cols-6 justify-items-center gap-3">
             {data?.bots && data?.bots?.length > 0
               ? data.bots
-                  .sort((a, b) => {
+                  .sort((a: any, b: any) => {
                     if (a.verified && !b.verified) {
                       return -1;
                     }
@@ -7654,7 +7664,7 @@ export default function Data(props) {
                     }
                     return 0;
                   })
-                  .map((b, i) => {
+                  .map((b: any, i: number) => {
                     return (
                       <div className="cursor-pointer " key={i} id={"bot_" + i}>
                         <Tippy
@@ -7742,13 +7752,14 @@ export default function Data(props) {
                     {data?.payments?.transactions?.length > 0 ? (
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: currencies.find(
-                            (a) =>
-                              a.abbreviation.toLowerCase() ===
-                              Utils.getMostUsedCurrency(
-                                data.payments.transactions
-                              )
-                          )?.symbol,
+                          __html:
+                            currencies.find(
+                              (a) =>
+                                a.abbreviation.toLowerCase() ===
+                                Utils.getMostUsedCurrency(
+                                  data.payments.transactions
+                                )
+                            )?.symbol || "",
                         }}
                       ></div>
                     ) : (
@@ -7770,7 +7781,7 @@ export default function Data(props) {
                     : ""}
                 </span>
                 <ul className="text-gray-900 dark:text-white lg:text-xl md:text-xl font-bold list-disc mt-2 ml-6 text-xs">
-                  {data?.payments?.transactions?.map((t, i) => {
+                  {data?.payments?.transactions?.map((t: any, i: number) => {
                     return (
                       <li key={i}>
                         <div className="inline-flex">
@@ -7784,11 +7795,12 @@ export default function Data(props) {
                             />
                             <div
                               dangerouslySetInnerHTML={{
-                                __html: currencies?.find(
-                                  (a) =>
-                                    a?.abbreviation.toLowerCase() ===
-                                    t?.currency
-                                )?.symbol,
+                                __html:
+                                  currencies?.find(
+                                    (a) =>
+                                      a?.abbreviation.toLowerCase() ===
+                                      t?.currency
+                                  )?.symbol || "",
                               }}
                             ></div>
                           </p>
@@ -7847,24 +7859,26 @@ export default function Data(props) {
                 </span>
                 <ul className="text-gray-900 dark:text-white text-xl font-bold list-disc mt-2 ml-6">
                   {data?.payments?.giftedNitro
-                    ? Object.keys(data?.payments?.giftedNitro)?.map((t, i) => {
-                        return (
-                          <li key={i}>
-                            <div className="inline-flex">
-                              {t}:
-                              <p className="mx-1 font-extrabold text-blue-500">
-                                <CountUp
-                                  end={data?.payments?.giftedNitro[t]}
-                                  separator=","
-                                  useGrouping={true}
-                                  start={0}
-                                  delay={2}
-                                />
-                              </p>
-                            </div>
-                          </li>
-                        );
-                      })
+                    ? Object.keys(data?.payments?.giftedNitro)?.map(
+                        (t: any, i: number) => {
+                          return (
+                            <li key={i}>
+                              <div className="inline-flex">
+                                {t}:
+                                <p className="mx-1 font-extrabold text-blue-500">
+                                  <CountUp
+                                    end={data?.payments?.giftedNitro[t]}
+                                    separator=","
+                                    useGrouping={true}
+                                    start={0}
+                                    delay={2}
+                                  />
+                                </p>
+                              </div>
+                            </li>
+                          );
+                        }
+                      )
                     : ""}
                 </ul>
               </div>
@@ -7932,20 +7946,20 @@ export default function Data(props) {
           </p>
           <div className="text-gray-900 dark:text-white md:text-xl lg:text-xl font-bold text-[16px] mt-2">
             {data?.statistics
-              ? Object.keys(data?.statistics)?.map((t, i) => {
+              ? Object.keys(data?.statistics)?.map((t: any, i: number) => {
                   if (!t) return;
-                  if (EventsJSON?.events[t] && data?.statistics[t]) {
+                  if ((EventsJSON.events as any)[t] && data?.statistics[t]) {
                     return (
                       <div key={i}>
                         <div className="flex items-center mb-4">
-                          {statIcons[t] ? (
+                          {(statIcons as any)[t] ? (
                             <Tippy
                               animation="scale"
                               className="shadow-xl"
-                              content={EventsJSON?.events[t]}
+                              content={(EventsJSON.events as any)[t]}
                             >
                               <div className="cursor-default">
-                                {statIcons[t]}
+                                {(statIcons as any)[t]}
                               </div>
                             </Tippy>
                           ) : (
@@ -7955,7 +7969,7 @@ export default function Data(props) {
                           <div
                             className="ml-1"
                             dangerouslySetInnerHTML={{
-                              __html: EventsJSON?.e_dsc[t]
+                              __html: (EventsJSON.e_dsc as any)[t]
                                 .toLowerCase()
                                 .replace(
                                   /{count}/g,
@@ -8038,6 +8052,6 @@ export default function Data(props) {
       </a>
     </div>
   ) : (
-    ""
+    <></>
   );
 }

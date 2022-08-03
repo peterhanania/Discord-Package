@@ -1,13 +1,13 @@
 import Tippy from "@tippyjs/react";
-import { useState, Fragment, useEffect } from "react";
+import { useState, Fragment, useEffect, ReactElement } from "react";
 import { Dialog, Transition, Listbox } from "@headlessui/react";
 import Image from "next/image";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 
-export default function Settings() {
+export default function Settings(): ReactElement {
   const [settings, setSettings] = useState(false);
 
-  function classNames(...classes) {
+  function classNames(...classes: any): any {
     return classes.filter(Boolean).join(" ");
   }
 
@@ -20,7 +20,7 @@ export default function Settings() {
     },
   ];
   const [selected, setSelected] = useState(countries[0]);
-  const [theme, setTheme] = useState(null);
+  const [theme, setTheme] = useState<string | null>(null);
 
   useEffect(() => {
     setTheme(localStorage.theme);
@@ -97,7 +97,7 @@ export default function Settings() {
                         name="theme"
                         id="dark"
                         value="dark"
-                        onChange={()=>{}}
+                        onChange={() => {}}
                         checked={theme === "dark"}
                       />
                       <label htmlFor="dark">Dark</label>
@@ -109,14 +109,13 @@ export default function Settings() {
                         setTheme("light");
                         localStorage.setItem("theme", "light");
                       }}
-                      
                     >
                       <input
                         type="radio"
                         name="theme"
                         id="light"
                         value="light"
-                        onChange={()=>{}}
+                        onChange={() => {}}
                         checked={theme === "light"}
                       />
                       <label htmlFor="light">Light</label>
