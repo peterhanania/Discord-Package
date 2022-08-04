@@ -155,6 +155,14 @@ Discord Data Package Explorer is built with **[Next.js](https://nextjs.org/)** a
 * Install the dependencies using `npm install` or `yarn install`.
 * Start the app using `npm run dev`.
 
+
+## Using Docker
+
+* Run `docker build -t discord-package-explorer .` to build the image.
+* Run `docker run -p 3000:3000 discord-package-explorer` to start the app.
+
+and you're good to go!
+
 ### Credits
 Huge credits to [Andros2091](https://github.com/Androz2091) for the original [source](https://github.com/Androz2091/discord-data-package-explorer). 
 
