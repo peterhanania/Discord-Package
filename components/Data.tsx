@@ -1268,7 +1268,7 @@ export default function Data(props: any): JSX.Element {
                         data.messages.topCursed.length
                           .toString()
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-                        " Curse Word | Cursed " +
+                        " Curse Words | Cursed " +
                         Utils.getTopCount(data.messages.topCursed) +
                         " times"
                       }
@@ -1337,7 +1337,7 @@ export default function Data(props: any): JSX.Element {
                         data.messages.topLinks.length +
                         " Links | Sent " +
                         Utils.getTopCount(data.messages.topLinks) +
-                        " Total Links"
+                        " unique total Links"
                       }
                       animation="scale"
                       className="shadow-xl"
@@ -1404,7 +1404,7 @@ export default function Data(props: any): JSX.Element {
                         data.messages.topDiscordLinks.length +
                         " Discord Links | Sent " +
                         Utils.getTopCount(data.messages.topDiscordLinks) +
-                        " Total Discord Links"
+                        " unique total Discord links"
                       }
                       animation="scale"
                       className="shadow-xl"
@@ -2285,7 +2285,7 @@ export default function Data(props: any): JSX.Element {
             <ul className="text-gray-900 dark:text-white lg:text-xl md:text-xl font-bold list-disc mt-2 ml-6">
               {data?.settings?.appearance?.theme ? (
                 <li>
-                  {data?.dataFile ? "They " : "You "}prefer discord{" "}
+                  {data?.dataFile ? "They " : "You "}prefer Discord{" "}
                   {data.settings.appearance.theme.toLowerCase()} mode
                 </li>
               ) : (
@@ -2332,7 +2332,7 @@ export default function Data(props: any): JSX.Element {
                                       </li>
                                     );
                                   })
-                                : "Please re-upload your discord package."}
+                                : "Please re-upload your Discord package."}
                             </ul>
                           </div>
                         }
@@ -2764,7 +2764,7 @@ export default function Data(props: any): JSX.Element {
                   <p className="text-white text-lg ">
                     Active Hours are the hours in which{" "}
                     {data?.dataFile ? "they " : "you "} are most active on
-                    discord sending messages.
+                    Discord sending messages.
                   </p>{" "}
                   <div className="flex items-center">
                     <svg
@@ -2779,7 +2779,7 @@ export default function Data(props: any): JSX.Element {
                       This is based on your device timezone. If the graph is
                       inacurrate, make sure your device timezone is the same
                       timezone as the usual timezone you use when sending
-                      discord messages.
+                      Discord messages.
                     </b>
                   </div>
                 </>
@@ -9001,7 +9001,7 @@ export default function Data(props: any): JSX.Element {
                           key={i}
                           className="lg:inline-flex md:inline-flex lg:text-xl md:text-xl text-sm"
                         >
-                          - {data?.dataFile ? "They " : "You "} open discord ~
+                          - {data?.dataFile ? "They " : "You "} open Discord ~
                           {data?.statistics[t].day} times per day,{" "}
                           {data?.statistics[t].week} times per week,{" "}
                           {data?.statistics[t].month} times per month, and{" "}

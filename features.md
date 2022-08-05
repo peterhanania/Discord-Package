@@ -10,7 +10,7 @@
 - [How to share your data with others](#3)
 - [How to view your oldest Messages](#4)
 - [How to view your message & character Count](#5)
-- [How to view your discord links or normal links, bad words or favorite messages](#6)
+- [How to view your Discord links or normal links, bad words or favorite messages](#6)
 - [How to filter data, if you want to hide a certain option](#7)
 - [How to toggle the website theme](#8)
 - [How to view the amount of messages with each user or channel](#9)
@@ -21,7 +21,7 @@
 
 ### introduction
 
-Ever wondered what Data discord collects? Or did you ever want to view what's inside of a discord package? Discord Package is a customisable tool that allows you to view your data in a fancy way. You could also use our exporting feature to share your selected data with your friends.
+Ever wondered what Data Discord collects? Or did you ever want to view what's inside of a Discord package? Discord Package is a customisable tool that allows you to view your data in a fancy way. You could also use our exporting feature to share your selected data with your friends.
 
 ##### 1
 
@@ -39,7 +39,7 @@ Ever wondered what Data discord collects? Or did you ever want to view what's in
 
 <img src="https://discordpackage.com/help/3.png" />
 
-#### 4. Keep checking your email and download your data once reached. The data will be sent to the email associated with your discord account and usually takes up to 24 hours to reach.
+#### 4. Keep checking your email and download your data once reached. The data will be sent to the email associated with your Discord account and usually takes up to 24 hours to reach.
 
 <img src="https://discordpackage.com/help/4.png" />
 <img src="https://discordpackage.com/help/5.png" />
@@ -97,9 +97,9 @@ If you want to view your message and character count you can do so by clicking o
 
 ##### 6
 
-### How to view your discord links or normal links, bad words or favorite messages
+### How to view your Discord links or normal links, bad words or favorite messages
 
-Similarly to the message and character count and oldest messages **(question 4-5)**, hover or press on the heart icon, text with exlamation marks, or the 2 link icons to respectively view your discord links, favorite messages, or bad words.
+Similarly to the message and character count and oldest messages **(question 4-5)**, hover or press on the heart icon, text with exlamation marks, or the 2 link icons to respectively view your Discord links, favorite messages, or bad words.
 
 ##### 7
 
@@ -122,7 +122,7 @@ You can toggle the website theme by clicking on the gear icon and toggling betwe
 
 ### How to view the amount of messages with each user or channel
 
-Each user or channel has a message count next to it which you can only hover. In addition to favorite words, curse words, discord links and normal links which you can click to view more details.
+Each user or channel has a message count next to it which you can only hover. In addition to favorite words, curse words, Discord links and normal links which you can click to view more details.
 
 <img src="https://discordpackage.com/help/4/1.png" />
 

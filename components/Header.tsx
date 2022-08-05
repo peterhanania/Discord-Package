@@ -22,7 +22,7 @@ export default function Header() {
     },
   ];
   const [selected, setSelected] = useState(countries[0]);
-  const [theme, setTheme] = useState<string | null>(null)
+  const [theme, setTheme] = useState<string | null>(null);
 
   useEffect(() => {
     setTheme(localStorage.theme);
@@ -111,7 +111,7 @@ export default function Header() {
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
                       4- Keep checking your email and download your data once
                       reached. The data will be sent to the email associated
-                      with your discord account and usually takes up to 24 hours
+                      with your Discord account and usually takes up to 24 hours
                       to reach.
                     </h3>
                     <Image src="/help/4.png" alt="4" width={500} height={30} />{" "}
@@ -243,7 +243,7 @@ export default function Header() {
                     . I got inspired by the idea and decided to work on a more
                     customizable one as a side project. This project is 100%
                     free and will always remain free. My main goal is to
-                    visualize the data used by discord in a more user friendly
+                    visualize the data used by Discord in a more user friendly
                     way.
                     <br />
                     <br />
@@ -506,7 +506,7 @@ export default function Header() {
                             }
                           }}
                           id={"debug"}
-                          type="checkbox"  
+                          type="checkbox"
                           className="w-4 h-4 text-blue-600 bg-gray-100 rounded  border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                         />
                         <label
