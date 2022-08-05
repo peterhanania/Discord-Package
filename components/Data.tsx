@@ -2410,9 +2410,6 @@ export default function Data(props: any): JSX.Element {
                     x="0px"
                     y="0px"
                     viewBox="0 0 461.001 461.001"
-                    // style={{
-                    //   enableBackground: "new 0 0 461.001 461.001",
-                    // }}
                   >
                     <g>
                       <path
@@ -2464,9 +2461,6 @@ export default function Data(props: any): JSX.Element {
                     x="0px"
                     y="0px"
                     viewBox="0 0 512.002 512.002"
-                    // style={{
-                    //   enableBackground: "new 0 0 512.002 512.002",
-                    // }}
                   >
                     <path
                       style={{
@@ -2636,9 +2630,6 @@ export default function Data(props: any): JSX.Element {
                     x="0px"
                     y="0px"
                     viewBox="0 0 455.73 455.73"
-                    // style={{
-                    //   enableBackground: "new 0 0 455.73 455.73",
-                    // }}
                   >
                     <path
                       style={{
