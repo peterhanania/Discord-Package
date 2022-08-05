@@ -221,7 +221,7 @@ export default function Upload(): ReactElement {
 
   const onUpload = (files: any) => {
     if (loading) {
-      function hasClass(el: any, cl: any): boolean {
+      function hasClass(el: Element, cl: string): boolean {
         return el.classList
           ? el.classList.contains(cl)
           : !!el.className &&
@@ -2392,26 +2392,67 @@ export default function Upload(): ReactElement {
                 `  ${chalk.yellow(`Preparing to render data`)}`
             );
 
+          if (isDebug && Date.now() - startTime > 60000) {
+            data.disabledDebugMode = true;
+          }
+
           return data;
         }
 
         extractData(files, selectedFeatures)
-          .then((data) => {
+          .then(async (data) => {
             setLoading(null);
             setError(null);
             data.demo = true;
             data.fakeInfo = false;
-            setDataExtracted(data);
 
-            toast.success("Data extracted Successfully", {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
+            setLoading("Rendering Data|||✨ Spicing up things for you ✨");
+            if (data.disabledDebugMode) {
+              toast(
+                <div
+                  style={{
+                    width: "450px",
+                  }}
+                >
+                  <span className="font-bold text-lg text-black dark:text-white">
+                    Slow device detected
+                  </span>
+                  <br />
+                  <span className="text-black dark:text-white">
+                    Heya user, your package took more than 1 minute to load.
+                    Therefore you might be experiencing a slow loading of the
+                    file using debug mode. Therefore, I have disabled debug mode
+                    for you to speed up the loading of your package! To
+                    re-enable it, go on the home page, select settings and then
+                    check the enable debug mode checkbox.
+                  </span>
+                </div>
+              );
+
+              localStorage.setItem("debug", "false");
+              await delay(2000);
+            } else {
+              toast(
+                <div
+                  style={{
+                    width: "300px",
+                  }}
+                >
+                  <span className="font-bold text-lg text-black dark:text-white">
+                    ✨ Data extracted Successfully ✨
+                  </span>
+                  <br />
+                  <span className="text-black dark:text-white">
+                    We are currently Rendering your Data you might experience a
+                    bit of lag. If you run through severe issues join our
+                    Discord Server and reach out to us.
+                  </span>
+                </div>
+              );
+              await delay(1000);
+            }
+
+            setDataExtracted(data);
           })
           .catch((err) => {
             if (isDebug) console.log(err);
@@ -2467,14 +2508,12 @@ export default function Upload(): ReactElement {
       <Header />{" "}
       <ToastContainer
         position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
+        autoClose={false}
         newestOnTop={false}
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable
-        pauseOnHover
       />
       <Transition
         show={showLargeModal}
@@ -3024,7 +3063,10 @@ export default function Upload(): ReactElement {
                         <>
                           <label
                             onClick={(e) => {
-                              function hasClass(el: any, cl: any): boolean {
+                              function hasClass(
+                                el: Element,
+                                cl: string
+                              ): boolean {
                                 return el.classList
                                   ? el.classList.contains(cl)
                                   : !!el.className &&
@@ -3111,7 +3153,12 @@ export default function Upload(): ReactElement {
                                 leaveTo="opacity-0"
                               >
                                 <div className="animate-fadeIn max-w-screen-lg mx-auto fixed bg-[#2b2d31] inset-x-5 p-5 bottom-10 rounded-lg drop-shadow-2xl flex gap-4 flex-wrap md:flex-nowrap text-center md:text-left items-center justify-center md:justify-between">
-                                  <div className="w-full flex align-center text-gray-200">
+                                  <div
+                                    className="w-full flex align-center text-gray-200"
+                                    style={{
+                                      fontFamily: "Product Sans",
+                                    }}
+                                  >
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
                                       height="24"

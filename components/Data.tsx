@@ -23,7 +23,7 @@ if (typeof Highcharts === "object") {
   Highchartsaccessibility(Highcharts);
 }
 
-function hasClass(el: any, cl: any): boolean {
+function hasClass(el: Element, cl: string): boolean {
   return el.classList
     ? el.classList.contains(cl)
     : !!el.className &&
@@ -2716,9 +2716,7 @@ export default function Data(props: any): JSX.Element {
                     backgroundColor: "#212529",
                     borderWith: 5,
                     className: "tooltip-hov",
-                    formatter: function (
-                      this: any
-                    ): string {
+                    formatter: function (this: any): string {
                       return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
                         this.y
                       }</b> messages ${
