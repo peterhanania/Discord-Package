@@ -3208,16 +3208,21 @@ export default function Upload(): ReactElement {
           )}
         </div>
       </div>
-      <div className="lg:landscape:flex md:landscape:flex landscape:hidden lg:text-xl md:text-xl text-sm mt-1 animate__delay-1s animate__animated animate__fadeIn flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
-        Want to view a Demo?{" "}
-        <a
-          className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1"
-          href="/?demo=true"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Click here
-        </a>
+      <div className="lg:landscape:flex md:landscape:flex landscape:hidden flex flex-col">
+        <span className="flex justify-center text-slate-900 dark:text-gray-200 ">
+          -- or --
+        </span>
+        <div className=" lg:text-xl md:text-xl text-sm mt-1 animate__delay-1s animate__animated animate__fadeIn flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
+          <a
+            href="/?demo=true"
+            target="_blank"
+            rel="noreferrer"
+            type="button"
+            className="button-green text-gray-200  my-2 flex items-center"
+          >
+            View a Demo
+          </a>
+        </div>
       </div>
       <div className="lg:landscape:flex md:landscape:flex landscape:hidden animate__animated animate__fadeIn animate__delay-1s flex justify-center items-center absolute bottom-8 right-0 left-0">
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] text-slate-800 dark:text-white font-bold flex items-center rounded-md">
