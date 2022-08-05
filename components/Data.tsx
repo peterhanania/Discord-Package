@@ -15,7 +15,7 @@ import Settings from "./settings";
 import HighchartsExporting from "highcharts/modules/exporting";
 import HighchartsExportData from "highcharts/modules/export-data";
 import Highchartsaccessibility from "highcharts/modules/accessibility";
-import ReactElement from "react";
+import { useSnackbar } from "notistack";
 
 if (typeof Highcharts === "object") {
   HighchartsExporting(Highcharts);
@@ -884,6 +884,16 @@ const statIcons = {
     </span>
   ),
 };
+
+function copyToClipboard(value: string) {
+  const el: HTMLTextAreaElement = document.createElement("textarea");
+  el.value = value;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand("copy");
+  document.body.removeChild(el);
+}
+
 export default function Data(props: any): JSX.Element {
   const [topDMs, setTopDMs] = useState<any>([]);
   const [topChannels, setTopChannels] = useState<any>([]);
@@ -891,8 +901,8 @@ export default function Data(props: any): JSX.Element {
   const [topGroupDMs, setTopGroupDMs] = useState<any>([]);
   const [generate_, setGenerate_] = useState<any>(false);
   const [data, setData] = useState<any>(props.data);
-  const [graphType, setGraphType] = useState<any>("areaspline");
-  const [emojiType, setEmojiType] = useState<any>(
+  const [graphType, setGraphType] = useState<String | null>("areaspline");
+  const [emojiType, setEmojiType] = useState<String | null>(
     data?.messages?.topEmojis && data?.messages?.topEmojis.length
       ? "topEmojis"
       : data?.messages?.topCustomEmojis &&
@@ -902,7 +912,18 @@ export default function Data(props: any): JSX.Element {
       ? "recentEmojis"
       : null
   );
-  const [messageType, setMessageType] = useState<any>("channelMode");
+  const [messageType, setMessageType] = useState<String | null>("channelMode");
+  const { enqueueSnackbar } = useSnackbar();
+  const noti = (noti: string) => {
+    enqueueSnackbar(noti, {
+      variant: "success",
+      autoHideDuration: 2000,
+      anchorOrigin: {
+        vertical: "bottom",
+        horizontal: "center",
+      },
+    });
+  };
 
   return data ? (
     <div className="h-screen">
@@ -1736,7 +1757,15 @@ export default function Data(props: any): JSX.Element {
                             animation="scale"
                             className="shadow-xl"
                           >
-                            <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                            <div
+                              className="cursor-pointer text-4xl opacity-90 hover:opacity-100"
+                              onClick={() => {
+                                copyToClipboard(
+                                  m.name + ": " + m.count + " times"
+                                );
+                                noti("Copied to Clipboard");
+                              }}
+                            >
                               <Image
                                 key={id}
                                 src={
@@ -1762,7 +1791,15 @@ export default function Data(props: any): JSX.Element {
                             animation="scale"
                             className="shadow-xl"
                           >
-                            <div className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100">
+                            <div
+                              className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100"
+                              onClick={() => {
+                                copyToClipboard(
+                                  ":" + m.name + ": - " + m.count + " times"
+                                );
+                                noti("Copied to Clipboard");
+                              }}
+                            >
                               {(emojis as any)[m.name]
                                 ? (emojis as any)[m.name]
                                 : m.name}
@@ -1801,7 +1838,15 @@ export default function Data(props: any): JSX.Element {
                               animation="scale"
                               className="shadow-xl"
                             >
-                              <div className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100">
+                              <div
+                                onClick={() => {
+                                  copyToClipboard(
+                                    m.emoji + ": " + m.count + " times"
+                                  );
+                                  noti("Copied to Clipboard");
+                                }}
+                                className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100"
+                              >
                                 {m.emoji}
                               </div>
                             </Tippy>
@@ -1869,7 +1914,15 @@ export default function Data(props: any): JSX.Element {
                               animation="scale"
                               className="shadow-xl"
                             >
-                              <div className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100">
+                              <div
+                                onClick={() => {
+                                  copyToClipboard(
+                                    m.emoji + ": " + m.count + " times"
+                                  );
+                                  noti("Copied to Clipboard");
+                                }}
+                                className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100"
+                              >
                                 {m.emoji}
                               </div>
                             </Tippy>
@@ -1907,7 +1960,15 @@ export default function Data(props: any): JSX.Element {
                                   animation="scale"
                                   className="shadow-xl"
                                 >
-                                  <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                  <div
+                                    className="cursor-pointer text-4xl opacity-90 hover:opacity-100"
+                                    onClick={() => {
+                                      copyToClipboard(
+                                        m.emoji + ": " + m.count + " times"
+                                      );
+                                      noti("Copied to Clipboard");
+                                    }}
+                                  >
                                     <Image
                                       key={id}
                                       src={Utils.createEmoji(m.emoji)}
@@ -1931,7 +1992,15 @@ export default function Data(props: any): JSX.Element {
                                       animation="scale"
                                       className="shadow-xl"
                                     >
-                                      <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100 m-2">
+                                      <div
+                                        className="cursor-pointer text-4xl opacity-90 hover:opacity-100 m-2"
+                                        onClick={() => {
+                                          copyToClipboard(
+                                            m.emoji + ": " + m.count + " times"
+                                          );
+                                          noti("Copied to Clipboard");
+                                        }}
+                                      >
                                         <Image
                                           key={id}
                                           src={Utils.createCustomEmoji(m.emoji)}

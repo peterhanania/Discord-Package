@@ -16,6 +16,7 @@ import Alerts from "./Alerts";
 import moment from "moment";
 import chalk from "chalk";
 import { Line } from "rc-progress";
+import { SnackbarProvider } from "notistack";
 
 interface IObjectKeys {
   [key: string]: any;
@@ -2245,7 +2246,7 @@ export default function Upload(): ReactElement {
               await delay(600);
             } else {
               setLoading("Loading Your Bots");
-              await delay(100);
+              await delay(1000);
             }
 
             const bots = files.filter(
@@ -2310,7 +2311,7 @@ export default function Upload(): ReactElement {
             );
 
           if (!isDebug) setLoading("Loading Your Flags");
-          await delay(100);
+          await delay(1000);
 
           setPercent(88);
           if (userInformationData.flags && options.user.badges) {
@@ -2500,7 +2501,9 @@ export default function Upload(): ReactElement {
   };
 
   return demo || (dataExtracted && dataExtracted.demo) ? (
-    <Data data={dataExtracted} />
+    <SnackbarProvider>
+      <Data data={dataExtracted} />
+    </SnackbarProvider>
   ) : (
     <>
       <Alerts />
