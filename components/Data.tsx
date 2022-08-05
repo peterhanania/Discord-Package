@@ -1180,7 +1180,20 @@ export default function Data(props: any): JSX.Element {
                       </svg>
                     </Tippy>
                   ) : (
-                    ""
+                    <Tippy
+                      content={"You have no messages"}
+                      animation="scale"
+                      className="shadow-xl"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
+                        width="24"
+                      >
+                        <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                      </svg>
+                    </Tippy>
                   )}
                   {data?.messages?.favoriteWords &&
                   data?.messages?.favoriteWords.length > 0 ? (
@@ -1233,7 +1246,20 @@ export default function Data(props: any): JSX.Element {
                       </svg>
                     </Tippy>
                   ) : (
-                    ""
+                    <Tippy
+                      content={`You don't have any favorite word`}
+                      animation="scale"
+                      className="shadow-xl"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                      >
+                        <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                      </svg>
+                    </Tippy>
                   )}
                   {data?.messages?.topCursed &&
                   data?.messages?.topCursed?.length > 0 ? (
@@ -1289,7 +1315,20 @@ export default function Data(props: any): JSX.Element {
                       </svg>
                     </Tippy>
                   ) : (
-                    ""
+                    <Tippy
+                      content={"You don't have any curse word"}
+                      animation="scale"
+                      className="shadow-xl"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                      >
+                        <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                      </svg>
+                    </Tippy>
                   )}
                   {data?.messages?.topLinks &&
                   data?.messages?.topLinks?.length > 0 ? (
@@ -1343,7 +1382,20 @@ export default function Data(props: any): JSX.Element {
                       </svg>
                     </Tippy>
                   ) : (
-                    ""
+                    <Tippy
+                      content={"You don't have any links"}
+                      animation="scale"
+                      className="shadow-xl"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                      >
+                        <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                      </svg>
+                    </Tippy>
                   )}
                   {data?.messages?.topDiscordLinks &&
                   data?.messages?.topDiscordLinks?.length > 0 ? (
@@ -1397,7 +1449,20 @@ export default function Data(props: any): JSX.Element {
                       </svg>
                     </Tippy>
                   ) : (
-                    ""
+                    <Tippy
+                      content={"You have no Discord Links"}
+                      animation="scale"
+                      className="shadow-xl"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                      >
+                        <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                      </svg>
+                    </Tippy>
                   )}
                   {data?.messages?.oldestMessages &&
                   data?.messages?.oldestMessages?.length > 0 ? (
@@ -1456,7 +1521,20 @@ export default function Data(props: any): JSX.Element {
                       </svg>
                     </Tippy>
                   ) : (
-                    ""
+                    <Tippy
+                      content={"You don't have any messages "}
+                      animation="scale"
+                      className="shadow-xl"
+                    >
+                      <svg
+                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                      >
+                        <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
+                      </svg>
+                    </Tippy>
                   )}
                   {data?.messages?.attachmentCount &&
                   data?.messages?.attachmentCount?.length > 0 ? (
@@ -2966,7 +3044,20 @@ export default function Data(props: any): JSX.Element {
                                   </svg>
                                 </Tippy>
                               ) : (
-                                ""
+                                <Tippy
+                                  content={"You have no messages"}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24"
+                                    className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
+                                    width="24"
+                                  >
+                                    <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                  </svg>
+                                </Tippy>
                               )}
                               {m?.favoriteWords &&
                               m?.favoriteWords?.length > 0 ? (
@@ -3019,7 +3110,20 @@ export default function Data(props: any): JSX.Element {
                                   </svg>
                                 </Tippy>
                               ) : (
-                                ""
+                                <Tippy
+                                  content={`You don't have any favorite word`}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24"
+                                    width="24"
+                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                  >
+                                    <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                  </svg>
+                                </Tippy>
                               )}
                               {m?.topCursed && m?.topCursed?.length > 0 ? (
                                 <Tippy
@@ -3073,7 +3177,20 @@ export default function Data(props: any): JSX.Element {
                                   </svg>
                                 </Tippy>
                               ) : (
-                                ""
+                                <Tippy
+                                  content={"You don't have any curse word"}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24"
+                                    width="24"
+                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                  >
+                                    <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                  </svg>
+                                </Tippy>
                               )}
                               {m?.topLinks && m?.topLinks?.length > 0 ? (
                                 <Tippy
@@ -3121,7 +3238,20 @@ export default function Data(props: any): JSX.Element {
                                   </svg>
                                 </Tippy>
                               ) : (
-                                ""
+                                <Tippy
+                                  content={"You don't have any links"}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24"
+                                    width="24"
+                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                  >
+                                    <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                  </svg>
+                                </Tippy>
                               )}
                               {m?.topDiscordLinks &&
                               m?.topDiscordLinks?.length > 0 ? (
@@ -3172,7 +3302,20 @@ export default function Data(props: any): JSX.Element {
                                   </svg>
                                 </Tippy>
                               ) : (
-                                ""
+                                <Tippy
+                                  content={"You have no Discord Links"}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24"
+                                    width="24"
+                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                  >
+                                    <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                  </svg>
+                                </Tippy>
                               )}
                               {m?.oldestMessages &&
                               m?.oldestMessages?.length > 0 ? (
@@ -3245,7 +3388,20 @@ export default function Data(props: any): JSX.Element {
                                   </svg>
                                 </Tippy>
                               ) : (
-                                ""
+                                <Tippy
+                                  content={"You don't have any messages "}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <svg
+                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24"
+                                    width="24"
+                                  >
+                                    <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
+                                  </svg>
+                                </Tippy>
                               )}
                               {m?.topEmojis && m?.topEmojis?.length > 0 ? (
                                 <Tippy
@@ -3297,7 +3453,20 @@ export default function Data(props: any): JSX.Element {
                                   </svg>
                                 </Tippy>
                               ) : (
-                                ""
+                                <Tippy
+                                  content={"You don't have any emojis"}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24"
+                                    width="24"
+                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                  >
+                                    <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                  </svg>
+                                </Tippy>
                               )}
                               {m?.topCustomEmojis &&
                               m?.topCustomEmojis?.length > 0 ? (
@@ -3416,7 +3585,20 @@ export default function Data(props: any): JSX.Element {
                                   </svg>
                                 </Tippy>
                               ) : (
-                                ""
+                                <Tippy
+                                  content={`You don't have any custom emoji`}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24"
+                                    width="24"
+                                    className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                  >
+                                    <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                  </svg>
+                                </Tippy>
                               )}
                             </div>
                           </div>
@@ -3463,7 +3645,20 @@ export default function Data(props: any): JSX.Element {
                                       </svg>
                                     </Tippy>
                                   ) : (
-                                    ""
+                                    <Tippy
+                                      content={"You have no messages"}
+                                      animation="scale"
+                                      className="shadow-xl"
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="24"
+                                        className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
+                                        width="24"
+                                      >
+                                        <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                      </svg>
+                                    </Tippy>
                                   )}
                                   {m?.favoriteWords &&
                                   m?.favoriteWords.length > 0 ? (
@@ -3518,7 +3713,20 @@ export default function Data(props: any): JSX.Element {
                                       </svg>
                                     </Tippy>
                                   ) : (
-                                    ""
+                                    <Tippy
+                                      content={`You don't have any favorite word`}
+                                      animation="scale"
+                                      className="shadow-xl"
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="24"
+                                        width="24"
+                                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                      >
+                                        <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                      </svg>
+                                    </Tippy>
                                   )}
                                   {m?.topCursed && m?.topCursed.length > 0 ? (
                                     <Tippy
@@ -3577,7 +3785,20 @@ export default function Data(props: any): JSX.Element {
                                       </svg>
                                     </Tippy>
                                   ) : (
-                                    ""
+                                    <Tippy
+                                      content={"You don't have any curse word"}
+                                      animation="scale"
+                                      className="shadow-xl"
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="24"
+                                        width="24"
+                                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                      >
+                                        <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                      </svg>
+                                    </Tippy>
                                   )}
                                   {m?.topLinks && m?.topLinks?.length > 0 ? (
                                     <Tippy
@@ -3627,7 +3848,20 @@ export default function Data(props: any): JSX.Element {
                                       </svg>
                                     </Tippy>
                                   ) : (
-                                    ""
+                                    <Tippy
+                                      content={"You don't have any links"}
+                                      animation="scale"
+                                      className="shadow-xl"
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="24"
+                                        width="24"
+                                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                      >
+                                        <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                      </svg>
+                                    </Tippy>
                                   )}
                                   {m?.topDiscordLinks &&
                                   m?.topDiscordLinks.length > 0 ? (
@@ -3681,7 +3915,20 @@ export default function Data(props: any): JSX.Element {
                                       </svg>
                                     </Tippy>
                                   ) : (
-                                    ""
+                                    <Tippy
+                                      content={"You have no Discord Links"}
+                                      animation="scale"
+                                      className="shadow-xl"
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="24"
+                                        width="24"
+                                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                      >
+                                        <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                      </svg>
+                                    </Tippy>
                                   )}
                                   {m?.oldestMessages &&
                                   m?.oldestMessages?.length > 0 ? (
@@ -3756,7 +4003,20 @@ export default function Data(props: any): JSX.Element {
                                       </svg>
                                     </Tippy>
                                   ) : (
-                                    ""
+                                    <Tippy
+                                      content={"You don't have any messages "}
+                                      animation="scale"
+                                      className="shadow-xl"
+                                    >
+                                      <svg
+                                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="24"
+                                        width="24"
+                                      >
+                                        <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
+                                      </svg>
+                                    </Tippy>
                                   )}
                                   {m?.topEmojis && m?.topEmojis?.length > 0 ? (
                                     <Tippy
@@ -3815,7 +4075,20 @@ export default function Data(props: any): JSX.Element {
                                       </svg>
                                     </Tippy>
                                   ) : (
-                                    ""
+                                    <Tippy
+                                      content={"You don't have any emojis"}
+                                      animation="scale"
+                                      className="shadow-xl"
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="24"
+                                        width="24"
+                                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                      >
+                                        <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                      </svg>
+                                    </Tippy>
                                   )}
                                   {m?.topCustomEmojis &&
                                   m?.topCustomEmojis?.length > 0 ? (
@@ -3940,7 +4213,20 @@ export default function Data(props: any): JSX.Element {
                                       </svg>
                                     </Tippy>
                                   ) : (
-                                    ""
+                                    <Tippy
+                                      content={`You don't have any custom emoji`}
+                                      animation="scale"
+                                      className="shadow-xl"
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="24"
+                                        width="24"
+                                        className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                      >
+                                        <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                      </svg>
+                                    </Tippy>
                                   )}
                                 </div>
                               </div>
@@ -4270,7 +4556,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={"You have no messages"}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
+                                          width="24"
+                                        >
+                                          <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.favoriteWords &&
                                     m?.favoriteWords?.length > 0 ? (
@@ -4328,7 +4627,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={`You don't have any favorite word`}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.topCursed &&
                                     m?.topCursed?.length > 0 ? (
@@ -4391,7 +4703,22 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={
+                                          "You don't have any curse word"
+                                        }
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.topLinks && m?.topLinks?.length > 0 ? (
                                       <Tippy
@@ -4444,7 +4771,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={"You don't have any links"}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.topDiscordLinks &&
                                     m?.topDiscordLinks?.length > 0 ? (
@@ -4502,7 +4842,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={"You have no Discord Links"}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.oldestMessages &&
                                     m?.oldestMessages?.length > 0 ? (
@@ -4577,7 +4930,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={"You don't have any messages "}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                        >
+                                          <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.topEmojis &&
                                     m?.topEmojis?.length > 0 ? (
@@ -4637,7 +5003,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={"You don't have any emojis"}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.topCustomEmojis &&
                                     m?.topCustomEmojis?.length > 0 ? (
@@ -4768,7 +5147,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={`You don't have any custom emoji`}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                   </div>
                                 </div>
@@ -4820,7 +5212,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={"You have no messages"}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
+                                            width="24"
+                                          >
+                                            <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.favoriteWords &&
                                       m?.favoriteWords.length > 0 ? (
@@ -4881,7 +5286,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={`You don't have any favorite word`}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.topCursed &&
                                       m?.topCursed?.length > 0 ? (
@@ -4944,7 +5362,22 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={
+                                            "You don't have any curse word"
+                                          }
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.topLinks &&
                                       m?.topLinks?.length > 0 ? (
@@ -4998,7 +5431,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={"You don't have any links"}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.topDiscordLinks &&
                                       m?.topDiscordLinks?.length > 0 ? (
@@ -5057,7 +5503,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={"You have no Discord Links"}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.oldestMessages &&
                                       m?.oldestMessages?.length > 0 ? (
@@ -5138,7 +5597,22 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={
+                                            "You don't have any messages "
+                                          }
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                          >
+                                            <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.topEmojis &&
                                       m?.topEmojis?.length > 0 ? (
@@ -5198,7 +5672,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={"You don't have any emojis"}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.topCustomEmojis &&
                                       m?.topCustomEmojis?.length > 0 ? (
@@ -5330,7 +5817,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={`You don't have any custom emoji`}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                     </div>
                                   </div>
@@ -5446,7 +5946,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={"You have no messages"}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
+                                          width="24"
+                                        >
+                                          <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.favoriteWords &&
                                     m?.favoriteWords?.length > 0 ? (
@@ -5504,7 +6017,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={`You don't have any favorite word`}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.topCursed &&
                                     m?.topCursed?.length > 0 ? (
@@ -5567,7 +6093,22 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={
+                                          "You don't have any curse word"
+                                        }
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.topLinks && m?.topLinks?.length > 0 ? (
                                       <Tippy
@@ -5620,7 +6161,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={"You don't have any links"}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.topDiscordLinks &&
                                     m?.topDiscordLinks?.length > 0 ? (
@@ -5678,7 +6232,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={"You have no Discord Links"}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.oldestMessages &&
                                     m?.oldestMessages?.length > 0 ? (
@@ -5753,7 +6320,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={"You don't have any messages "}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                        >
+                                          <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.topEmojis &&
                                     m?.topEmojis?.length > 0 ? (
@@ -5813,7 +6393,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={"You don't have any emojis"}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.topCustomEmojis &&
                                     m?.topCustomEmojis?.length > 0 ? (
@@ -5944,7 +6537,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={`You don't have any custom emoji`}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                   </div>
                                 </div>
@@ -5998,7 +6604,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={"You have no messages"}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
+                                            width="24"
+                                          >
+                                            <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.favoriteWords &&
                                       m?.favoriteWords.length > 0 ? (
@@ -6059,7 +6678,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={`You don't have any favorite word`}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.topCursed &&
                                       m?.topCursed?.length > 0 ? (
@@ -6122,7 +6754,22 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={
+                                            "You don't have any curse word"
+                                          }
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.topLinks &&
                                       m?.topLinks?.length > 0 ? (
@@ -6176,7 +6823,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={"You don't have any links"}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.topDiscordLinks &&
                                       m?.topDiscordLinks?.length > 0 ? (
@@ -6235,7 +6895,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={"You have no Discord Links"}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.oldestMessages &&
                                       m?.oldestMessages?.length > 0 ? (
@@ -6316,7 +6989,22 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={
+                                            "You don't have any messages "
+                                          }
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                          >
+                                            <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.topEmojis &&
                                       m?.topEmojis?.length > 0 ? (
@@ -6376,7 +7064,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={"You don't have any emojis"}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.topCustomEmojis &&
                                       m?.topCustomEmojis?.length > 0 ? (
@@ -6508,7 +7209,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={`You don't have any custom emoji`}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                     </div>
                                   </div>
@@ -6619,7 +7333,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={"You have no messages"}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
+                                          width="24"
+                                        >
+                                          <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.favoriteWords &&
                                     m?.favoriteWords?.length > 0 ? (
@@ -6677,7 +7404,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={`You don't have any favorite word`}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.topCursed &&
                                     m?.topCursed?.length > 0 ? (
@@ -6740,7 +7480,22 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={
+                                          "You don't have any curse word"
+                                        }
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.topLinks && m?.topLinks?.length > 0 ? (
                                       <Tippy
@@ -6793,7 +7548,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={"You don't have any links"}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.topDiscordLinks &&
                                     m?.topDiscordLinks?.length > 0 ? (
@@ -6851,7 +7619,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={"You have no Discord Links"}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.oldestMessages &&
                                     m?.oldestMessages?.length > 0 ? (
@@ -6926,7 +7707,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={"You don't have any messages "}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                        >
+                                          <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.topEmojis &&
                                     m?.topEmojis?.length > 0 ? (
@@ -6986,7 +7780,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={"You don't have any emojis"}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                     {m?.topCustomEmojis &&
                                     m?.topCustomEmojis?.length > 0 ? (
@@ -7117,7 +7924,20 @@ export default function Data(props: any): JSX.Element {
                                         </svg>
                                       </Tippy>
                                     ) : (
-                                      ""
+                                      <Tippy
+                                        content={`You don't have any custom emoji`}
+                                        animation="scale"
+                                        className="shadow-xl"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          height="24"
+                                          width="24"
+                                          className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                        >
+                                          <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                        </svg>
+                                      </Tippy>
                                     )}
                                   </div>
                                 </div>
@@ -7165,7 +7985,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={"You have no messages"}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
+                                            width="24"
+                                          >
+                                            <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.favoriteWords &&
                                       m?.favoriteWords.length > 0 ? (
@@ -7226,7 +8059,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={`You don't have any favorite word`}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.topCursed &&
                                       m?.topCursed?.length > 0 ? (
@@ -7289,7 +8135,22 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={
+                                            "You don't have any curse word"
+                                          }
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.topLinks &&
                                       m?.topLinks?.length > 0 ? (
@@ -7343,7 +8204,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={"You don't have any links"}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.topDiscordLinks &&
                                       m?.topDiscordLinks?.length > 0 ? (
@@ -7402,7 +8276,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={"You have no Discord Links"}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.oldestMessages &&
                                       m?.oldestMessages?.length > 0 ? (
@@ -7483,7 +8370,22 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={
+                                            "You don't have any messages "
+                                          }
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                          >
+                                            <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.topEmojis &&
                                       m?.topEmojis?.length > 0 ? (
@@ -7543,7 +8445,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={"You don't have any emojis"}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                       {m?.topCustomEmojis &&
                                       m?.topCustomEmojis?.length > 0 ? (
@@ -7675,7 +8590,20 @@ export default function Data(props: any): JSX.Element {
                                           </svg>
                                         </Tippy>
                                       ) : (
-                                        ""
+                                        <Tippy
+                                          content={`You don't have any custom emoji`}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="24"
+                                            width="24"
+                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                          >
+                                            <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                          </svg>
+                                        </Tippy>
                                       )}
                                     </div>
                                   </div>
