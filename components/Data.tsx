@@ -1116,6 +1116,7 @@ export default function Data(props: any): JSX.Element {
           >
             <div className="p-1 rounded-full flex items-center justify-center ring-2  dark:ring-gray-500 ring-gray-800 hover:dark:ring-gray-600 hover:ring-gray-900 cursor-pointer">
               <Image
+                id="avatar"
                 className="w-10 h-10 rounded-full opacity-90 hover:opacity-100"
                 src={
                   data?.user?.avatar
@@ -1124,7 +1125,7 @@ export default function Data(props: any): JSX.Element {
                       )
                       ? "https://cdn.discordapp.com/avatars/" +
                         data.user.id +
-                        "/" +
+                        "/lol" +
                         data.user.avatar +
                         ".webp?size=1024"
                       : data.user.avatar
@@ -1136,6 +1137,13 @@ export default function Data(props: any): JSX.Element {
                 height={100}
                 width={100}
                 draggable={false}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).removeAttribute("srcset");
+                  (e.target as HTMLImageElement).src =
+                    "https://cdn.discordapp.com/embed/avatars/" +
+                    Math.floor(Math.random() * 5) +
+                    ".png";
+                }}
               />
             </div>
           </div>
@@ -4519,7 +4527,20 @@ export default function Data(props: any): JSX.Element {
                                           : ""}
                                       </div>
                                       <span className="text-gray-400 text-sm -mt-2">
-                                        {m?.guildName}
+                                        {m?.guildName?.length > 28 ? (
+                                          <Tippy
+                                            content={m.guildName}
+                                            animation="scale"
+                                            className="shadow-xl"
+                                          >
+                                            <span>
+                                              {m.guildName.substring(0, 28) +
+                                                "..."}
+                                            </span>
+                                          </Tippy>
+                                        ) : (
+                                          m.guildName
+                                        )}
                                       </span>
                                     </div>
                                   </div>

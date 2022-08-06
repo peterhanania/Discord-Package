@@ -2474,7 +2474,9 @@ export default function Upload(): ReactElement {
       startUpload();
     } else {
       if (fileUploaded.type === "application/json") {
+        setPercent(100);
         setLoading("Loading JSON|||reading files");
+
         var readFile_ = new FileReader();
         readFile_.onload = function (e: any) {
           var content = e.target.result;
@@ -3209,7 +3211,7 @@ export default function Upload(): ReactElement {
         </div>
       </div>
       <div className="lg:landscape:flex md:landscape:flex landscape:hidden flex flex-col animate__delay-1s animate__animated animate__fadeIn">
-        <span className="flex justify-center text-slate-900 dark:text-gray-200 pointer-events-none">
+        <span className="flex justify-center text-slate-900 dark:text-gray-200 pointer-events-none select-none">
           -- or --
         </span>
         <div className=" lg:text-xl md:text-xl text-sm mt-1  flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
