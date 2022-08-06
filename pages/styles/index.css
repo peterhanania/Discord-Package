@@ -479,7 +479,6 @@ input[type="search"]:focus {
   color: rgb(228, 217, 217);
   cursor: pointer;
   pointer-events: none;
-  position: absolute;
 }
 
 .toggle input:checked + label {

@@ -3208,11 +3208,11 @@ export default function Upload(): ReactElement {
           )}
         </div>
       </div>
-      <div className="lg:landscape:flex md:landscape:flex landscape:hidden flex flex-col">
-        <span className="flex justify-center text-slate-900 dark:text-gray-200 ">
+      <div className="lg:landscape:flex md:landscape:flex landscape:hidden flex flex-col animate__delay-1s animate__animated animate__fadeIn">
+        <span className="flex justify-center text-slate-900 dark:text-gray-200 pointer-events-none">
           -- or --
         </span>
-        <div className=" lg:text-xl md:text-xl text-sm mt-1 animate__delay-1s animate__animated animate__fadeIn flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
+        <div className=" lg:text-xl md:text-xl text-sm mt-1  flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
           <a
             href="/?demo=true"
             target="_blank"
@@ -3224,7 +3224,7 @@ export default function Upload(): ReactElement {
           </a>
         </div>
       </div>
-      <div className="lg:landscape:flex md:landscape:flex landscape:hidden animate__animated animate__fadeIn animate__delay-1s flex justify-center items-center absolute bottom-8 right-0 left-0">
+      <div className="group lg:landscape:flex md:landscape:flex landscape:hidden animate__animated animate__fadeIn animate__delay-1s flex justify-center items-center absolute bottom-8 right-0 left-0">
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] text-slate-800 dark:text-white font-bold flex items-center rounded-md">
           <a
             href="https://discord.gg/W2zPcgG9F5 "
@@ -3310,6 +3310,23 @@ export default function Upload(): ReactElement {
                 </linearGradient>
               </defs>
             </svg>
+          </Tippy>
+          <Tippy content={"Close"} animation="scale" className="shadow-xl">
+            <div
+              className="p-1 hover:bg-[#232323] hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden ml-3 "
+              onClick={(e: any) => {
+                e.target.parentElement.parentElement.parentElement.remove();
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                width="24"
+                className="fill-white cursor-pointer"
+              >
+                <path d="m6.3 19.6-1.85-1.9 5.675-5.7L4.45 6.25l1.85-1.9 5.725 5.75L17.7 4.35l1.85 1.9L13.875 12l5.675 5.7-1.85 1.9-5.675-5.75Z" />
+              </svg>
+            </div>
           </Tippy>
         </div>
       </div>
