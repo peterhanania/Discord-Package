@@ -664,6 +664,8 @@ export default function Upload(): ReactElement {
                     return {
                       type: e.type,
                       name: e.name,
+                      visible: e.visibility === 0 ? false : true,
+                      id: e.id,
                     };
                   });
                 data.connections = cncs;
@@ -3314,20 +3316,22 @@ export default function Upload(): ReactElement {
             </svg>
           </Tippy>
           <Tippy content={"Close"} animation="scale" className="shadow-xl">
-            <div
-              className="p-1 hover:bg-[#232323] hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden ml-3 "
-              onClick={(e: any) => {
-                e.target.parentElement.parentElement.parentElement.remove();
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24"
-                width="24"
-                className="fill-white cursor-pointer"
+            <div className="ml-3 justify-center items-center">
+              <div
+                className="hover:bg-[#232323] p-1 hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden  "
+                onClick={(e: any) => {
+                  e.target.parentElement.parentElement.parentElement.remove();
+                }}
               >
-                <path d="m6.3 19.6-1.85-1.9 5.675-5.7L4.45 6.25l1.85-1.9 5.725 5.75L17.7 4.35l1.85 1.9L13.875 12l5.675 5.7-1.85 1.9-5.675-5.75Z" />
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24"
+                  width="24"
+                  className="fill-white cursor-pointer"
+                >
+                  <path d="M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6Z" />
+                </svg>
+              </div>
             </div>
           </Tippy>
         </div>

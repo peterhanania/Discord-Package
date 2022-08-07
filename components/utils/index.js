@@ -427,6 +427,8 @@ class Utils {
     const connections = connectionsArray.map((connection) => ({
       type: connection,
       name: username + Math.floor(Math.random() * 10) + 1,
+      visible: Math.random() < 0.2,
+      id: null,
     }));
 
     let guildCount = Math.floor(Math.random() * 40) + 10;

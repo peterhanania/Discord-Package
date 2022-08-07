@@ -546,7 +546,7 @@ export default function Header() {
               fontFamily:
                 "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
             }}
-            className="animate__animated animate__zoomIn dark:text-white text-gray-900 font-bold lg:text-5xl md:text-3xl sm:text-2xl text-xl uppercase dark:drop-shadow-[0_0_25px_#000] drop-shadow-[0_0_25px_#fff]"
+            className="animate__animated animate__zoomIn animate__delay-0s dark:text-white text-gray-900 font-bold lg:text-5xl md:text-3xl sm:text-2xl text-xl uppercase dark:drop-shadow-[0_0_25px_#000] drop-shadow-[0_0_25px_#fff]"
           >
             Discord Package
           </h1>

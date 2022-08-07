@@ -16,6 +16,7 @@ import HighchartsExporting from "highcharts/modules/exporting";
 import HighchartsExportData from "highcharts/modules/export-data";
 import Highchartsaccessibility from "highcharts/modules/accessibility";
 import { useSnackbar } from "notistack";
+import Connections from "./json/Connections.json";
 
 if (typeof Highcharts === "object") {
   HighchartsExporting(Highcharts);
@@ -1121,15 +1122,15 @@ export default function Data(props: any): JSX.Element {
                 src={
                   data?.user?.avatar
                     ? !data?.user?.avatar.includes(
-                        "https://better-default-discord.netlify.app/Icons"
+                        "https://better-default-Discord.netlify.app/Icons"
                       )
-                      ? "https://cdn.discordapp.com/avatars/" +
+                      ? "https://cdn.Discordapp.com/avatars/" +
                         data.user.id +
                         "/lol" +
                         data.user.avatar +
                         ".webp?size=1024"
                       : data.user.avatar
-                    : "https://cdn.discordapp.com/embed/avatars/" +
+                    : "https://cdn.Discordapp.com/embed/avatars/" +
                       Math.floor(Math.random() * 5) +
                       ".png"
                 }
@@ -1140,7 +1141,7 @@ export default function Data(props: any): JSX.Element {
                 onError={(e) => {
                   (e.target as HTMLImageElement).removeAttribute("srcset");
                   (e.target as HTMLImageElement).src =
-                    "https://cdn.discordapp.com/embed/avatars/" +
+                    "https://cdn.Discordapp.com/embed/avatars/" +
                     Math.floor(Math.random() * 5) +
                     ".png";
                 }}
@@ -1148,7 +1149,7 @@ export default function Data(props: any): JSX.Element {
             </div>
           </div>
           <div
-            className="space-y-1 font-medium text-gray-900 dark:text-white uppercase  w-full"
+            className="space-y-1 font-medium text-gray-900 dark:text-white uppercase w-full" 
             style={{
               fontFamily:
                 "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
@@ -1189,7 +1190,9 @@ export default function Data(props: any): JSX.Element {
                     </Tippy>
                   ) : (
                     <Tippy
-                      content={"You have no messages"}
+                      content={
+                        (data?.dataFile ? "They " : "You ") + "have no messages"
+                      }
                       animation="scale"
                       className="shadow-xl"
                     >
@@ -1255,7 +1258,10 @@ export default function Data(props: any): JSX.Element {
                     </Tippy>
                   ) : (
                     <Tippy
-                      content={`You don't have any favorite word`}
+                      content={
+                        (data?.dataFile ? "They " : "You ") +
+                        "have no favorite words"
+                      }
                       animation="scale"
                       className="shadow-xl"
                     >
@@ -1324,7 +1330,10 @@ export default function Data(props: any): JSX.Element {
                     </Tippy>
                   ) : (
                     <Tippy
-                      content={"You don't have any curse word"}
+                      content={
+                        (data?.dataFile ? "They " : "You ") +
+                        "have no curse words"
+                      }
                       animation="scale"
                       className="shadow-xl"
                     >
@@ -1391,7 +1400,9 @@ export default function Data(props: any): JSX.Element {
                     </Tippy>
                   ) : (
                     <Tippy
-                      content={"You don't have any links"}
+                      content={
+                        (data?.dataFile ? "They " : "You ") + "have no links"
+                      }
                       animation="scale"
                       className="shadow-xl"
                     >
@@ -1458,7 +1469,10 @@ export default function Data(props: any): JSX.Element {
                     </Tippy>
                   ) : (
                     <Tippy
-                      content={"You have no Discord Links"}
+                      content={
+                        (data?.dataFile ? "They " : "You ") +
+                        "have no Discord links"
+                      }
                       animation="scale"
                       className="shadow-xl"
                     >
@@ -1530,7 +1544,9 @@ export default function Data(props: any): JSX.Element {
                     </Tippy>
                   ) : (
                     <Tippy
-                      content={"You don't have any messages "}
+                      content={
+                        (data?.dataFile ? "They " : "You ") + "have no messages"
+                      }
                       animation="scale"
                       className="shadow-xl"
                     >
@@ -1781,7 +1797,7 @@ export default function Data(props: any): JSX.Element {
           <div className="lg:flex items-center justify-center">
             <div className="lg:mr-14 lg:mb-0 mb-2">
               <div
-                className="text-gray-900 dark:text-white max-w-sm font-bold lg:text-5xl md:text-3xl text-xl hidden lg:block"
+                className="text-gray-900 dark:text-white max-w-sm font-bold xl:text-5xl lg:text-3xl text-xl hidden lg:block uppercase"
                 style={{
                   fontFamily:
                     "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
@@ -1799,7 +1815,7 @@ export default function Data(props: any): JSX.Element {
                 <br />
                 Emojis
               </div>{" "}
-              <div className="text-gray-900 dark:text-white max-w-sm font-bold lg:hidden text-2xl md:text-4xl">
+              <div className="text-gray-900 dark:text-white max-w-sm font-bold lg:hidden text-2xl ">
                 {data?.dataFile ? "Their" : "Your "}
                 {emojiType === "topEmojis"
                   ? " Top  "
@@ -1819,7 +1835,7 @@ export default function Data(props: any): JSX.Element {
             ) : (
               ""
             )}
-            <div className="grid lg:grid-cols-10 grid-cols-6 justify-items-center ">
+            <div className="grid xl:grid-cols-10 xl:gap-1 gap-2 grid-cols-6 justify-items-center ">
               {emojiType === "recentEmojis" ? (
                 <>
                   {data?.settings?.recentEmojis
@@ -1855,7 +1871,7 @@ export default function Data(props: any): JSX.Element {
                               <Image
                                 key={id}
                                 src={
-                                  "https://cdn.discordapp.com/emojis/" +
+                                  "https://cdn.Discordapp.com/emojis/" +
                                   m.name +
                                   ".png"
                                 }
@@ -2329,7 +2345,8 @@ export default function Data(props: any): JSX.Element {
                         content={
                           <div className="h-[400px] overflow-y-auto">
                             <div className="text-gray-900 dark:text-gray-200 font-bold text-xl">
-                              Your Counted Guilds
+                              {data?.dataFile ? "Their " : "Your "} Counted
+                              Guilds
                             </div>
                             <ul className="text-gray-900 dark:text-gray-200 font-bold text-md list-disc ml-4">
                               {typeof data?.guilds === "object"
@@ -2340,7 +2357,7 @@ export default function Data(props: any): JSX.Element {
                                       </li>
                                     );
                                   })
-                                : "Please re-upload your Discord package."}
+                                : ""}
                             </ul>
                           </div>
                         }
@@ -2412,39 +2429,25 @@ export default function Data(props: any): JSX.Element {
               const obj = {
                 youtube: (
                   <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
                     className="w-10 h-10"
-                    version="1.1"
-                    id="Layer_1"
-                    x="0px"
-                    y="0px"
-                    viewBox="0 0 461.001 461.001"
                   >
-                    <g>
-                      <path
-                        style={{
-                          fill: "#F61C0D",
-                        }}
-                        d="M365.257,67.393H95.744C42.866,67.393,0,110.259,0,163.137v134.728
-		c0,52.878,42.866,95.744,95.744,95.744h269.513c52.878,0,95.744-42.866,95.744-95.744V163.137
-		C461.001,110.259,418.135,67.393,365.257,67.393z M300.506,237.056l-126.06,60.123c-3.359,1.602-7.239-0.847-7.239-4.568V168.607
-		c0-3.774,3.982-6.22,7.348-4.514l126.06,63.881C304.363,229.873,304.298,235.248,300.506,237.056z"
-                      />
-                    </g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M21.582 7.20034C21.352 6.3342 20.6744 5.65216 19.8139 5.42068C18.2542 5 12 5 12 5C12 5 5.7458 5 4.18614 5.42068C3.32568 5.65216 2.64795 6.3342 2.41795 7.20034C2 8.77011 2 12.0455 2 12.0455C2 12.0455 2 15.3207 2.41795 16.8907C2.64795 17.7567 3.32568 18.4387 4.18614 18.6703C5.7458 19.0909 12 19.0909 12 19.0909C12 19.0909 18.2542 19.0909 19.8139 18.6703C20.6744 18.4387 21.352 17.7567 21.582 16.8907C22 15.3207 22 12.0455 22 12.0455C22 12.0455 22 8.77011 21.582 7.20034Z"
+                      fill="#D9252A"
+                    />
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M9.95447 15.0192L15.1817 12.0455L9.95447 9.07169V15.0192Z"
+                      fill="#FFFFFE"
+                    />
                   </svg>
                 ),
                 xbox: (
@@ -2686,19 +2689,35 @@ export default function Data(props: any): JSX.Element {
                   </svg>
                 ),
               };
-              return (
-                <div className="cursor-pointer" key={i}>
-                  <Tippy
-                    content={`${m.type}: ${m.name}`}
-                    animation="scale"
-                    className="shadow-xl"
-                  >
-                    <div className="opacity-90 hover:opacity-100 ">
-                      {(obj as any)[m.type]}
-                    </div>
-                  </Tippy>
-                </div>
-              );
+
+              if (m.type && (obj as any)[m.type]) {
+                return (
+                  <div className="cursor-pointer" key={i}>
+                    <Tippy
+                      content={`${m?.type}: ${m?.name} ${
+                        m.visible ? "[VISIBLE]" : ""
+                      }`}
+                      animation="scale"
+                      className="shadow-xl"
+                    >
+                      <div className="opacity-90 hover:opacity-100 ">
+                        <a
+                          href={
+                            (Connections as any)[m.type].link && m.id
+                              ? (Connections as any)[m.type].link +
+                                ((Connections as any)[m.type].id
+                                  ? m.id
+                                  : m.name)
+                              : `#`
+                          }
+                        >
+                          {(obj as any)[m.type]}
+                        </a>
+                      </div>
+                    </Tippy>
+                  </div>
+                );
+              }
             })}
           </div>
         </div>
@@ -2707,7 +2726,7 @@ export default function Data(props: any): JSX.Element {
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg text-center w-full">
           {" "}
           <span
-            className="uppercase text-gray-900 dark:text-white lg:text-4xl md:text-3xl text-xl font-bold flex items-center justify-center"
+            className="uppercase text-gray-900 dark:text-white lg:text-4xl md:text-3xl text-xl font-bold flex items-center justify-center uppercase"
             style={{
               fontFamily:
                 "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
@@ -2775,10 +2794,11 @@ export default function Data(props: any): JSX.Element {
                       <path d="M.275 21.425 12 1.15l11.725 20.275ZM12 17.925q.45 0 .788-.338.337-.337.337-.787t-.337-.775Q12.45 15.7 12 15.7t-.787.325q-.338.325-.338.775t.338.787q.337.338.787.338ZM11 15h2v-4.725h-2Z" />
                     </svg>
                     <b className="text-red-400 text-lg pt-1 ">
-                      This is based on your device timezone. If the graph is
-                      inacurrate, make sure your device timezone is the same
-                      timezone as the usual timezone you use when sending
-                      Discord messages.
+                      This is based on {data?.dataFile ? "their " : "your "}{" "}
+                      device timezone. If the graph is inacurrate, make sure{" "}
+                      {data?.dataFile ? "their " : "your "} device timezone is
+                      the same timezone as the usual timezone you use when
+                      sending Discord messages.
                     </b>
                   </div>
                 </>
@@ -2897,7 +2917,7 @@ export default function Data(props: any): JSX.Element {
       <div className="lg:grid grid-cols-2 grid-flow-col gap-4 lg:mx-10 md:mx-8 mx-2 lg:mt-4 md:mt-4 mt-2">
         <div className="lg:px-4 md:px-4 px-1 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__fadeIn animate__delay-1s rounded-lg row-span-3 ">
           <span
-            className="text-gray-900 dark:text-white text-2xl font-bold pt-4 lg:px-6 md:px-6 px-1 flex items-center"
+            className="text-gray-900 dark:text-white text-2xl font-bold pt-4 lg:px-6 md:px-6 px-1 flex items-center uppercase"
             style={{
               fontFamily:
                 "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
@@ -3044,7 +3064,10 @@ export default function Data(props: any): JSX.Element {
                                 </Tippy>
                               ) : (
                                 <Tippy
-                                  content={"You have no messages"}
+                                  content={
+                                    (data?.dataFile ? "They " : "You ") +
+                                    "have no messages"
+                                  }
                                   animation="scale"
                                   className="shadow-xl"
                                 >
@@ -3110,7 +3133,10 @@ export default function Data(props: any): JSX.Element {
                                 </Tippy>
                               ) : (
                                 <Tippy
-                                  content={`You don't have any favorite word`}
+                                  content={
+                                    (data?.dataFile ? "They " : "You ") +
+                                    "have no favorite words"
+                                  }
                                   animation="scale"
                                   className="shadow-xl"
                                 >
@@ -3177,7 +3203,10 @@ export default function Data(props: any): JSX.Element {
                                 </Tippy>
                               ) : (
                                 <Tippy
-                                  content={"You don't have any curse word"}
+                                  content={
+                                    (data?.dataFile ? "They " : "You ") +
+                                    "have no curse words"
+                                  }
                                   animation="scale"
                                   className="shadow-xl"
                                 >
@@ -3238,7 +3267,10 @@ export default function Data(props: any): JSX.Element {
                                 </Tippy>
                               ) : (
                                 <Tippy
-                                  content={"You don't have any links"}
+                                  content={
+                                    (data?.dataFile ? "They " : "You ") +
+                                    "have no links"
+                                  }
                                   animation="scale"
                                   className="shadow-xl"
                                 >
@@ -3302,7 +3334,10 @@ export default function Data(props: any): JSX.Element {
                                 </Tippy>
                               ) : (
                                 <Tippy
-                                  content={"You have no Discord Links"}
+                                  content={
+                                    (data?.dataFile ? "They " : "You ") +
+                                    "have no Discord links"
+                                  }
                                   animation="scale"
                                   className="shadow-xl"
                                 >
@@ -3388,7 +3423,10 @@ export default function Data(props: any): JSX.Element {
                                 </Tippy>
                               ) : (
                                 <Tippy
-                                  content={"You don't have any messages "}
+                                  content={
+                                    (data?.dataFile ? "They " : "You ") +
+                                    "have no messages"
+                                  }
                                   animation="scale"
                                   className="shadow-xl"
                                 >
@@ -3453,7 +3491,10 @@ export default function Data(props: any): JSX.Element {
                                 </Tippy>
                               ) : (
                                 <Tippy
-                                  content={"You don't have any emojis"}
+                                  content={
+                                    (data?.dataFile ? "They " : "You ") +
+                                    "have no emojis"
+                                  }
                                   animation="scale"
                                   className="shadow-xl"
                                 >
@@ -3585,7 +3626,10 @@ export default function Data(props: any): JSX.Element {
                                 </Tippy>
                               ) : (
                                 <Tippy
-                                  content={`You don't have any custom emoji`}
+                                  content={
+                                    (data?.dataFile ? "They " : "You ") +
+                                    "have no custom emojis"
+                                  }
                                   animation="scale"
                                   className="shadow-xl"
                                 >
@@ -3645,7 +3689,10 @@ export default function Data(props: any): JSX.Element {
                                     </Tippy>
                                   ) : (
                                     <Tippy
-                                      content={"You have no messages"}
+                                      content={
+                                        (data?.dataFile ? "They " : "You ") +
+                                        "have no messages"
+                                      }
                                       animation="scale"
                                       className="shadow-xl"
                                     >
@@ -3713,7 +3760,10 @@ export default function Data(props: any): JSX.Element {
                                     </Tippy>
                                   ) : (
                                     <Tippy
-                                      content={`You don't have any favorite word`}
+                                      content={
+                                        (data?.dataFile ? "They " : "You ") +
+                                        "have no favorite words"
+                                      }
                                       animation="scale"
                                       className="shadow-xl"
                                     >
@@ -3785,7 +3835,10 @@ export default function Data(props: any): JSX.Element {
                                     </Tippy>
                                   ) : (
                                     <Tippy
-                                      content={"You don't have any curse word"}
+                                      content={
+                                        (data?.dataFile ? "They " : "You ") +
+                                        "have no curse words"
+                                      }
                                       animation="scale"
                                       className="shadow-xl"
                                     >
@@ -3848,7 +3901,10 @@ export default function Data(props: any): JSX.Element {
                                     </Tippy>
                                   ) : (
                                     <Tippy
-                                      content={"You don't have any links"}
+                                      content={
+                                        (data?.dataFile ? "They " : "You ") +
+                                        "have no links"
+                                      }
                                       animation="scale"
                                       className="shadow-xl"
                                     >
@@ -3915,7 +3971,10 @@ export default function Data(props: any): JSX.Element {
                                     </Tippy>
                                   ) : (
                                     <Tippy
-                                      content={"You have no Discord Links"}
+                                      content={
+                                        (data?.dataFile ? "They " : "You ") +
+                                        "have no Discord links"
+                                      }
                                       animation="scale"
                                       className="shadow-xl"
                                     >
@@ -4003,7 +4062,10 @@ export default function Data(props: any): JSX.Element {
                                     </Tippy>
                                   ) : (
                                     <Tippy
-                                      content={"You don't have any messages "}
+                                      content={
+                                        (data?.dataFile ? "They " : "You ") +
+                                        "have no messages"
+                                      }
                                       animation="scale"
                                       className="shadow-xl"
                                     >
@@ -4075,7 +4137,10 @@ export default function Data(props: any): JSX.Element {
                                     </Tippy>
                                   ) : (
                                     <Tippy
-                                      content={"You don't have any emojis"}
+                                      content={
+                                        (data?.dataFile ? "They " : "You ") +
+                                        "have no emojis"
+                                      }
                                       animation="scale"
                                       className="shadow-xl"
                                     >
@@ -4213,7 +4278,10 @@ export default function Data(props: any): JSX.Element {
                                     </Tippy>
                                   ) : (
                                     <Tippy
-                                      content={`You don't have any custom emoji`}
+                                      content={
+                                        (data?.dataFile ? "They " : "You ") +
+                                        "have no custom emojis"
+                                      }
                                       animation="scale"
                                       className="shadow-xl"
                                     >
@@ -4251,7 +4319,7 @@ export default function Data(props: any): JSX.Element {
         <div className="lg:px-4 md:px-4 px-1 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__fadeIn animate__delay-1s rounded-lg row-span-3 lg:mt-0 mt-4">
           <div className="lg:flex justify-between md:flex sm:flex items-center">
             <span
-              className="text-gray-900 dark:text-white text-2xl font-bold pt-4 lg:px-6 md:px-6 px-1 flex items-center mb-2"
+              className="text-gray-900 dark:text-white text-2xl font-bold pt-4 lg:px-6 md:px-6 px-1 flex items-center mb-2 uppercase"
               style={{
                 fontFamily:
                   "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
@@ -4569,7 +4637,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={"You have no messages"}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no messages"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -4640,7 +4711,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={`You don't have any favorite word`}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no favorite words"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -4717,7 +4791,8 @@ export default function Data(props: any): JSX.Element {
                                     ) : (
                                       <Tippy
                                         content={
-                                          "You don't have any curse word"
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no curse words"
                                         }
                                         animation="scale"
                                         className="shadow-xl"
@@ -4784,7 +4859,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={"You don't have any links"}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no links"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -4855,7 +4933,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={"You have no Discord Links"}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no Discord links"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -4943,7 +5024,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={"You don't have any messages "}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no messages"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -5016,7 +5100,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={"You don't have any emojis"}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no emojis"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -5160,7 +5247,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={`You don't have any custom emoji`}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no custom emojis"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -5225,7 +5315,11 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={"You have no messages"}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") + "have no messages"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -5299,7 +5393,12 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={`You don't have any favorite word`}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") +
+                                            "have no favorite words"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -5376,7 +5475,9 @@ export default function Data(props: any): JSX.Element {
                                       ) : (
                                         <Tippy
                                           content={
-                                            "You don't have any curse word"
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") + "have no curse words"
                                           }
                                           animation="scale"
                                           className="shadow-xl"
@@ -5444,7 +5545,11 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={"You don't have any links"}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") + "have no links"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -5516,7 +5621,12 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={"You have no Discord Links"}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") +
+                                            "have no Discord links"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -5611,7 +5721,9 @@ export default function Data(props: any): JSX.Element {
                                       ) : (
                                         <Tippy
                                           content={
-                                            "You don't have any messages "
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") + "have no messages"
                                           }
                                           animation="scale"
                                           className="shadow-xl"
@@ -5685,7 +5797,11 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={"You don't have any emojis"}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") + "have no emojis"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -5830,7 +5946,12 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={`You don't have any custom emoji`}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") +
+                                            "have no custom emojis"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -5959,7 +6080,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={"You have no messages"}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no messages"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -6030,7 +6154,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={`You don't have any favorite word`}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no favorite words"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -6107,7 +6234,8 @@ export default function Data(props: any): JSX.Element {
                                     ) : (
                                       <Tippy
                                         content={
-                                          "You don't have any curse word"
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no curse words"
                                         }
                                         animation="scale"
                                         className="shadow-xl"
@@ -6174,7 +6302,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={"You don't have any links"}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no links"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -6245,7 +6376,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={"You have no Discord Links"}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no Discord links"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -6333,7 +6467,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={"You don't have any messages "}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no messages"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -6406,7 +6543,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={"You don't have any emojis"}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no emojis"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -6550,7 +6690,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={`You don't have any custom emoji`}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no custom emojis"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -6617,7 +6760,11 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={"You have no messages"}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") + "have no messages"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -6691,7 +6838,12 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={`You don't have any favorite word`}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") +
+                                            "have no favorite words"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -6768,7 +6920,9 @@ export default function Data(props: any): JSX.Element {
                                       ) : (
                                         <Tippy
                                           content={
-                                            "You don't have any curse word"
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") + "have no curse words"
                                           }
                                           animation="scale"
                                           className="shadow-xl"
@@ -6836,7 +6990,11 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={"You don't have any links"}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") + "have no links"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -6908,7 +7066,12 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={"You have no Discord Links"}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") +
+                                            "have no Discord links"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -7003,7 +7166,9 @@ export default function Data(props: any): JSX.Element {
                                       ) : (
                                         <Tippy
                                           content={
-                                            "You don't have any messages "
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") + "have no messages"
                                           }
                                           animation="scale"
                                           className="shadow-xl"
@@ -7077,7 +7242,11 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={"You don't have any emojis"}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") + "have no emojis"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -7222,7 +7391,12 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={`You don't have any custom emoji`}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") +
+                                            "have no custom emojis"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -7346,7 +7520,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={"You have no messages"}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no messages"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -7417,7 +7594,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={`You don't have any favorite word`}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no favorite words"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -7494,7 +7674,8 @@ export default function Data(props: any): JSX.Element {
                                     ) : (
                                       <Tippy
                                         content={
-                                          "You don't have any curse word"
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no curse words"
                                         }
                                         animation="scale"
                                         className="shadow-xl"
@@ -7561,7 +7742,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={"You don't have any links"}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no links"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -7632,7 +7816,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={"You have no Discord Links"}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no Discord links"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -7720,7 +7907,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={"You don't have any messages "}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no messages"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -7793,7 +7983,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={"You don't have any emojis"}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no emojis"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -7937,7 +8130,10 @@ export default function Data(props: any): JSX.Element {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        content={`You don't have any custom emoji`}
+                                        content={
+                                          (data?.dataFile ? "They " : "You ") +
+                                          "have no custom emojis"
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -7998,7 +8194,11 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={"You have no messages"}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") + "have no messages"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -8072,7 +8272,12 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={`You don't have any favorite word`}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") +
+                                            "have no favorite words"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -8149,7 +8354,9 @@ export default function Data(props: any): JSX.Element {
                                       ) : (
                                         <Tippy
                                           content={
-                                            "You don't have any curse word"
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") + "have no curse words"
                                           }
                                           animation="scale"
                                           className="shadow-xl"
@@ -8217,7 +8424,11 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={"You don't have any links"}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") + "have no links"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -8289,7 +8500,12 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={"You have no Discord Links"}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") +
+                                            "have no Discord links"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -8384,7 +8600,9 @@ export default function Data(props: any): JSX.Element {
                                       ) : (
                                         <Tippy
                                           content={
-                                            "You don't have any messages "
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") + "have no messages"
                                           }
                                           animation="scale"
                                           className="shadow-xl"
@@ -8458,7 +8676,11 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={"You don't have any emojis"}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") + "have no emojis"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -8603,7 +8825,12 @@ export default function Data(props: any): JSX.Element {
                                         </Tippy>
                                       ) : (
                                         <Tippy
-                                          content={`You don't have any custom emoji`}
+                                          content={
+                                            (data?.dataFile
+                                              ? "They "
+                                              : "You ") +
+                                            "have no custom emojis"
+                                          }
                                           animation="scale"
                                           className="shadow-xl"
                                         >
@@ -8647,7 +8874,7 @@ export default function Data(props: any): JSX.Element {
         <div className="lg:px-4 md:px-4 px-1 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__fadeIn animate__delay-1s rounded-lg row-span-3 lg:flex md:flex items-center justify-center">
           <div className="lg:mr-14 lg:ml-8 md:mr-12 md:ml-7 mb-2 lg:mb-0 md:mb-0">
             <span
-              className="text-gray-900 dark:text-white font-bold lg:text-5xl md:text-3xl hidden lg:block md:block "
+              className="text-gray-900 dark:text-white font-bold xl:text-5xl lg:text-2xl hidden lg:block md:block uppercase"
               style={{
                 fontFamily:
                   "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
@@ -8659,7 +8886,7 @@ export default function Data(props: any): JSX.Element {
               {data?.dataFile ? "Their" : "Your"} Discord Bots
             </span>
           </div>
-          <div className="grid lg:grid-cols-10 md:grid-cols-8 grid-cols-6 justify-items-center gap-3">
+          <div className="grid xl:grid-cols-8 lg:grid-cols-6  grid-cols-4 justify-items-center">
             {data?.bots && data?.bots?.length > 0
               ? data.bots
                   .sort((a: any, b: any) => {
@@ -8673,7 +8900,11 @@ export default function Data(props: any): JSX.Element {
                   })
                   .map((b: any, i: number) => {
                     return (
-                      <div className="cursor-pointer " key={i} id={"bot_" + i}>
+                      <div
+                        className="cursor-pointer xl:m-1 m-2"
+                        key={i}
+                        id={"bot_" + i}
+                      >
                         <Tippy
                           content={`${b?.verified ? "[🗸 VERIFIED]" : ""} ${
                             b.name
@@ -8686,7 +8917,7 @@ export default function Data(props: any): JSX.Element {
                               src={
                                 !b?.avatar?.endsWith("null.png")
                                   ? b?.avatar
-                                  : "https://cdn.discordapp.com/embed/avatars/" +
+                                  : "https://cdn.Discordapp.com/embed/avatars/" +
                                     Math.floor(Math.random() * 5) +
                                     ".png"
                               }
@@ -8718,7 +8949,7 @@ export default function Data(props: any): JSX.Element {
           )}
         </div>
         <div className="px-4 py-2 lg:my-0 my-4 bg-gray-300 dark:bg-[#2b2d31] animate__fadeIn animate__delay-1s rounded-lg row-span-3 col-span-2 ">
-          <h3 className="text-gray-900 dark:text-white font-bold text-xl mb-2 mt-2">
+          <h3 className="text-gray-900 dark:text-white font-bold text-xl mb-2 mt-2 uppercase">
             {data?.dataFile ? "Their" : "Your"} Payments
           </h3>
           {!data?.payments ? (
@@ -8776,7 +9007,7 @@ export default function Data(props: any): JSX.Element {
                   on Discord
                 </span>
               </div>
-              <h3 className="text-gray-900 dark:text-white font-bold text-xl mt-2">
+              <h3 className="text-gray-900 dark:text-white font-bold text-xl mt-2 uppercase">
                 {data?.dataFile ? "Their" : "Your"} Transactions
               </h3>
               <div className="flex items-center gap-2">
@@ -8829,7 +9060,7 @@ export default function Data(props: any): JSX.Element {
                   })}
                 </ul>
               </div>
-              <h3 className="text-gray-900 dark:text-white font-bold text-xl mt-2 flex items-center">
+              <h3 className="text-gray-900 dark:text-white font-bold text-xl mt-2 flex items-center uppercase">
                 Gifted Nitro{" "}
                 <Tippy
                   content={
@@ -8896,7 +9127,7 @@ export default function Data(props: any): JSX.Element {
       <div className="gap-4 lg:mx-10 md:mx-8 mx-2 lg:mt-4 md:mt-4 mt-2 pb-10">
         <div className="lg:px-4 md:px-4 px-1 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__fadeIn animate__delay-1s rounded-lg text-left w-full">
           <span
-            className="text-gray-900 dark:text-white lg:text-4xl md:text-4xl text-2xl font-bold flex items-center"
+            className="text-gray-900 dark:text-white lg:text-4xl text-2xl font-bold flex items-center uppercase"
             style={{
               fontFamily:
                 "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
@@ -8940,7 +9171,7 @@ export default function Data(props: any): JSX.Element {
             </Tippy>
           </span>{" "}
           <p className="text-gray-900 dark:text-white font-mono text-md">
-            Note: you can view more statistics.{" "}
+            <u>Note:</u> you can view more statistics.{" "}
             <a
               target="_blank"
               rel="noreferrer"
@@ -9052,7 +9283,7 @@ export default function Data(props: any): JSX.Element {
               </Tippy>
             </div>
             <a
-              href="https://github.com/peterhanania/discord-package"
+              href="https://github.com/peterhanania/Discord-package"
               target="_blank"
               rel="noreferrer"
             >

@@ -1,0 +1,25 @@
+{
+  "youtube": {
+    "link": "https://www.youtube.com/channel/",
+    "name": "YouTube",
+    "id": true
+  },
+  "xbox": {
+    "link": "https://account.xbox.com/profile?gamertag=",
+    "name": "Xbox"
+  },
+  "twitter": { "link": "https://twitter.com/", "name": "Twitter" },
+  "twitch": { "link": "https://www.twitch.tv/", "name": "Twitch" },
+  "steam": {
+    "link": "https://steamcommunity.com/profiles/",
+    "name": "Steam",
+    "id": true
+  },
+  "spotify": { "link": "https://open.spotify.com/user/", "name": "Spotify" },
+  "reddit": { "link": "https://www.reddit.com/u/", "name": "Reddit" },
+  "playstation": { "link": null, "name": "Playstation Network" },
+  "github": { "link": "https://github.com/", "name": "GitHub" },
+  "facebook": { "link": null, "name": "Facebook" },
+  "epicgames": { "link": null, "name": "Epic Games" },
+  "battlenet": { "link": null, "name": "Battle.net" }
+}
