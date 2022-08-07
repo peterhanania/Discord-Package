@@ -2710,6 +2710,8 @@ export default function Data(props: any): JSX.Element {
                                   : m.name)
                               : `#`
                           }
+                          target="_blank"
+                          rel="noreferrer"
                         >
                           {(obj as any)[m.type]}
                         </a>
@@ -8924,11 +8926,14 @@ export default function Data(props: any): JSX.Element {
                               width={62}
                               height={62}
                               className="rounded-full"
-                              onError={() => {
-                                const bot__ = document.getElementById(
-                                  "bot_" + i
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).removeAttribute(
+                                  "srcset"
                                 );
-                                if (bot__) bot__.style.display = "none";
+                                (e.target as HTMLImageElement).src =
+                                  "https://cdn.Discordapp.com/embed/avatars/" +
+                                  Math.floor(Math.random() * 5) +
+                                  ".png";
                               }}
                             />
                           </div>
