@@ -25,8 +25,8 @@ This service **does not** use any third party services and does not collect any 
 
 ## 
 
-<image src="https://i.imgur.com/t6NhI2z.png" />
-<image src="https://i.imgur.com/6oyu9B8.png" />
+<image src="https://i.imgur.com/MKWRWQo.png" />
+<image src="https://i.imgur.com/gkz1cZc.png" />
 
 ### Features
 <ul>
