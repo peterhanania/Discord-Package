@@ -1865,7 +1865,7 @@ export default function Data(props: any): JSX.Element {
                                 copyToClipboard(
                                   m.name + ": " + m.count + " times"
                                 );
-                                noti("Copied to Clipboard");
+                                noti("Copied emoji to Clipboard");
                               }}
                             >
                               <Image
@@ -1899,7 +1899,7 @@ export default function Data(props: any): JSX.Element {
                                 copyToClipboard(
                                   ":" + m.name + ": - " + m.count + " times"
                                 );
-                                noti("Copied to Clipboard");
+                                noti("Copied emoji to Clipboard");
                               }}
                             >
                               {(emojis as any)[m.name]
@@ -1945,7 +1945,7 @@ export default function Data(props: any): JSX.Element {
                                   copyToClipboard(
                                     m.emoji + ": " + m.count + " times"
                                   );
-                                  noti("Copied to Clipboard");
+                                  noti("Copied emoji to Clipboard");
                                 }}
                                 className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100"
                               >
@@ -2021,7 +2021,7 @@ export default function Data(props: any): JSX.Element {
                                   copyToClipboard(
                                     m.emoji + ": " + m.count + " times"
                                   );
-                                  noti("Copied to Clipboard");
+                                  noti("Copied emoji to Clipboard");
                                 }}
                                 className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100"
                               >
@@ -2068,7 +2068,7 @@ export default function Data(props: any): JSX.Element {
                                       copyToClipboard(
                                         m.emoji + ": " + m.count + " times"
                                       );
-                                      noti("Copied to Clipboard");
+                                      noti("Copied emoji to Clipboard");
                                     }}
                                   >
                                     <Image
@@ -2100,7 +2100,7 @@ export default function Data(props: any): JSX.Element {
                                           copyToClipboard(
                                             m.emoji + ": " + m.count + " times"
                                           );
-                                          noti("Copied to Clipboard");
+                                          noti("Copied emoji to Clipboard");
                                         }}
                                       >
                                         <Image
@@ -8929,6 +8929,10 @@ export default function Data(props: any): JSX.Element {
                         className="cursor-pointer xl:m-1 m-2"
                         key={i}
                         id={"bot_" + i}
+                        onClick={() => {
+                          copyToClipboard(b.id);
+                          noti("Copied ID to Clipboard");
+                        }}
                       >
                         <Tippy
                           content={`${b?.verified ? "[🗸 VERIFIED]" : ""} ${
