@@ -1126,8 +1126,7 @@ export default function Data(props: any): JSX.Element {
                       )
                       ? "https://cdn.Discordapp.com/avatars/" +
                         data.user.id +
-                        "/lol" +
-                        data.user.avatar +
+                        +data.user.avatar +
                         ".webp?size=1024"
                       : data.user.avatar
                     : "https://cdn.Discordapp.com/embed/avatars/" +
@@ -2718,9 +2717,9 @@ export default function Data(props: any): JSX.Element {
                 return (
                   <div className="cursor-pointer" key={i}>
                     <Tippy
-                      content={`${m?.type}: ${m?.name} ${
-                        m.visible ? "[VISIBLE]" : ""
-                      }`}
+                      content={`${(Connections as any)[m.type].name}: ${
+                        m?.name
+                      } ${m.visible ? "[VISIBLE]" : ""}`}
                       animation="scale"
                       className="shadow-xl"
                     >
@@ -8911,7 +8910,7 @@ export default function Data(props: any): JSX.Element {
               {data?.dataFile ? "Their" : "Your"} Discord Bots
             </span>
           </div>
-          <div className="grid xl:grid-cols-8 lg:grid-cols-6  grid-cols-4 justify-items-center">
+          <div className="grid xl:grid-cols-8 xl2:grid-cols-6 lg:grid-cols-6 md1:grid-cols-4 xl1:grid-cols-4 grid-cols-6 justify-items-center">
             {data?.bots && data?.bots?.length > 0
               ? data.bots
                   .sort((a: any, b: any) => {
@@ -9206,7 +9205,7 @@ export default function Data(props: any): JSX.Element {
             ""
           ) : (
             <p className="text-gray-900 dark:text-white font-mono text-md">
-              <u>Note:</u> you can view more statistics.
+              <u>Note:</u> you can view more statistics.{" "}
               <a
                 target="_blank"
                 rel="noreferrer"
@@ -9296,15 +9295,18 @@ export default function Data(props: any): JSX.Element {
           </div>
         </div>
       </div>
-      <div className="group animate__fadeIn animate__delay-5s animate__animated">
+      <div
+        className="group animate__fadeIn animate__delay-5s animate__animated"
+        id="popup__1"
+      >
         <div className="fixed bottom-5 right-5 hidden lg:block opacity-70 hover:opacity-100 cursor-pointer ">
           <div className="bg-gray-300 dark:bg-[#232323] px-6 py-2">
             <div className="flex justify-end">
               <Tippy content={"Close"} animation="scale" className="shadow-xl">
                 <div
                   className="p-1 hover:bg-[#2b2d31] hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden w-[32px]"
-                  onClick={(e: any) => {
-                    e.target.parentElement.parentElement.parentElement.remove();
+                  onClick={() => {
+                    document.getElementById("popup__1")?.remove();
                   }}
                 >
                   <svg
