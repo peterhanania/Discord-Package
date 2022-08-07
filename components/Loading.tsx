@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { ReactElement } from "react";
 
-export default function Loading() : ReactElement {
+export default function Loading(): ReactElement {
   return (
     <>
       <Head>
