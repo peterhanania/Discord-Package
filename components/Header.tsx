@@ -96,16 +96,16 @@ export default function Header() {
                 <div className="overflow-y-auto h-[560px] ">
                   <div className="py-6 px-8">
                     <h3 className="text-xl font-medium text-white mb-2">
-                      1- Click on the &quot;User Settings&quot; icon
+                      1- Click on the &quot;User Settings&quot; icon.
                     </h3>
                     <Image src="/help/1.png" alt="1" width={500} height={300} />{" "}
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
-                      2- Click on &quot;Privacy & Safety&quot;
+                      2- Click on &quot;Privacy & Safety&quot;.
                     </h3>
                     <Image src="/help/2.png" alt="2" width={500} height={300} />{" "}
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
-                      3- Scroll Down to the end then click on &quot;Request Data
-                      &quot; to request your Data
+                      3- Scroll down to the end then click on &quot;Request Data
+                      &quot; to request your data.
                     </h3>
                     <Image src="/help/3.png" alt="3" width={500} height={300} />
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
@@ -118,19 +118,19 @@ export default function Header() {
                     <Image src="/help/5.png" alt="5" width={500} height={300} />
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
                       5- Upload the downloaded package by dragging or clicking
-                      on the box
+                      on the box.
                     </h3>
                     <video controls>
                       <source src="/help/1.mp4" type="video/webm" />
                       Your browser does not support embedded videos
                     </video>{" "}
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
-                      You could Cancel by pressing on the box while its
-                      uploading
+                      You could cancel by pressing on the box while its
+                      uploading.
                     </h3>
                     <video controls>
                       <source src="/help/2.mp4" type="video/webm" />
-                      Your browser does not support embedded videos
+                      Your browser does not support embedded videos.
                     </video>
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
                       You could press &quot;More Options&quot; to customize what
