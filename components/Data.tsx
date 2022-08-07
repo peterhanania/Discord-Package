@@ -9320,7 +9320,6 @@ export default function Data(props: any): JSX.Element {
       >
         <div className="fixed bottom-5 right-5 hidden lg:block opacity-70 hover:opacity-100 cursor-pointer ">
           <div className="bg-gray-300 dark:bg-[#232323] px-6 py-2">
-
             <a
               href="https://github.com/peterhanania/Discord-package"
               target="_blank"
@@ -9342,7 +9341,8 @@ export default function Data(props: any): JSX.Element {
                   <Tippy content={"Close"} animation="scale" className="shadow-xl">
                     <div
                       className="ml-2 p-1 hover:bg-[#2b2d31] hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden w-8"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault()
                         document.getElementById("popup__1")?.remove();
                       }}
                     >
