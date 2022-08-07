@@ -1236,7 +1236,7 @@ export default function Data(props: any): ReactElement {
                                 {data.messages.favoriteWords.map(
                                   (f: any, i: number) => {
                                     return (
-                                      <li key={i} className="flex items-center">
+                                      <li key={i}>
                                         {f.word}: {f.count} time
                                         {f.count > 1 ? "s" : ""}
                                       </li>
@@ -1308,7 +1308,7 @@ export default function Data(props: any): ReactElement {
                                 {data.messages.topCursed.map(
                                   (f: any, i: number) => {
                                     return (
-                                      <li key={i} className="flex items-center">
+                                      <li key={i}>
                                         {f.word}: {f.count} time
                                         {f.count > 1 ? "s" : ""}
                                       </li>
@@ -1378,8 +1378,15 @@ export default function Data(props: any): ReactElement {
                                 {data.messages.topLinks.map(
                                   (f: any, i: number) => {
                                     return (
-                                      <li key={i} className="flex items-center">
-                                        {f.word}: {f.count} time
+                                      <li key={i}>
+                                        <a
+                                          href={f.word}
+                                          target="_blank"
+                                          rel="noreferrer"
+                                        >
+                                          {f.word}
+                                        </a>
+                                        : {f.count} time
                                         {f.count > 1 ? "s" : ""}
                                       </li>
                                     );
@@ -1447,8 +1454,15 @@ export default function Data(props: any): ReactElement {
                                 {data.messages.topDiscordLinks.map(
                                   (f: any, i: number) => {
                                     return (
-                                      <li key={i} className="flex items-center">
-                                        {f.word}: {f.count} time
+                                      <li key={i}>
+                                        <a
+                                          href={f.word}
+                                          target="_blank"
+                                          rel="noreferrer"
+                                        >
+                                          {f.word}
+                                        </a>
+                                        : {f.count} time
                                         {f.count > 1 ? "s" : ""}
                                       </li>
                                     );
@@ -1509,7 +1523,7 @@ export default function Data(props: any): ReactElement {
                                 {data.messages.oldestMessages.map(
                                   (f: any, i: number) => {
                                     return (
-                                      <li key={i} className="flex items-center">
+                                      <li key={i}>
                                         <b>{f.sentence}</b>
                                         <ul>
                                           <li>
@@ -1585,7 +1599,7 @@ export default function Data(props: any): ReactElement {
                                 {data.messages.attachmentCount.map(
                                   (f: any, i: number) => {
                                     return (
-                                      <li key={i} className="flex items-center">
+                                      <li key={i}>
                                         <a
                                           target="_blank"
                                           rel="noreferrer"
@@ -2003,7 +2017,7 @@ export default function Data(props: any): ReactElement {
                                             return (
                                               <li
                                                 key={i}
-                                                className="flex items-center"
+                                               
                                               >
                                                 {f.emoji}: {f.count} time
                                                 {f.count > 1 ? "s" : ""}
@@ -2174,10 +2188,7 @@ export default function Data(props: any): ReactElement {
                                           )
                                           .map((f: any, i: number) => {
                                             return (
-                                              <li
-                                                key={i}
-                                                className="flex items-center"
-                                              >
+                                              <li key={i}>
                                                 {/<:.*?:(\d+)>/g.exec(
                                                   f.emoji
                                                 ) ? (
@@ -3159,10 +3170,7 @@ export default function Data(props: any): ReactElement {
                                             {m.favoriteWords.map(
                                               (f: any, i: number) => {
                                                 return (
-                                                  <li
-                                                    key={i}
-                                                    className="flex items-center"
-                                                  >
+                                                  <li key={i}>
                                                     {f.word}: {f.count} time
                                                     {f.count > 1 ? "s" : ""}
                                                   </li>
@@ -3232,10 +3240,7 @@ export default function Data(props: any): ReactElement {
                                             {m.topCursed.map(
                                               (f: any, i: number) => {
                                                 return (
-                                                  <li
-                                                    key={i}
-                                                    className="flex items-center"
-                                                  >
+                                                  <li key={i}>
                                                     {f.word}: {f.count} time
                                                     {f.count > 1 ? "s" : ""}
                                                   </li>
@@ -3299,10 +3304,7 @@ export default function Data(props: any): ReactElement {
                                             {m.topLinks.map(
                                               (f: any, i: number) => {
                                                 return (
-                                                  <li
-                                                    key={i}
-                                                    className="flex items-center"
-                                                  >
+                                                  <li key={i}>
                                                     <a
                                                       href={f.word}
                                                       target="_blank"
@@ -3376,11 +3378,15 @@ export default function Data(props: any): ReactElement {
                                             {m.topDiscordLinks.map(
                                               (f: any, i: number) => {
                                                 return (
-                                                  <li
-                                                    key={i}
-                                                    className="flex items-center"
-                                                  >
-                                                    {f.word}: {f.count} time
+                                                  <li key={i}>
+                                                    <a
+                                                      href={f.word}
+                                                      target="_blank"
+                                                      rel="noreferrer"
+                                                    >
+                                                      {f.word}
+                                                    </a>
+                                                    : {f.count} time
                                                     {f.count > 1 ? "s" : ""}
                                                   </li>
                                                 );
@@ -3448,10 +3454,7 @@ export default function Data(props: any): ReactElement {
                                             {m.oldestMessages.map(
                                               (f: any, i: number) => {
                                                 return (
-                                                  <li
-                                                    key={i}
-                                                    className="flex items-center"
-                                                  >
+                                                  <li key={i}>
                                                     <b>{f.sentence}</b>
                                                     <ul>
                                                       <li>
@@ -3537,10 +3540,7 @@ export default function Data(props: any): ReactElement {
                                             {m.topEmojis.map(
                                               (f: any, i: number) => {
                                                 return (
-                                                  <li
-                                                    key={i}
-                                                    className="flex items-center"
-                                                  >
+                                                  <li key={i}>
                                                     <b>
                                                       {f.emoji}: {f.count} time
                                                       {f.count > 1 ? "s" : ""}
@@ -3611,10 +3611,7 @@ export default function Data(props: any): ReactElement {
                                             {m.topCustomEmojis.map(
                                               (f: any, i: number) => {
                                                 return (
-                                                  <li
-                                                    key={i}
-                                                    className="flex items-center"
-                                                  >
+                                                  <li key={i}>
                                                     {/<:.*?:(\d+)>/g.exec(
                                                       f.emoji
                                                     ) ? (
@@ -3811,10 +3808,7 @@ export default function Data(props: any): ReactElement {
                                                 {m.favoriteWords.map(
                                                   (f: any, i: number) => {
                                                     return (
-                                                      <li
-                                                        key={i}
-                                                        className="flex items-center"
-                                                      >
+                                                      <li key={i}>
                                                         {f.word}: {f.count} time
                                                         {f.count > 1 ? "s" : ""}
                                                       </li>
@@ -3889,10 +3883,7 @@ export default function Data(props: any): ReactElement {
                                                 {m.topCursed.map(
                                                   (f: any, i: number) => {
                                                     return (
-                                                      <li
-                                                        key={i}
-                                                        className="flex items-center"
-                                                      >
+                                                      <li key={i}>
                                                         {f.word}: {f.count} time
                                                         {f.count > 1 ? "s" : ""}
                                                       </li>
@@ -3958,10 +3949,7 @@ export default function Data(props: any): ReactElement {
                                                 {m.topLinks.map(
                                                   (f: any, i: number) => {
                                                     return (
-                                                      <li
-                                                        key={i}
-                                                        className="flex items-center"
-                                                      >
+                                                      <li key={i}>
                                                         <a
                                                           href={f.word}
                                                           target="_blank"
@@ -4038,11 +4026,15 @@ export default function Data(props: any): ReactElement {
                                                 {m.topDiscordLinks.map(
                                                   (f: any, i: number) => {
                                                     return (
-                                                      <li
-                                                        key={i}
-                                                        className="flex items-center"
-                                                      >
-                                                        {f.word}: {f.count} time
+                                                      <li key={i}>
+                                                        <a
+                                                          href={f.word}
+                                                          target="_blank"
+                                                          rel="noreferrer"
+                                                        >
+                                                          {f.word}
+                                                        </a>
+                                                        : {f.count} time
                                                         {f.count > 1 ? "s" : ""}
                                                       </li>
                                                     );
@@ -4112,10 +4104,7 @@ export default function Data(props: any): ReactElement {
                                                 {m.oldestMessages.map(
                                                   (f: any, i: number) => {
                                                     return (
-                                                      <li
-                                                        key={i}
-                                                        className="flex items-center"
-                                                      >
+                                                      <li key={i}>
                                                         <b>{f.sentence}</b>
                                                         <ul>
                                                           <li>
@@ -4205,10 +4194,7 @@ export default function Data(props: any): ReactElement {
                                                 {m.topEmojis.map(
                                                   (f: any, i: number) => {
                                                     return (
-                                                      <li
-                                                        key={i}
-                                                        className="flex items-center"
-                                                      >
+                                                      <li key={i}>
                                                         <b>
                                                           {f.emoji}: {f.count}{" "}
                                                           time
@@ -4284,10 +4270,7 @@ export default function Data(props: any): ReactElement {
                                                 {m.topCustomEmojis.map(
                                                   (f: any, i: number) => {
                                                     return (
-                                                      <li
-                                                        key={i}
-                                                        className="flex items-center"
-                                                      >
+                                                      <li key={i}>
                                                         {/<:.*?:(\d+)>/g.exec(
                                                           f.emoji
                                                         ) ? (
@@ -4784,10 +4767,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.favoriteWords.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           {f.word}: {f.count}{" "}
                                                           time
                                                           {f.count > 1
@@ -4866,10 +4846,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.topCursed.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           {f.word}: {f.count}{" "}
                                                           time
                                                           {f.count > 1
@@ -4938,10 +4915,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.topLinks.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           <a
                                                             href={f.word}
                                                             target="_blank"
@@ -5021,12 +4995,15 @@ export default function Data(props: any): ReactElement {
                                                   {m.topDiscordLinks.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
-                                                          {f.word}: {f.count}{" "}
-                                                          time
+                                                        <li key={i}>
+                                                          <a
+                                                            href={f.word}
+                                                            target="_blank"
+                                                            rel="noreferrer"
+                                                          >
+                                                            {f.word}
+                                                          </a>
+                                                          : {f.count} time
                                                           {f.count > 1
                                                             ? "s"
                                                             : ""}
@@ -5098,10 +5075,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.oldestMessages.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           <b>{f.sentence}</b>
                                                           <ul>
                                                             <li>
@@ -5192,10 +5166,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.topEmojis.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           <b>
                                                             {f.emoji}: {f.count}{" "}
                                                             time
@@ -5274,10 +5245,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.topCustomEmojis.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           {/<:.*?:(\d+)>/g.exec(
                                                             f.emoji
                                                           ) ? (
@@ -5490,10 +5458,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.favoriteWords.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             {f.word}: {f.count}{" "}
                                                             time
                                                             {f.count > 1
@@ -5574,10 +5539,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.topCursed.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             {f.word}: {f.count}{" "}
                                                             time
                                                             {f.count > 1
@@ -5648,10 +5610,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.topLinks.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             <a
                                                               href={f.word}
                                                               target="_blank"
@@ -5733,12 +5692,15 @@ export default function Data(props: any): ReactElement {
                                                     {m.topDiscordLinks.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
-                                                            {f.word}: {f.count}{" "}
-                                                            time
+                                                          <li key={i}>
+                                                            <a
+                                                              href={f.word}
+                                                              target="_blank"
+                                                              rel="noreferrer"
+                                                            >
+                                                              {f.word}
+                                                            </a>
+                                                            : {f.count} time
                                                             {f.count > 1
                                                               ? "s"
                                                               : ""}
@@ -5816,10 +5778,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.oldestMessages.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             <b>{f.sentence}</b>
                                                             <ul>
                                                               <li>
@@ -5913,10 +5872,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.topEmojis.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             <b>
                                                               {f.emoji}:{" "}
                                                               {f.count} time
@@ -5997,10 +5953,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.topCustomEmojis.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             {/<:.*?:(\d+)>/g.exec(
                                                               f.emoji
                                                             ) ? (
@@ -6275,10 +6228,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.favoriteWords.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           {f.word}: {f.count}{" "}
                                                           time
                                                           {f.count > 1
@@ -6357,10 +6307,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.topCursed.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           {f.word}: {f.count}{" "}
                                                           time
                                                           {f.count > 1
@@ -6429,10 +6376,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.topLinks.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           <a
                                                             href={f.word}
                                                             target="_blank"
@@ -6512,12 +6456,15 @@ export default function Data(props: any): ReactElement {
                                                   {m.topDiscordLinks.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
-                                                          {f.word}: {f.count}{" "}
-                                                          time
+                                                        <li key={i}>
+                                                          <a
+                                                            href={f.word}
+                                                            target="_blank"
+                                                            rel="noreferrer"
+                                                          >
+                                                            {f.word}
+                                                          </a>
+                                                          : {f.count} time
                                                           {f.count > 1
                                                             ? "s"
                                                             : ""}
@@ -6589,10 +6536,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.oldestMessages.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           <b>{f.sentence}</b>
                                                           <ul>
                                                             <li>
@@ -6683,10 +6627,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.topEmojis.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           <b>
                                                             {f.emoji}: {f.count}{" "}
                                                             time
@@ -6765,10 +6706,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.topCustomEmojis.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           {/<:.*?:(\d+)>/g.exec(
                                                             f.emoji
                                                           ) ? (
@@ -6983,10 +6921,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.favoriteWords.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             {f.word}: {f.count}{" "}
                                                             time
                                                             {f.count > 1
@@ -7067,10 +7002,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.topCursed.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             {f.word}: {f.count}{" "}
                                                             time
                                                             {f.count > 1
@@ -7141,10 +7073,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.topLinks.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             <a
                                                               href={f.word}
                                                               target="_blank"
@@ -7226,12 +7155,15 @@ export default function Data(props: any): ReactElement {
                                                     {m.topDiscordLinks.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
-                                                            {f.word}: {f.count}{" "}
-                                                            time
+                                                          <li key={i}>
+                                                            <a
+                                                              href={f.word}
+                                                              target="_blank"
+                                                              rel="noreferrer"
+                                                            >
+                                                              {f.word}
+                                                            </a>
+                                                            : {f.count} time
                                                             {f.count > 1
                                                               ? "s"
                                                               : ""}
@@ -7309,10 +7241,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.oldestMessages.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             <b>{f.sentence}</b>
                                                             <ul>
                                                               <li>
@@ -7406,10 +7335,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.topEmojis.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             <b>
                                                               {f.emoji}:{" "}
                                                               {f.count} time
@@ -7490,10 +7416,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.topCustomEmojis.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             {/<:.*?:(\d+)>/g.exec(
                                                               f.emoji
                                                             ) ? (
@@ -7763,10 +7686,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.favoriteWords.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           {f.word}: {f.count}{" "}
                                                           time
                                                           {f.count > 1
@@ -7845,10 +7765,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.topCursed.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           {f.word}: {f.count}{" "}
                                                           time
                                                           {f.count > 1
@@ -7917,10 +7834,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.topLinks.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           <a
                                                             href={f.word}
                                                             target="_blank"
@@ -8000,12 +7914,15 @@ export default function Data(props: any): ReactElement {
                                                   {m.topDiscordLinks.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
-                                                          {f.word}: {f.count}{" "}
-                                                          time
+                                                        <li key={i}>
+                                                          <a
+                                                            href={f.word}
+                                                            target="_blank"
+                                                            rel="noreferrer"
+                                                          >
+                                                            {f.word}
+                                                          </a>
+                                                          : {f.count} time
                                                           {f.count > 1
                                                             ? "s"
                                                             : ""}
@@ -8077,10 +7994,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.oldestMessages.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           <b>{f.sentence}</b>
                                                           <ul>
                                                             <li>
@@ -8171,10 +8085,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.topEmojis.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           <b>
                                                             {f.emoji}: {f.count}{" "}
                                                             time
@@ -8253,10 +8164,7 @@ export default function Data(props: any): ReactElement {
                                                   {m.topCustomEmojis.map(
                                                     (f: any, i: number) => {
                                                       return (
-                                                        <li
-                                                          key={i}
-                                                          className="flex items-center"
-                                                        >
+                                                        <li key={i}>
                                                           {/<:.*?:(\d+)>/g.exec(
                                                             f.emoji
                                                           ) ? (
@@ -8465,10 +8373,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.favoriteWords.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             {f.word}: {f.count}{" "}
                                                             time
                                                             {f.count > 1
@@ -8549,10 +8454,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.topCursed.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             {f.word}: {f.count}{" "}
                                                             time
                                                             {f.count > 1
@@ -8623,10 +8525,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.topLinks.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             <a
                                                               href={f.word}
                                                               target="_blank"
@@ -8708,12 +8607,15 @@ export default function Data(props: any): ReactElement {
                                                     {m.topDiscordLinks.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
-                                                            {f.word}: {f.count}{" "}
-                                                            time
+                                                          <li key={i}>
+                                                            <a
+                                                              href={f.word}
+                                                              target="_blank"
+                                                              rel="noreferrer"
+                                                            >
+                                                              {f.word}
+                                                            </a>
+                                                            : {f.count} time
                                                             {f.count > 1
                                                               ? "s"
                                                               : ""}
@@ -8791,10 +8693,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.oldestMessages.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             <b>{f.sentence}</b>
                                                             <ul>
                                                               <li>
@@ -8888,10 +8787,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.topEmojis.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             <b>
                                                               {f.emoji}:{" "}
                                                               {f.count} time
@@ -8972,10 +8868,7 @@ export default function Data(props: any): ReactElement {
                                                     {m.topCustomEmojis.map(
                                                       (f: any, i: number) => {
                                                         return (
-                                                          <li
-                                                            key={i}
-                                                            className="flex items-center"
-                                                          >
+                                                          <li key={i}>
                                                             {/<:.*?:(\d+)>/g.exec(
                                                               f.emoji
                                                             ) ? (
@@ -9269,7 +9162,7 @@ export default function Data(props: any): ReactElement {
                 <ul className="text-gray-900 dark:text-white lg:text-xl md:text-xl font-bold list-disc mt-2 ml-6 text-xs">
                   {data?.payments?.transactions?.map((t: any, i: number) => {
                     return (
-                      <li key={i} className="flex items-center">
+                      <li key={i}>
                         <div className="inline-flex">
                           <p className="mx-1 font-extrabold text-blue-500 inline-flex">
                             <CountUp
@@ -9348,7 +9241,7 @@ export default function Data(props: any): ReactElement {
                     ? Object.keys(data?.payments?.giftedNitro)?.map(
                         (t: any, i: number) => {
                           return (
-                            <li key={i} className="flex items-center">
+                            <li key={i}>
                               <div className="inline-flex">
                                 {t}:
                                 <p className="mx-1 font-extrabold text-blue-500">
@@ -9536,11 +9429,15 @@ export default function Data(props: any): ReactElement {
                   Star this Repository
                 </span>
                 <div className="flex justify-end">
-                  <Tippy content={"Close"} animation="scale" className="shadow-xl">
+                  <Tippy
+                    content={"Close"}
+                    animation="scale"
+                    className="shadow-xl"
+                  >
                     <div
                       className="ml-2 p-1 hover:bg-[#2b2d31] hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden w-8"
                       onClick={(e) => {
-                        e.preventDefault()
+                        e.preventDefault();
                         document.getElementById("popup__1")?.remove();
                       }}
                     >
