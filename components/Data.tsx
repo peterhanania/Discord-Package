@@ -9320,25 +9320,7 @@ export default function Data(props: any): JSX.Element {
       >
         <div className="fixed bottom-5 right-5 hidden lg:block opacity-70 hover:opacity-100 cursor-pointer ">
           <div className="bg-gray-300 dark:bg-[#232323] px-6 py-2">
-            <div className="flex justify-end">
-              <Tippy content={"Close"} animation="scale" className="shadow-xl">
-                <div
-                  className="p-1 hover:bg-[#2b2d31] hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden w-[32px]"
-                  onClick={() => {
-                    document.getElementById("popup__1")?.remove();
-                  }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24"
-                    width="24"
-                    className="fill-white cursor-pointer"
-                  >
-                    <path d="m6.3 19.6-1.85-1.9 5.675-5.7L4.45 6.25l1.85-1.9 5.725 5.75L17.7 4.35l1.85 1.9L13.875 12l5.675 5.7-1.85 1.9-5.675-5.75Z" />
-                  </svg>
-                </div>
-              </Tippy>
-            </div>
+
             <a
               href="https://github.com/peterhanania/Discord-package"
               target="_blank"
@@ -9356,6 +9338,25 @@ export default function Data(props: any): JSX.Element {
                 <span className="text-gray-900 dark:text-white font-bold">
                   Star this Repository
                 </span>
+                <div className="flex justify-end">
+                  <Tippy content={"Close"} animation="scale" className="shadow-xl">
+                    <div
+                      className="ml-2 p-1 hover:bg-[#2b2d31] hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden w-8"
+                      onClick={() => {
+                        document.getElementById("popup__1")?.remove();
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                        className="fill-white cursor-pointer"
+                      >
+                        <path d="m6.3 19.6-1.85-1.9 5.675-5.7L4.45 6.25l1.85-1.9 5.725 5.75L17.7 4.35l1.85 1.9L13.875 12l5.675 5.7-1.85 1.9-5.675-5.75Z" />
+                      </svg>
+                    </div>
+                  </Tippy>
+                </div>
               </div>
               <p className="text-gray-900 dark:text-white text-sm max-w-[200px] text-left">
                 Enjoying what you see? Star this repository on Github and follow
