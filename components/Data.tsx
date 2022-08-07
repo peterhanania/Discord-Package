@@ -1149,7 +1149,7 @@ export default function Data(props: any): JSX.Element {
             </div>
           </div>
           <div
-            className="space-y-1 font-medium text-gray-900 dark:text-white uppercase w-full" 
+            className="space-y-1 font-medium text-gray-900 dark:text-white uppercase w-full"
             style={{
               fontFamily:
                 "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
@@ -1814,7 +1814,7 @@ export default function Data(props: any): JSX.Element {
                   : "Top"}
                 <br />
                 Emojis
-              </div>{" "}
+              </div>
               <div className="text-gray-900 dark:text-white max-w-sm font-bold lg:hidden text-2xl ">
                 {data?.dataFile ? "Their" : "Your "}
                 {emojiType === "topEmojis"
@@ -1826,7 +1826,7 @@ export default function Data(props: any): JSX.Element {
                   : null}{" "}
                 Emojis
               </div>
-            </div>{" "}
+            </div>
             {!emojiType ? (
               <span className="text-gray-900 dark:text-white text-lg font-bold w-full">
                 No Emojis Found or {data?.dataFile ? "they " : "you "}disabled
@@ -2388,10 +2388,10 @@ export default function Data(props: any): JSX.Element {
               </div>
             </div>
           )}
-        </div>{" "}
+        </div>
         <div className="lg:mt-0 mt-2 md:mt-0 px-4 py-2 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg lg:row-span-2 md:row-span-1 col-span-2 row-span-2">
           <h3 className="text-gray-900 dark:text-white font-bold text-xl mb-2 flex items-center">
-            {data?.dataFile ? "Their" : "Your"} Connections{" "}
+            {data?.dataFile ? "Their" : "Your"} Connections
             <Tippy
               content={
                 <>
@@ -2721,12 +2721,11 @@ export default function Data(props: any): JSX.Element {
             })}
           </div>
         </div>
-      </div>{" "}
+      </div>
       <div className="gap-4 lg:mx-10 md:mx-8 mx-2 lg:mt-4 md:mt-4 mt-2">
-        <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg text-center w-full">
-          {" "}
+        <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__delay-1s rounded-lg text-center w-full">
           <span
-            className="uppercase text-gray-900 dark:text-white lg:text-4xl md:text-3xl text-xl font-bold flex items-center justify-center uppercase"
+            className=" text-gray-900 dark:text-white lg:text-4xl md:text-3xl text-xl font-bold flex items-center justify-center"
             style={{
               fontFamily:
                 "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
@@ -2783,7 +2782,7 @@ export default function Data(props: any): JSX.Element {
                     Active Hours are the hours in which{" "}
                     {data?.dataFile ? "they " : "you "} are most active on
                     Discord sending messages.
-                  </p>{" "}
+                  </p>
                   <div className="flex items-center">
                     <svg
                       className="fill-red-400 mr-2 basis-[40%]"
@@ -8881,7 +8880,7 @@ export default function Data(props: any): JSX.Element {
               }}
             >
               {data?.dataFile ? "Their" : "Your"} <br /> Discord <br /> Bots
-            </span>{" "}
+            </span>
             <span className="text-gray-900 dark:text-white font-bold lg:hidden md:hidden text-xl">
               {data?.dataFile ? "Their" : "Your"} Discord Bots
             </span>
@@ -8938,7 +8937,7 @@ export default function Data(props: any): JSX.Element {
                     );
                   })
               : ""}
-          </div>{" "}
+          </div>
           {!data?.bots ? (
             <div className="text-center text-gray-900 dark:text-white font-bold text-xl">
               No Bots were found or this option is was disabled by{" "}
@@ -9003,7 +9002,7 @@ export default function Data(props: any): JSX.Element {
                     ) : (
                       "$"
                     )}
-                  </p>{" "}
+                  </p>
                   on Discord
                 </span>
               </div>
@@ -9061,7 +9060,7 @@ export default function Data(props: any): JSX.Element {
                 </ul>
               </div>
               <h3 className="text-gray-900 dark:text-white font-bold text-xl mt-2 flex items-center uppercase">
-                Gifted Nitro{" "}
+                {data?.dataFile ? "Their" : "Your"} Gifted Nitro{" "}
                 <Tippy
                   content={
                     <>
@@ -9152,7 +9151,7 @@ export default function Data(props: any): JSX.Element {
                       width="24"
                     >
                       <path d="M.275 21.425 12 1.15l11.725 20.275ZM12 17.925q.45 0 .788-.338.337-.337.337-.787t-.337-.775Q12.45 15.7 12 15.7t-.787.325q-.338.325-.338.775t.338.787q.337.338.787.338ZM11 15h2v-4.725h-2Z" />
-                    </svg>{" "}
+                    </svg>
                     Some Analytics may be inacurrate
                   </b>
                 </>
@@ -9169,19 +9168,23 @@ export default function Data(props: any): JSX.Element {
                 <path d="M10.625 17.375h2.75V11h-2.75ZM12 9.5q.65 0 1.075-.438Q13.5 8.625 13.5 8q0-.65-.425-1.075Q12.65 6.5 12 6.5q-.625 0-1.062.425Q10.5 7.35 10.5 8q0 .625.438 1.062.437.438 1.062.438Zm0 13.35q-2.275 0-4.25-.85t-3.438-2.312Q2.85 18.225 2 16.25q-.85-1.975-.85-4.25T2 7.75q.85-1.975 2.312-3.438Q5.775 2.85 7.75 2q1.975-.85 4.25-.85t4.25.85q1.975.85 3.438 2.312Q21.15 5.775 22 7.75q.85 1.975.85 4.25T22 16.25q-.85 1.975-2.312 3.438Q18.225 21.15 16.25 22q-1.975.85-4.25.85Z" />
               </svg>
             </Tippy>
-          </span>{" "}
-          <p className="text-gray-900 dark:text-white font-mono text-md">
-            <u>Note:</u> you can view more statistics.{" "}
-            <a
-              target="_blank"
-              rel="noreferrer"
-              className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold"
-              href="https://github.com/peterhanania/Discord-Package/blob/main/features.md#13"
-            >
-              Learn More
-            </a>
-            .
-          </p>
+          </span>
+          {data?.fakeInfo || data?.dataFile ? (
+            ""
+          ) : (
+            <p className="text-gray-900 dark:text-white font-mono text-md">
+              <u>Note:</u> you can view more statistics.
+              <a
+                target="_blank"
+                rel="noreferrer"
+                className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold"
+                href="https://github.com/peterhanania/Discord-Package/blob/main/features.md#13"
+              >
+                Learn More
+              </a>
+              .
+            </p>
+          )}
           <div className="text-gray-900 dark:text-white md:text-xl lg:text-xl font-bold text-[16px] mt-2">
             {data?.statistics
               ? Object.keys(data?.statistics)?.map((t: any, i: number) => {
