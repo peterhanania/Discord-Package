@@ -1726,7 +1726,7 @@ export default function Data(props: any): JSX.Element {
                         xmlns="http://www.w3.org/2000/svg"
                         height="24"
                         width="24"
-                        className="cursor-pointer fill-black dark:fill-white"
+                        className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
                       >
                         <path d="M15.7 11.2q.75 0 1.25-.5t.5-1.25q0-.75-.5-1.25t-1.25-.5q-.75 0-1.25.5t-.5 1.25q0 .75.5 1.25t1.25.5Zm-7.4 0q.75 0 1.25-.5t.5-1.25q0-.75-.5-1.25T8.3 7.7q-.75 0-1.25.5t-.5 1.25q0 .75.5 1.25t1.25.5ZM12 18q2.075 0 3.55-1.163 1.475-1.162 2.05-2.787H6.4q.575 1.625 2.05 2.787Q9.925 18 12 18Zm0 4.8q-2.25 0-4.213-.85-1.962-.85-3.424-2.312Q2.9 18.175 2.05 16.212 1.2 14.25 1.2 12t.85-4.225Q2.9 5.8 4.363 4.338q1.462-1.463 3.424-2.301Q9.75 1.2 12 1.2t4.225.837q1.975.838 3.438 2.301 1.462 1.462 2.299 3.437Q22.8 9.75 22.8 12q0 2.25-.838 4.212-.837 1.963-2.299 3.426Q18.2 21.1 16.225 21.95q-1.975.85-4.225.85Z" />
                       </svg>
@@ -1753,7 +1753,7 @@ export default function Data(props: any): JSX.Element {
                         xmlns="http://www.w3.org/2000/svg"
                         height="24"
                         width="24"
-                        className="cursor-pointer fill-black dark:fill-white"
+                        className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
                       >
                         <path d="M12 22.8q-2.225 0-4.2-.85t-3.437-2.312Q2.9 18.175 2.05 16.2 1.2 14.225 1.2 12t.85-4.2q.85-1.975 2.313-3.45Q5.825 2.875 7.8 2.025q1.975-.85 4.2-.825 1.175.025 2.163.212Q15.15 1.6 16.1 2l-4.375 1.9 5.2 3.15 1.325 2.875q-2.2.125-4.438-.675-2.237-.8-4.112-3.05-.85 2-2.338 3.462-1.487 1.463-3.512 2.188 0 3.55 2.375 5.925T12 20.15q3.4 0 5.775-2.375Q20.15 15.4 20.15 12v-.175L21.975 7.9q.425.875.625 1.95t.2 2.15q0 2.225-.85 4.2t-2.312 3.438Q18.175 21.1 16.2 21.95q-1.975.85-4.2.85Zm-3.05-8.5q-.55 0-.925-.375T7.65 13q0-.55.375-.925t.925-.375q.55 0 .925.375t.375.925q0 .55-.375.925t-.925.375Zm6.1 0q-.55 0-.925-.375T13.75 13q0-.55.375-.925t.925-.375q.55 0 .925.375t.375.925q0 .55-.375.925t-.925.375Zm4.5-6.325-1.1-2.425L16 4.425 18.45 3.3l1.1-2.425 1.1 2.425 2.45 1.125-2.45 1.125Z" />
                       </svg>
@@ -1780,7 +1780,7 @@ export default function Data(props: any): JSX.Element {
                         xmlns="http://www.w3.org/2000/svg"
                         height="24"
                         width="24"
-                        className="cursor-pointer fill-black dark:fill-white"
+                        className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
                       >
                         <path d="m19 9-1.25-2.75L15 5l2.75-1.25L19 1l1.25 2.75L23 5l-2.75 1.25Zm0 14-1.25-2.75L15 19l2.75-1.25L19 15l1.25 2.75L23 19l-2.75 1.25ZM9 20l-2.5-5.5L1 12l5.5-2.5L9 4l2.5 5.5L17 12l-5.5 2.5Z" />
                       </svg>
@@ -2306,9 +2306,17 @@ export default function Data(props: any): JSX.Element {
           {data?.settings?.appearance?.theme ||
           data?.settings?.appearance?.developerMode ||
           data?.guilds ? (
-            <ul className="text-gray-900 dark:text-white lg:text-xl md:text-xl font-bold list-disc mt-2 ml-6">
+            <ul className="text-gray-900 dark:text-white lg:text-xl md:text-xl font-bold mt-2 ">
               {data?.settings?.appearance?.theme ? (
-                <li>
+                <li className="flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    width="24"
+                    className="fill-black dark:fill-white opacity-90 hover:opacity-100 mr-2"
+                  >
+                    <path d="M12 21q-3.75 0-6.375-2.625T3 12q0-3.75 2.625-6.375T12 3q.35 0 .688.025.337.025.662.075-1.025.725-1.637 1.887Q11.1 6.15 11.1 7.5q0 2.25 1.575 3.825Q14.25 12.9 16.5 12.9q1.375 0 2.525-.613 1.15-.612 1.875-1.637.05.325.075.662Q21 11.65 21 12q0 3.75-2.625 6.375T12 21Z" />
+                  </svg>
                   {data?.dataFile ? "They " : "You "}prefer Discord{" "}
                   {data.settings.appearance.theme.toLowerCase()} mode
                 </li>
@@ -2316,7 +2324,15 @@ export default function Data(props: any): JSX.Element {
                 ""
               )}
               {data?.settings?.appearance?.developerMode ? (
-                <li>
+                <li className="flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    width="24"
+                    className="fill-black dark:fill-white opacity-90 hover:opacity-100 mr-2"
+                  >
+                    <path d="m8 18-6-6 6-6 1.425 1.425-4.6 4.6L9.4 16.6Zm8 0-1.425-1.425 4.6-4.6L14.6 7.4 16 6l6 6Z" />
+                  </svg>
                   {data?.dataFile ? "They " : "You "}are using Discord developer
                   mode
                 </li>
@@ -2325,7 +2341,15 @@ export default function Data(props: any): JSX.Element {
               )}
 
               {data?.guilds ? (
-                <li>
+                <li className="flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    width="24"
+                    className="fill-black dark:fill-white opacity-90 hover:opacity-100 mr-2"
+                  >
+                    <path d="M0 18v-1.575q0-1.1 1.1-1.763Q2.2 14 4 14q.325 0 .613.025.287.025.562.075-.35.5-.513 1.075Q4.5 15.75 4.5 16.4V18Zm6 0v-1.6q0-1.625 1.663-2.638Q9.325 12.75 12 12.75q2.7 0 4.35 1.012Q18 14.775 18 16.4V18Zm13.5 0v-1.6q0-.65-.175-1.225-.175-.575-.5-1.075.275-.05.563-.075Q19.675 14 20 14q1.8 0 2.9.662 1.1.663 1.1 1.763V18ZM4 13q-.825 0-1.412-.588Q2 11.825 2 11t.588-1.413Q3.175 9 4 9t1.412.587Q6 10.175 6 11q0 .825-.588 1.412Q4.825 13 4 13Zm16 0q-.825 0-1.413-.588Q18 11.825 18 11t.587-1.413Q19.175 9 20 9q.825 0 1.413.587Q22 10.175 22 11q0 .825-.587 1.412Q20.825 13 20 13Zm-8-1q-1.25 0-2.125-.875T9 9q0-1.25.875-2.125T12 6q1.25 0 2.125.875T15 9q0 1.25-.875 2.125T12 12Z" />
+                  </svg>
                   <div className="inline-flex">
                     {data?.dataFile ? "They " : "You "}are in{" "}
                     {typeof data?.guilds === "number" ? (
@@ -2390,7 +2414,7 @@ export default function Data(props: any): JSX.Element {
           )}
         </div>
         <div className="lg:mt-0 mt-2 md:mt-0 px-4 py-2 bg-gray-300 dark:bg-[#2b2d31]  animate__delay-1s rounded-lg lg:row-span-2 md:row-span-1 col-span-2 row-span-2">
-          <h3 className="text-gray-900 dark:text-white font-bold text-xl mb-2 flex items-center">
+          <h3 className="text-gray-900 dark:text-white font-bold text-xl mb-2 flex items-center uppercase">
             {data?.dataFile ? "Their" : "Your"} Connections
             <Tippy
               content={
@@ -2413,7 +2437,7 @@ export default function Data(props: any): JSX.Element {
                 xmlns="http://www.w3.org/2000/svg"
                 height="24"
                 width="24"
-                className="cursor-pointer fill-black dark:fill-white ml-2 opacity-90 hover:opacity-100"
+                className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100 ml-2"
               >
                 <path d="M10.625 17.375h2.75V11h-2.75ZM12 9.5q.65 0 1.075-.438Q13.5 8.625 13.5 8q0-.65-.425-1.075Q12.65 6.5 12 6.5q-.625 0-1.062.425Q10.5 7.35 10.5 8q0 .625.438 1.062.437.438 1.062.438Zm0 13.35q-2.275 0-4.25-.85t-3.438-2.312Q2.85 18.225 2 16.25q-.85-1.975-.85-4.25T2 7.75q.85-1.975 2.312-3.438Q5.775 2.85 7.75 2q1.975-.85 4.25-.85t4.25.85q1.975.85 3.438 2.312Q21.15 5.775 22 7.75q.85 1.975.85 4.25T22 16.25q-.85 1.975-2.312 3.438Q18.225 21.15 16.25 22q-1.975.85-4.25.85Z" />
               </svg>
@@ -4463,7 +4487,7 @@ export default function Data(props: any): JSX.Element {
                         xmlns="http://www.w3.org/2000/svg"
                         height="24"
                         width="24"
-                        className="cursor-pointer fill-black dark:fill-white"
+                        className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
                       >
                         <path d="m6 20 1-4H3.5l.5-2h3.5l1-4h-4L5 8h4l1-4h2l-1 4h4l1-4h2l-1 4h3.5l-.5 2h-3.5l-1 4h4l-.5 2h-4l-1 4h-2l1-4H9l-1 4Zm3.5-6h4l1-4h-4Z" />
                       </svg>
@@ -4493,7 +4517,7 @@ export default function Data(props: any): JSX.Element {
                         xmlns="http://www.w3.org/2000/svg"
                         height="24"
                         width="24"
-                        className="cursor-pointer fill-black dark:fill-white"
+                        className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
                       >
                         <path d="M4 13.525 6.525 11 4 8.475 1.475 11ZM17.5 13 20 9l2.5 4ZM0 18v-1.575q0-1.1 1.113-1.763Q2.225 14 4 14q.325 0 .625.012.3.013.575.063-.35.5-.525 1.075-.175.575-.175 1.225V18Zm6 0v-1.625q0-1.625 1.663-2.625 1.662-1 4.337-1 2.7 0 4.35 1 1.65 1 1.65 2.625V18Zm13.5 0v-1.625q0-.65-.163-1.225-.162-.575-.487-1.075.275-.05.563-.063Q19.7 14 20 14q1.8 0 2.9.662 1.1.663 1.1 1.763V18ZM12 12q-1.25 0-2.125-.875T9 9q0-1.275.875-2.138Q10.75 6 12 6q1.275 0 2.137.862Q15 7.725 15 9q0 1.25-.863 2.125Q13.275 12 12 12Z" />
                       </svg>
@@ -4523,7 +4547,7 @@ export default function Data(props: any): JSX.Element {
                         xmlns="http://www.w3.org/2000/svg"
                         height="24"
                         width="24"
-                        className="cursor-pointer fill-black dark:fill-white"
+                        className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
                       >
                         <path d="M1 20v-2.8q0-.85.438-1.563.437-.712 1.162-1.087 1.55-.775 3.15-1.163Q7.35 13 9 13t3.25.387q1.6.388 3.15 1.163.725.375 1.162 1.087Q17 16.35 17 17.2V20Zm18 0v-3q0-1.1-.612-2.113-.613-1.012-1.738-1.737 1.275.15 2.4.512 1.125.363 2.1.888.9.5 1.375 1.112Q23 16.275 23 17v3ZM9 12q-1.65 0-2.825-1.175Q5 9.65 5 8q0-1.65 1.175-2.825Q7.35 4 9 4q1.65 0 2.825 1.175Q13 6.35 13 8q0 1.65-1.175 2.825Q10.65 12 9 12Zm10-4q0 1.65-1.175 2.825Q16.65 12 15 12q-.275 0-.7-.062-.425-.063-.7-.138.675-.8 1.037-1.775Q15 9.05 15 8q0-1.05-.363-2.025Q14.275 5 13.6 4.2q.35-.125.7-.163Q14.65 4 15 4q1.65 0 2.825 1.175Q19 6.35 19 8Z" />
                       </svg>
