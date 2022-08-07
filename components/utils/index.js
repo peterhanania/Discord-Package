@@ -94,6 +94,7 @@ class Utils {
         str = prevChkEnd + str;
         for (let event of Object.keys(eventsOccurrences)) {
           const eventName = snakeCase(event);
+          // eslint-disable-next-line no-constant-condition
           while (true) {
             const ind = str.indexOf(eventName);
             if (ind == -1) break;
@@ -194,7 +195,7 @@ class Utils {
       .map((word) => ({ word: word, count: object[word] }));
 
     let regex =
-      /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+      /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#%?=~_|!:,.;]*[-A-Z0-9+&@#%=~_|])/gi;
 
     let links = [];
     for (let i = 0; i < array.length; i++) {
@@ -370,19 +371,20 @@ class Utils {
     if (isNitroUser) badges.push("nitro_until");
 
     const recentEmojis = Object.entries(emojis)
-      .map(([key, value]) => ({
+      .map(([key]) => ({
         name: key,
         count: Math.floor(Math.random() * 20) + 1,
       }))
-      .sort((a, b) => Math.random() - 0.5)
+      .sort(() => Math.random() - 0.5)
       .filter((s) => isNaN(s.name));
 
     const topEmojis = Object.entries(emojis)
-      .sort((a, b) => Math.random() - 0.5)
+      .sort(() => Math.random() - 0.5)
       .slice(
         Math.floor(Math.random() * 40) + 40,
         Math.floor(Math.random() * 40) + 200
       )
+      // eslint-disable-next-line no-unused-vars
       .map(([key, value]) => ({
         emoji: value,
         count: Math.floor(Math.random() * 200) + 1,
@@ -437,6 +439,7 @@ class Utils {
     const guilds_ = {};
     for (let i = 0; i < guildCount; i++) {
       const rndID = (
+        // eslint-disable-next-line no-loss-of-precision
         Math.floor(Math.random() * (9999999999999999 - 100000000000000 + 1)) +
         100000000000000
       ).toString();
@@ -573,7 +576,9 @@ class Utils {
           names[Math.floor(Math.random() * names.length)] +
           "#" +
           Math.floor(Math.random() * (9999 - 1000 + 1)),
-        user_id: (
+        user_id: 
+        (
+          // eslint-disable-next-line no-loss-of-precision
           Math.floor(Math.random() * (9999999999999999 - 100000000000000 + 1)) +
           100000000000000
         ).toString(),
@@ -620,11 +625,12 @@ class Utils {
           },
         ],
         topEmojis: Object.entries(emojis)
-          .sort((a, b) => Math.random() - 0.5)
+          .sort(() => Math.random() - 0.5)
           .slice(
             Math.floor(Math.random() * 40) + 40,
             Math.floor(Math.random() * 40) + 200
           )
+          // eslint-disable-next-line no-unused-vars
           .map(([key, value]) => ({
             emoji: value,
             count: Math.floor(Math.random() * 200) + 1,
@@ -703,11 +709,12 @@ class Utils {
           },
         ],
         topEmojis: Object.entries(emojis)
-          .sort((a, b) => Math.random() - 0.5)
+          .sort(() => Math.random() - 0.5)
           .slice(
             Math.floor(Math.random() * 40) + 40,
             Math.floor(Math.random() * 40) + 200
           )
+          // eslint-disable-next-line no-unused-vars
           .map(([key, value]) => ({
             emoji: value,
             count: Math.floor(Math.random() * 200) + 1,
@@ -777,11 +784,12 @@ class Utils {
           },
         ],
         topEmojis: Object.entries(emojis)
-          .sort((a, b) => Math.random() - 0.5)
+          .sort(() => Math.random() - 0.5)
           .slice(
             Math.floor(Math.random() * 40) + 40,
             Math.floor(Math.random() * 40) + 200
           )
+          // eslint-disable-next-line no-unused-vars
           .map(([key, value]) => ({
             emoji: value,
             count: Math.floor(Math.random() * 200) + 1,
@@ -874,9 +882,11 @@ class Utils {
                 "#" +
                 Math.floor(Math.random() * (9999 - 1000 + 1)) +
                 "(ID: " +
-                Math.floor(
-                  Math.random() * (9999999999999999 - 100000000000000 + 1)
-                ) +
+                (
+                  // eslint-disable-next-line no-loss-of-precision
+                  Math.floor(Math.random() * (9999999999999999 - 100000000000000 + 1)) +
+                  100000000000000
+                ).toString() +
                 ")",
         };
       });

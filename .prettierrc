@@ -1,0 +1,10 @@
+{
+  "parser": "babylon",
+  "tabWidth": 4,
+  "semi": true,
+  "singleQuote": true,
+  "bracketSpacing": false,
+  "requirePragma": true,
+  "insertPragma": true,
+  "printWidth": 80
+}

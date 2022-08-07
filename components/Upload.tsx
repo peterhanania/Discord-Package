@@ -1740,7 +1740,9 @@ export default function Upload(): ReactElement {
                           ? attachment.match(regex)[0]
                           : null;
 
-                        if (mtch && mtch.length > 25) return mtch;
+                        if (mtch && mtch.length > 25) return mtch ;
+
+                    
                       }
                     );
 

@@ -86,7 +86,7 @@ export default function Settings(): ReactElement {
                     <br />
                     <div
                       className="toggle"
-                      onClick={(e) => {
+                      onClick={() => {
                         document.documentElement.classList.add("dark");
                         setTheme("dark");
                         localStorage.setItem("theme", "dark");
@@ -104,7 +104,7 @@ export default function Settings(): ReactElement {
                     </div>
                     <div
                       className="toggle"
-                      onClick={(e) => {
+                      onClick={() => {
                         document.documentElement.classList.remove("dark");
                         setTheme("light");
                         localStorage.setItem("theme", "light");

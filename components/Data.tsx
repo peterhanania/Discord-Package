@@ -8,7 +8,7 @@ import currencies from "./json/other/currencies.json";
 import Utils from "./utils";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import EventsJSON from "./json/events.json";
 import Settings from "./settings";
@@ -895,7 +895,7 @@ function copyToClipboard(value: string) {
   document.body.removeChild(el);
 }
 
-export default function Data(props: any): JSX.Element {
+export default function Data(props: any): ReactElement {
   const [topDMs, setTopDMs] = useState<any>([]);
   const [topChannels, setTopChannels] = useState<any>([]);
   const [topGuilds, setTopGuilds] = useState<any>([]);
@@ -2925,6 +2925,7 @@ export default function Data(props: any): JSX.Element {
                     backgroundColor: "#212529",
                     borderWith: 5,
                     className: "tooltip-hov",
+                    // eslint-disable-next-line no-unused-vars
                     formatter: function (this: any): string {
                       return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
                         this.y

@@ -357,7 +357,7 @@ export default function Header() {
                     <br />
                     <div
                       className="toggle"
-                      onClick={(e) => {
+                      onClick={() => {
                         document.documentElement.classList.add("dark");
                         setTheme("dark");
                         localStorage.setItem("theme", "dark");
@@ -498,7 +498,7 @@ export default function Header() {
                           defaultChecked={
                             localStorage.getItem("debug") === "true"
                           }
-                          onChange={(e) => {
+                          onChange={() => {
                             if (localStorage.getItem("debug") === "true") {
                               localStorage.setItem("debug", "false");
                             } else {
