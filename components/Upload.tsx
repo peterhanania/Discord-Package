@@ -993,7 +993,7 @@ export default function Upload(): ReactElement {
 
                 const favoriteWords = Utils.getFavoriteWords(words);
                 const curseWords = Utils.getCursedWords(
-                  words.filter((w: any) => w.length < 10)
+                  words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
                 );
                 const topCursed = curseWords;
                 const links = Utils.getTopLinks(words);
@@ -1145,7 +1145,7 @@ export default function Upload(): ReactElement {
                 });
                 const favoriteWords = Utils.getFavoriteWords(words);
                 const curseWords = Utils.getCursedWords(
-                  words.filter((w: any) => w.length < 10)
+                  words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
                 );
                 const topCursed = curseWords;
                 const links = Utils.getTopLinks(words);
@@ -1291,7 +1291,7 @@ export default function Upload(): ReactElement {
 
                 const favoriteWords = Utils.getFavoriteWords(words);
                 const curseWords = Utils.getCursedWords(
-                  words.filter((w: any) => w.length < 10)
+                  words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
                 );
                 const topCursed = curseWords;
                 const links = Utils.getTopLinks(words);
@@ -1513,7 +1513,7 @@ export default function Upload(): ReactElement {
 
               const favoriteWords = Utils.getFavoriteWords(words);
               const curseWords = Utils.getCursedWords(
-                words.filter((w: any) => w.length < 10)
+                words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
               );
               const topCursed = curseWords;
               const links = Utils.getTopLinks(words);
@@ -1733,16 +1733,20 @@ export default function Upload(): ReactElement {
                       return regex.test(word);
                     });
 
-                    //remove everything before the http and after the extension example .pmg
-                    const attachmentsClean = attachments.map(
+                    // replace everything before and after the regex with ""
+                    const attachmentsCleaned = attachments.map(
                       (attachment: any) => {
-                        return attachment.replace(
-                          /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|mp4|pdf|zip|wmv|mp3|nitf|doc|docx))/gi,
-                          "$1"
-                        );
+                        const mtch = regex.test(attachment)
+                          ? attachment.match(regex)[0]
+                          : null;
+
+                        if (mtch && mtch.length > 25) return mtch;
                       }
                     );
-                    return attachmentsClean;
+
+                    return attachmentsCleaned.filter(
+                      (s: Array<any>) => s && s.length > 0
+                    );
                   })
                   .flat();
 
@@ -2125,7 +2129,7 @@ export default function Upload(): ReactElement {
             setPercent(76);
 
             const curseWords = Utils.getCursedWords(
-              words.filter((w: any) => w.length < 10)
+              words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
             );
             data.messages.topCursed = curseWords;
             if (isDebug)

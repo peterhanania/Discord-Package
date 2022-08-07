@@ -1573,11 +1573,11 @@ export default function Data(props: any): JSX.Element {
                           toast(
                             <div className="Toastify__toast-body_">
                               <span className="font-bold text-lg text-black dark:text-white">
-                                {data?.dataFile ? "Their" : "Your"} total
+                                {data?.dataFile ? "Their " : "Your "}
                                 attachment
                                 {data.messages.oldestMessages.length === 1
-                                  ? " is"
-                                  : "s are"}
+                                  ? ""
+                                  : "s"}
                                 :
                               </span>
                               <br />
@@ -1586,7 +1586,26 @@ export default function Data(props: any): JSX.Element {
                                   (f: any, i: number) => {
                                     return (
                                       <li key={i}>
-                                        <b>{f}</b>
+                                        <a
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          href={f}
+                                          id={f}
+                                        >
+                                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                                          <img
+                                            src={f}
+                                            alt="attachment"
+                                            className="max-h-[200px] max-w-[600px] py-1"
+                                            onError={() => {
+                                              const img: any =
+                                                document.getElementById(f);
+                                              if (img)
+                                                img.innerHTML = `<p class="text-black dark:text-white font-bold py-1">${f}</p>`;
+                                              img.href = "#";
+                                            }}
+                                          />
+                                        </a>
                                       </li>
                                     );
                                   }
@@ -8910,7 +8929,7 @@ export default function Data(props: any): JSX.Element {
               {data?.dataFile ? "Their" : "Your"} Discord Bots
             </span>
           </div>
-          <div className="grid xl:grid-cols-8 xl2:grid-cols-6 lg:grid-cols-6 md1:grid-cols-4 xl1:grid-cols-4 grid-cols-6 justify-items-center">
+          <div className="grid xl:grid-cols-8 xl2:grid-cols-6 xl3:grid-cols-8 lg:grid-cols-6 md1:grid-cols-4 xl1:grid-cols-4 grid-cols-6 justify-items-center">
             {data?.bots && data?.bots?.length > 0
               ? data.bots
                   .sort((a: any, b: any) => {

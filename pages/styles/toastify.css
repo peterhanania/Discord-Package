@@ -140,6 +140,7 @@ html.dark {
   overflow-y: auto;
   overflow-x: hidden;
 }
+
 .Toastify__toast--rtl {
   direction: rtl;
 }
