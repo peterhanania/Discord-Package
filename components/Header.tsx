@@ -399,7 +399,7 @@ export default function Header() {
                           {({ open }) => (
                             <>
                               <div className="mt-1 relative">
-                                <Listbox.Button className="relative w-full cursor-pointer bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left sm:text-sm">
+                                <Listbox.Button className="relative w-full cursor-pointer bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm pl-3 pr-10 py-2 text-left sm:text-sm">
                                   <span className="flex items-center">
                                     <Image
                                       height={20}
@@ -408,7 +408,7 @@ export default function Header() {
                                       alt=""
                                       className="flex-shrink-0 h-6 w-6 rounded-full"
                                     />
-                                    <span className="ml-3 block truncate text-slate-900">
+                                    <span className="ml-3 block truncate text-slate-900 dark:text-white">
                                       {selected.name}
                                     </span>
                                   </span>
@@ -427,7 +427,7 @@ export default function Header() {
                                   leaveFrom="opacity-100"
                                   leaveTo="opacity-0"
                                 >
-                                  <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ">
+                                  <Listbox.Options className="bg-white dark:bg-gray-800 z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ">
                                     {countries.map((country) => (
                                       <Listbox.Option
                                         key={country.id}
@@ -457,7 +457,7 @@ export default function Header() {
                                                     ? "font-semibold"
                                                     : "font-normal",
                                                   "ml-3 block truncate",
-                                                  "text-slate-900"
+                                                  "text-slate-900 dark:text-white"
                                                 )}
                                               >
                                                 {country.name}
