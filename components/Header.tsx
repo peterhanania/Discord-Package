@@ -98,24 +98,54 @@ export default function Header() {
                     <h3 className="text-xl font-medium text-white mb-2">
                       1- Click on the &quot;User Settings&quot; icon.
                     </h3>
-                    <Image src="/help/1.png" alt="1" width={500} height={300} />{" "}
+                    <Image
+                      unoptimized={true}
+                      src="/help/1.png"
+                      alt="1"
+                      width={500}
+                      height={300}
+                    />{" "}
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
                       2- Click on &quot;Privacy & Safety&quot;.
                     </h3>
-                    <Image src="/help/2.png" alt="2" width={500} height={300} />{" "}
+                    <Image
+                      unoptimized={true}
+                      src="/help/2.png"
+                      alt="2"
+                      width={500}
+                      height={300}
+                    />{" "}
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
                       3- Scroll down to the end then click on &quot;Request Data
                       &quot; to request your data.
                     </h3>
-                    <Image src="/help/3.png" alt="3" width={500} height={300} />
+                    <Image
+                      unoptimized={true}
+                      src="/help/3.png"
+                      alt="3"
+                      width={500}
+                      height={300}
+                    />
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
                       4- Keep checking your email and download your data once
                       reached. The data will be sent to the email associated
                       with your Discord account and usually takes up to 24 hours
                       to reach.
                     </h3>
-                    <Image src="/help/4.png" alt="4" width={500} height={30} />{" "}
-                    <Image src="/help/5.png" alt="5" width={500} height={300} />
+                    <Image
+                      unoptimized={true}
+                      src="/help/4.png"
+                      alt="4"
+                      width={500}
+                      height={30}
+                    />{" "}
+                    <Image
+                      unoptimized={true}
+                      src="/help/5.png"
+                      alt="5"
+                      width={500}
+                      height={300}
+                    />
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
                       5- Upload the downloaded package by dragging or clicking
                       on the box.
@@ -402,6 +432,7 @@ export default function Header() {
                                 <Listbox.Button className="relative w-full cursor-pointer bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm pl-3 pr-10 py-2 text-left sm:text-sm">
                                   <span className="flex items-center">
                                     <Image
+                                      unoptimized={true}
                                       height={20}
                                       width={20}
                                       src={selected.avatar}
@@ -445,6 +476,7 @@ export default function Header() {
                                           <>
                                             <div className="flex items-center">
                                               <Image
+                                                unoptimized={true}
                                                 height={20}
                                                 width={20}
                                                 src={country.avatar}

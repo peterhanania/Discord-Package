@@ -6,7 +6,6 @@
   <br>
 </h1>
 
-
 <div align=left>
 
 <a>[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/peterhanania/Discord-Package)</a>
@@ -24,14 +23,16 @@ Ever wondered what Data discord collects? Or did you ever want to view what's in
 This service **does not** use any third party services and does not collect any data. This Repo is directly hosted via vercel to discordpackage.com
 
 #### [Join the Discord Server](https://discord.com/invite/W2zPcgG9F5)
+
 #### [View the Detailed Features & Steps by Clicking here](features.md)
 
-## 
+##
 
-<image src="https://i.imgur.com/MKWRWQo.png" />
-<image src="https://i.imgur.com/gkz1cZc.png" />
+<Image src="https://i.imgur.com/MKWRWQo.png" />
+<Image src="https://i.imgur.com/gkz1cZc.png" />
 
 ### Features
+
 <ul>
 <li>View user information</li><li>View settings like device appearance, servers and emojis</li><li>View your connections</li><li>View how much you spent on discord, and the nitro you got gifted</li><li>View the amount of channels and users you DMed, your top DMs & channels, How much time you spent on discord, your character count, your favorite words, links, oldest messages, discord invite links, and curse words in each top dm and top channel. </li>
 <li>View user information</li><li>View settings like device appearance, your favorite emojis</li><li>View your connections</li><li>View how much you spent on discord, and the nitro you got gifted</li><li>View the amount of channels and users you DMed, your top DMs & channels, How much time you spent on discord, your character count, your favorite words, links, oldest messages, discord invite links, and curse words in each top dm and top channel. </li>
@@ -147,28 +148,28 @@ This service **does not** use any third party services and does not collect any 
 </ul>
 
 ### Notice
+
 This project **does not** store any information, and does not have any third party services. If you would like to self host it yourself, you could follow the following instructions.
 
-
-###  Production Deployment
+### Production Deployment
 
 Discord Data Package Explorer is built with **[Next.js](https://nextjs.org/)** and **[Tailwind.css](https://tailwindcss.com/)**.
 
-* Clone the repository `git clone https://github.com/peterhanania/discord-package`.
-* Install the dependencies using `npm install` or `yarn install`.
-* Start the app using `npm run dev`.
-
+- Clone the repository `git clone https://github.com/peterhanania/discord-package`.
+- Install the dependencies using `npm install` or `yarn install`.
+- Start the app using `npm run dev`.
 
 #### Using Docker
 
-* Run `docker build -t discord-package-explorer .` to build the image.
-* Run `docker run -p 3000:3000 discord-package-explorer` to start the app.
+- Run `docker build -t discord-package-explorer .` to build the image.
+- Run `docker run -p 3000:3000 discord-package-explorer` to start the app.
 
 and you're good to go!
 
 ### Credits
-Huge credits to [Andros2091](https://github.com/Androz2091) for the original [source](https://github.com/Androz2091/discord-data-package-explorer). 
 
-### Contributors 
+Huge credits to [Andros2091](https://github.com/Androz2091) for the original [source](https://github.com/Androz2091/discord-data-package-explorer).
+
+### Contributors
 
 ![image](https://contrib.rocks/image?repo=peterhanania/Discord-Package)

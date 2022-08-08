@@ -1204,6 +1204,16 @@ class Utils {
       return false;
     }
   }
+
+  static getTenor(link) {
+    try {
+      const last = link.split("/")[link.split("/").length - 1];
+      const id = last.match(/\d+/)[0];
+      return id;
+    } catch (err) {
+      return null;
+    }
+  }
 }
 
 export default Utils;

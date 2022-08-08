@@ -131,6 +131,7 @@ export default function Settings(): ReactElement {
                                 <Listbox.Button className="relative w-full cursor-pointer bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm pl-3 pr-10 py-2 text-left sm:text-sm">
                                   <span className="flex items-center">
                                     <Image
+                                      unoptimized={true}
                                       height={20}
                                       width={20}
                                       src={selected.avatar}
@@ -174,6 +175,7 @@ export default function Settings(): ReactElement {
                                           <>
                                             <div className="flex items-center">
                                               <Image
+                                                unoptimized={true}
                                                 height={20}
                                                 width={20}
                                                 src={country.avatar}

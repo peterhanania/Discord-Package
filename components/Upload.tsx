@@ -1763,7 +1763,11 @@ export default function Upload(): ReactElement {
                   .map((message: any) => {
                     const regex =
                       /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|mp4|pdf|zip|wmv|mp3|nitf|doc|docx))/gi;
+                    const tenorGIFregex =
+                      /https?:\/\/(c\.tenor\.com\/([^ /\n]+)\/([^ /\n]+)\.gif|tenor\.com\/view\/(?:.*-)?([^ /\n]+))/gi;
+
                     const attachments = message.words.filter((word: any) => {
+                      if (tenorGIFregex.test(word)) return true;
                       return regex.test(word);
                     });
 
@@ -1776,9 +1780,24 @@ export default function Upload(): ReactElement {
                               // eslint-disable-next-line no-mixed-spaces-and-tabs
                               // eslint-disable-next-line no-mixed-spaces-and-tabs
                             )[0]
-                          : null;
+                          : tenorGIFregex.test(attachment)
+                          ? attachment.match(
+                              tenorGIFregex
+                              // eslint-disable-next-line no-mixed-spaces-and-tabs
+                              // eslint-disable-next-line no-mixed-spaces-and-tabs
+                            )[0]
+                          : attachment;
 
-                        if (mtch && mtch.length > 25) return mtch;
+                        if (mtch && mtch.length > 25)
+                          return mtch
+                            .replace(/`/g, "")
+                            .replace(/"/g, "")
+                            .replace(/\|/g, "")
+                            .replace(/'/g, "")
+                            .replace(/{/g, "")
+                            .replace(/}/g, "")
+                            .replace(/\[/g, "")
+                            .replace(/\]/g, "");
                       }
                     );
 

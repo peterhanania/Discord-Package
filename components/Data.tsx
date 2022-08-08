@@ -24,6 +24,74 @@ if (typeof Highcharts === "object") {
   Highchartsaccessibility(Highcharts);
 }
 
+function loadTenor() {
+  var embedurl = "https://tenor.com/embed/";
+  var canonical = document.querySelector("link[rel='canonical']");
+
+  var elts = document.querySelectorAll(
+    ".tenor-embed:not([data-processed]), .tenor-gif-embed:not([data-processed])"
+  );
+  let e;
+  for (var i = 0; i < elts.length; ++i) {
+    e = elts[i];
+    e.setAttribute("data-processed", "true");
+    var embedSubPath = e.getAttribute("data-postid");
+    if (!embedSubPath) {
+      embedSubPath = e.getAttribute("data-type");
+    }
+    if (!embedSubPath) {
+      embedSubPath = e.getAttribute("data-insights-term");
+      if (embedSubPath) {
+        embedSubPath = "insights/" + embedSubPath.replace(/\s+/g, "-");
+        embedSubPath += "?range=" + e.getAttribute("data-range");
+        embedSubPath += "&timestamp=" + e.getAttribute("data-timestamp");
+      }
+    }
+
+    var iframe = document.createElement("iframe");
+    iframe.setAttribute("frameborder", "0");
+    iframe.setAttribute("allowtransparency", "true");
+    iframe.setAttribute("allowfullscreen", "true");
+    iframe.setAttribute("scrolling", "no");
+    var root;
+    if (e.hasAttribute("data-height")) {
+      iframe.setAttribute("width", "400px");
+      iframe.setAttribute("height", "200px");
+      root = iframe;
+    } else {
+      var framewrapper = document.createElement("div");
+      //var aspect = 0.959375
+      e.setAttribute(
+        "style",
+        "width:" + e.getAttribute("data-width") + ";" + "position:relative;"
+      );
+      framewrapper.setAttribute(
+        "style",
+        "padding-top: 228px"
+        //+ (1 / aspect) * 100 + "%;"
+      );
+      iframe.setAttribute(
+        "style",
+        "position:absolute;top:0;left:0;width:400px;height:200px;"
+      );
+      framewrapper.appendChild(iframe);
+      root = framewrapper;
+    }
+
+    var url = embedurl + embedSubPath;
+    var sharemethod = e.getAttribute("data-share-method") || "tenor";
+    if (sharemethod == "host") {
+      var hosturl;
+      if (canonical) hosturl = (canonical as any).href;
+      else hosturl = document.location.href;
+      url += "?canonicalurl=" + hosturl;
+    }
+    iframe.setAttribute("src", url);
+    e.innerHTML = "";
+    e.appendChild(root);
+  }
+}
+
 function hasClass(el: Element, cl: string): boolean {
   return el.classList
     ? el.classList.contains(cl)
@@ -39,6 +107,7 @@ const days_ = new Array(24)
 const icons = {
   DISCORD_EMPLOYEE: (
     <Image
+      unoptimized={true}
       src="https://i.imgur.com/6eIBtYR.png"
       width={42}
       height={42}
@@ -48,6 +117,7 @@ const icons = {
   ),
   DISCORD_PARTNER: (
     <Image
+      unoptimized={true}
       src="https://i.imgur.com/hpTiFXi.png"
       width={42}
       height={42}
@@ -57,6 +127,7 @@ const icons = {
   ),
   HYPESQUAD_EVENTS: (
     <Image
+      unoptimized={true}
       src="https://i.imgur.com/RzA4bXZ.png"
       width={42}
       height={42}
@@ -66,6 +137,7 @@ const icons = {
   ),
   BUG_HUNTER_LEVEL_1: (
     <Image
+      unoptimized={true}
       src="https://i.imgur.com/2NLZJXk.png"
       width={42}
       height={42}
@@ -95,6 +167,7 @@ const icons = {
   ),
   HOUSE_BRAVERY: (
     <Image
+      unoptimized={true}
       src="https://i.imgur.com/mwFPsVv.png"
       width={42}
       height={42}
@@ -104,6 +177,7 @@ const icons = {
   ),
   HOUSE_BRILLIANCE: (
     <Image
+      unoptimized={true}
       src="https://i.imgur.com/UNpQI3M.png"
       width={42}
       height={42}
@@ -113,6 +187,7 @@ const icons = {
   ),
   HOUSE_BALANCE: (
     <Image
+      unoptimized={true}
       src="https://i.imgur.com/Jw2Xyx6.png"
       width={42}
       height={42}
@@ -122,6 +197,7 @@ const icons = {
   ),
   EARLY_SUPPORTER: (
     <Image
+      unoptimized={true}
       src="https://i.imgur.com/xUtDJFl.png"
       width={42}
       height={42}
@@ -171,6 +247,7 @@ const icons = {
   ),
   BUG_HUNTER_LEVEL_2: (
     <Image
+      unoptimized={true}
       src="https://i.imgur.com/iBK3a1Z.png"
       width={42}
       height={42}
@@ -190,6 +267,7 @@ const icons = {
   ),
   VERIFIED_BOT: (
     <Image
+      unoptimized={true}
       src="https://i.imgur.com/Gs2JVkP.png"
       width={42}
       height={42}
@@ -199,6 +277,7 @@ const icons = {
   ),
   VERIFIED_TRUE: (
     <Image
+      unoptimized={true}
       src="https://i.imgur.com/XieNzv4.png"
       width={42}
       height={42}
@@ -208,6 +287,7 @@ const icons = {
   ),
   VERIFIED_BOT_DEVELOPER: (
     <Image
+      unoptimized={true}
       src="https://i.imgur.com/XieNzv4.png"
       width={42}
       height={42}
@@ -217,6 +297,7 @@ const icons = {
   ),
   CERTIFIED_MODERATOR: (
     <Image
+      unoptimized={true}
       src="https://i.imgur.com/E9hSIGm.png"
       width={42}
       height={42}
@@ -326,6 +407,7 @@ const icons = {
   ),
   nitro: (
     <Image
+      unoptimized={true}
       src="https://i.imgur.com/LcyKRvv.png["
       width={42}
       height={42}
@@ -335,6 +417,7 @@ const icons = {
   ),
   nitro_until: (
     <Image
+      unoptimized={true}
       src="https://i.imgur.com/LcyKRvv.png["
       width={42}
       height={42}
@@ -1117,6 +1200,7 @@ export default function Data(props: any): ReactElement {
           >
             <div className="p-1 rounded-full flex items-center justify-center ring-2  dark:ring-gray-500 ring-gray-800 hover:dark:ring-gray-600 hover:ring-gray-900 cursor-pointer">
               <Image
+                unoptimized={true}
                 id="avatar"
                 className="w-10 h-10 rounded-full opacity-90 hover:opacity-100"
                 src={
@@ -1124,7 +1208,7 @@ export default function Data(props: any): ReactElement {
                     ? !data?.user?.avatar.includes(
                         "https://better-default-Discord.netlify.app/Icons"
                       )
-                      ? `https://cdn.Discordapp.com/avatars/${data.user.id}/${data.user.avatar}.webp?size=1024` 
+                      ? `https://cdn.Discordapp.com/avatars/${data.user.id}/${data.user.avatar}.webp?size=1024`
                       : data.user.avatar
                     : "https://cdn.Discordapp.com/embed/avatars/" +
                       Math.floor(Math.random() * 5) +
@@ -1597,26 +1681,48 @@ export default function Data(props: any): ReactElement {
                                   (f: any, i: number) => {
                                     return (
                                       <li key={i}>
-                                        <a
-                                          target="_blank"
-                                          rel="noreferrer"
-                                          href={f}
-                                          id={f}
-                                        >
-                                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                                          <img
-                                            src={f}
-                                            alt="attachment"
-                                            className="max-h-[200px] max-w-[600px] py-1"
-                                            onError={() => {
-                                              const img: any =
-                                                document.getElementById(f);
-                                              if (img)
-                                                img.innerHTML = `<p class="text-black dark:text-white font-bold py-1">${f}</p>`;
-                                                img.removeAttribute("href");
-                                            }}
-                                          />
-                                        </a>
+                                        {f.startsWith("https://tenor.com/") &&
+                                        Utils.getTenor(f) ? (
+                                          <>
+                                            <div
+                                              className="tenor-gif-embed"
+                                              data-postid={Utils.getTenor(f)}
+                                              data-share-method="host"
+                                              data-aspect-ratio="0.959375"
+                                              data-width="100%"
+                                            ></div>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <a
+                                              target="_blank"
+                                              rel="noreferrer"
+                                              href={f}
+                                              id={f}
+                                            >
+                                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                                              <img
+                                                src={f}
+                                                alt="attachment"
+                                                className="max-h-[200px] max-w-[600px] py-1"
+                                                onLoad={() => {
+                                                  const img: any =
+                                                    document.getElementById(f);
+                                                  if (img)
+                                                    img.innerHTML = `<p class="text-black dark:text-white font-bold py-1 max-w-[40%]">${f}</p>`;
+                                                  img.removeAttribute("href");
+                                                }}
+                                                onError={() => {
+                                                  const img: any =
+                                                    document.getElementById(f);
+                                                  if (img)
+                                                    img.innerHTML = `<p class="text-black dark:text-white font-bold py-1 max-w-[40%]">${f}</p>`;
+                                                  img.removeAttribute("href");
+                                                }}
+                                              />{" "}
+                                            </a>
+                                          </>
+                                        )}
                                       </li>
                                     );
                                   }
@@ -1624,6 +1730,10 @@ export default function Data(props: any): ReactElement {
                               </ul>
                             </div>
                           );
+
+                          setTimeout(() => {
+                            loadTenor();
+                          }, 1000);
                         }}
                         className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
                         xmlns="http://www.w3.org/2000/svg"
@@ -1898,6 +2008,7 @@ export default function Data(props: any): ReactElement {
                               }}
                             >
                               <Image
+                                unoptimized={true}
                                 key={id}
                                 src={
                                   "https://cdn.Discordapp.com/emojis/" +
@@ -2012,10 +2123,7 @@ export default function Data(props: any): ReactElement {
                                           )
                                           .map((f: any, i: number) => {
                                             return (
-                                              <li
-                                                key={i}
-                                               
-                                              >
+                                              <li key={i}>
                                                 {f.emoji}: {f.count} time
                                                 {f.count > 1 ? "s" : ""}
                                               </li>
@@ -2104,6 +2212,7 @@ export default function Data(props: any): ReactElement {
                                     }}
                                   >
                                     <Image
+                                      unoptimized={true}
                                       key={id}
                                       src={Utils.createEmoji(m.emoji)}
                                       alt="emoji"
@@ -2136,6 +2245,7 @@ export default function Data(props: any): ReactElement {
                                         }}
                                       >
                                         <Image
+                                          unoptimized={true}
                                           key={id}
                                           src={Utils.createCustomEmoji(m.emoji)}
                                           alt="emoji"
@@ -2201,6 +2311,7 @@ export default function Data(props: any): ReactElement {
                                                   >
                                                     <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                       <Image
+                                                        unoptimized={true}
                                                         key={id}
                                                         src={Utils.createEmoji(
                                                           f.emoji
@@ -2231,6 +2342,7 @@ export default function Data(props: any): ReactElement {
                                                       >
                                                         <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100 m-2">
                                                           <Image
+                                                            unoptimized={true}
                                                             key={id}
                                                             src={Utils.createCustomEmoji(
                                                               f.emoji
@@ -2283,6 +2395,7 @@ export default function Data(props: any): ReactElement {
                                 >
                                   <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                     <Image
+                                      unoptimized={true}
                                       key={id}
                                       src={Utils.createEmoji(m.emoji)}
                                       alt="emoji"
@@ -2307,6 +2420,7 @@ export default function Data(props: any): ReactElement {
                                     >
                                       <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                         <Image
+                                          unoptimized={true}
                                           key={id}
                                           src={Utils.createCustomEmoji(m.emoji)}
                                           alt="emoji"
@@ -3625,6 +3739,7 @@ export default function Data(props: any): ReactElement {
                                                       >
                                                         <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                           <Image
+                                                            unoptimized={true}
                                                             src={Utils.createEmoji(
                                                               f.emoji
                                                             )}
@@ -3655,6 +3770,9 @@ export default function Data(props: any): ReactElement {
                                                           >
                                                             <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                               <Image
+                                                                unoptimized={
+                                                                  true
+                                                                }
                                                                 src={Utils.createCustomEmoji(
                                                                   f.emoji
                                                                 )}
@@ -4286,6 +4404,9 @@ export default function Data(props: any): ReactElement {
                                                           >
                                                             <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                               <Image
+                                                                unoptimized={
+                                                                  true
+                                                                }
                                                                 src={Utils.createEmoji(
                                                                   f.emoji
                                                                 )}
@@ -4318,6 +4439,9 @@ export default function Data(props: any): ReactElement {
                                                               >
                                                                 <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                   <Image
+                                                                    unoptimized={
+                                                                      true
+                                                                    }
                                                                     src={Utils.createCustomEmoji(
                                                                       f.emoji
                                                                     )}
@@ -5261,6 +5385,9 @@ export default function Data(props: any): ReactElement {
                                                             >
                                                               <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                 <Image
+                                                                  unoptimized={
+                                                                    true
+                                                                  }
                                                                   src={Utils.createEmoji(
                                                                     f.emoji
                                                                   )}
@@ -5294,6 +5421,9 @@ export default function Data(props: any): ReactElement {
                                                                 >
                                                                   <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                     <Image
+                                                                      unoptimized={
+                                                                        true
+                                                                      }
                                                                       src={Utils.createCustomEmoji(
                                                                         f.emoji
                                                                       )}
@@ -5969,6 +6099,9 @@ export default function Data(props: any): ReactElement {
                                                               >
                                                                 <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                   <Image
+                                                                    unoptimized={
+                                                                      true
+                                                                    }
                                                                     src={Utils.createEmoji(
                                                                       f.emoji
                                                                     )}
@@ -6002,6 +6135,9 @@ export default function Data(props: any): ReactElement {
                                                                   >
                                                                     <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                       <Image
+                                                                        unoptimized={
+                                                                          true
+                                                                        }
                                                                         src={Utils.createCustomEmoji(
                                                                           f.emoji
                                                                         )}
@@ -6722,6 +6858,9 @@ export default function Data(props: any): ReactElement {
                                                             >
                                                               <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                 <Image
+                                                                  unoptimized={
+                                                                    true
+                                                                  }
                                                                   src={Utils.createEmoji(
                                                                     f.emoji
                                                                   )}
@@ -6755,6 +6894,9 @@ export default function Data(props: any): ReactElement {
                                                                 >
                                                                   <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                     <Image
+                                                                      unoptimized={
+                                                                        true
+                                                                      }
                                                                       src={Utils.createCustomEmoji(
                                                                         f.emoji
                                                                       )}
@@ -7432,6 +7574,9 @@ export default function Data(props: any): ReactElement {
                                                               >
                                                                 <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                   <Image
+                                                                    unoptimized={
+                                                                      true
+                                                                    }
                                                                     src={Utils.createEmoji(
                                                                       f.emoji
                                                                     )}
@@ -7465,6 +7610,9 @@ export default function Data(props: any): ReactElement {
                                                                   >
                                                                     <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                       <Image
+                                                                        unoptimized={
+                                                                          true
+                                                                        }
                                                                         src={Utils.createCustomEmoji(
                                                                           f.emoji
                                                                         )}
@@ -8180,6 +8328,9 @@ export default function Data(props: any): ReactElement {
                                                             >
                                                               <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                 <Image
+                                                                  unoptimized={
+                                                                    true
+                                                                  }
                                                                   src={Utils.createEmoji(
                                                                     f.emoji
                                                                   )}
@@ -8213,6 +8364,9 @@ export default function Data(props: any): ReactElement {
                                                                 >
                                                                   <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                     <Image
+                                                                      unoptimized={
+                                                                        true
+                                                                      }
                                                                       src={Utils.createCustomEmoji(
                                                                         f.emoji
                                                                       )}
@@ -8884,6 +9038,9 @@ export default function Data(props: any): ReactElement {
                                                               >
                                                                 <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                   <Image
+                                                                    unoptimized={
+                                                                      true
+                                                                    }
                                                                     src={Utils.createEmoji(
                                                                       f.emoji
                                                                     )}
@@ -8917,6 +9074,9 @@ export default function Data(props: any): ReactElement {
                                                                   >
                                                                     <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
                                                                       <Image
+                                                                        unoptimized={
+                                                                          true
+                                                                        }
                                                                         src={Utils.createCustomEmoji(
                                                                           f.emoji
                                                                         )}
@@ -9049,6 +9209,7 @@ export default function Data(props: any): ReactElement {
                         >
                           <div className="text-5xl p-1 rounded-full flex items-center justify-center ring-2 ring-gray-500 opacity-90 hover:opacity-100">
                             <Image
+                              unoptimized={true}
                               src={
                                 !b?.avatar?.endsWith("null.png")
                                   ? b?.avatar

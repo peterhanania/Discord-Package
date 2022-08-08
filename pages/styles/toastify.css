@@ -61,7 +61,7 @@ html.dark {
   -webkit-transform: translate3d(0, 0, var(--toastify-z-index) px);
   position: fixed;
   padding: 4px;
-  max-width: 100%;
+  max-width: 90%;
   min-width: var(--toastify-toast-width);
   box-sizing: border-box;
   color: #fff;
