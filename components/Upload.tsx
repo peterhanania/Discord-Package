@@ -287,7 +287,6 @@ export default function Upload(): ReactElement {
     ) {
       // eslint-disable-next-line
       async function startUpload() {
-        //alert('uploading')
         const isDebug = localStorage.getItem("debug") === "true";
         const startTime = Date.now();
 
@@ -2710,14 +2709,20 @@ export default function Upload(): ReactElement {
                                       }}
                                       id={classifyOBJ(Features)
                                         [item].split(" ")
-                                        .join("")}
+                                        .join("")
+                                        .toLowerCase()}
                                       type="checkbox"
                                       className="w-4 h-4 text-blue-600 bg-gray-100 rounded  border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                     />
                                     <label
+                                      onClick={(e: any) => {
+                                        e.preventDefault();
+                                        e.target.previousElementSibling.click();
+                                      }}
                                       htmlFor={classifyOBJ(Features)
                                         [item].split(" ")
-                                        .join("")}
+                                        .join("")
+                                        .toLowerCase()}
                                       className="ml-4 text-sm font-medium text-gray-200"
                                     >
                                       {classifyOBJ(Features)[item]}
@@ -2763,12 +2768,18 @@ export default function Upload(): ReactElement {
                                               },
                                             });
                                           }}
-                                          id={item_.split(" ").join("")}
+                                          id={item_
+                                            .split(" ")
+                                            .join("")
+                                            .toLowerCase()}
                                           type="checkbox"
                                           className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                         />
                                         <label
-                                          htmlFor={item_.split(" ").join("")}
+                                          htmlFor={item_
+                                            .split(" ")
+                                            .join("")
+                                            .toLowerCase()}
                                           className="ml-4 text-sm font-medium text-gray-200"
                                         >
                                           {item_}
@@ -2877,12 +2888,16 @@ export default function Upload(): ReactElement {
                                     });
                                   }
                                 }}
-                                id={item.split(" ").join("")}
+                                id={item.split(" ").join("").toLowerCase()}
                                 type="checkbox"
                                 className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                               />
                               <label
-                                htmlFor={item.split(" ").join("")}
+                                onClick={(e: any) => {
+                                  e.preventDefault();
+                                  e.target.previousElementSibling.click();
+                                }}
+                                htmlFor={item.split(" ").join("").toLowerCase()}
                                 className="ml-4 text-sm font-medium text-gray-200"
                               >
                                 {item}
@@ -2919,6 +2934,10 @@ export default function Upload(): ReactElement {
                       className="w-[21px] h-[21px] text-blue-600 bg-gray-100 rounded  border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
                     <label
+                      onClick={(e: any) => {
+                        e.preventDefault();
+                        e.target.previousElementSibling.click();
+                      }}
                       htmlFor={"defaultOptions_enabled"}
                       className="pl-2 text-white font-mono"
                       style={{

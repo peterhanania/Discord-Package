@@ -13,7 +13,7 @@
 <a>
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/peterhanania/discord-package)</a>
 
-<a href="https://github.com/peterhanania/discord-package/blob/main/LICENSE">
+<a href="https://github.com/peterhanania/discord-package/blob/main/LICENSE.md">
 <img src="https://img.shields.io/badge/license-GPL-blue" alt="license">
 </a>
 
