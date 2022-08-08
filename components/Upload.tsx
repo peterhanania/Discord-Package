@@ -287,6 +287,7 @@ export default function Upload(): ReactElement {
     ) {
       // eslint-disable-next-line
       async function startUpload() {
+        //alert('uploading')
         const isDebug = localStorage.getItem("debug") === "true";
         const startTime = Date.now();
 
