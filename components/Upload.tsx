@@ -2525,7 +2525,7 @@ export default function Upload(): ReactElement {
     } else {
       if (fileUploaded.type === "application/json") {
         setPercent(100);
-        setLoading("Loading JSON|||reading files");
+        setLoading("Loading JSON|||✨ Rendering Data ✨");
 
         var readFile_ = new FileReader();
         readFile_.onload = function (e: any) {

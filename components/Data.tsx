@@ -1616,7 +1616,7 @@ export default function Data(props: any): ReactElement {
                                                 document.getElementById(f);
                                               if (img)
                                                 img.innerHTML = `<p class="text-black dark:text-white font-bold py-1">${f}</p>`;
-                                              img.href = "#";
+                                                img.removeAttribute("href");
                                             }}
                                           />
                                         </a>
@@ -2764,7 +2764,7 @@ export default function Data(props: any): ReactElement {
                                 ((Connections as any)[m.type].id
                                   ? m.id
                                   : m.name)
-                              : `#`
+                              : null
                           }
                           target="_blank"
                           rel="noreferrer"
