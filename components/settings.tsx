@@ -42,7 +42,7 @@ export default function Settings(): ReactElement {
           onClose={() => {
             setSettings(false);
           }}
-          className="fixed z-10 inset-0 overflow-y-auto"
+          className="fixed z-[999999] inset-0 overflow-y-auto"
         >
           <div className="flex items-center justify-center min-h-screen">
             <Dialog.Overlay className="fixed inset-0  bg-black/30" />
