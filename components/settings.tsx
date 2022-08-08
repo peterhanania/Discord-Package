@@ -81,7 +81,7 @@ export default function Settings(): ReactElement {
                 </div>
 
                 <div className="overflow-y-auto h-[280px]">
-                  <div className="py-6 px-8 text-white font-bold text-lg">
+                  <div className="py-4 px-2 lg:py-6 lg:px-8 md:py-6 md:px-8 sm:py-6 sm:px-8 text-white font-bold text-lg">
                     THEME
                     <br />
                     <div
