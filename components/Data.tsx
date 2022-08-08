@@ -1124,10 +1124,7 @@ export default function Data(props: any): ReactElement {
                     ? !data?.user?.avatar.includes(
                         "https://better-default-Discord.netlify.app/Icons"
                       )
-                      ? "https://cdn.Discordapp.com/avatars/" +
-                        data.user.id +
-                        +data.user.avatar +
-                        ".webp?size=1024"
+                      ? `https://cdn.Discordapp.com/avatars/${data.user.id}/${data.user.avatar}.webp?size=1024` 
                       : data.user.avatar
                     : "https://cdn.Discordapp.com/embed/avatars/" +
                       Math.floor(Math.random() * 5) +

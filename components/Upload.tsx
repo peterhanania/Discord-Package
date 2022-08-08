@@ -2494,9 +2494,9 @@ export default function Upload(): ReactElement {
                   </span>
                   <br />
                   <span className="text-black dark:text-white">
-                    We are currently Rendering your Data you might experience a
-                    bit of lag. If you run through severe issues join our
-                    Discord Server and reach out to us.
+                    Your data is currently being rendered, you may experience a
+                    some lag. If you encounter issues please join our Discord
+                    server and let us know.
                   </span>
                 </div>
               );
