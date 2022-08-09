@@ -18,6 +18,9 @@ import Highchartsaccessibility from "highcharts/modules/accessibility";
 import { useSnackbar } from "notistack";
 import Connections from "./json/Connections.json";
 
+// twe-emoji, will remove if it uses so much bandwidth
+import Twemoji from "react-twemoji";
+
 if (typeof Highcharts === "object") {
   HighchartsExporting(Highcharts);
   HighchartsExportData(Highcharts);
@@ -2034,17 +2037,19 @@ export default function Data(props: any): ReactElement {
                             className="shadow-xl"
                           >
                             <div
-                              className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100"
                               onClick={() => {
                                 copyToClipboard(
                                   ":" + m.name + ": - " + m.count + " times"
                                 );
                                 noti("Copied emoji to Clipboard");
                               }}
+                              className="cursor-pointer opacity-90 hover:opacity-100 w-14 h-14"
                             >
-                              {(emojis as any)[m.name]
-                                ? (emojis as any)[m.name]
-                                : m.name}
+                              <Twemoji>
+                                {(emojis as any)[m.name]
+                                  ? (emojis as any)[m.name]
+                                  : m.name}
+                              </Twemoji>
                             </div>
                           </Tippy>
                         );
@@ -2087,9 +2092,9 @@ export default function Data(props: any): ReactElement {
                                   );
                                   noti("Copied emoji to Clipboard");
                                 }}
-                                className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100"
+                                className="cursor-pointer opacity-90 hover:opacity-100 w-14 h-14"
                               >
-                                {m.emoji}
+                                <Twemoji>{m.emoji}</Twemoji>
                               </div>
                             </Tippy>
                           ) : (
