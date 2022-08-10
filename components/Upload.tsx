@@ -799,18 +799,37 @@ export default function Upload(): ReactElement {
             await Utils.readFile("messages/index.json", files)
           );
           const messagesREGEX = /messages\/c?([0-9]{16,32})\/$/;
-          const channelsIDFILE = files.filter((file: any): boolean =>
-            messagesREGEX.test(file.name)
-          );
+          const channelsIDFILE = files.filter((file: any) => {
+            if (file && file?.name) {
+              return messagesREGEX.test(file.name);
+            }
+          });
+
+          if (!channelsIDFILE[0]?.name) {
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Error: channelsIDFILE[0].name. Check array below:`
+                  )}`
+              );
+            if (isDebug) console.log(channelsIDFILE);
+            throw new Error("invalid_package_missing_messages");
+          }
 
           const isOldPackage =
             channelsIDFILE[0].name.match(
               /messages\/(c)?([0-9]{16,32})\/$/
             )[1] === undefined;
 
-          const channelsIDs = channelsIDFILE.map(
-            (file: any) => file.name.match(messagesREGEX)[1]
-          );
+          const channelsIDs = channelsIDFILE.map((file: any) => {
+            if (file && file?.name) {
+              return file.name.match(messagesREGEX)[1];
+            }
+          });
 
           const channels: Array<any> = [];
           let messagesRead = 0;

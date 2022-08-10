@@ -26,7 +26,11 @@ class Utils {
   }
   static readFile(name, files) {
     return new Promise((resolve) => {
-      const file = files.find((file) => file.name === name);
+      const file = files.find((file) => {
+        if (file && file?.name) {
+          return file.name === name;
+        }
+      });
       if (!file) return resolve(null);
       const fileContent = [];
       const decoder = new DecodeUTF8();
