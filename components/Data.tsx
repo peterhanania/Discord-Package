@@ -1502,6 +1502,7 @@ export default function Data(props: any): ReactElement {
                                       <li key={i}>
                                         <a
                                           href={f.word}
+className="opacity-80 hover:opacity-100"
                                           target="_blank"
                                           rel="noreferrer"
                                         >
@@ -1578,6 +1579,7 @@ export default function Data(props: any): ReactElement {
                                       <li key={i}>
                                         <a
                                           href={f.word}
+className="opacity-80 hover:opacity-100"
                                           target="_blank"
                                           rel="noreferrer"
                                         >
@@ -3675,6 +3677,7 @@ export default function Data(props: any): ReactElement {
                                                     <li key={i}>
                                                       <a
                                                         href={f.word}
+className="opacity-80 hover:opacity-100"
                                                         target="_blank"
                                                         rel="noreferrer"
                                                       >
@@ -3752,6 +3755,7 @@ export default function Data(props: any): ReactElement {
                                                     <li key={i}>
                                                       <a
                                                         href={f.word}
+className="opacity-80 hover:opacity-100"
                                                         target="_blank"
                                                         rel="noreferrer"
                                                       >
@@ -4342,6 +4346,7 @@ export default function Data(props: any): ReactElement {
                                                         <li key={i}>
                                                           <a
                                                             href={f.word}
+className="opacity-80 hover:opacity-100"
                                                             target="_blank"
                                                             rel="noreferrer"
                                                           >
@@ -4422,6 +4427,7 @@ export default function Data(props: any): ReactElement {
                                                         <li key={i}>
                                                           <a
                                                             href={f.word}
+className="opacity-80 hover:opacity-100"
                                                             target="_blank"
                                                             rel="noreferrer"
                                                           >
@@ -5388,6 +5394,7 @@ export default function Data(props: any): ReactElement {
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
+className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -5470,6 +5477,7 @@ export default function Data(props: any): ReactElement {
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
+className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -6114,6 +6122,7 @@ export default function Data(props: any): ReactElement {
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
+className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -6196,6 +6205,7 @@ export default function Data(props: any): ReactElement {
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
+className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -6898,6 +6908,7 @@ export default function Data(props: any): ReactElement {
                                                           <li key={i}>
                                                             <a
                                                               href={f.word}
+className="opacity-80 hover:opacity-100"
                                                               target="_blank"
                                                               rel="noreferrer"
                                                             >
@@ -6980,6 +6991,7 @@ export default function Data(props: any): ReactElement {
                                                           <li key={i}>
                                                             <a
                                                               href={f.word}
+className="opacity-80 hover:opacity-100"
                                                               target="_blank"
                                                               rel="noreferrer"
                                                             >
@@ -7622,6 +7634,7 @@ export default function Data(props: any): ReactElement {
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
+className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -7704,6 +7717,7 @@ export default function Data(props: any): ReactElement {
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
+className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -8408,6 +8422,7 @@ export default function Data(props: any): ReactElement {
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
+className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -8490,6 +8505,7 @@ export default function Data(props: any): ReactElement {
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
+className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -9130,6 +9146,7 @@ export default function Data(props: any): ReactElement {
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
+className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -9212,6 +9229,7 @@ export default function Data(props: any): ReactElement {
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
+className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
