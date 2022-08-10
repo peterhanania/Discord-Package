@@ -3405,7 +3405,7 @@ export default function Upload(): ReactElement {
           <Tippy content={"Close"} animation="scale" className="shadow-xl">
             <div className="ml-3 justify-center items-center">
               <div
-                className="hover:bg-[#232323] p-1 hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden  "
+                className="hover:bg-[#232323] p-1 hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden"
                 onClick={(e: any) => {
                   e.target.parentElement.parentElement.parentElement.remove();
                 }}

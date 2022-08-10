@@ -488,3 +488,36 @@ input[type="search"]:focus {
 .tippy-content {
   pointer-events: all !important;
 }
+
+@media (hover: none) and (pointer: coarse) {
+  #blur_1 {
+    display: block !important;
+  }
+  #blur_2 {
+    display: block !important;
+  }
+  #blur_3 {
+    display: block !important;
+  }
+  #blur_4 {
+    display: block !important;
+  }
+  #blur_5 {
+    display: block !important;
+  }
+  #blur_6 {
+    display: block !important;
+  }
+  #blur_7 {
+    display: block !important;
+  }
+  #blur_8 {
+    display: block !important;
+  }
+  #blur_9 {
+    display: block !important;
+  }
+  #blur_10 {
+    display: block !important;
+  }
+}
