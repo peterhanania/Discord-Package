@@ -12,6 +12,8 @@
 <a>
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/peterhanania/discord-package)</a>
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/9b15f9e3-a39a-4b15-a3c8-1e73226006c2/deploy-status)](https://app.netlify.com/sites/discordpackage/deploys)
+
 <a href="https://github.com/peterhanania/discord-package/blob/main/LICENSE.md">
 <img src="https://img.shields.io/badge/license-GPL-blue" alt="license">
 </a>
