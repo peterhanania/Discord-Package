@@ -56,11 +56,11 @@ export default function Privacy(): ReactElement {
                     using{" "}
                     <a
                       className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1"
-                      href="https://vercel.com"
+                      href="https://Netlify.com"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      Vercel
+                      Netlify
                     </a>
                     . If you do not trust this website the{" "}
                     <a

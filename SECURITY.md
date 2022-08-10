@@ -21,7 +21,7 @@ We understand that most websites shared on Discord are scams. They tend to steal
 
 > We **do not** have a backend server. Everything runs on the frontend.
 
-> We run the website using Vercel (Vercel.com) directly from the main repository. You can observe that by checking the deployments on the Github repository. https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=Production
+> We run the website using Netlify (Netlify.com) directly from the main repository. You can observe that by checking the deployments on the Github repository. https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=Production
 
 > No database, no storage or any other form of data is stored.
 

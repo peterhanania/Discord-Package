@@ -154,7 +154,7 @@ We understand that most websites shared on Discord are scams. They tend to steal
 - Our code is fully open sourced and available for inspection on the Github repository.
 - We do not have a backend server. Everything runs on the frontend.
 
-- We run the website using Vercel ([Vercel.com](vercel.com)) directly from the main repository. You can observe that by checking the deployments on the Github repository. [https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=Production](https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=Production)
+- We run the website using Netlify ([Netlify.com](Netlify.com)) directly from the main repository. You can observe that by checking the deployments on the Github repository. [https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=Production](https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=Production)
 - No database, no storage or any other form of data is stored.
 
 If you find a security issue or have any other questions, please contact me at peter@pogy.xyz

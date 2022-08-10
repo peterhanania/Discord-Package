@@ -284,11 +284,11 @@ export default function Header() {
                     This website is also deployed on{" "}
                     <a
                       className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                      href="https://vercel.com"
+                      href="https://Netlify.com"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      Vercel
+                      Netlify
                     </a>{" "}
                     from the{" "}
                     <a

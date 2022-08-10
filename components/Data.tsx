@@ -1502,7 +1502,7 @@ export default function Data(props: any): ReactElement {
                                       <li key={i}>
                                         <a
                                           href={f.word}
-className="opacity-80 hover:opacity-100"
+                                          className="opacity-80 hover:opacity-100"
                                           target="_blank"
                                           rel="noreferrer"
                                         >
@@ -1579,7 +1579,7 @@ className="opacity-80 hover:opacity-100"
                                       <li key={i}>
                                         <a
                                           href={f.word}
-className="opacity-80 hover:opacity-100"
+                                          className="opacity-80 hover:opacity-100"
                                           target="_blank"
                                           rel="noreferrer"
                                         >
@@ -3677,7 +3677,7 @@ className="opacity-80 hover:opacity-100"
                                                     <li key={i}>
                                                       <a
                                                         href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                        className="opacity-80 hover:opacity-100"
                                                         target="_blank"
                                                         rel="noreferrer"
                                                       >
@@ -3755,7 +3755,7 @@ className="opacity-80 hover:opacity-100"
                                                     <li key={i}>
                                                       <a
                                                         href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                        className="opacity-80 hover:opacity-100"
                                                         target="_blank"
                                                         rel="noreferrer"
                                                       >
@@ -4346,7 +4346,7 @@ className="opacity-80 hover:opacity-100"
                                                         <li key={i}>
                                                           <a
                                                             href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                            className="opacity-80 hover:opacity-100"
                                                             target="_blank"
                                                             rel="noreferrer"
                                                           >
@@ -4427,7 +4427,7 @@ className="opacity-80 hover:opacity-100"
                                                         <li key={i}>
                                                           <a
                                                             href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                            className="opacity-80 hover:opacity-100"
                                                             target="_blank"
                                                             rel="noreferrer"
                                                           >
@@ -5128,11 +5128,39 @@ className="opacity-80 hover:opacity-100"
 
                                         <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
                                           <div className="flex items-center text-lg">
-                                            {m?.name
-                                              ? typeof m.name === "object"
-                                                ? m.name[0]
-                                                : m.name
-                                              : ""}
+                                            {m?.name ? (
+                                              typeof m.name === "object" ? (
+                                                m?.name[0]?.length > 28 ? (
+                                                  <Tippy
+                                                    content={m.name[0]}
+                                                    animation="scale"
+                                                    className="shadow-xl"
+                                                  >
+                                                    <span>
+                                                      {m.name[0].substring(0, 28) +
+                                                        "..."}
+                                                    </span>
+                                                  </Tippy>
+                                                ) : (
+                                                  m.name[0]
+                                                )
+                                              ) : m?.name?.length > 28 ? (
+                                                <Tippy
+                                                  content={m.name}
+                                                  animation="scale"
+                                                  className="shadow-xl"
+                                                >
+                                                  <span>
+                                                    {m.name.substring(0, 28) +
+                                                      "..."}
+                                                  </span>
+                                                </Tippy>
+                                              ) : (
+                                                m.name
+                                              )
+                                            ) : (
+                                              ""
+                                            )}
                                           </div>
                                           <span className="text-gray-400 text-sm -mt-2">
                                             {m?.guildName?.length > 28 ? (
@@ -5394,7 +5422,7 @@ className="opacity-80 hover:opacity-100"
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                                className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -5477,7 +5505,7 @@ className="opacity-80 hover:opacity-100"
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                                className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -5878,7 +5906,22 @@ className="opacity-80 hover:opacity-100"
                                               : ""}
                                           </div>
                                           <span className="text-gray-400 text-sm -mt-2">
-                                            {m?.guildName}
+                                            {m?.guildName?.length > 28 ? (
+                                              <Tippy
+                                                content={m.guildName}
+                                                animation="scale"
+                                                className="shadow-xl"
+                                              >
+                                                <span>
+                                                  {m.guildName.substring(
+                                                    0,
+                                                    28
+                                                  ) + "..."}
+                                                </span>
+                                              </Tippy>
+                                            ) : (
+                                              m.guildName
+                                            )}
                                           </span>
                                         </div>
                                       </div>
@@ -6122,7 +6165,7 @@ className="opacity-80 hover:opacity-100"
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                                className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -6205,7 +6248,7 @@ className="opacity-80 hover:opacity-100"
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                                className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -6661,7 +6704,20 @@ className="opacity-80 hover:opacity-100"
 
                                       <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
                                         <div className="flex items-center text-lg">
-                                          {m?.guildName}
+                                          {m?.guildName?.length > 28 ? (
+                                            <Tippy
+                                              content={m.guildName}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <span>
+                                                {m.guildName.substring(0, 28) +
+                                                  "..."}
+                                              </span>
+                                            </Tippy>
+                                          ) : (
+                                            m.guildName
+                                          )}
                                         </div>
                                         <Tippy
                                           content={m?.name?.join(", ")}
@@ -6908,7 +6964,7 @@ className="opacity-80 hover:opacity-100"
                                                           <li key={i}>
                                                             <a
                                                               href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                              className="opacity-80 hover:opacity-100"
                                                               target="_blank"
                                                               rel="noreferrer"
                                                             >
@@ -6991,7 +7047,7 @@ className="opacity-80 hover:opacity-100"
                                                           <li key={i}>
                                                             <a
                                                               href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                              className="opacity-80 hover:opacity-100"
                                                               target="_blank"
                                                               rel="noreferrer"
                                                             >
@@ -7381,7 +7437,22 @@ className="opacity-80 hover:opacity-100"
                                       <div className="flex items-center max-w-full sm:max-w-4/6">
                                         <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
                                           <div className="flex items-center text-lg">
-                                            {m?.guildName}
+                                            {m?.guildName?.length > 28 ? (
+                                              <Tippy
+                                                content={m.guildName}
+                                                animation="scale"
+                                                className="shadow-xl"
+                                              >
+                                                <span>
+                                                  {m.guildName.substring(
+                                                    0,
+                                                    28
+                                                  ) + "..."}
+                                                </span>
+                                              </Tippy>
+                                            ) : (
+                                              m.guildName
+                                            )}
                                           </div>
                                           <Tippy
                                             content={m?.name?.join(", ")}
@@ -7634,7 +7705,7 @@ className="opacity-80 hover:opacity-100"
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                                className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -7717,7 +7788,7 @@ className="opacity-80 hover:opacity-100"
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                                className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -8422,7 +8493,7 @@ className="opacity-80 hover:opacity-100"
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                                className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -8505,7 +8576,7 @@ className="opacity-80 hover:opacity-100"
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                                className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -9146,7 +9217,7 @@ className="opacity-80 hover:opacity-100"
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                                className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
@@ -9229,7 +9300,7 @@ className="opacity-80 hover:opacity-100"
                                                             <li key={i}>
                                                               <a
                                                                 href={f.word}
-className="opacity-80 hover:opacity-100"
+                                                                className="opacity-80 hover:opacity-100"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                               >
