@@ -41,7 +41,7 @@ export default function Document() {
           />
           <meta
             property="og:image"
-            content="https://discordpackage.com/discord-package.png"
+            content="https://discordpackage.com/banner.png"
           />
           <meta property="twitter:card" content="summary_large_image" />
           <meta property="twitter:url" content="https://discordpackage.com" />
