@@ -107,6 +107,53 @@ const days_ = new Array(24)
   .map((v, i) =>
     i == 0 ? "12am" : i < 12 ? `${i}am` : i == 12 ? "12pm" : `${i - 12}pm`
   );
+
+const days_daily = new Array(7)
+  .fill(0)
+  .map((v, i) =>
+    i == 0
+      ? "Sunday"
+      : i == 1
+      ? "Monday"
+      : i == 2
+      ? "Tuesday"
+      : i == 3
+      ? "Wednesday"
+      : i == 4
+      ? "Thursday"
+      : i == 5
+      ? "Friday"
+      : "Saturday"
+  );
+
+const days_monthly = new Array(12)
+  .fill(0)
+  .map((v, i) =>
+    i == 0
+      ? "January"
+      : i == 1
+      ? "February"
+      : i == 2
+      ? "March"
+      : i == 3
+      ? "April"
+      : i == 4
+      ? "May"
+      : i == 5
+      ? "June"
+      : i == 6
+      ? "July"
+      : i == 7
+      ? "August"
+      : i == 8
+      ? "September"
+      : i == 9
+      ? "October"
+      : i == 10
+      ? "November"
+      : "December"
+  );
+
 const icons = {
   DISCORD_EMPLOYEE: (
     <Image
@@ -430,8 +477,8 @@ const icons = {
   ),
 };
 
-function makeData(data: any): Array<any> {
-  const day = new Array(24).fill(0).map((v, i) => v + i);
+function makeData(data: any, days: any): Array<any> {
+  const day = new Array(days).fill(0).map((v, i) => v + i);
   const data_day = data.map((v: any, i: number): any => [day[i], v]);
   return data_day;
 }
@@ -988,6 +1035,7 @@ export default function Data(props: any): ReactElement {
   const [topGroupDMs, setTopGroupDMs] = useState<any>([]);
   const [generate_, setGenerate_] = useState<any>(false);
   const [data, setData] = useState<any>(props.data);
+  const [graphOption, setGraphOption] = useState<String | null>("hourly");
   const [graphType, setGraphType] = useState<String | null>("areaspline");
   const [emojiType, setEmojiType] = useState<String | null>(
     data?.messages?.topEmojis && data?.messages?.topEmojis.length
@@ -3109,14 +3157,121 @@ export default function Data(props: any): ReactElement {
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__delay-1s rounded-lg text-center w-full">
           <div id="blur_5_div">
             <span
-              className=" text-gray-900 dark:text-white lg:text-4xl md:text-3xl text-xl font-bold flex items-center justify-center"
+              className=" text-gray-900 dark:text-white lg:text-4xl md:text-3xl text-xl font-bold lg:flex md:flex sm:flex items-center"
               style={{
                 fontFamily:
                   "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
               }}
             >
-              <ul className="flex items-center flex-shrink-0 space-x-6 p-2 rounded-lg bg-gray-400 dark:bg-[#232323] mr-6">
-                <li className="flex ">
+              <ul
+                className="flex items-center lg:mr-6 md:mr-6 sm:mr-6 mr-1 lg:text-lg md:text-lg text-sm font-mono lg:pb-0 md:pb-0 sm:pb-0 pb-1"
+                style={{
+                  flexGrow: "0.3",
+                }}
+              >
+                <li
+                  className={
+                    "flex lg:p-2 md:p-2 sm:p-2 p-1 rounded-lg " +
+                    (graphOption === "hourly"
+                      ? "bg-gray-400 dark:bg-[#232323]"
+                      : "")
+                  }
+                >
+                  <Tippy
+                    content={"Hourly"}
+                    animation="scale"
+                    arrow={false}
+                    placement="bottom"
+                  >
+                    <button
+                      className="rounded-md "
+                      onClick={() => {
+                        setGraphOption("hourly");
+                      }}
+                      aria-label="hourly"
+                    >
+                      hourly
+                    </button>
+                  </Tippy>
+                </li>{" "}
+                <li
+                  className={
+                    "flex lg:p-2 md:p-2 sm:p-2 p-1 rounded-lg " +
+                    (graphOption === "daily"
+                      ? "bg-gray-400 dark:bg-[#232323]"
+                      : "")
+                  }
+                >
+                  <Tippy
+                    content={"Daily"}
+                    animation="scale"
+                    arrow={false}
+                    placement="bottom"
+                  >
+                    <button
+                      className="rounded-md "
+                      onClick={() => {
+                        setGraphOption("daily");
+                      }}
+                      aria-label="daily"
+                    >
+                      daily
+                    </button>
+                  </Tippy>
+                </li>{" "}
+                <li
+                  className={
+                    "flex lg:p-2 md:p-2 sm:p-2 p-1 rounded-lg " +
+                    (graphOption === "monthly"
+                      ? "bg-gray-400 dark:bg-[#232323]"
+                      : "")
+                  }
+                >
+                  <Tippy
+                    content={"Monthly"}
+                    animation="scale"
+                    arrow={false}
+                    placement="bottom"
+                  >
+                    <button
+                      className="rounded-md "
+                      onClick={() => {
+                        setGraphOption("monthly");
+                      }}
+                      aria-label="monthly"
+                    >
+                      monthly
+                    </button>
+                  </Tippy>
+                </li>{" "}
+                <li
+                  className={
+                    "flex lg:p-2 md:p-2 sm:p-2 p-1 rounded-lg " +
+                    (graphOption === "yearly"
+                      ? "bg-gray-400 dark:bg-[#232323]"
+                      : "")
+                  }
+                >
+                  <Tippy
+                    content={"Yearly"}
+                    animation="scale"
+                    arrow={false}
+                    placement="bottom"
+                  >
+                    <button
+                      className="rounded-md "
+                      onClick={() => {
+                        setGraphOption("yearly");
+                      }}
+                      aria-label=""
+                    >
+                      yearly
+                    </button>
+                  </Tippy>
+                </li>
+              </ul>
+              <ul className="lg:flex items-center grow-0 space-x-6 p-2 rounded-lg bg-gray-400 dark:bg-[#232323] lg:mr-4 md:mr-4 sm:mr-4 mr-1">
+                <li className="flex">
                   <Tippy
                     content={graphType === "areaspline" ? "Bar" : "Line"}
                     animation="scale"
@@ -3155,49 +3310,58 @@ export default function Data(props: any): ReactElement {
                   </Tippy>
                 </li>
               </ul>
-              Active Hours{" "}
-              <Tippy
-                content={
-                  <>
-                    <div className="text-white text-xl font-bold">
-                      What are Active Hours?
-                    </div>
-                    <p className="text-white text-lg ">
-                      Active Hours are the hours in which{" "}
-                      {data?.dataFile ? "they " : "you "} are most active on
-                      Discord sending messages.
-                    </p>
-                    <div className="flex items-center">
-                      <svg
-                        className="fill-red-400 mr-2 basis-[40%]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="24"
-                        width="24"
-                      >
-                        <path d="M.275 21.425 12 1.15l11.725 20.275ZM12 17.925q.45 0 .788-.338.337-.337.337-.787t-.337-.775Q12.45 15.7 12 15.7t-.787.325q-.338.325-.338.775t.338.787q.337.338.787.338ZM11 15h2v-4.725h-2Z" />
-                      </svg>
-                      <b className="text-red-400 text-lg pt-1 ">
-                        This is based on {data?.dataFile ? "their " : "your "}{" "}
-                        device timezone. If the graph is inacurrate, make sure{" "}
-                        {data?.dataFile ? "their " : "your "} device timezone is
-                        the same timezone as the usual timezone you use when
-                        sending Discord messages.
-                      </b>
-                    </div>
-                  </>
-                }
-                animation="scale"
-                className="shadow-xl"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24"
-                  width="24"
-                  className="cursor-pointer fill-black dark:fill-white ml-2 opacity-90 hover:opacity-100"
+              <p className="flex items-center">
+                Active{" "}
+                {graphOption === "hourly"
+                  ? "Hours"
+                  : graphOption === "daily"
+                  ? "Days"
+                  : graphOption === "monthly"
+                  ? "Months"
+                  : "Years"}
+                <Tippy
+                  content={
+                    <>
+                      <div className="text-white text-xl font-bold">
+                        What are Active Hours?
+                      </div>
+                      <p className="text-white text-lg ">
+                        Active Hours are the hours in which{" "}
+                        {data?.dataFile ? "they " : "you "} are most active on
+                        Discord sending messages.
+                      </p>
+                      <div className="flex items-center">
+                        <svg
+                          className="fill-red-400 mr-2 basis-[40%]"
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="24"
+                          width="24"
+                        >
+                          <path d="M.275 21.425 12 1.15l11.725 20.275ZM12 17.925q.45 0 .788-.338.337-.337.337-.787t-.337-.775Q12.45 15.7 12 15.7t-.787.325q-.338.325-.338.775t.338.787q.337.338.787.338ZM11 15h2v-4.725h-2Z" />
+                        </svg>
+                        <b className="text-red-400 text-lg pt-1 ">
+                          This is based on {data?.dataFile ? "their " : "your "}{" "}
+                          device timezone. If the graph is inacurrate, make sure{" "}
+                          {data?.dataFile ? "their " : "your "} device timezone
+                          is the same timezone as the usual timezone you use
+                          when sending Discord messages.
+                        </b>
+                      </div>
+                    </>
+                  }
+                  animation="scale"
+                  className="shadow-xl"
                 >
-                  <path d="M10.625 17.375h2.75V11h-2.75ZM12 9.5q.65 0 1.075-.438Q13.5 8.625 13.5 8q0-.65-.425-1.075Q12.65 6.5 12 6.5q-.625 0-1.062.425Q10.5 7.35 10.5 8q0 .625.438 1.062.437.438 1.062.438Zm0 13.35q-2.275 0-4.25-.85t-3.438-2.312Q2.85 18.225 2 16.25q-.85-1.975-.85-4.25T2 7.75q.85-1.975 2.312-3.438Q5.775 2.85 7.75 2q1.975-.85 4.25-.85t4.25.85q1.975.85 3.438 2.312Q21.15 5.775 22 7.75q.85 1.975.85 4.25T22 16.25q-.85 1.975-2.312 3.438Q18.225 21.15 16.25 22q-1.975.85-4.25.85Z" />
-                </svg>
-              </Tippy>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    width="24"
+                    className="cursor-pointer fill-black dark:fill-white ml-2 opacity-90 hover:opacity-100"
+                  >
+                    <path d="M10.625 17.375h2.75V11h-2.75ZM12 9.5q.65 0 1.075-.438Q13.5 8.625 13.5 8q0-.65-.425-1.075Q12.65 6.5 12 6.5q-.625 0-1.062.425Q10.5 7.35 10.5 8q0 .625.438 1.062.437.438 1.062.438Zm0 13.35q-2.275 0-4.25-.85t-3.438-2.312Q2.85 18.225 2 16.25q-.85-1.975-.85-4.25T2 7.75q.85-1.975 2.312-3.438Q5.775 2.85 7.75 2q1.975-.85 4.25-.85t4.25.85q1.975.85 3.438 2.312Q21.15 5.775 22 7.75q.85 1.975.85 4.25T22 16.25q-.85 1.975-2.312 3.438Q18.225 21.15 16.25 22q-1.975.85-4.25.85Z" />
+                  </svg>
+                </Tippy>
+              </p>
             </span>
             <div className="row-span-3 ">
               <div className="lg:mx-10 md:mx-8 mx-2">
@@ -3210,7 +3374,26 @@ export default function Data(props: any): ReactElement {
                     },
                     xAxis: {
                       labels: {
-                        formatter: function (a: any): string {
+                        formatter: function (a: any): any {
+                          if (graphOption === "hours") return days_[a.value];
+                          else if (graphOption === "daily")
+                            return days_daily[a.value];
+                          else if (graphOption === "monthly")
+                            return days_monthly[a.value];
+                          else if (graphOption === "yearly") {
+                            const years =
+                              data?.messages?.hoursValues?.yearly?.length;
+                            if (years) {
+                              const years_ = data?.messages?.hoursValues?.yearly
+                                ?.map(
+                                  (year: any, index: number) =>
+                                    new Date(Date.now()).getFullYear() - index
+                                )
+                                .reverse();
+                              return years_[a.value];
+                            }
+                          }
+
                           return days_[a.value];
                         },
                         style: {
@@ -3243,12 +3426,54 @@ export default function Data(props: any): ReactElement {
                     series: [
                       {
                         name: "Messages",
-                        data: data?.messages?.hoursValues
-                          ? makeData(data.messages.hoursValues)
-                          : new Array(24).fill(0),
-                        pointStart: data?.messages?.hoursValues
-                          ? makeData(data.messages.hoursValues)[0]
-                          : 0,
+                        data:
+                          graphOption === "hourly"
+                            ? data?.messages?.hoursValues?.hourly
+                              ? makeData(data.messages.hoursValues.hourly, 24)
+                              : new Array(24).fill(0)
+                            : graphOption === "daily"
+                            ? data?.messages?.hoursValues?.daily
+                              ? makeData(data.messages.hoursValues.daily, 7)
+                              : new Array(7).fill(0)
+                            : graphOption === "monthly"
+                            ? data?.messages?.hoursValues?.monthly
+                              ? makeData(data.messages.hoursValues.monthly, 12)
+                              : new Array(12).fill(0)
+                            : graphOption === "yearly"
+                            ? data?.messages?.hoursValues?.yearly
+                              ? makeData(
+                                  data.messages.hoursValues.yearly,
+                                  data.messages.hoursValues.yearly.length
+                                )
+                              : new Array(3).fill(0)
+                            : new Array(12).fill(0),
+                        pointStart:
+                          graphOption === "hourly"
+                            ? data?.messages?.hoursValues?.hourly
+                              ? makeData(
+                                  data.messages.hoursValues.hourly,
+                                  24
+                                )[0]
+                              : 0
+                            : graphOption === "daily"
+                            ? data?.messages?.hoursValues?.daily
+                              ? makeData(data.messages.hoursValues.daily, 7)[0]
+                              : 0
+                            : graphOption === "monthly"
+                            ? data?.messages?.hoursValues?.monthly
+                              ? makeData(
+                                  data.messages.hoursValues.monthly,
+                                  12
+                                )[0]
+                              : 0
+                            : graphOption === "yearly"
+                            ? data?.messages?.hoursValues?.yearly
+                              ? makeData(
+                                  data.messages.hoursValues.yearly,
+                                  data.messages.hoursValues.yearly.length
+                                )[0]
+                              : 0
+                            : 0,
                         pointInterval: 86400000,
                       },
                     ],
@@ -3267,11 +3492,48 @@ export default function Data(props: any): ReactElement {
                       className: "tooltip-hov",
                       // eslint-disable-next-line no-unused-vars
                       formatter: function (this: any): string {
-                        return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
-                          this.y
-                        }</b> messages ${
-                          this.x && days_[this.x] ? `at ${days_[this.x]}` : ""
-                        }</p>`;
+                        if (graphOption === "hourly") {
+                          return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
+                            this.y
+                          }</b> messages ${
+                            this.x && days_[this.x] ? `at ${days_[this.x]}` : `at ${days_[0]}`
+                          }</p>`;
+                        } else if (graphOption === "daily") {
+                          return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
+                            this.y
+                          }</b> messages ${
+                            this.x && days_daily[this.x]
+                              ? `at a ${days_daily[this.x]}`
+                              : `at a ${days_daily[0]}`
+                          }</p>`;
+                        } else if (graphOption === "monthly") {
+                          return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
+                            this.y
+                          }</b> messages ${
+                            this.x && days_monthly[this.x]
+                              ? `in ${days_monthly[this.x]}`
+                              : `in ${days_monthly[0]}`
+                          }</p>`;
+                        } else if (graphOption === "yearly") {
+                          const years =
+                            data?.messages?.hoursValues?.yearly?.length;
+                          if (years) {
+                            const years_ = data?.messages?.hoursValues?.yearly
+                              ?.map(
+                                (year: any, index: number) =>
+                                  new Date(Date.now()).getFullYear() - index
+                              )
+                              .reverse();
+
+                            return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
+                              this.y
+                            }</b> messages ${
+                              this.x && years_[this.x]
+                                ? `in ${years_[this.x]} `
+                                :  `in ${years_[0]} `
+                            }</p>`;
+                          } else return `<p>Unable to find option</p>`;
+                        } else return `<p>Unable to find option</p>`;
                       },
                     },
                     legend: {
@@ -3421,7 +3683,7 @@ export default function Data(props: any): ReactElement {
               ""
             )}
             <div className="flex grow rounded-sm overflow-y-auto overflow-x-hidden h-[700px]">
-              <div className="flex flex-col w-full px-3 pb-4 lg:px-3 md:px-3 lg:pt-0 md:pt-0 pt-2">
+              <div className="flex flex-col w-full px-1 pb-4 lg:px-3 md:px-3 lg:pt-0 md:pt-0 pt-2">
                 {" "}
                 {!data?.messages?.topDMs ? (
                   <div className="px-10 text-gray-900 dark:text-white text-3xl font-bold flex flex-col justify-center content-center align-center w-full h-full">
@@ -5137,8 +5399,10 @@ export default function Data(props: any): ReactElement {
                                                     className="shadow-xl"
                                                   >
                                                     <span>
-                                                      {m.name[0].substring(0, 28) +
-                                                        "..."}
+                                                      {m.name[0].substring(
+                                                        0,
+                                                        28
+                                                      ) + "..."}
                                                     </span>
                                                   </Tippy>
                                                 ) : (

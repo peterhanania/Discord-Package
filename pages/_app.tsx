@@ -38,6 +38,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       "%c🚀 Welcome to Discord Package 🚀\nPlease Report bugs to Peter_#4444",
       "font-size: 1.5rem; font-weight: bold; color: #fff; background: #000; padding: 0.5rem;"
     );
+    console.log(
+      "%cMake sure to join the discord server and leave your ideas, bug reports, and feedback to improve the service!",
+      "font-size: 0.8rem; font-weight: bold; color: #fff; background: #000; padding: 0.3rem;"
+    );
   }, []);
 
   return loading ? (

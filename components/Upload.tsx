@@ -2129,8 +2129,14 @@ export default function Upload(): ReactElement {
                   ) +
                   `  ${chalk.yellow(`Calculating your top hours on discord`)}`
               );
+            if (isDebug)
+              setLoading(
+                "Loading Messages|||Calculating your top hours on discord"
+              );
+
+            const hourlyMessages = [];
             for (let i = 0; i < 24; i++) {
-              data.messages.hoursValues.push(
+              hourlyMessages.push(
                 channels
                   .map((c) => c.messages)
                   .flat()
@@ -2150,7 +2156,109 @@ export default function Upload(): ReactElement {
                   }).length
               );
             }
-            if (isDebug)
+
+            const dailyMessages = [];
+            for (let i = 0; i < 7; i++) {
+              dailyMessages.push(
+                channels
+                  .map((c) => c.messages)
+                  .flat()
+                  .filter((m) => {
+                    if (!m.timestamp) return false;
+                    const date: any = new Date(m.timestamp).getDay();
+                    if (date && date !== "Invalid Date") {
+                      return parseInt(date) == i;
+                    } else {
+                      const date_: any = moment(m.timestamp).format("d");
+                      if (date_) {
+                        return date_ == i;
+                      } else {
+                        return false;
+                      }
+                    }
+                  }).length
+              );
+            }
+
+            const dates2:any = [];
+            const monthlyMessages = [];
+            for (let i = 0; i < 12; i++) {
+              monthlyMessages.push(
+                channels
+                  .map((c) => c.messages)
+                  .flat()
+                  .filter((m) => {
+                    if (!m.timestamp) return false;
+                    const date: any = new Date(m.timestamp).getMonth();
+                    if(!dates2.includes(date)) dates2.push(date);
+
+                    if (date && date !== "Invalid Date") {
+                      return parseInt(date) == i;
+                    } else {
+                      const date_: any = parseInt(moment(m.timestamp).format("M")) 
+                      if (date_) {
+                        return date_ == (i + 1);
+                      } else {
+                        return false;
+                      }
+                    }
+                  }).length
+              );
+            }
+
+            const yearlyMessages: any = [];
+            const years: any = [];
+            channels
+              .map((c) => c.messages)
+              .flat()
+              .forEach((m) => {
+                if (!m.timestamp) return false;
+                const date: any = new Date(m.timestamp).getFullYear();
+                if (date && date !== "Invalid Date") {
+                  if (!years.includes(date)) {
+                    years.push(date);
+                  }
+                } else {
+                  const date_: any = moment(m.timestamp).format("YYYY");
+                  if (date_) {
+                    if (!years.includes(date_)) {
+                      years.push(date_);
+                    }
+                  }
+                }
+              });
+
+            years.forEach((year: any) => {
+              yearlyMessages.push(
+                channels
+                  .map((c) => c.messages)
+                  .flat()
+                  .filter((m) => {
+                    if (!m.timestamp) return false;
+                    const date: any = new Date(m.timestamp).getFullYear();
+                    if (date && date !== "Invalid Date") {
+                      return date === year;
+                    } else {
+                      const date_: any = moment(m.timestamp).format("YYYY");
+                      if (date_) {
+                        return date_ == year;
+                      } else {
+                        return false;
+                      }
+                    }
+                  }).length
+              );
+            });
+
+            data.messages.hoursValues = {
+              hourly: hourlyMessages,
+              daily: dailyMessages,
+              monthly: monthlyMessages,
+              yearly: yearlyMessages,
+            };
+
+
+            if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
                   chalk.bold.cyan(
@@ -2158,6 +2266,7 @@ export default function Upload(): ReactElement {
                   ) +
                   `  ${chalk.yellow(`Calculated your top hours on discord`)}`
               );
+            }
           }
 
           setPercent(73);

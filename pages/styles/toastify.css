@@ -61,11 +61,18 @@ html.dark {
   -webkit-transform: translate3d(0, 0, var(--toastify-z-index) px);
   position: fixed;
   padding: 4px;
-  max-width: 90%;
+  max-width: 100%;
   min-width: var(--toastify-toast-width);
   box-sizing: border-box;
   color: #fff;
 }
+
+@media (min-width: 1024px) {
+  .Toastify__toast-container {
+    max-width: 90% !important;
+  }
+}
+
 .Toastify__toast-container--top-left {
   top: 1em;
   left: 1em;

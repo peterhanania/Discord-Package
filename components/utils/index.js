@@ -569,9 +569,22 @@ class Utils {
       }
     });
 
-    const hoursValues = new Array(24).fill(0).map(() => {
-      return Math.floor(Math.random() * 20000);
-    });
+    const hoursValues = {
+      hourly: new Array(24).fill(0).map(() => {
+        return Math.floor(Math.random() * 20000);
+      }),
+      daily: new Array(7).fill(0).map(() => {
+        return Math.floor(Math.random() * 20000);
+      }),
+      monthly: new Array(12).fill(0).map(() => {
+        return Math.floor(Math.random() * 20000);
+      }),
+      yearly: new Array(Math.floor(Math.random() * (5 - 3 + 1)) + 3)
+        .fill(0)
+        .map(() => {
+          return Math.floor(Math.random() * 20000);
+        }),
+    };
 
     function generateRandomDiscordLink() {
       const links = [];
