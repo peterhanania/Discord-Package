@@ -1,0 +1,18 @@
+[build]
+  publish = "public"
+
+[[plugins]]
+  package = "netlify-plugin-submit-sitemap"
+
+	[plugins.inputs]
+
+	baseUrl = "https://discordpackage.com"
+
+	sitemapPath = "/sitemap.xml"
+
+	ignorePeriod = 0
+
+	providers = [
+		"google",
+		"yandex"
+	]
