@@ -11,17 +11,20 @@ export default function Document() {
             href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
             rel="stylesheet"
           />
+
+          <meta name="theme-color" content="#5865F2" />
           <meta
             name="title"
-            content="Discord Data Package Viewer and Explorer"
+            content="✨ Discord Data Package Viewer and Explorer ✨ "
           />
           <meta
             name="description"
-            content="Discord Data Package Viewer will help you to explore and view Discord Data Packages."
+            content="Discord Data Package Viewer makes it easy to explore your discord data package."
           />
+          <meta name="image" content="https://discordpackage.com/favicon.ico" />
           <meta
             name="keywords"
-            content="discord package, discord, discord package viewer"
+            content="discord package, discord, discord package viewer, discord data package explorer, view your discord package"
           />
           <meta name="robots" content="index, follow" />
           <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
@@ -34,7 +37,7 @@ export default function Document() {
           />
           <meta
             property="og:description"
-            content="Discord Data Package Viewer will help you to explore and view Discord Data Packages."
+            content="Discord Data Package Viewer makes it easy to explore your discord data package."
           />
           <meta
             property="og:image"
@@ -48,7 +51,7 @@ export default function Document() {
           />
           <meta
             property="twitter:description"
-            content="Discord Data Package Viewer will help you to explore and view Discord Data Packages."
+            content="Discord Data Package Viewer makes it easy to explore your discord data package."
           />
           <meta
             property="twitter:image"
@@ -56,19 +59,28 @@ export default function Document() {
           />
         </>
         <noscript>
-          <div style={{
-            position: "absolute",
-            top: "0",
-            left: "0",
-            width: "100%",
-            height: "100%",
-            backgroundColor: "#2b2d31",
-          }}><span style={{
-            color: "#fff",
-            fontSize: "26px",
-            fontFamily:
-            "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
-          }}>You need to enable Javascript on this browser so that you continue using the service.</span></div>
+          <div
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "100%",
+              height: "100%",
+              backgroundColor: "#2b2d31",
+            }}
+          >
+            <span
+              style={{
+                color: "#fff",
+                fontSize: "26px",
+                fontFamily:
+                  "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+              }}
+            >
+              You need to enable Javascript on this browser so that you continue
+              using the service.
+            </span>
+          </div>
         </noscript>
       </Head>
       <body>

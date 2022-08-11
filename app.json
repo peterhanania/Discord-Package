@@ -1,6 +1,6 @@
 {
   "name": "Discord Package",
-  "description": "Discord Data Package Viewer will help you to explore and view Discord Data Packages.",
+  "description": "Discord Data Package Viewer makes it easy to explore your discord data package.",
   "repository": "https://github.com/peterhanania/discord-package",
   "logo": "https://discordpackage.com/favicon.ico",
   "keywords": ["nextjs", "discord"]
