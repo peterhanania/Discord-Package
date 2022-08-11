@@ -55,7 +55,21 @@ export default function Document() {
             content="https://discordpackage.com/favicon.ico"
           />
         </>
-        <noscript>Please enable JavaScript to view the site</noscript>
+        <noscript>
+          <div style={{
+            position: "absolute",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "#2b2d31",
+          }}><span style={{
+            color: "#fff",
+            fontSize: "26px",
+            fontFamily:
+            "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+          }}>You need to enable Javascript on this browser so that you continue using the service.</span></div>
+        </noscript>
       </Head>
       <body>
         <Main />
