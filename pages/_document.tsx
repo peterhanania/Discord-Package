@@ -21,7 +21,7 @@ export default function Document() {
             name="description"
             content="Discord Data Package Viewer makes it easy to explore your discord data package."
           />
-          <meta name="image" content="https://discordpackage.com/favicon.ico" />
+          <meta name="image" content="https://discordpackage.com/discord-package.png" />
           <meta
             name="keywords"
             content="discord package, discord, discord package viewer, discord data package explorer, view your discord package"
@@ -33,7 +33,7 @@ export default function Document() {
           <meta property="og:url" content="https://discordpackage.com" />
           <meta
             property="og:title"
-            content="Discord Data Package Viewer and Explorer"
+            content="✨ Discord Data Package Viewer and Explorer ✨"
           />
           <meta
             property="og:description"
@@ -41,7 +41,7 @@ export default function Document() {
           />
           <meta
             property="og:image"
-            content="https://discordpackage.com/favicon.ico"
+            content="https://discordpackage.com/discord-package.png"
           />
           <meta property="twitter:card" content="summary_large_image" />
           <meta property="twitter:url" content="https://discordpackage.com" />
@@ -55,7 +55,7 @@ export default function Document() {
           />
           <meta
             property="twitter:image"
-            content="https://discordpackage.com/favicon.ico"
+            content="https://discordpackage.com/discord-package.png"
           />
         </>
         <noscript>
