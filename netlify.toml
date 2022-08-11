@@ -1,5 +1,5 @@
 [build]
-  publish = "public"
+  publish = ".next"
 
 [[plugins]]
   package = "netlify-plugin-submit-sitemap"
