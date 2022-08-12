@@ -1,6 +1,6 @@
 import Upload from "../components/Upload";
 import Head from "next/head";
-
+import { SnackbarProvider } from "notistack";
 export default function Home() {
   return (
     <>
@@ -8,7 +8,9 @@ export default function Home() {
         <title>Discord Package Explorer</title>
       </Head>
       <div className="h-screen">
-        <Upload />
+        <SnackbarProvider>
+          <Upload />
+        </SnackbarProvider>
       </div>
     </>
   );

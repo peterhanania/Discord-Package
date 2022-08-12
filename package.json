@@ -24,6 +24,7 @@
     "fflate": "^0.7.3",
     "highcharts": "^10.2.0",
     "highcharts-react-official": "^3.1.0",
+    "jotai": "^1.7.8",
     "moment": "^2.29.4",
     "next": "^12.2.4",
     "notistack": "^2.0.5",
@@ -35,6 +36,7 @@
     "react-dom": "18.2.0",
     "react-toastify": "^9.0.8",
     "react-twemoji": "^0.5.0",
+    "sass": "^1.54.4",
     "snake-case": "^3.0.4"
   },
   "devDependencies": {

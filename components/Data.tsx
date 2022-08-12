@@ -17,6 +17,13 @@ import HighchartsExportData from "highcharts/modules/export-data";
 import Highchartsaccessibility from "highcharts/modules/accessibility";
 import { useSnackbar } from "notistack";
 import Connections from "./json/Connections.json";
+import {
+  topDMsAtom,
+  topChannelsAtom,
+  topGuildsAtom,
+  topGroupDMsAtom,
+} from "./atoms/data";
+import { useAtom } from "jotai";
 
 // twe-emoji, will remove if it uses so much bandwidth
 import Twemoji from "react-twemoji";
@@ -1028,13 +1035,11 @@ function copyToClipboard(value: string) {
   document.body.removeChild(el);
 }
 
-export default function Data(props: any): ReactElement {
-  const [topDMs, setTopDMs] = useState<any>([]);
-  const [topChannels, setTopChannels] = useState<any>([]);
-  const [topGuilds, setTopGuilds] = useState<any>([]);
-  const [topGroupDMs, setTopGroupDMs] = useState<any>([]);
-  const [generate_, setGenerate_] = useState<any>(false);
-  const [data, setData] = useState<any>(props.data);
+export default function Data({ data, demo }: any): ReactElement {
+  const [topDMs, setTopDMs] = useAtom(topDMsAtom);
+  const [topChannels, setTopChannels] = useAtom(topChannelsAtom);
+  const [topGuilds, setTopGuilds] = useAtom(topGuildsAtom);
+  const [topGroupDMs, setTopGroupDMs] = useAtom(topGroupDMsAtom);
   const [graphOption, setGraphOption] = useState<String | null>("hourly");
   const [graphType, setGraphType] = useState<String | null>("areaspline");
   const [emojiType, setEmojiType] = useState<String | null>(
@@ -1138,82 +1143,56 @@ export default function Data(props: any): ReactElement {
             You are viewing <b>{data?.user?.username}</b>&apos;s data
           </span>
         )}
-        {data?.fakeInfo ? (
+        {demo ? (
           <>
-            {generate_ ? (
-              <Tippy
-                content={"Generating..."}
-                animation="scale"
-                className="shadow-xl"
+            <Tippy
+              content={
+                <>
+                  <div className="text-white text-lg font-bold">
+                    Regenerate Data
+                  </div>
+                  <p className="text-white text-lg ">
+                    Regenerating your data will generate a new set of data,
+                    allowing you to see a demonstration without using your data
+                    but fake data.
+                  </p>
+                  <div className="flex items-center">
+                    <svg
+                      className="fill-red-400 mr-2 basis-[20%]"
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24"
+                      width="24"
+                    >
+                      <path d="M.275 21.425 12 1.15l11.725 20.275ZM12 17.925q.45 0 .788-.338.337-.337.337-.787t-.337-.775Q12.45 15.7 12 15.7t-.787.325q-.338.325-.338.775t.338.787q.337.338.787.338ZM11 15h2v-4.725h-2Z" />
+                    </svg>
+                    <b className="text-red-400 text-lg pt-1 ">
+                      The data you see is totally fake and generated using our
+                      algorythm, not stolen by anyone.
+                    </b>
+                  </div>
+                </>
+              }
+              animation="scale"
+              className="shadow-xl"
+            >
+              <div
+                onClick={() => {
+                  window.location.reload();
+                }}
+                className="button-green text-gray-200 flex items-center gap-1 h-[90px] lg:ml-2 md:ml-2 sm:ml-2 lg:my-0 md:my-0 sm:my-0 my-2 "
               >
-                <div className="opacity-60 cursor-not-allowed button-green text-gray-200 flex items-center gap-1 h-[90px] lg:ml-2 md:ml-2 sm:ml-2 lg:my-0 md:my-0 sm:my-0 my-2 ">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24"
-                    width="24"
-                    className="fill-white cursor-pointer"
-                  >
-                    <path d="M11.9 20.85q-3.675 0-6.262-2.588Q3.05 15.675 3.05 12q0-3.675 2.588-6.263Q8.225 3.15 11.9 3.15q1.95 0 3.688.787 1.737.788 2.962 2.288V3.15h2.4v8.225H12.7V9h4.05q-.8-1.25-2.075-1.975Q13.4 6.3 11.9 6.3q-2.375 0-4.037 1.663Q6.2 9.625 6.2 12t1.663 4.038Q9.525 17.7 11.9 17.7q1.775 0 3.238-1.025Q16.6 15.65 17.25 14h3.275q-.725 3-3.125 4.925-2.4 1.925-5.5 1.925Z" />
-                  </svg>
-
-                  <p> Regenerating...</p>
-                </div>
-              </Tippy>
-            ) : (
-              <Tippy
-                content={
-                  <>
-                    <div className="text-white text-lg font-bold">
-                      Regenerate Data
-                    </div>
-                    <p className="text-white text-lg ">
-                      Regenerating your data will generate a new set of data,
-                      allowing you to see a demonstration without using your
-                      data but fake data.
-                    </p>
-                    <div className="flex items-center">
-                      <svg
-                        className="fill-red-400 mr-2 basis-[20%]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="24"
-                        width="24"
-                      >
-                        <path d="M.275 21.425 12 1.15l11.725 20.275ZM12 17.925q.45 0 .788-.338.337-.337.337-.787t-.337-.775Q12.45 15.7 12 15.7t-.787.325q-.338.325-.338.775t.338.787q.337.338.787.338ZM11 15h2v-4.725h-2Z" />
-                      </svg>
-                      <b className="text-red-400 text-lg pt-1 ">
-                        The data you see is totally fake and generated using our
-                        algorythm, not stolen by anyone.
-                      </b>
-                    </div>
-                  </>
-                }
-                animation="scale"
-                className="shadow-xl"
-              >
-                <div
-                  onClick={() => {
-                    setGenerate_(true);
-                    setTimeout(() => {
-                      const data___ = Utils.generateRandomData();
-                      setData(data___);
-                      setGenerate_(false);
-                    }, 1000);
-                  }}
-                  className="button-green text-gray-200 flex items-center gap-1 h-[90px] lg:ml-2 md:ml-2 sm:ml-2 lg:my-0 md:my-0 sm:my-0 my-2 "
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24"
+                  width="24"
+                  className="fill-white cursor-pointer"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24"
-                    width="24"
-                    className="fill-white cursor-pointer"
-                  >
-                    <path d="M11.9 20.85q-3.675 0-6.262-2.588Q3.05 15.675 3.05 12q0-3.675 2.588-6.263Q8.225 3.15 11.9 3.15q1.95 0 3.688.787 1.737.788 2.962 2.288V3.15h2.4v8.225H12.7V9h4.05q-.8-1.25-2.075-1.975Q13.4 6.3 11.9 6.3q-2.375 0-4.037 1.663Q6.2 9.625 6.2 12t1.663 4.038Q9.525 17.7 11.9 17.7q1.775 0 3.238-1.025Q16.6 15.65 17.25 14h3.275q-.725 3-3.125 4.925-2.4 1.925-5.5 1.925Z" />
-                  </svg>
+                  <path d="M11.9 20.85q-3.675 0-6.262-2.588Q3.05 15.675 3.05 12q0-3.675 2.588-6.263Q8.225 3.15 11.9 3.15q1.95 0 3.688.787 1.737.788 2.962 2.288V3.15h2.4v8.225H12.7V9h4.05q-.8-1.25-2.075-1.975Q13.4 6.3 11.9 6.3q-2.375 0-4.037 1.663Q6.2 9.625 6.2 12t1.663 4.038Q9.525 17.7 11.9 17.7q1.775 0 3.238-1.025Q16.6 15.65 17.25 14h3.275q-.725 3-3.125 4.925-2.4 1.925-5.5 1.925Z" />
+                </svg>
 
-                  <p> Regenerate Data</p>
-                </div>
-              </Tippy>
-            )}
+                <p> Regenerate Data</p>
+              </div>
+            </Tippy>
           </>
         ) : (
           ""
@@ -2094,6 +2073,7 @@ export default function Data(props: any): ReactElement {
                   Emojis
                 </div>
               </div>
+
               {!emojiType ? (
                 <span className="text-gray-900 dark:text-white text-lg font-bold w-full">
                   No Emojis Found or {data?.dataFile ? "they " : "you "}disabled
@@ -3496,7 +3476,9 @@ export default function Data(props: any): ReactElement {
                           return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
                             this.y
                           }</b> messages ${
-                            this.x && days_[this.x] ? `at ${days_[this.x]}` : `at ${days_[0]}`
+                            this.x && days_[this.x]
+                              ? `at ${days_[this.x]}`
+                              : `at ${days_[0]}`
                           }</p>`;
                         } else if (graphOption === "daily") {
                           return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
@@ -3530,7 +3512,7 @@ export default function Data(props: any): ReactElement {
                             }</b> messages ${
                               this.x && years_[this.x]
                                 ? `in ${years_[this.x]} `
-                                :  `in ${years_[0]} `
+                                : `in ${years_[0]} `
                             }</p>`;
                           } else return `<p>Unable to find option</p>`;
                         } else return `<p>Unable to find option</p>`;

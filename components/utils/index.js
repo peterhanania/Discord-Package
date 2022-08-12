@@ -1231,6 +1231,21 @@ class Utils {
       return null;
     }
   }
+
+  static classifyOBJ(obj) {
+    let newObj = {};
+    for (let key in obj) {
+      if (key.includes(".")) {
+        let newKey = key.split(".")[0];
+        if (!newObj[newKey]) newObj[newKey] = {};
+        newObj[newKey][key.split(".")[1]] = obj[key];
+      } else {
+        newObj[key] = obj[key];
+      }
+    }
+
+    return newObj;
+  }
 }
 
 export default Utils;

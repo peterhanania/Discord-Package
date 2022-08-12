@@ -3,6 +3,7 @@ import { useState, Fragment, useEffect } from "react";
 import { Dialog, Transition, Listbox } from "@headlessui/react";
 import Image from "next/image";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
+import Link from "next/link";
 
 export default function Header() {
   const [help, setHelp] = useState(false);
@@ -85,7 +86,7 @@ export default function Header() {
                 <p className="text-white text-lg py-2 px-8">
                   If you need help, kindly join our
                   <a
-                    href="https://discord.gg/W2zPcgG9F5"
+                    href="/discord"
                     className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold mx-1"
                     target="_blank"
                     rel="noreferrer"
@@ -604,15 +605,11 @@ export default function Header() {
           </a>
         </p>
         <div className="portrait:hidden lg:hidden landscape:flex md:landscape:hidden lg:text-xl md:text-xl text-sm mt-1 animate__delay-1s animate__animated animate__fadeIn flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
-          <a
-            href="/?demo=true"
-            target="_blank"
-            rel="noreferrer"
-            type="button"
-            className="button-green text-gray-200  my-2 flex items-center"
-          >
-            Click to View Demo
-          </a>
+          <Link href="/demo" target="_blank" rel="noreferrer" type="button">
+            <a className="button-green text-gray-200  my-2 flex items-center">
+              Click to View Demo
+            </a>
+          </Link>
         </div>
         <div className="flex justify-center items-center mt-2">
           <Tippy content={"Help"} animation="scale" className="shadow-xl ">

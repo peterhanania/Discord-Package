@@ -1,13 +1,14 @@
 import "./styles/index.css";
 import "animate.css";
 import "./styles/toastify.css";
+import "./styles/skeleton.scss";
 import "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import React from "react";
 import Loading from "../components/Loading";
-import { DataProvider } from "../components/utils/context";
 import { AppProps } from "next/app";
+import { SnackbarProvider } from "notistack";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = React.useState(true);
@@ -31,6 +32,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       document.documentElement.classList.remove("dark");
     }
 
+    if (window.location.href.includes("demo=true")) {
+      document.body.innerHTML = `<div class="sp"><div class="sp1"></div><div class="sp2"></div></div><div class="flex items-center justify-center dark:text-white text-gray-900 text-xl font-mono font-bold">Redirecting you to demo page, stay tight!</div>`;
+
+      window.location.href = "/demo";
+    }
+
     setTimeout(() => {
       setLoading(false);
     }, 1000);
@@ -45,10 +52,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return loading ? (
-    <Loading></Loading>
+    <SnackbarProvider>
+      <Loading skeleton={false} />
+    </SnackbarProvider>
   ) : (
-    <DataProvider>
-      <Component {...pageProps} />
-    </DataProvider>
+    <Component {...pageProps} />
   );
 }

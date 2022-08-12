@@ -1,0 +1,272 @@
+/* Variables */
+$skeleton-element-color: rgba(0, 0, 0, 0.17) !default;
+
+$skeleton-loading-animation-time: 1.3s !default;
+
+$skeleton-margin-standart: 16px !default;
+$skeleton-margin-small: $skeleton-margin-standart / 2 !default;
+
+$skeleton-card-box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.17) !default;
+$skeleton-card-background-color: #ffffff !default;
+$skeleton-card-border-radius: 5px !default;
+
+$skeleton-circle-size: 50px !default;
+
+$skeleton-hr-height: 2px !default;
+
+$skeleton-line-border-radius: 15px !default;
+$skeleton-line-height: 12px !default;
+$skeleton-line-margin-bottom: 8px !default;
+
+$skeleton-headline-height: $skeleton-line-height * 2 !default;
+
+$skeleton-square-height: 150px !default;
+
+/* Animation */
+@keyframes ssc-loading {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Animation partial */
+%ssc-animation {
+  position: relative;
+  overflow: hidden;
+
+  &:after {
+    content: "";
+    animation: ssc-loading $skeleton-loading-animation-time infinite;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translateX(-100%);
+    z-index: 1;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsla(0, 0%, 100%, 0.3),
+      transparent
+    );
+  }
+}
+
+/** Main class */
+.ssc {
+  cursor: progress;
+  user-select: none;
+}
+
+/** devices less than 400px **/
+@media (max-width: 400px) {
+  .ssc {
+    .w-title {
+      width: 100%;
+    }
+
+    .w-sentence {
+      min-width: 100% !important;
+      max-width: 100%;
+    }
+
+    .ico {
+      width: 16px !important;
+      height: 16px !important;
+    }
+
+    .ico-xl {
+      width: 32px !important;
+      height: 32px !important;
+    }
+  }
+}
+
+/** Helpers classes */
+.ssc {
+  .mb {
+    margin-bottom: $skeleton-margin-standart;
+  }
+
+  .w-sentence {
+    width: 70%;
+    height: 10px;
+  }
+
+  .w-title {
+    width: 210px;
+    height: 20px;
+  }
+
+  .w-word {
+    width: 70px !important;
+  }
+
+  .w-sentence {
+    min-width: 200px !important;
+    max-width: 300px;
+    height: 30px;
+  }
+
+  .page {
+    width: 100%;
+    height: 400px;
+  }
+
+  .ico {
+    width: 24px;
+    height: 24px;
+  }
+
+  .ico-lg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .ico-xl {
+    width: 56px;
+    height: 56px;
+  }
+
+  .w-text-1 {
+    width: 70px !important;
+    height: 20px !important;
+  }
+
+  .w-text-2 {
+    width: 100px !important;
+    height: 20px !important;
+  }
+
+  .w-text-3 {
+    width: 130px !important;
+    height: 25px !important;
+  }
+
+  .mt {
+    margin-top: $skeleton-margin-standart;
+  }
+
+  .mr {
+    margin-right: $skeleton-margin-standart;
+  }
+
+  .ml {
+    margin-left: $skeleton-margin-standart;
+  }
+
+  .mbs {
+    margin-bottom: $skeleton-margin-small;
+  }
+
+  .mts {
+    margin-top: $skeleton-margin-small;
+  }
+
+  .mrs {
+    margin-right: $skeleton-margin-small;
+  }
+
+  .mls {
+    margin-left: $skeleton-margin-small;
+  }
+
+  .flex {
+    display: flex;
+  }
+
+  .inline-flex {
+    display: inline-flex;
+  }
+
+  .align-center {
+    align-items: center;
+  }
+
+  .align-start {
+    align-items: flex-start;
+  }
+
+  .align-end {
+    align-items: flex-end;
+  }
+
+  .align-stretch {
+    align-items: stretch;
+  }
+
+  .justify-start {
+    justify-content: start;
+  }
+
+  .justify-end {
+    justify-content: end;
+  }
+  .justify-between {
+    justify-content: space-between;
+  }
+
+  .justify-center {
+    justify-content: center;
+  }
+
+  .justify-around {
+    justify-content: space-around;
+  }
+}
+
+/** Wrapper class */
+.ssc-wrapper {
+  padding: $skeleton-margin-standart;
+}
+
+/* Figures, Objects */
+.ssc-card {
+  display: block;
+  border-radius: $skeleton-card-border-radius;
+  box-shadow: $skeleton-card-box-shadow;
+  background-color: $skeleton-card-background-color;
+}
+
+.ssc-circle {
+  display: block;
+  background-color: $skeleton-element-color;
+  border-radius: 50%;
+
+  @extend %ssc-animation;
+}
+
+.ssc-hr {
+  display: block;
+  background-color: $skeleton-element-color;
+}
+
+.ssc-line {
+  display: block;
+  background-color: $skeleton-element-color;
+
+  &:last-child {
+    margin-bottom: unset;
+  }
+
+  @extend %ssc-animation;
+}
+
+.ssc-head-line {
+  display: block;
+  background-color: $skeleton-element-color;
+  border-radius: $skeleton-line-border-radius;
+
+  @extend %ssc-animation;
+}
+
+.ssc-square {
+  display: block;
+  background-color: $skeleton-element-color;
+
+  @extend %ssc-animation;
+}

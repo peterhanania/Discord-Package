@@ -5,13 +5,11 @@ import Tippy from "@tippyjs/react";
 import Utils from "./utils";
 import { Unzip, AsyncUnzipInflate } from "fflate";
 import { Transition, Dialog } from "@headlessui/react";
-import { Fragment, useContext, ReactElement } from "react";
+import { Fragment, ReactElement } from "react";
 import Features from "./json/features.json";
 import EventsJSON from "./json/events.json";
 import { ToastContainer, toast } from "react-toastify";
-import { DataContext } from "./utils/context";
 import Header from "./Header";
-import Data from "./Data";
 import BitField from "./utils/Bitfield";
 import Privacy from "./privacy";
 import Alerts from "./Alerts";
@@ -19,6 +17,18 @@ import moment from "moment";
 import chalk from "chalk";
 import { Line } from "rc-progress";
 import { SnackbarProvider } from "notistack";
+import {
+  dataExtractedAtom,
+  defaultOptionAtom,
+  selectedFeaturesAtom,
+  oldSelectedAtom,
+} from "./atoms/data";
+import { useAtom } from "jotai";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+import Link from "next/link";
+import Loading from "./Loading";
+import { useSnackbar } from "notistack";
 
 interface IObjectKeys {
   [key: string]: any;
@@ -36,75 +46,16 @@ interface objectInterface extends IObjectKeys {
 }
 
 export default function Upload(): ReactElement {
-  const { dataExtracted, setDataExtracted } = useContext<any>(DataContext);
   const [dragging, setDragging] = React.useState(false);
   const [error, setError] = React.useState<String | boolean | null>(null);
-  const [loading, setLoading] = React.useState<String | boolean | null>(
-    "Loading...|||"
-  );
+  const [loading, setLoading] = React.useState<String | boolean | null>(null);
   const [saveToDevice, setSaveToDevice] = React.useState<boolean>(false);
-  const [percent, setPercent] = React.useState<number>(90);
-
-  const classifyOBJ = (obj: any): any => {
-    let newObj: any = {};
-    for (let key in obj) {
-      if (key.includes(".")) {
-        let newKey: string = key.split(".")[0];
-        if (!newObj[newKey]) newObj[newKey] = {};
-        newObj[newKey][key.split(".")[1]] = obj[key];
-      } else {
-        newObj[key] = obj[key];
-      }
-    }
-
-    return newObj;
-  };
-
-  let [defaultOptions] = React.useState<any>(
-    classifyOBJ({
-      bots: true,
-      "user.premium_until": true,
-      "user.badges": true,
-      "settings.appearance": true,
-      "settings.recentEmojis": true,
-      connections: true,
-      "payments.total": true,
-      "payments.transactions": true,
-      "payments.giftedNitro": true,
-      "messages.topChannels": true,
-      "messages.topDMs": true,
-      "messages.topGuilds": true,
-      "messages.topGroupDMs": true,
-      "messages.characterCount": true,
-      "messages.topCustomEmojis": true,
-      "messages.topEmojis": true,
-      "messages.hoursValues": true,
-      "messages.oldestMessages": true,
-      "messages.attachmentCount": true,
-      "messages.mentionCount": true,
-      guilds: true,
-      "other.showCurseWords": true,
-      "other.showDiscordLinks": true,
-      "other.showLinks": true,
-      "other.favoriteWords": true,
-      "other.oldestMessages": true,
-      "other.topEmojis": true,
-      "other.topCustomEmojis": true,
-      statistics: EventsJSON.defaultEvents,
-    })
-  );
-
-  const [demo, setDemo] = React.useState<boolean>(false);
-  const [oldSelected, setOldSelected] = React.useState<any | null>(null);
-  const [selectedFeatures, setSelectedFeatures] = React.useState<any | null>(
-    defaultOptions
-  );
-
-  async function validateData_(obj: any, data_d: any) {
-    const validateOptions = await Utils.validateOptions(obj, data_d);
-    if (!validateOptions) return;
-    setSelectedFeatures(data_d);
-  }
+  const [percent, setPercent] = React.useState<number>(0);
+  const [dataExtracted, setDataExtracted] = useAtom(dataExtractedAtom);
+  const [defaultOptions] = useAtom(defaultOptionAtom);
+  const [oldSelected, setOldSelected] = useAtom(oldSelectedAtom);
+  const [selectedFeatures, setSelectedFeatures] = useAtom(selectedFeaturesAtom);
+  const { enqueueSnackbar } = useSnackbar();
 
   function hasClass(el: Element, cl: string): boolean {
     return el.classList
@@ -114,11 +65,10 @@ export default function Upload(): ReactElement {
   }
 
   React.useEffect(() => {
-    if (window.location.href.includes("demo=true") && dataExtracted) {
-      setDemo(true);
-    } else {
-      setLoading(false);
-      setPercent(0);
+    async function validateData_(obj: any, data_d: any) {
+      const validateOptions = await Utils.validateOptions(obj, data_d);
+      if (!validateOptions) return;
+      setSelectedFeatures(data_d);
     }
 
     const itm = localStorage.getItem("defaultOptions_enabled");
@@ -173,7 +123,7 @@ export default function Upload(): ReactElement {
         }
       }
     }
-  }, [dataExtracted]);
+  }, [dataExtracted, setSelectedFeatures]);
 
   React.useEffect(() => {
     const file = document.getElementById("file");
@@ -2180,7 +2130,7 @@ export default function Upload(): ReactElement {
               );
             }
 
-            const dates2:any = [];
+            const dates2: any = [];
             const monthlyMessages = [];
             for (let i = 0; i < 12; i++) {
               monthlyMessages.push(
@@ -2190,14 +2140,16 @@ export default function Upload(): ReactElement {
                   .filter((m) => {
                     if (!m.timestamp) return false;
                     const date: any = new Date(m.timestamp).getMonth();
-                    if(!dates2.includes(date)) dates2.push(date);
+                    if (!dates2.includes(date)) dates2.push(date);
 
                     if (date && date !== "Invalid Date") {
                       return parseInt(date) == i;
                     } else {
-                      const date_: any = parseInt(moment(m.timestamp).format("M")) 
+                      const date_: any = parseInt(
+                        moment(m.timestamp).format("M")
+                      );
                       if (date_) {
-                        return date_ == (i + 1);
+                        return date_ == i + 1;
                       } else {
                         return false;
                       }
@@ -2256,7 +2208,6 @@ export default function Upload(): ReactElement {
               monthly: monthlyMessages,
               yearly: yearlyMessages,
             };
-
 
             if (isDebug) {
               console.log(
@@ -2601,7 +2552,6 @@ export default function Upload(): ReactElement {
           .then(async (data) => {
             setLoading(null);
             setError(null);
-            data.demo = true;
             data.fakeInfo = false;
 
             setLoading("Rendering Data|||✨ Spicing up things for you ✨");
@@ -2683,7 +2633,6 @@ export default function Upload(): ReactElement {
             if (data.dataFile) {
               setLoading(null);
               setError(null);
-              data.demo = true;
               setDataExtracted(data);
             } else {
               setLoading(null);
@@ -2699,10 +2648,22 @@ export default function Upload(): ReactElement {
     }
   };
 
-  return demo || (dataExtracted && dataExtracted.demo) ? (
-    <SnackbarProvider>
-      <Data data={dataExtracted} />
-    </SnackbarProvider>
+  const DynamicComponent = dynamic(() => import("./Data"), {
+    suspense: true,
+  });
+
+  return dataExtracted ? (
+    <Suspense
+      fallback={
+        <SnackbarProvider>
+          <Loading skeleton={true} />
+        </SnackbarProvider>
+      }
+    >
+      <SnackbarProvider>
+        <DynamicComponent data={dataExtracted} demo={false} />
+      </SnackbarProvider>
+    </Suspense>
   ) : (
     <>
       <Alerts />
@@ -2836,8 +2797,9 @@ export default function Upload(): ReactElement {
                                 </svg>
                               </summary>
 
-                              {typeof classifyOBJ(Features)[item] ===
-                              "string" ? (
+                              {typeof (Utils.classifyOBJ(Features) as any)[
+                                item
+                              ] === "string" ? (
                                 <>
                                   {" "}
                                   <div
@@ -2854,8 +2816,10 @@ export default function Upload(): ReactElement {
                                             : null,
                                         });
                                       }}
-                                      id={classifyOBJ(Features)
-                                        [item].split(" ")
+                                      id={(Utils.classifyOBJ(Features) as any)[
+                                        item
+                                      ]
+                                        .split(" ")
                                         .join("")
                                         .toLowerCase()}
                                       type="checkbox"
@@ -2866,20 +2830,26 @@ export default function Upload(): ReactElement {
                                         e.preventDefault();
                                         e.target.previousElementSibling.click();
                                       }}
-                                      htmlFor={classifyOBJ(Features)
-                                        [item].split(" ")
+                                      htmlFor={(
+                                        Utils.classifyOBJ(Features) as any
+                                      )[item]
+                                        .split(" ")
                                         .join("")
                                         .toLowerCase()}
                                       className="ml-4 text-sm font-medium text-gray-200"
                                     >
-                                      {classifyOBJ(Features)[item]}
+                                      {
+                                        (Utils.classifyOBJ(Features) as any)[
+                                          item
+                                        ]
+                                      }
                                     </label>
                                   </div>
                                 </>
                               ) : (
                                 <>
                                   {Object.values(
-                                    classifyOBJ(Features)[item]
+                                    (Utils.classifyOBJ(Features) as any)[item]
                                   ).map((item_: any, i: number): any => {
                                     return (
                                       <div
@@ -2896,12 +2866,18 @@ export default function Upload(): ReactElement {
                                           }
                                           onChange={(e) => {
                                             const key = Object.keys(
-                                              classifyOBJ(Features)[item]
+                                              (
+                                                Utils.classifyOBJ(
+                                                  Features
+                                                ) as any
+                                              )[item]
                                             ).find(
                                               (key) =>
-                                                classifyOBJ(Features)[item][
-                                                  key
-                                                ] === item_
+                                                (
+                                                  Utils.classifyOBJ(
+                                                    Features
+                                                  ) as any
+                                                )[item][key] === item_
                                             );
 
                                             setSelectedFeatures({
@@ -3432,25 +3408,28 @@ export default function Upload(): ReactElement {
           -- or --
         </span>
         <div className=" lg:text-xl md:text-xl text-sm mt-1  flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
-          <a
-            href="/?demo=true"
-            target="_blank"
-            rel="noreferrer"
-            type="button"
-            className="button-green text-gray-200  my-2 flex items-center"
-          >
-            View a Demo
-          </a>
+          <Link href="/demo">
+            <a
+              className="button-green text-gray-200  my-2 flex items-center"
+              onClick={() => {
+                enqueueSnackbar("Loading demo, please wait...", {
+                  persist: true,
+                  preventDuplicate: true,
+                  anchorOrigin: {
+                    vertical: "bottom",
+                    horizontal: "center",
+                  },
+                });
+              }}
+            >
+              View a Demo
+            </a>
+          </Link>
         </div>
       </div>
       <div className="group lg:landscape:flex md:landscape:flex landscape:hidden animate__animated animate__fadeIn animate__delay-1s flex justify-center items-center absolute bottom-8 right-0 left-0">
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] text-slate-800 dark:text-white font-bold flex items-center rounded-md">
-          <a
-            href="https://discord.gg/W2zPcgG9F5 "
-            target="_blank"
-            rel="noreferrer"
-            className="mr-1"
-          >
+          <a href="/discord" target="_blank" rel="noreferrer" className="mr-1">
             <Tippy
               content={"Join our Discord Server"}
               animation="scale"

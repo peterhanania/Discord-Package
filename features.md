@@ -141,7 +141,7 @@ Your browser does not support embedded videos
 
 ### How to view a demonstration of the website
 
-If you want to view a demonstration of the website you can do so by clicking on the "Demo" link or by visiting [https://discordpackage.com?demo=true](https://discordpackage.com/?demo=true)
+If you want to view a demonstration of the website you can do so by clicking on the "Demo" link or by visiting [https://discordpackage.com/demo](https://discordpackage.com/demo)
 
 ##### 12
 

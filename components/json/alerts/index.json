@@ -4,5 +4,11 @@
     "id": "alert_1",
     "url": "https://discord.gg/W2zPcgG9F5",
     "button": "Join Now"
+  },
+  {
+    "title": "We need your Feedback, please join the Discord and leave some Feedback!",
+    "id": "alert_2",
+    "url": "/discord",
+    "button": "Give Feedback"
   }
 ]

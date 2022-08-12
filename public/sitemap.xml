@@ -4,6 +4,6 @@
     <loc>http://discordpackage.com</loc>
   </url>
   <url>
-    <loc>http://discordpackage.com?demo=true</loc>
+    <loc>http://discordpackage.com/demo</loc>
   </url>
 </urlset>
