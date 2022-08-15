@@ -1273,11 +1273,11 @@ export default function Data({ data, demo }: any): ReactElement {
                 src={
                   data?.user?.avatar
                     ? !data?.user?.avatar.includes(
-                        "https://better-default-Discord.netlify.app/Icons"
+                        "https://better-default-discord.netlify.app/Icons"
                       )
-                      ? `https://cdn.Discordapp.com/avatars/${data.user.id}/${data.user.avatar}.webp?size=1024`
+                      ? `https://cdn.discordapp.com/avatars/${data.user.id}/${data.user.avatar}.webp?size=1024`
                       : data.user.avatar
-                    : "https://cdn.Discordapp.com/embed/avatars/" +
+                    : "https://cdn.discordapp.com/embed/avatars/" +
                       Math.floor(Math.random() * 5) +
                       ".png"
                 }
@@ -1288,7 +1288,7 @@ export default function Data({ data, demo }: any): ReactElement {
                 onError={(e) => {
                   (e.target as HTMLImageElement).removeAttribute("srcset");
                   (e.target as HTMLImageElement).src =
-                    "https://cdn.Discordapp.com/embed/avatars/" +
+                    "https://cdn.discordapp.com/embed/avatars/" +
                     Math.floor(Math.random() * 5) +
                     ".png";
                 }}
