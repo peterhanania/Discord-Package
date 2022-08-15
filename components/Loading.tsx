@@ -8,7 +8,7 @@ export default function Loading({ skeleton }: any): ReactElement {
 
   useEffect(() => {
     if (skeleton) {
-      enqueueSnackbar("Rendering your Data, stay tight...", {
+      enqueueSnackbar("Rendering the Data, stay tight...", {
         persist: true,
         preventDuplicate: true,
         anchorOrigin: {

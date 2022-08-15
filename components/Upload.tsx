@@ -3427,7 +3427,10 @@ export default function Upload(): ReactElement {
           </Link>
         </div>
       </div>
-      <div className="group lg:landscape:flex md:landscape:flex landscape:hidden animate__animated animate__fadeIn animate__delay-1s flex justify-center items-center absolute bottom-8 right-0 left-0">
+      <div
+        id="made_by"
+        className="group lg:landscape:flex md:landscape:flex landscape:hidden animate__animated animate__fadeIn animate__delay-1s flex justify-center items-center absolute bottom-8 right-0 left-0"
+      >
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] text-slate-800 dark:text-white font-bold flex items-center rounded-md">
           <a href="/discord" target="_blank" rel="noreferrer" className="mr-1">
             <Tippy
@@ -3513,8 +3516,11 @@ export default function Upload(): ReactElement {
             <div className="ml-3 justify-center items-center">
               <div
                 className="hover:bg-[#232323] p-1 hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden"
-                onClick={(e: any) => {
-                  e.target.parentElement.parentElement.parentElement.remove();
+                onClick={() => {
+                  const madeBy = document.getElementById("made_by");
+                  if (madeBy) {
+                    madeBy.remove();
+                  }
                 }}
               >
                 <svg
