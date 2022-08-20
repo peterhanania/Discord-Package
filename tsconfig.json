@@ -31,5 +31,5 @@
     "tailwind.config.js",
     "postcss.config.js",
     "components/utils/index.js"
-  ]
+, "lib/ga/index.js"  ]
 }

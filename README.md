@@ -22,7 +22,7 @@
 
 Ever wondered what Data discord collects? Or did you ever want to view what's inside of a discord package? Discord Package is a customisable tool that allows you to view your data in a fancy way. You could also use our exporting feature to share your selected data with your friends.
 
-This service **does not** use any third party services and does not collect any data. This Repo is directly hosted via Netlify to discordpackage.com
+This Repo is directly hosted via Netlify to discordpackage.com
 
 #### [Join the Discord Server](https://discord.com/invite/W2zPcgG9F5)
 
@@ -151,7 +151,7 @@ This service **does not** use any third party services and does not collect any 
 
 ### Notice
 
-This project **does not** store any information, and does not have any third party services. If you would like to self host it yourself, you could follow the following instructions.
+This project **does not** store any information, and does not have any third party services other than google analytics. If you would like to self host it yourself, you could follow the following instructions.
 
 ### Production Deployment
 

@@ -5,6 +5,23 @@ export default function Document() {
     <Html>
       <Head>
         <>
+          {/* Global Site Tag (gtag.js) - Google Analytics */}
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+          />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+              page_path: window.location.pathname,
+            });
+          `,
+            }}
+          />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
@@ -21,7 +38,10 @@ export default function Document() {
             name="description"
             content="Discord Data Package Viewer makes it easy to explore your discord data package."
           />
-          <meta name="image" content="https://discordpackage.com/discord-package.png" />
+          <meta
+            name="image"
+            content="https://discordpackage.com/discord-package.png"
+          />
           <meta
             name="keywords"
             content="discord package, discord, discord package viewer, discord data package explorer, view your discord package"

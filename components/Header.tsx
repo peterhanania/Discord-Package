@@ -279,7 +279,7 @@ export default function Header() {
                     <br />
                     <br />
                     This project does not store any information, and does not
-                    have any third party services.
+                    have any third party services other than google analytics.
                     <br />
                     <br />
                     This website is also deployed on{" "}

@@ -15,7 +15,7 @@
 **Privacy**
 We understand that most websites shared on Discord are scams. They tend to steal your credentials and information but rest assured that we are not one of them.
 
-> We **do not** store any form of data as **we don't** have any third party services.
+> We **do not** store any form of data as **we don't** have any third party services other than google analytics.
 
 > Our code is **fully open sourced** and available for inspection on the Github repository.
 

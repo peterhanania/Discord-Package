@@ -149,7 +149,7 @@ If you want to view a demonstration of the website you can do so by clicking on 
 
 We understand that most websites shared on Discord are scams. They tend to steal your credentials and information but rest assured that we are not one of them.
 
-- We do not store any form of data as we don't have any third party services.
+- We do not store any form of data
 
 - Our code is fully open sourced and available for inspection on the Github repository.
 - We do not have a backend server. Everything runs on the frontend.

@@ -5,10 +5,13 @@ import "./styles/skeleton.scss";
 import "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
-import React from "react";
+import React, {useEffect} from "react";
 import Loading from "../components/Loading";
+import { useRouter } from "next/router";
 import { AppProps } from "next/app";
 import { SnackbarProvider } from "notistack";
+
+import * as ga from '../lib/ga'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = React.useState(true);
@@ -50,6 +53,23 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       "font-size: 0.8rem; font-weight: bold; color: #fff; background: #000; padding: 0.3rem;"
     );
   }, []);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      ga.pageview(url);
+    };
+    //When the component is mounted, subscribe to router changes
+    //and log those page views
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    // If the component is unmounted, unsubscribe
+    // from the event with the `off` method
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
 
   return loading ? (
     <SnackbarProvider>
