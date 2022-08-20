@@ -55,7 +55,7 @@
     "undocumented": false
   },
   "INTERNAL_APPLICATION": {
-    "description": "An internal flag accidentally leaked to the client's private flags Relates to partner/verification applications but nothing else is known",
+    "description": "{p_1} requested verification and/or partnership for a server before (Internal flag)",
     "shift": 11,
     "undocumented": true
   },
