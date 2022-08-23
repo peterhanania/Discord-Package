@@ -1032,7 +1032,7 @@ function copyToClipboard(value: string) {
   document.body.appendChild(el);
   el.select();
   document.execCommand("copy");
-  document.body.removeChild(el);
+  document.body?.removeChild(el);
 }
 
 export default function Data({ data, demo }: any): ReactElement {
@@ -1819,7 +1819,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   Object.keys(data?.messages?.mentionCount)?.length > 0 ? (
                     <Tippy
                       content={
-                        Object.values(data.messages.mentionCount).reduce(
+                        Object.values(data.messages.mentionCount)?.reduce(
                           (a: any, b: any): number => a + b
                         ) + " Mentions"
                       }
