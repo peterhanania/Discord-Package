@@ -25,10 +25,10 @@ export default function Document() {
 
           {/* eslint-disable-next-line @next/next/no-sync-scripts */}
           <script
-            data-ad-client="ca-pub-7631334792930149"
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-          />
-          
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7631334792930149"
+            crossOrigin="anonymous"
+          ></script>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
