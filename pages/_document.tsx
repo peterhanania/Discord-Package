@@ -1,10 +1,16 @@
 import { Html, Head, Main, NextScript } from "next/document";
-import Script from "next/script";
+
 export default function Document() {
   return (
     <Html>
       <Head>
         <>
+          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_ADSENSE}`}
+            crossOrigin="anonymous"
+          ></script>
           {/* Global Site Tag (gtag.js) - Google Analytics */}
           <script
             async
@@ -22,13 +28,6 @@ export default function Document() {
           `,
             }}
           />
-
-          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-          <script
-            async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7631334792930149"
-            crossOrigin="anonymous"
-          ></script>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
