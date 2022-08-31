@@ -4,21 +4,29 @@ export default function Document() {
   return (
     <Html>
       <Head>
-        <>
-          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-          <script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_ADSENSE}`}
-            crossOrigin="anonymous"
-          ></script>
-          {/* Global Site Tag (gtag.js) - Google Analytics */}
-          <script
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-          />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
+        {/* google adsense */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: ${process.env.NEXT_PUBLIC_GOOGLE_ADSENSE},
+            enable_page_level_ads: true
+            });
+            `,
+          }}
+        />
+        {/* Global Site Tag (gtag.js) - Google Analytics */}
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -26,63 +34,62 @@ export default function Document() {
               page_path: window.location.pathname,
             });
           `,
-            }}
-          />
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
-            rel="stylesheet"
-          />
-          <meta name="theme-color" content="#5865F2" />
-          <meta
-            name="title"
-            content="✨ Discord Data Package Viewer and Explorer ✨ "
-          />
-          <meta
-            name="description"
-            content="Discord Data Package Viewer makes it easy to explore your discord data package."
-          />
-          <meta
-            name="image"
-            content="https://discordpackage.com/discord-package.png"
-          />
-          <meta
-            name="keywords"
-            content="discord package, discord, discord package viewer, discord data package explorer, view your discord package"
-          />
-          <meta name="robots" content="index, follow" />
-          <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-          <meta name="language" content="English" />
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://discordpackage.com" />
-          <meta
-            property="og:title"
-            content="✨ Discord Data Package Viewer and Explorer ✨"
-          />
-          <meta
-            property="og:description"
-            content="Discord Data Package Viewer makes it easy to explore your discord data package."
-          />
-          <meta
-            property="og:image"
-            content="https://discordpackage.com/thumbnail.png"
-          />
-          <meta property="twitter:card" content="summary_large_image" />
-          <meta property="twitter:url" content="https://discordpackage.com" />
-          <meta
-            property="twitter:title"
-            content="Discord Data Package Viewer and Explorer"
-          />
-          <meta
-            property="twitter:description"
-            content="Discord Data Package Viewer makes it easy to explore your discord data package."
-          />
-          <meta
-            property="twitter:image"
-            content="https://discordpackage.com/discord-package.png"
-          />
-        </>
+          }}
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+          rel="stylesheet"
+        />
+        <meta name="theme-color" content="#5865F2" />
+        <meta
+          name="title"
+          content="✨ Discord Data Package Viewer and Explorer ✨ "
+        />
+        <meta
+          name="description"
+          content="Discord Data Package Viewer makes it easy to explore your discord data package."
+        />
+        <meta
+          name="image"
+          content="https://discordpackage.com/discord-package.png"
+        />
+        <meta
+          name="keywords"
+          content="discord package, discord, discord package viewer, discord data package explorer, view your discord package"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="language" content="English" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://discordpackage.com" />
+        <meta
+          property="og:title"
+          content="✨ Discord Data Package Viewer and Explorer ✨"
+        />
+        <meta
+          property="og:description"
+          content="Discord Data Package Viewer makes it easy to explore your discord data package."
+        />
+        <meta
+          property="og:image"
+          content="https://discordpackage.com/thumbnail.png"
+        />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://discordpackage.com" />
+        <meta
+          property="twitter:title"
+          content="Discord Data Package Viewer and Explorer"
+        />
+        <meta
+          property="twitter:description"
+          content="Discord Data Package Viewer makes it easy to explore your discord data package."
+        />
+        <meta
+          property="twitter:image"
+          content="https://discordpackage.com/discord-package.png"
+        />
         <noscript>
           <div
             style={{
