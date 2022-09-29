@@ -10,7 +10,6 @@ import Loading from "../components/Loading";
 import { useRouter } from "next/router";
 import { AppProps } from "next/app";
 import { SnackbarProvider } from "notistack";
-
 import * as ga from '../lib/ga'
 
 export default function MyApp({ Component, pageProps }: AppProps) {

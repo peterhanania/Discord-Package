@@ -244,6 +244,28 @@ export default function Header() {
 
                 <div className="overflow-y-auto h-[340px]">
                   <div className="py-4 px-2 lg:py-6 lg:px-8 md:py-6 md:px-8 sm:py-6 sm:px-8 text-white font-bold text-lg">
+                    <u className="mr-1">
+                      <a
+                        className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
+                        href="/privacy"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        PRIVACY
+                      </a>
+                    </u>
+                    |
+                    <u className="ml-1">
+                      <a
+                        className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
+                        href="/discord"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        DISCORD
+                      </a>
+                    </u>
+                    <br />
                     Discord Package Explorer is a new tool made by{" "}
                     <a
                       className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
@@ -594,15 +616,7 @@ export default function Header() {
           >
             Open Sourced
           </a>{" "}
-          Discord Package Explorer influenced by{" "}
-          <a
-            target="_blank"
-            rel="noreferrer"
-            className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold"
-            href="https://ddpe.androz2091.fr"
-          >
-            ddpe.androz2091.fr
-          </a>
+          Discord Package Explorer; Read your data with ease!
         </p>
         <div className="portrait:hidden lg:hidden landscape:flex md:landscape:hidden lg:text-xl md:text-xl text-sm mt-1 animate__delay-1s animate__animated animate__fadeIn flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
           <Link href="/demo" target="_blank" rel="noreferrer" type="button">
