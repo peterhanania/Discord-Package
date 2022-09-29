@@ -45,7 +45,7 @@ export default function Document() {
         <meta name="theme-color" content="#5865F2" />
         <meta
           name="title"
-          content="✨ Discord Data Package Viewer and Explorer ✨ "
+          content="📦 Discord Data Package Viewer and Explorer ✨ "
         />
         <meta
           name="description"
@@ -66,7 +66,7 @@ export default function Document() {
         <meta property="og:url" content="https://discordpackage.com" />
         <meta
           property="og:title"
-          content="✨ Discord Data Package Viewer and Explorer ✨"
+          content="📦 Discord Data Package Viewer and Explorer ✨"
         />
         <meta
           property="og:description"

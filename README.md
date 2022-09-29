@@ -2,7 +2,7 @@
  <br>
   <a href="https://github.com/peterhanania"><img src="https://i.imgur.com/JXomrnb.png"></a>
   <br>
-  Discord Package
+  📦 Discord Package
   <br>
 </h1>
 
@@ -20,7 +20,7 @@
 
 </div>
 
-Ever wondered what Data discord collects? Or did you ever want to view what's inside of a discord package? Discord Package is a customisable tool that allows you to view your data in a fancy way. You could also use our exporting feature to share your selected data with your friends.
+✨Ever wondered what Data discord collects? Or did you ever want to view what's inside of a discord package? Discord Package is a customisable tool that allows you to view your data in a fancy way. You could also use our exporting feature to share your selected data with your friends :)
 
 This Repo is directly hosted via Netlify to discordpackage.com
 
