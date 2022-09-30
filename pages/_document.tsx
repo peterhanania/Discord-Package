@@ -5,7 +5,7 @@ export default function Document() {
     <Html>
       <Head>
         {/* google adsense */}
-        <script
+        {/* <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
         />
@@ -18,7 +18,7 @@ export default function Document() {
             });
             `,
           }}
-        />
+        /> */}
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <script
           async

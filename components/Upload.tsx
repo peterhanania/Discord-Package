@@ -29,7 +29,6 @@ import { Suspense } from "react";
 import Link from "next/link";
 import Loading from "./Loading";
 import { useSnackbar } from "notistack";
-import GoogleAds from "./ga";
 
 interface IObjectKeys {
   [key: string]: any;
@@ -3456,15 +3455,6 @@ export default function Upload(): ReactElement {
             </p>
           </div>
         </div>
-        {process.env.NEXT_PUBLIC_SLOT_1 ? (
-          <GoogleAds
-            format="auto"
-            slot={process.env.NEXT_PUBLIC_SLOT_1}
-            responsive="true"
-          />
-        ) : (
-          ""
-        )}
         <h1
           className="mt-4 text-2xl text-black dark:text-white flex items-center justify-center uppercase"
           style={{
@@ -3503,15 +3493,6 @@ export default function Upload(): ReactElement {
             </a>
           </div>
         </div>
-        {process.env.NEXT_PUBLIC_SLOT_2 ? (
-          <GoogleAds
-            format="autorelaxed"
-            slot={process.env.NEXT_PUBLIC_SLOT_2}
-            responsive="false"
-          />
-        ) : (
-          ""
-        )}
         <div
           id="made_by"
           className="flex items-center justify-center mb-4 mt-[2%]"

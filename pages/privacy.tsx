@@ -116,7 +116,6 @@ export default function Home() {
               <p className="py-2 font-bold">Third parties</p>
               <ul className="list-disc">
                 <li>Google Analytics</li>
-                <li>Google Adsense</li>
               </ul>
               <p className="font-bold">General Contact Information</p>
               <p>peter@pogy.xyz</p>

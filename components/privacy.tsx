@@ -49,7 +49,7 @@ export default function Privacy(): ReactElement {
                   <div>
                     Discord Package <b className="px-1">does not</b> store any
                     information about you. We do not use any third party
-                    services other than google analytics & google adsense. This
+                    services other than google analytics. This
                     website is directly hosted from the
                     <a
                       className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1"
