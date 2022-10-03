@@ -491,7 +491,7 @@ export default function Upload(): ReactElement {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
                   chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                    `[${moment(Date.now()).format("h:mm:ss a LTS")}]`
                   ) +
                   `  ${chalk.yellow(`Loaded user premium until`)}`
               );
