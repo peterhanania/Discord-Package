@@ -1894,7 +1894,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     content={(Badges as any)[m].description
                       .replace(
                         /{until}/g,
-                        moment(data?.user?.premium_until).format("MMMM Do YYYY")
+                        moment(data?.user?.premium_until).format("MMMM Do YYYY LTC")
                       )
                       .replace(/{p_2}/g, data?.dataFile ? "Their" : "Your")
                       .replace(/{p_1}/g, data?.dataFile ? "They" : "You")}
