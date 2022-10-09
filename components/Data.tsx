@@ -8,7 +8,7 @@ import currencies from "./json/other/currencies.json";
 import Utils from "./utils";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, Fragment, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import EventsJSON from "./json/events.json";
 import Settings from "./settings";
@@ -24,15 +24,22 @@ import {
   topGroupDMsAtom,
 } from "./atoms/data";
 import { useAtom } from "jotai";
-
+import Driver from "driver.js";
+import "driver.js/dist/driver.min.css";
 // twe-emoji, will remove if it uses so much bandwidth
 import Twemoji from "react-twemoji";
+import { Dialog, Transition } from "@headlessui/react";
 
 if (typeof Highcharts === "object") {
   HighchartsExporting(Highcharts);
   HighchartsExportData(Highcharts);
   Highchartsaccessibility(Highcharts);
 }
+
+import { useCallback } from "react";
+import type { Container, Engine } from "tsparticles-engine";
+import Particles from "react-particles";
+import { loadFull } from "tsparticles";
 
 function loadTenor() {
   var embedurl = "https://tenor.com/embed/";
@@ -1065,8 +1072,522 @@ export default function Data({ data, demo }: any): ReactElement {
     });
   };
 
+  const [particles, setParticles] = useState<boolean>(false);
+  const particlesInit = useCallback(async (engine: Engine) => {
+    console.log(engine);
+    await loadFull(engine);
+  }, []);
+
+  const particlesLoaded = useCallback(
+    async (container: Container | undefined) => {
+      await console.log(container);
+    },
+    []
+  );
+
+  const [showWalkthrough, setShowWalkthrough] = useState<boolean>(false);
+  useEffect(() => {
+    if (!localStorage.getItem("showWalkthrough")) {
+      setTimeout(() => {
+        setShowWalkthrough(true);
+      }, 3000);
+    }
+  }, []);
+
+  function beginWalkthrough() {
+    const driver = new Driver({
+      animate: true, // Whether to animate or not
+      opacity: 0.75,
+      stageBackground: "var(--bg-color)",
+      allowClose: false,
+    });
+
+    driver.defineSteps([
+      {
+        element: "#walkthrough-1",
+        popover: {
+          className: "walkthrough",
+          title: "Let's get started! 😊",
+          description:
+            "This box right here, will help you export your data, or regenerate fake data if you are having a demonstration. You can also click on the settings icon to toggle themes and you can hover each of the buttons to know more information. TIP: You can use your keyboard arrows to toggle between steps",
+          position: "bottom",
+        },
+      },
+      {
+        element: "#blur_1_div",
+        popover: {
+          className: "walkthrough",
+          title: "Basic user information",
+          description:
+            "This box right here, will give you an overview of your account. Your badges that can be aquired by achieving Discord goals, and some icons that you can hover and click to know more about them. (Ex. messages, favorite words, links) ",
+          position: "bottom",
+        },
+        onNext: () => {
+          setEmojiType("topEmojis");
+          driver.preventMove();
+          setTimeout(() => {
+            driver.moveNext();
+          }, 200);
+        },
+      },
+      {
+        element: "#blur_2_div",
+        popover: {
+          className: "walkthrough",
+          title: "View emoji data",
+          description:
+            "In this box, you will be able to view your custom emojis, normal emojis, and recently used emojis from Discord. For this one right here, you can view your most used normal emojis. TIP: click on a emoji to copy it to your clipboard!",
+          position: "bottom",
+        },
+        onNext: () => {
+          setEmojiType("topCustomEmojis");
+          driver.preventMove();
+          setTimeout(() => {
+            driver.moveNext();
+          }, 1000);
+        },
+      },
+      {
+        element: "#blur_2_div_1",
+        popover: {
+          className: "walkthrough",
+          title: "View custom emojis",
+          description:
+            "In this box, you will be able to view your custom emojis. We all like sending custom emojis :) TIP: click on a emoji to copy it to your clipboard!",
+          position: "bottom",
+        },
+        onNext: () => {
+          setEmojiType("recentEmojis");
+          driver.preventMove();
+          setTimeout(() => {
+            driver.moveNext();
+          }, 500);
+        },
+        onPrevious: () => {
+          setEmojiType("topEmojis");
+        },
+      },
+      {
+        element: "#blur_2_div",
+        popover: {
+          className: "walkthrough",
+          title: "View recent emojis",
+          description:
+            "Recent emojis are the emojis collected by Discord when you use them recently. You can view them here. TIP: click on a emoji to copy it to your clipboard!",
+          position: "bottom",
+        },
+        onPrevious: () => {
+          setEmojiType("topCustomEmojis");
+        },
+      },
+      {
+        element: "#blur_3_div",
+        popover: {
+          className: "walkthrough",
+          title: "User Preferences",
+          description:
+            "View some of your discord preferences. TIP: you can click on the guild count to get more detailed information.",
+          position: "bottom",
+        },
+        onPrevious: () => {
+          setEmojiType("recentEmojis");
+        },
+      },
+      {
+        element: "#blur_4_div",
+        popover: {
+          className: "walkthrough",
+          title: "User Connections",
+          description:
+            "View your Discord connections. TIP: you can click on some connections to get redirected to your account or you can hover them to check your username. ",
+          position: "bottom",
+        },
+        onNext: () => {
+          document
+            .getElementById("blur_1_div")
+            ?.scrollIntoView({ behavior: "smooth" });
+          setGraphOption("hourly");
+        },
+      },
+      {
+        element: "#blur_5_div",
+        popover: {
+          className: "walkthrough",
+          title: "📊 User Activity",
+          description:
+            "View what hour you are most active on Discord.. Is it during the day or at night? 🤔. TIP: you can hover to view more information and drag click to zoom into the chart, you can even click on the icon next to Active Hours to toggle between line and bar graph.",
+          position: "top",
+        },
+        onNext: () => {
+          setGraphOption("daily");
+        },
+      },
+      {
+        element: "#blur_5_div_1",
+        popover: {
+          className: "walkthrough",
+          title: "📊 User Activity: Daily",
+          description:
+            "View what day you are most active on Discord.. Weekends? 🤔. TIP: you can hover to view more information and drag click to zoom into the chart, you can even click on the icon next to Active Days to toggle between line and bar graph.",
+          position: "top",
+        },
+        onNext: () => {
+          setGraphOption("monthly");
+        },
+        onPrevious: () => {
+          setGraphOption("hourly");
+        },
+      },
+      {
+        element: "#blur_5_div",
+        popover: {
+          className: "walkthrough",
+          title: "📊 User Activity: Monthly",
+          description:
+            "View what month you are most active on Discord.. December? 🤔. TIP: you can hover to view more information and drag click to zoom into the chart, you can even click on the icon next to Active Months to toggle between line and bar graph.",
+          position: "top",
+        },
+        onNext: () => {
+          setGraphOption("yearly");
+        },
+        onPrevious: () => {
+          setGraphOption("daily");
+        },
+      },
+      {
+        element: "#blur_5_div_1",
+        popover: {
+          className: "walkthrough",
+          title: "📊 User Activity: Yearly",
+          description:
+            "View what year you are most active on Discord.. 2022? 🤔. TIP: you can hover to view more information and drag click to zoom into the chart, you can even click on the icon next to Active Years to toggle between line and bar graph.",
+          position: "top",
+        },
+        onPrevious: () => {
+          setGraphOption("monthly");
+        },
+      },
+      {
+        element: "#blur_6_div",
+        popover: {
+          className: "walkthrough",
+          title: "Users.. Here we are!",
+          description:
+            "This box will show you all the users discord has recorded you texting with, along with more information. Hover the icons on the right or click them to get to know more! You can also use the filter input to filter by name, or ID",
+          position: "right",
+        },
+        onNext: () => {
+          setMessageType("channelMode");
+        },
+        onPrevious: () => {
+          setGraphOption("yearly");
+        },
+      },
+      {
+        element: "#blur_7_div",
+        popover: {
+          className: "walkthrough",
+          title: "Top Channels",
+          description:
+            "This box will show you the recorded messages in Discord Channels. You can hover the icons on the right or click them to get to know more! You can also use the filter input to filter by name, or ID, or guild name",
+          position: "left",
+        },
+        onNext: () => {
+          setMessageType("guildMode");
+        },
+      },
+      {
+        element: "#blur_7_div_1",
+        popover: {
+          className: "walkthrough",
+          title: "Top Guilds",
+          description:
+            "This box will show you the recorded messages in your top guilds. You can hover the icons on the right or click them to get to know more! You can also use the filter input to filter by name, or ID, or guild name",
+          position: "left",
+        },
+        onNext: () => {
+          setMessageType("dmMode");
+        },
+        onPrevious: () => {
+          setMessageType("channelMode");
+        },
+      },
+      {
+        element: "#blur_7_div",
+        popover: {
+          className: "walkthrough",
+          title: "Top Group DMs",
+          description:
+            "This box will show you the recorded messages in your group DMs aka group chat. You can hover the icons on the right or click them to get to know more! You can also use the filter input to filter by name, or ID, or group dm name",
+          position: "left",
+        },
+        onPrevious: () => {
+          setMessageType("guildMode");
+        },
+      },
+      {
+        element: "#blur_8_div",
+        popover: {
+          className: "walkthrough",
+          title: "🤖 Your Discord Bots",
+          description:
+            "This box will show you the recorded bots on your account, you can hover each for more information and you can click the avatar to copy the ID.",
+          position: "right",
+        },
+        onPrevious: () => {
+          setMessageType("dmMode");
+        },
+      },
+      {
+        element: "#blur_9_div",
+        popover: {
+          className: "walkthrough",
+          title: "💰 Your payments",
+          description:
+            "View information about your payments on Discord. How much did you spend? 💸",
+          position: "left",
+        },
+      },
+      {
+        element: "#blur_10_div",
+        popover: {
+          className: "walkthrough",
+          title: "📈 Your Statistics",
+          description:
+            "This box will show you the recorded analytic data used by discord. Analytic data is used to improve Discord and to help you get the best experience possible.",
+          position: "top",
+        },
+      },
+      {
+        element: "#walkthrough-1",
+        popover: {
+          className: "walkthrough",
+          title: "🎉 You're all set!",
+          description:
+            "That's all, thank you for taking the quick guide to get to know more about Discord Package & The data used by Discord!",
+          position: "bottom",
+        },
+        onNext: () => {
+          setParticles(true);
+
+          setTimeout(() => {
+            setParticles(false);
+          }, 5000);
+        },
+      },
+    ]);
+
+    driver.start();
+  }
+
   return data ? (
     <div className="h-screen">
+      <Transition
+        show={showWalkthrough}
+        enter="transition-opacity delay-200 duration-200"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-150"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+        as={Fragment}
+      >
+        <Dialog
+          onClose={() => {
+            localStorage.setItem("showWalkthrough", "true");
+            setShowWalkthrough(false);
+          }}
+          className="fixed z-[999999] inset-0 overflow-y-auto"
+        >
+          <div className="flex items-center justify-center min-h-screen">
+            <Dialog.Overlay className="fixed inset-0  bg-black/30" />
+            <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
+              <div className="relative shadow-lg bg-[#36393f] ">
+                <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
+                  <h3
+                    className="text-xl font-medium text-white uppercase"
+                    style={{
+                      fontFamily:
+                        "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+                    }}
+                  >
+                    get Started with discord package
+                  </h3>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("showWalkthrough", "true");
+                      setShowWalkthrough(false);
+                    }}
+                    type="button"
+                    className="text-gray-400 bg-transparent hover:bg-[#2f3136] hover:text-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div className="overflow-y-auto h-[560px] px-5 py-2">
+                  <code className="dark:text-white text-black font-bold">
+                    🎊 Welcome to Discord Package, we hope you enjoy your visit.
+                    Are you interested in a 2 minute walkthrough/guide to help
+                    you get most of the features?
+                  </code>
+
+                  <div className="mt-2">
+                    <Image
+                      src="/help/step_by_step.png"
+                      alt="steps"
+                      height={550}
+                      width={1000}
+                      unoptimized={true}
+                    ></Image>
+                  </div>
+                </div>
+
+                <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
+                  <button
+                    onClick={() => {
+                      setShowWalkthrough(false);
+                      localStorage.setItem("showWalkthrough", "true");
+                      beginWalkthrough();
+                    }}
+                    type="button"
+                    className="button-green text-gray-200 mr-2"
+                  >
+                    Let&apos;s do it!
+                  </button>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("showWalkthrough", "true");
+                      setShowWalkthrough(false);
+                    }}
+                    type="button"
+                    className="button-cancel text-gray-200"
+                  >
+                    No Thanks
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+      {particles ? (
+        <Particles
+          id="tsparticles"
+          init={particlesInit}
+          loaded={particlesLoaded}
+          options={{
+            fullScreen: {
+              zIndex: 999999999999999,
+            },
+            particles: {
+              color: {
+                value: ["#FFFFFF", "#FFd700"],
+              },
+              move: {
+                direction: "bottom",
+                enable: true,
+                outModes: {
+                  default: "out",
+                },
+                size: true,
+                speed: {
+                  min: 1,
+                  max: 3,
+                },
+              },
+              number: {
+                value: 500,
+                density: {
+                  enable: true,
+                  area: 800,
+                },
+              },
+              opacity: {
+                value: 1,
+                animation: {
+                  enable: false,
+                  startValue: "max",
+                  destroy: "min",
+                  speed: 0.3,
+                  sync: true,
+                },
+              },
+              rotate: {
+                value: {
+                  min: 0,
+                  max: 360,
+                },
+                direction: "random",
+                move: true,
+                animation: {
+                  enable: true,
+                  speed: 60,
+                },
+              },
+              tilt: {
+                direction: "random",
+                enable: true,
+                move: true,
+                value: {
+                  min: 0,
+                  max: 360,
+                },
+                animation: {
+                  enable: true,
+                  speed: 60,
+                },
+              },
+              shape: {
+                type: ["circle", "square"],
+                options: {},
+              },
+              size: {
+                value: {
+                  min: 2,
+                  max: 4,
+                },
+              },
+              roll: {
+                darken: {
+                  enable: true,
+                  value: 30,
+                },
+                enlighten: {
+                  enable: true,
+                  value: 30,
+                },
+                enable: true,
+                speed: {
+                  min: 15,
+                  max: 25,
+                },
+              },
+              wobble: {
+                distance: 30,
+                enable: true,
+                move: true,
+                speed: {
+                  min: -15,
+                  max: 15,
+                },
+              },
+            },
+          }}
+        />
+      ) : (
+        ""
+      )}
       <ToastContainer
         position="top-right"
         autoClose={false}
@@ -1076,9 +1597,44 @@ export default function Data({ data, demo }: any): ReactElement {
         pauseOnFocusLoss
         draggable
       />
-      <div className="lg:flex sm:flex md:flex items-center lg:mx-10 md:mx-8 mx-2 lg:mt-4 md:mt-4 mt-2">
+      <div
+        className="lg:flex sm:flex md:flex items-center lg:mx-10 md:mx-8 mx-2 lg:mt-4 md:mt-4 mt-2"
+        id="walkthrough-1"
+      >
+        <Tippy
+          zIndex={999999999999999}
+          content={
+            <>
+              <div className="text-white text-lg font-bold">Take a guide</div>
+              <p className="text-white text-lg ">
+                Get to know all the features within the site in just 2 minutes
+                using a simple walkthrough! 😊
+              </p>
+            </>
+          }
+          animation="scale"
+          className="shadow-xl"
+        >
+          <div
+            onClick={() => {
+              beginWalkthrough();
+            }}
+            className="button-green text-gray-200 hidden md:flex lg:flex items-center gap-1 h-[90px] lg:ml-2 md:ml-2 sm:ml-2 lg:my-0 md:my-0 sm:my-0 my-2 "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24"
+              width="24"
+              className="fill-white cursor-pointer "
+            >
+              <path d="M11 17h2v-6h-2Zm1-8q.425 0 .713-.288Q13 8.425 13 8t-.287-.713Q12.425 7 12 7t-.712.287Q11 7.575 11 8t.288.712Q11.575 9 12 9Zm0 13q-3.475-.875-5.737-3.988Q4 14.9 4 11.1V5l8-3 8 3v6.1q0 3.8-2.262 6.912Q15.475 21.125 12 22Z" />
+            </svg>
+            <p>Guide me</p>
+          </div>
+        </Tippy>
         {!data.dataFile ? (
           <Tippy
+            zIndex={999999999999999}
             content={
               <>
                 <div className="text-white text-lg font-bold">Why Export?</div>
@@ -1125,7 +1681,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   URL.revokeObjectURL(url);
                 }, 100);
               }}
-              className="button-green text-gray-200 flex items-center gap-1 h-[90px] "
+              className="button-green text-gray-200 flex items-center gap-1 h-[90px] lg:ml-2 md:ml-2 sm:ml-2 lg:my-0 md:my-0 sm:my-0 my-2 "
             >
               <svg
                 className="fill-white cursor-pointer"
@@ -1146,6 +1702,7 @@ export default function Data({ data, demo }: any): ReactElement {
         {demo ? (
           <>
             <Tippy
+              zIndex={999999999999999}
               content={
                 <>
                   <div className="text-white text-lg font-bold">
@@ -1313,6 +1870,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.characterCount &&
                   data?.messages?.messageCount ? (
                     <Tippy
+                      zIndex={999999999999999}
                       content={
                         data.messages.characterCount
                           .toString()
@@ -1337,6 +1895,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     </Tippy>
                   ) : (
                     <Tippy
+                      zIndex={999999999999999}
                       content={
                         (data?.dataFile ? "They " : "You ") + "have no messages"
                       }
@@ -1356,6 +1915,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.favoriteWords &&
                   data?.messages?.favoriteWords.length > 0 ? (
                     <Tippy
+                      zIndex={999999999999999}
                       content={`${
                         data.messages.favoriteWords.length
                       } Favorite Word${
@@ -1405,6 +1965,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     </Tippy>
                   ) : (
                     <Tippy
+                      zIndex={999999999999999}
                       content={
                         (data?.dataFile ? "They " : "You ") +
                         "have no favorite words"
@@ -1425,6 +1986,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.topCursed &&
                   data?.messages?.topCursed?.length > 0 ? (
                     <Tippy
+                      zIndex={999999999999999}
                       content={
                         data.messages.topCursed.length
                           .toString()
@@ -1477,6 +2039,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     </Tippy>
                   ) : (
                     <Tippy
+                      zIndex={999999999999999}
                       content={
                         (data?.dataFile ? "They " : "You ") +
                         "have no curse words"
@@ -1497,6 +2060,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.topLinks &&
                   data?.messages?.topLinks?.length > 0 ? (
                     <Tippy
+                      zIndex={999999999999999}
                       content={
                         data.messages.topLinks.length +
                         " Links | Sent " +
@@ -1555,6 +2119,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     </Tippy>
                   ) : (
                     <Tippy
+                      zIndex={999999999999999}
                       content={
                         (data?.dataFile ? "They " : "You ") + "have no links"
                       }
@@ -1574,6 +2139,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.topDiscordLinks &&
                   data?.messages?.topDiscordLinks?.length > 0 ? (
                     <Tippy
+                      zIndex={999999999999999}
                       content={
                         data.messages.topDiscordLinks.length +
                         " Discord Links | Sent " +
@@ -1632,6 +2198,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     </Tippy>
                   ) : (
                     <Tippy
+                      zIndex={999999999999999}
                       content={
                         (data?.dataFile ? "They " : "You ") +
                         "have no Discord links"
@@ -1652,6 +2219,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.oldestMessages &&
                   data?.messages?.oldestMessages?.length > 0 ? (
                     <Tippy
+                      zIndex={999999999999999}
                       content={"Your 1000 Oldest Messages"}
                       animation="scale"
                       className="shadow-xl"
@@ -1707,6 +2275,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     </Tippy>
                   ) : (
                     <Tippy
+                      zIndex={999999999999999}
                       content={
                         (data?.dataFile ? "They " : "You ") + "have no messages"
                       }
@@ -1726,6 +2295,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.attachmentCount &&
                   data?.messages?.attachmentCount?.length > 0 ? (
                     <Tippy
+                      zIndex={999999999999999}
                       content={
                         data.messages.attachmentCount.length + " Attachments"
                       }
@@ -1818,6 +2388,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.mentionCount &&
                   Object.keys(data?.messages?.mentionCount)?.length > 0 ? (
                     <Tippy
+                      zIndex={999999999999999}
                       content={
                         Object.values(data.messages.mentionCount)?.reduce(
                           (a: any, b: any): number => a + b
@@ -1890,6 +2461,7 @@ export default function Data({ data, demo }: any): ReactElement {
               {data?.user?.badges?.map((m: any, id: number) => {
                 return (
                   <Tippy
+                    zIndex={999999999999999}
                     key={id}
                     content={(Badges as any)[m].description
                       .replace(
@@ -1950,242 +2522,209 @@ export default function Data({ data, demo }: any): ReactElement {
               <path d="m16.1 13.3-1.45-1.45q.225-1.175-.675-2.2-.9-1.025-2.325-.8L10.2 7.4q.425-.2.862-.3Q11.5 7 12 7q1.875 0 3.188 1.312Q16.5 9.625 16.5 11.5q0 .5-.1.938-.1.437-.3.862Zm3.2 3.15-1.45-1.4q.95-.725 1.688-1.588.737-.862 1.262-1.962-1.25-2.525-3.588-4.013Q14.875 6 12 6q-.725 0-1.425.1-.7.1-1.375.3L7.65 4.85q1.025-.425 2.1-.638Q10.825 4 12 4q3.775 0 6.725 2.087Q21.675 8.175 23 11.5q-.575 1.475-1.512 2.738Q20.55 15.5 19.3 16.45Zm.5 6.15-4.2-4.15q-.875.275-1.762.413Q12.95 19 12 19q-3.775 0-6.725-2.087Q2.325 14.825 1 11.5q.525-1.325 1.325-2.463Q3.125 7.9 4.15 7L1.4 4.2l1.4-1.4 18.4 18.4ZM5.55 8.4q-.725.65-1.325 1.425T3.2 11.5q1.25 2.525 3.587 4.012Q9.125 17 12 17q.5 0 .975-.062.475-.063.975-.138l-.9-.95q-.275.075-.525.112Q12.275 16 12 16q-1.875 0-3.188-1.312Q7.5 13.375 7.5 11.5q0-.275.037-.525.038-.25.113-.525Zm7.975 2.325ZM9.75 12.6Z" />
             </svg>
           </div>
-          <div id="blur_2_div">
-            {emojiType ? (
-              <ul className="flex items-center rounded-lg mb-1">
-                <li className="flex gap-2">
-                  {data?.messages?.topEmojis &&
-                  data?.messages?.topEmojis?.length > 0 ? (
-                    <div
-                      className={
-                        "p-2 rounded-lg" +
-                        (emojiType !== "topEmojis"
-                          ? ""
-                          : " bg-gray-400 dark:bg-[#232323]")
-                      }
-                      onClick={() => {
-                        setEmojiType("topEmojis");
-                      }}
-                    >
-                      <Tippy content="Your Top Emojis" animation="scale">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="24"
-                          width="24"
-                          className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
+          <div id="blur_2_div_1">
+            {" "}
+            <div id="blur_2_div">
+              {emojiType ? (
+                <ul className="flex items-center rounded-lg mb-1">
+                  <li className="flex gap-2">
+                    {data?.messages?.topEmojis &&
+                    data?.messages?.topEmojis?.length > 0 ? (
+                      <div
+                        className={
+                          "p-2 rounded-lg" +
+                          (emojiType !== "topEmojis"
+                            ? ""
+                            : " bg-gray-400 dark:bg-[#232323]")
+                        }
+                        onClick={() => {
+                          setEmojiType("topEmojis");
+                        }}
+                      >
+                        <Tippy
+                          zIndex={999999999999999}
+                          content="Your Top Emojis"
+                          animation="scale"
                         >
-                          <path d="M15.7 11.2q.75 0 1.25-.5t.5-1.25q0-.75-.5-1.25t-1.25-.5q-.75 0-1.25.5t-.5 1.25q0 .75.5 1.25t1.25.5Zm-7.4 0q.75 0 1.25-.5t.5-1.25q0-.75-.5-1.25T8.3 7.7q-.75 0-1.25.5t-.5 1.25q0 .75.5 1.25t1.25.5ZM12 18q2.075 0 3.55-1.163 1.475-1.162 2.05-2.787H6.4q.575 1.625 2.05 2.787Q9.925 18 12 18Zm0 4.8q-2.25 0-4.213-.85-1.962-.85-3.424-2.312Q2.9 18.175 2.05 16.212 1.2 14.25 1.2 12t.85-4.225Q2.9 5.8 4.363 4.338q1.462-1.463 3.424-2.301Q9.75 1.2 12 1.2t4.225.837q1.975.838 3.438 2.301 1.462 1.462 2.299 3.437Q22.8 9.75 22.8 12q0 2.25-.838 4.212-.837 1.963-2.299 3.426Q18.2 21.1 16.225 21.95q-1.975.85-4.225.85Z" />
-                        </svg>
-                      </Tippy>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  {data?.messages?.topCustomEmojis &&
-                  data?.messages?.topCustomEmojis?.length > 0 ? (
-                    <div
-                      className={
-                        "p-2 rounded-lg" +
-                        (emojiType !== "topCustomEmojis"
-                          ? ""
-                          : " bg-gray-400 dark:bg-[#232323]")
-                      }
-                      onClick={() => {
-                        setEmojiType("topCustomEmojis");
-                      }}
-                    >
-                      <Tippy content="Your Top Custom Emojis" animation="scale">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="24"
-                          width="24"
-                          className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24"
+                            width="24"
+                            className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
+                          >
+                            <path d="M15.7 11.2q.75 0 1.25-.5t.5-1.25q0-.75-.5-1.25t-1.25-.5q-.75 0-1.25.5t-.5 1.25q0 .75.5 1.25t1.25.5Zm-7.4 0q.75 0 1.25-.5t.5-1.25q0-.75-.5-1.25T8.3 7.7q-.75 0-1.25.5t-.5 1.25q0 .75.5 1.25t1.25.5ZM12 18q2.075 0 3.55-1.163 1.475-1.162 2.05-2.787H6.4q.575 1.625 2.05 2.787Q9.925 18 12 18Zm0 4.8q-2.25 0-4.213-.85-1.962-.85-3.424-2.312Q2.9 18.175 2.05 16.212 1.2 14.25 1.2 12t.85-4.225Q2.9 5.8 4.363 4.338q1.462-1.463 3.424-2.301Q9.75 1.2 12 1.2t4.225.837q1.975.838 3.438 2.301 1.462 1.462 2.299 3.437Q22.8 9.75 22.8 12q0 2.25-.838 4.212-.837 1.963-2.299 3.426Q18.2 21.1 16.225 21.95q-1.975.85-4.225.85Z" />
+                          </svg>
+                        </Tippy>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                    {data?.messages?.topCustomEmojis &&
+                    data?.messages?.topCustomEmojis?.length > 0 ? (
+                      <div
+                        className={
+                          "p-2 rounded-lg" +
+                          (emojiType !== "topCustomEmojis"
+                            ? ""
+                            : " bg-gray-400 dark:bg-[#232323]")
+                        }
+                        onClick={() => {
+                          setEmojiType("topCustomEmojis");
+                        }}
+                      >
+                        <Tippy
+                          zIndex={999999999999999}
+                          content="Your Top Custom Emojis"
+                          animation="scale"
                         >
-                          <path d="M12 22.8q-2.225 0-4.2-.85t-3.437-2.312Q2.9 18.175 2.05 16.2 1.2 14.225 1.2 12t.85-4.2q.85-1.975 2.313-3.45Q5.825 2.875 7.8 2.025q1.975-.85 4.2-.825 1.175.025 2.163.212Q15.15 1.6 16.1 2l-4.375 1.9 5.2 3.15 1.325 2.875q-2.2.125-4.438-.675-2.237-.8-4.112-3.05-.85 2-2.338 3.462-1.487 1.463-3.512 2.188 0 3.55 2.375 5.925T12 20.15q3.4 0 5.775-2.375Q20.15 15.4 20.15 12v-.175L21.975 7.9q.425.875.625 1.95t.2 2.15q0 2.225-.85 4.2t-2.312 3.438Q18.175 21.1 16.2 21.95q-1.975.85-4.2.85Zm-3.05-8.5q-.55 0-.925-.375T7.65 13q0-.55.375-.925t.925-.375q.55 0 .925.375t.375.925q0 .55-.375.925t-.925.375Zm6.1 0q-.55 0-.925-.375T13.75 13q0-.55.375-.925t.925-.375q.55 0 .925.375t.375.925q0 .55-.375.925t-.925.375Zm4.5-6.325-1.1-2.425L16 4.425 18.45 3.3l1.1-2.425 1.1 2.425 2.45 1.125-2.45 1.125Z" />
-                        </svg>
-                      </Tippy>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  {data?.settings?.recentEmojis &&
-                  data?.settings?.recentEmojis?.length > 0 ? (
-                    <div
-                      className={
-                        "p-2 rounded-lg" +
-                        (emojiType !== "recentEmojis"
-                          ? ""
-                          : " bg-gray-400 dark:bg-[#232323]")
-                      }
-                      onClick={() => {
-                        setEmojiType("recentEmojis");
-                      }}
-                    >
-                      <Tippy content="Your Recent Emojis" animation="scale">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="24"
-                          width="24"
-                          className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24"
+                            width="24"
+                            className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
+                          >
+                            <path d="M12 22.8q-2.225 0-4.2-.85t-3.437-2.312Q2.9 18.175 2.05 16.2 1.2 14.225 1.2 12t.85-4.2q.85-1.975 2.313-3.45Q5.825 2.875 7.8 2.025q1.975-.85 4.2-.825 1.175.025 2.163.212Q15.15 1.6 16.1 2l-4.375 1.9 5.2 3.15 1.325 2.875q-2.2.125-4.438-.675-2.237-.8-4.112-3.05-.85 2-2.338 3.462-1.487 1.463-3.512 2.188 0 3.55 2.375 5.925T12 20.15q3.4 0 5.775-2.375Q20.15 15.4 20.15 12v-.175L21.975 7.9q.425.875.625 1.95t.2 2.15q0 2.225-.85 4.2t-2.312 3.438Q18.175 21.1 16.2 21.95q-1.975.85-4.2.85Zm-3.05-8.5q-.55 0-.925-.375T7.65 13q0-.55.375-.925t.925-.375q.55 0 .925.375t.375.925q0 .55-.375.925t-.925.375Zm6.1 0q-.55 0-.925-.375T13.75 13q0-.55.375-.925t.925-.375q.55 0 .925.375t.375.925q0 .55-.375.925t-.925.375Zm4.5-6.325-1.1-2.425L16 4.425 18.45 3.3l1.1-2.425 1.1 2.425 2.45 1.125-2.45 1.125Z" />
+                          </svg>
+                        </Tippy>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                    {data?.settings?.recentEmojis &&
+                    data?.settings?.recentEmojis?.length > 0 ? (
+                      <div
+                        className={
+                          "p-2 rounded-lg" +
+                          (emojiType !== "recentEmojis"
+                            ? ""
+                            : " bg-gray-400 dark:bg-[#232323]")
+                        }
+                        onClick={() => {
+                          setEmojiType("recentEmojis");
+                        }}
+                      >
+                        <Tippy
+                          zIndex={999999999999999}
+                          content="Your Recent Emojis"
+                          animation="scale"
                         >
-                          <path d="m19 9-1.25-2.75L15 5l2.75-1.25L19 1l1.25 2.75L23 5l-2.75 1.25Zm0 14-1.25-2.75L15 19l2.75-1.25L19 15l1.25 2.75L23 19l-2.75 1.25ZM9 20l-2.5-5.5L1 12l5.5-2.5L9 4l2.5 5.5L17 12l-5.5 2.5Z" />
-                        </svg>
-                      </Tippy>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </li>
-              </ul>
-            ) : (
-              ""
-            )}
-            <div className="lg:flex items-center justify-center">
-              <div className="lg:mr-14 lg:mb-0 mb-2">
-                <div
-                  className="text-gray-900 dark:text-white max-w-sm font-bold xl:text-5xl lg:text-3xl text-xl hidden lg:block uppercase"
-                  style={{
-                    fontFamily:
-                      "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
-                  }}
-                >
-                  {data?.dataFile ? "Their" : "Your"}
-                  <br />
-                  {emojiType === "topEmojis"
-                    ? "Top"
-                    : emojiType === "topCustomEmojis"
-                    ? "Top Custom"
-                    : emojiType === "recentEmojis"
-                    ? "Recent"
-                    : "Top"}
-                  <br />
-                  Emojis
-                </div>
-                <div className="text-gray-900 dark:text-white max-w-sm font-bold lg:hidden text-2xl ">
-                  {data?.dataFile ? "Their" : "Your "}
-                  {emojiType === "topEmojis"
-                    ? " Top  "
-                    : emojiType === "topCustomEmojis"
-                    ? " Top Custom "
-                    : emojiType === "recentEmojis"
-                    ? " Recent "
-                    : null}{" "}
-                  Emojis
-                </div>
-              </div>
-
-              {!emojiType ? (
-                <span className="text-gray-900 dark:text-white text-lg font-bold w-full">
-                  No Emojis Found or {data?.dataFile ? "they " : "you "}disabled
-                  all emoji options
-                </span>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24"
+                            width="24"
+                            className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
+                          >
+                            <path d="m19 9-1.25-2.75L15 5l2.75-1.25L19 1l1.25 2.75L23 5l-2.75 1.25Zm0 14-1.25-2.75L15 19l2.75-1.25L19 15l1.25 2.75L23 19l-2.75 1.25ZM9 20l-2.5-5.5L1 12l5.5-2.5L9 4l2.5 5.5L17 12l-5.5 2.5Z" />
+                          </svg>
+                        </Tippy>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </li>
+                </ul>
               ) : (
                 ""
               )}
-              <div className="grid xl:grid-cols-10 xl:gap-1 gap-2 grid-cols-6 justify-items-center ">
-                {emojiType === "recentEmojis" ? (
-                  <>
-                    {data?.settings?.recentEmojis
-                      ?.slice(0, 30)
-                      .sort((a: any, b: any) => {
-                        if (!a?.count || !b?.count) return;
-                        return b.count - a.count;
-                      })
-                      .map((m: any, id: number) => {
-                        if (!m.name) return;
-                        if (!m.count) return;
-                        const isCustomEmoji =
-                          !isNaN(m.name) && m.name.length > 7;
+              <div className="lg:flex items-center justify-center">
+                <div className="lg:mr-14 lg:mb-0 mb-2">
+                  <div
+                    className="text-gray-900 dark:text-white max-w-sm font-bold xl:text-5xl lg:text-3xl text-xl hidden lg:block uppercase"
+                    style={{
+                      fontFamily:
+                        "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+                    }}
+                  >
+                    {data?.dataFile ? "Their" : "Your"}
+                    <br />
+                    {emojiType === "topEmojis"
+                      ? "Top"
+                      : emojiType === "topCustomEmojis"
+                      ? "Top Custom"
+                      : emojiType === "recentEmojis"
+                      ? "Recent"
+                      : "Top"}
+                    <br />
+                    Emojis
+                  </div>
+                  <div className="text-gray-900 dark:text-white max-w-sm font-bold lg:hidden text-2xl ">
+                    {data?.dataFile ? "Their" : "Your "}
+                    {emojiType === "topEmojis"
+                      ? " Top  "
+                      : emojiType === "topCustomEmojis"
+                      ? " Top Custom "
+                      : emojiType === "recentEmojis"
+                      ? " Recent "
+                      : null}{" "}
+                    Emojis
+                  </div>
+                </div>
 
-                        if (isCustomEmoji) {
-                          return (
-                            <Tippy
-                              key={id}
-                              content={`used ${m.count} time${
-                                m.count === 1 ? "" : "s"
-                              }`}
-                              animation="scale"
-                              className="shadow-xl"
-                            >
-                              <div
-                                className="cursor-pointer text-4xl opacity-90 hover:opacity-100"
-                                onClick={() => {
-                                  copyToClipboard(
-                                    m.name + ": " + m.count + " times"
-                                  );
-                                  noti("Copied emoji to Clipboard");
-                                }}
-                              >
-                                <Image
-                                  unoptimized={true}
-                                  key={id}
-                                  src={
-                                    "https://cdn.Discordapp.com/emojis/" +
-                                    m.name +
-                                    ".png"
-                                  }
-                                  alt="emoji"
-                                  height="50px"
-                                  width="50px"
-                                  draggable={false}
-                                />
-                              </div>
-                            </Tippy>
-                          );
-                        } else {
-                          return (
-                            <Tippy
-                              key={id}
-                              content={`:${m.name}: used ${m.count} time${
-                                m.count === 1 ? "" : "s"
-                              }`}
-                              animation="scale"
-                              className="shadow-xl"
-                            >
-                              <div
-                                onClick={() => {
-                                  copyToClipboard(
-                                    ":" + m.name + ": - " + m.count + " times"
-                                  );
-                                  noti("Copied emoji to Clipboard");
-                                }}
-                                className="cursor-pointer opacity-90 hover:opacity-100 w-14 h-14"
-                              >
-                                <Twemoji>
-                                  {(emojis as any)[m.name]
-                                    ? (emojis as any)[m.name]
-                                    : m.name}
-                                </Twemoji>
-                              </div>
-                            </Tippy>
-                          );
-                        }
-                      })}
-                  </>
+                {!emojiType ? (
+                  <span className="text-gray-900 dark:text-white text-lg font-bold w-full">
+                    No Emojis Found or {data?.dataFile ? "they " : "you "}
+                    disabled all emoji options
+                  </span>
                 ) : (
                   ""
                 )}
-                {emojiType === "topEmojis" ? (
-                  <>
-                    {data?.messages?.topEmojis?.length > 29
-                      ? data?.messages?.topEmojis
-                          ?.slice(0, 29)
-                          .concat({
-                            emoji:
-                              "+ " +
-                              (data?.messages?.topEmojis?.length - 29) +
-                              " more",
-                            count: "ignore",
-                          })
-                          .map((m: any, id: number) => {
-                            if (!m) return;
-                            if (!m.emoji) return;
-                            if (!m.count) return;
+                <div className="grid xl:grid-cols-10 xl:gap-1 gap-2 grid-cols-6 justify-items-center ">
+                  {emojiType === "recentEmojis" ? (
+                    <>
+                      {data?.settings?.recentEmojis
+                        ?.slice(0, 30)
+                        .sort((a: any, b: any) => {
+                          if (!a?.count || !b?.count) return;
+                          return b.count - a.count;
+                        })
+                        .map((m: any, id: number) => {
+                          if (!m.name) return;
+                          if (!m.count) return;
+                          const isCustomEmoji =
+                            !isNaN(m.name) && m.name.length > 7;
 
-                            return m.count !== "ignore" ? (
+                          if (isCustomEmoji) {
+                            return (
                               <Tippy
+                                zIndex={999999999999999}
                                 key={id}
-                                content={`${m.emoji} used ${m.count} time${
+                                content={`used ${m.count} time${
+                                  m.count === 1 ? "" : "s"
+                                }`}
+                                animation="scale"
+                                className="shadow-xl"
+                              >
+                                <div
+                                  className="cursor-pointer text-4xl opacity-90 hover:opacity-100"
+                                  onClick={() => {
+                                    copyToClipboard(
+                                      m.name + ": " + m.count + " times"
+                                    );
+                                    noti("Copied emoji to Clipboard");
+                                  }}
+                                >
+                                  <Image
+                                    unoptimized={true}
+                                    key={id}
+                                    src={
+                                      "https://cdn.Discordapp.com/emojis/" +
+                                      m.name +
+                                      ".png"
+                                    }
+                                    alt="emoji"
+                                    height="50px"
+                                    width="50px"
+                                    draggable={false}
+                                  />
+                                </div>
+                              </Tippy>
+                            );
+                          } else {
+                            return (
+                              <Tippy
+                                zIndex={999999999999999}
+                                key={id}
+                                content={`:${m.name}: used ${m.count} time${
                                   m.count === 1 ? "" : "s"
                                 }`}
                                 animation="scale"
@@ -2194,376 +2733,446 @@ export default function Data({ data, demo }: any): ReactElement {
                                 <div
                                   onClick={() => {
                                     copyToClipboard(
-                                      m.emoji + ": " + m.count + " times"
+                                      ":" + m.name + ": - " + m.count + " times"
                                     );
                                     noti("Copied emoji to Clipboard");
                                   }}
                                   className="cursor-pointer opacity-90 hover:opacity-100 w-14 h-14"
                                 >
-                                  <Twemoji>{m.emoji}</Twemoji>
-                                </div>
-                              </Tippy>
-                            ) : (
-                              <Tippy
-                                key={id}
-                                content={`Click to view the rest`}
-                                animation="scale"
-                                className="shadow-xl"
-                              >
-                                <div
-                                  onClick={() => {
-                                    toast(
-                                      <div className="Toastify__toast-body_">
-                                        <span className="font-bold text-lg text-black dark:text-white">
-                                          {data?.dataFile ? "Their" : "Your"}{" "}
-                                          {data?.messages?.topEmojis?.length -
-                                            29}{" "}
-                                          more Emoji
-                                          {data?.messages?.topEmojis?.length -
-                                            29 ===
-                                          1
-                                            ? " is"
-                                            : "s are"}
-                                          :
-                                        </span>
-                                        <br />
-                                        <ul className="list-disc ml-4">
-                                          {data?.messages?.topEmojis
-                                            ?.slice(
-                                              29,
-                                              data?.messages?.topEmojis?.length
-                                            )
-                                            .map((f: any, i: number) => {
-                                              return (
-                                                <li key={i}>
-                                                  {f.emoji}: {f.count} time
-                                                  {f.count > 1 ? "s" : ""}
-                                                </li>
-                                              );
-                                            })}
-                                        </ul>
-                                      </div>
-                                    );
-                                  }}
-                                  className="cursor-pointer flex justify-center items-center text-md p-1 mt-2 py-1 px-2 font-medium text-white bg-gray-700 rounded-full border-2 border-white hover:bg-gray-600 dark:border-gray-800"
-                                >
-                                  +{data?.messages?.topEmojis?.length - 29}
+                                  <Twemoji>
+                                    {(emojis as any)[m.name]
+                                      ? (emojis as any)[m.name]
+                                      : m.name}
+                                  </Twemoji>
                                 </div>
                               </Tippy>
                             );
-                          })
-                      : data?.messages?.topEmojis
-                          ?.slice(0, 30)
-                          .map((m: any, id: number) => {
-                            if (!m) return;
-                            if (!m.emoji) return;
-                            if (!m.count) return;
+                          }
+                        })}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  {emojiType === "topEmojis" ? (
+                    <>
+                      {data?.messages?.topEmojis?.length > 29
+                        ? data?.messages?.topEmojis
+                            ?.slice(0, 29)
+                            .concat({
+                              emoji:
+                                "+ " +
+                                (data?.messages?.topEmojis?.length - 29) +
+                                " more",
+                              count: "ignore",
+                            })
+                            .map((m: any, id: number) => {
+                              if (!m) return;
+                              if (!m.emoji) return;
+                              if (!m.count) return;
 
-                            return (
-                              <Tippy
-                                key={id}
-                                content={`${m.emoji} used ${m.count} time${
-                                  m.count === 1 ? "" : "s"
-                                }`}
-                                animation="scale"
-                                className="shadow-xl"
-                              >
-                                <div
-                                  onClick={() => {
-                                    copyToClipboard(
-                                      m.emoji + ": " + m.count + " times"
-                                    );
-                                    noti("Copied emoji to Clipboard");
-                                  }}
-                                  className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100"
+                              return m.count !== "ignore" ? (
+                                <Tippy
+                                  zIndex={999999999999999}
+                                  key={id}
+                                  content={`${m.emoji} used ${m.count} time${
+                                    m.count === 1 ? "" : "s"
+                                  }`}
+                                  animation="scale"
+                                  className="shadow-xl"
                                 >
-                                  {m.emoji}
-                                </div>
-                              </Tippy>
-                            );
-                          })}
-                  </>
-                ) : (
-                  ""
-                )}
-                {emojiType === "topCustomEmojis" ? (
-                  <>
-                    {data?.messages?.topCustomEmojis?.length > 29
-                      ? data?.messages?.topCustomEmojis
-                          ?.slice(0, 29)
-                          .concat({
-                            emoji:
-                              "+ " +
-                              (data?.messages?.topCustomEmojis?.length - 29) +
-                              " more",
-                            count: "ignore",
-                          })
-                          .map((m: any, id: number) => {
-                            if (!m) return;
-                            if (!m.emoji) return;
-                            if (!m.count) return;
-
-                            return m.count !== "ignore" ? (
-                              <>
-                                {/<:.*?:(\d+)>/g.exec(m.emoji) ? (
-                                  <Tippy
-                                    key={id}
-                                    content={`${m.emoji} used ${m.count} time${
-                                      m.count === 1 ? "" : "s"
-                                    }`}
-                                    animation="scale"
-                                    className="shadow-xl"
+                                  <div
+                                    onClick={() => {
+                                      copyToClipboard(
+                                        m.emoji + ": " + m.count + " times"
+                                      );
+                                      noti("Copied emoji to Clipboard");
+                                    }}
+                                    className="cursor-pointer opacity-90 hover:opacity-100 w-14 h-14"
                                   >
-                                    <div
-                                      className="cursor-pointer text-4xl opacity-90 hover:opacity-100"
-                                      onClick={() => {
-                                        copyToClipboard(
-                                          m.emoji + ": " + m.count + " times"
-                                        );
-                                        noti("Copied emoji to Clipboard");
-                                      }}
+                                    <Twemoji>{m.emoji}</Twemoji>
+                                  </div>
+                                </Tippy>
+                              ) : (
+                                <Tippy
+                                  zIndex={999999999999999}
+                                  key={id}
+                                  content={`Click to view the rest`}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <div
+                                    onClick={() => {
+                                      toast(
+                                        <div className="Toastify__toast-body_">
+                                          <span className="font-bold text-lg text-black dark:text-white">
+                                            {data?.dataFile ? "Their" : "Your"}{" "}
+                                            {data?.messages?.topEmojis?.length -
+                                              29}{" "}
+                                            more Emoji
+                                            {data?.messages?.topEmojis?.length -
+                                              29 ===
+                                            1
+                                              ? " is"
+                                              : "s are"}
+                                            :
+                                          </span>
+                                          <br />
+                                          <ul className="list-disc ml-4">
+                                            {data?.messages?.topEmojis
+                                              ?.slice(
+                                                29,
+                                                data?.messages?.topEmojis
+                                                  ?.length
+                                              )
+                                              .map((f: any, i: number) => {
+                                                return (
+                                                  <li key={i}>
+                                                    {f.emoji}: {f.count} time
+                                                    {f.count > 1 ? "s" : ""}
+                                                  </li>
+                                                );
+                                              })}
+                                          </ul>
+                                        </div>
+                                      );
+                                    }}
+                                    className="cursor-pointer flex justify-center items-center text-md p-1 mt-2 py-1 px-2 font-medium text-white bg-gray-700 rounded-full border-2 border-white hover:bg-gray-600 dark:border-gray-800"
+                                  >
+                                    +{data?.messages?.topEmojis?.length - 29}
+                                  </div>
+                                </Tippy>
+                              );
+                            })
+                        : data?.messages?.topEmojis
+                            ?.slice(0, 30)
+                            .map((m: any, id: number) => {
+                              if (!m) return;
+                              if (!m.emoji) return;
+                              if (!m.count) return;
+
+                              return (
+                                <Tippy
+                                  zIndex={999999999999999}
+                                  key={id}
+                                  content={`${m.emoji} used ${m.count} time${
+                                    m.count === 1 ? "" : "s"
+                                  }`}
+                                  animation="scale"
+                                  className="shadow-xl"
+                                >
+                                  <div
+                                    onClick={() => {
+                                      copyToClipboard(
+                                        m.emoji + ": " + m.count + " times"
+                                      );
+                                      noti("Copied emoji to Clipboard");
+                                    }}
+                                    className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100"
+                                  >
+                                    {m.emoji}
+                                  </div>
+                                </Tippy>
+                              );
+                            })}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  {emojiType === "topCustomEmojis" ? (
+                    <>
+                      {data?.messages?.topCustomEmojis?.length > 29
+                        ? data?.messages?.topCustomEmojis
+                            ?.slice(0, 29)
+                            .concat({
+                              emoji:
+                                "+ " +
+                                (data?.messages?.topCustomEmojis?.length - 29) +
+                                " more",
+                              count: "ignore",
+                            })
+                            .map((m: any, id: number) => {
+                              if (!m) return;
+                              if (!m.emoji) return;
+                              if (!m.count) return;
+
+                              return m.count !== "ignore" ? (
+                                <>
+                                  {/<:.*?:(\d+)>/g.exec(m.emoji) ? (
+                                    <Tippy
+                                      zIndex={999999999999999}
+                                      key={id}
+                                      content={`${m.emoji} used ${
+                                        m.count
+                                      } time${m.count === 1 ? "" : "s"}`}
+                                      animation="scale"
+                                      className="shadow-xl"
                                     >
-                                      <Image
-                                        unoptimized={true}
-                                        key={id}
-                                        src={Utils.createEmoji(m.emoji)}
-                                        alt="emoji"
-                                        height="50px"
-                                        width="50px"
-                                        draggable={false}
-                                      />
-                                    </div>
-                                  </Tippy>
-                                ) : (
-                                  <>
-                                    {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                      m.emoji
-                                    ) ? (
-                                      <Tippy
-                                        key={id}
-                                        content={`${m.emoji} used ${
-                                          m.count
-                                        } time${m.count === 1 ? "" : "s"}`}
-                                        animation="scale"
-                                        className="shadow-xl"
+                                      <div
+                                        className="cursor-pointer text-4xl opacity-90 hover:opacity-100"
+                                        onClick={() => {
+                                          copyToClipboard(
+                                            m.emoji + ": " + m.count + " times"
+                                          );
+                                          noti("Copied emoji to Clipboard");
+                                        }}
                                       >
-                                        <div
-                                          className="cursor-pointer text-4xl opacity-90 hover:opacity-100 m-2"
-                                          onClick={() => {
-                                            copyToClipboard(
-                                              m.emoji +
-                                                ": " +
-                                                m.count +
-                                                " times"
-                                            );
-                                            noti("Copied emoji to Clipboard");
-                                          }}
-                                        >
-                                          <Image
-                                            unoptimized={true}
-                                            key={id}
-                                            src={Utils.createCustomEmoji(
-                                              m.emoji
-                                            )}
-                                            alt="emoji"
-                                            height="50px"
-                                            width="50px"
-                                            draggable={false}
-                                          />
-                                        </div>
-                                      </Tippy>
-                                    ) : (
-                                      ""
-                                    )}
-                                  </>
-                                )}
-                              </>
-                            ) : (
-                              <Tippy
-                                key={id}
-                                content={`Click to view the rest`}
-                                animation="scale"
-                                className="shadow-xl"
-                              >
-                                <div
-                                  onClick={() => {
-                                    toast(
-                                      <div className="Toastify__toast-body_">
-                                        <span className="font-bold text-lg text-black dark:text-white">
-                                          {data?.dataFile ? "Their" : "Your"}{" "}
-                                          {data?.messages?.topCustomEmojis
-                                            ?.length - 29}{" "}
-                                          more Custom Emoji
-                                          {data?.messages?.topCustomEmojis
-                                            ?.length -
-                                            29 ===
-                                          1
-                                            ? " is"
-                                            : "s are"}
-                                          :
-                                        </span>
-                                        <br />
-                                        <ul className="list-disc ml-4">
-                                          {data?.messages?.topCustomEmojis
-                                            ?.slice(
-                                              29,
-                                              data?.messages?.topCustomEmojis
-                                                ?.length
-                                            )
-                                            .map((f: any, i: number) => {
-                                              return (
-                                                <li key={i}>
-                                                  {/<:.*?:(\d+)>/g.exec(
-                                                    f.emoji
-                                                  ) ? (
-                                                    <Tippy
-                                                      key={id}
-                                                      content={`${
-                                                        f.emoji
-                                                      } used ${f.count} time${
-                                                        f.count === 1 ? "" : "s"
-                                                      }`}
-                                                      animation="scale"
-                                                      className="shadow-xl"
-                                                    >
-                                                      <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                                        <Image
-                                                          unoptimized={true}
-                                                          key={id}
-                                                          src={Utils.createEmoji(
-                                                            f.emoji
-                                                          )}
-                                                          alt="emoji"
-                                                          height="50px"
-                                                          width="50px"
-                                                          draggable={false}
-                                                        />
-                                                      </div>
-                                                    </Tippy>
-                                                  ) : (
-                                                    <>
-                                                      {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                                        f.emoji
-                                                      ) ? (
-                                                        <Tippy
-                                                          key={id}
-                                                          content={`${
-                                                            f.emoji
-                                                          } used ${
-                                                            f.count
-                                                          } time${
-                                                            f.count === 1
-                                                              ? ""
-                                                              : "s"
-                                                          }`}
-                                                          animation="scale"
-                                                          className="shadow-xl"
-                                                        >
-                                                          <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100 m-2">
-                                                            <Image
-                                                              unoptimized={true}
-                                                              key={id}
-                                                              src={Utils.createCustomEmoji(
-                                                                f.emoji
-                                                              )}
-                                                              alt="emoji"
-                                                              height="50px"
-                                                              width="50px"
-                                                              draggable={false}
-                                                            />
-                                                          </div>
-                                                        </Tippy>
-                                                      ) : (
-                                                        ""
-                                                      )}
-                                                    </>
-                                                  )}
-                                                  : {f.count} time
-                                                  {f.count > 1 ? "s" : ""}
-                                                </li>
-                                              );
-                                            })}
-                                        </ul>
+                                        <Image
+                                          unoptimized={true}
+                                          key={id}
+                                          src={Utils.createEmoji(m.emoji)}
+                                          alt="emoji"
+                                          height="50px"
+                                          width="50px"
+                                          draggable={false}
+                                        />
                                       </div>
-                                    );
-                                  }}
-                                  className="cursor-pointer flex justify-center items-center text-md p-1 py-2 px-2 font-medium text-white bg-gray-700 rounded-full border-2 border-white hover:bg-gray-600 dark:border-gray-800"
+                                    </Tippy>
+                                  ) : (
+                                    <>
+                                      {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                        m.emoji
+                                      ) ? (
+                                        <Tippy
+                                          zIndex={999999999999999}
+                                          key={id}
+                                          content={`${m.emoji} used ${
+                                            m.count
+                                          } time${m.count === 1 ? "" : "s"}`}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <div
+                                            className="cursor-pointer text-4xl opacity-90 hover:opacity-100 m-2"
+                                            onClick={() => {
+                                              copyToClipboard(
+                                                m.emoji +
+                                                  ": " +
+                                                  m.count +
+                                                  " times"
+                                              );
+                                              noti("Copied emoji to Clipboard");
+                                            }}
+                                          >
+                                            <Image
+                                              unoptimized={true}
+                                              key={id}
+                                              src={Utils.createCustomEmoji(
+                                                m.emoji
+                                              )}
+                                              alt="emoji"
+                                              height="50px"
+                                              width="50px"
+                                              draggable={false}
+                                            />
+                                          </div>
+                                        </Tippy>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </>
+                                  )}
+                                </>
+                              ) : (
+                                <Tippy
+                                  zIndex={999999999999999}
+                                  key={id}
+                                  content={`Click to view the rest`}
+                                  animation="scale"
+                                  className="shadow-xl"
                                 >
-                                  +
-                                  {data?.messages?.topCustomEmojis?.length - 29}
-                                </div>
-                              </Tippy>
-                            );
-                          })
-                      : data?.messages?.topCustomEmojis
-                          ?.slice(0, 30)
-                          .map((m: any, id: number) => {
-                            if (!m) return;
-                            if (!m.emoji) return;
-                            if (!m.count) return;
-
-                            return (
-                              <>
-                                {/<:.*?:(\d+)>/g.exec(m.emoji) ? (
-                                  <Tippy
-                                    key={id}
-                                    content={`${m.emoji} used ${m.count} time${
-                                      m.count === 1 ? "" : "s"
-                                    }`}
-                                    animation="scale"
-                                    className="shadow-xl"
-                                  >
-                                    <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                      <Image
-                                        unoptimized={true}
-                                        key={id}
-                                        src={Utils.createEmoji(m.emoji)}
-                                        alt="emoji"
-                                        height="50px"
-                                        width="50px"
-                                        draggable={false}
-                                      />
-                                    </div>
-                                  </Tippy>
-                                ) : (
-                                  <>
-                                    {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                      m.emoji
-                                    ) ? (
-                                      <Tippy
-                                        key={id}
-                                        content={`${m.emoji} used ${
-                                          m.count
-                                        } time${m.count === 1 ? "" : "s"}`}
-                                        animation="scale"
-                                        className="shadow-xl"
-                                      >
-                                        <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                          <Image
-                                            unoptimized={true}
-                                            key={id}
-                                            src={Utils.createCustomEmoji(
-                                              m.emoji
-                                            )}
-                                            alt="emoji"
-                                            height="50px"
-                                            width="50px"
-                                            draggable={false}
-                                          />
+                                  <div
+                                    onClick={() => {
+                                      toast(
+                                        <div className="Toastify__toast-body_">
+                                          <span className="font-bold text-lg text-black dark:text-white">
+                                            {data?.dataFile ? "Their" : "Your"}{" "}
+                                            {data?.messages?.topCustomEmojis
+                                              ?.length - 29}{" "}
+                                            more Custom Emoji
+                                            {data?.messages?.topCustomEmojis
+                                              ?.length -
+                                              29 ===
+                                            1
+                                              ? " is"
+                                              : "s are"}
+                                            :
+                                          </span>
+                                          <br />
+                                          <ul className="list-disc ml-4">
+                                            {data?.messages?.topCustomEmojis
+                                              ?.slice(
+                                                29,
+                                                data?.messages?.topCustomEmojis
+                                                  ?.length
+                                              )
+                                              .map((f: any, i: number) => {
+                                                return (
+                                                  <li key={i}>
+                                                    {/<:.*?:(\d+)>/g.exec(
+                                                      f.emoji
+                                                    ) ? (
+                                                      <Tippy
+                                                        zIndex={999999999999999}
+                                                        key={id}
+                                                        content={`${
+                                                          f.emoji
+                                                        } used ${f.count} time${
+                                                          f.count === 1
+                                                            ? ""
+                                                            : "s"
+                                                        }`}
+                                                        animation="scale"
+                                                        className="shadow-xl"
+                                                      >
+                                                        <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                          <Image
+                                                            unoptimized={true}
+                                                            key={id}
+                                                            src={Utils.createEmoji(
+                                                              f.emoji
+                                                            )}
+                                                            alt="emoji"
+                                                            height="50px"
+                                                            width="50px"
+                                                            draggable={false}
+                                                          />
+                                                        </div>
+                                                      </Tippy>
+                                                    ) : (
+                                                      <>
+                                                        {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                          f.emoji
+                                                        ) ? (
+                                                          <Tippy
+                                                            zIndex={
+                                                              999999999999999
+                                                            }
+                                                            key={id}
+                                                            content={`${
+                                                              f.emoji
+                                                            } used ${
+                                                              f.count
+                                                            } time${
+                                                              f.count === 1
+                                                                ? ""
+                                                                : "s"
+                                                            }`}
+                                                            animation="scale"
+                                                            className="shadow-xl"
+                                                          >
+                                                            <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100 m-2">
+                                                              <Image
+                                                                unoptimized={
+                                                                  true
+                                                                }
+                                                                key={id}
+                                                                src={Utils.createCustomEmoji(
+                                                                  f.emoji
+                                                                )}
+                                                                alt="emoji"
+                                                                height="50px"
+                                                                width="50px"
+                                                                draggable={
+                                                                  false
+                                                                }
+                                                              />
+                                                            </div>
+                                                          </Tippy>
+                                                        ) : (
+                                                          ""
+                                                        )}
+                                                      </>
+                                                    )}
+                                                    : {f.count} time
+                                                    {f.count > 1 ? "s" : ""}
+                                                  </li>
+                                                );
+                                              })}
+                                          </ul>
                                         </div>
-                                      </Tippy>
-                                    ) : (
-                                      ""
-                                    )}
-                                  </>
-                                )}
-                              </>
-                            );
-                          })}
-                  </>
-                ) : (
-                  ""
-                )}
+                                      );
+                                    }}
+                                    className="cursor-pointer flex justify-center items-center text-md p-1 py-2 px-2 font-medium text-white bg-gray-700 rounded-full border-2 border-white hover:bg-gray-600 dark:border-gray-800"
+                                  >
+                                    +
+                                    {data?.messages?.topCustomEmojis?.length -
+                                      29}
+                                  </div>
+                                </Tippy>
+                              );
+                            })
+                        : data?.messages?.topCustomEmojis
+                            ?.slice(0, 30)
+                            .map((m: any, id: number) => {
+                              if (!m) return;
+                              if (!m.emoji) return;
+                              if (!m.count) return;
+
+                              return (
+                                <>
+                                  {/<:.*?:(\d+)>/g.exec(m.emoji) ? (
+                                    <Tippy
+                                      zIndex={999999999999999}
+                                      key={id}
+                                      content={`${m.emoji} used ${
+                                        m.count
+                                      } time${m.count === 1 ? "" : "s"}`}
+                                      animation="scale"
+                                      className="shadow-xl"
+                                    >
+                                      <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                        <Image
+                                          unoptimized={true}
+                                          key={id}
+                                          src={Utils.createEmoji(m.emoji)}
+                                          alt="emoji"
+                                          height="50px"
+                                          width="50px"
+                                          draggable={false}
+                                        />
+                                      </div>
+                                    </Tippy>
+                                  ) : (
+                                    <>
+                                      {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                        m.emoji
+                                      ) ? (
+                                        <Tippy
+                                          zIndex={999999999999999}
+                                          key={id}
+                                          content={`${m.emoji} used ${
+                                            m.count
+                                          } time${m.count === 1 ? "" : "s"}`}
+                                          animation="scale"
+                                          className="shadow-xl"
+                                        >
+                                          <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                            <Image
+                                              unoptimized={true}
+                                              key={id}
+                                              src={Utils.createCustomEmoji(
+                                                m.emoji
+                                              )}
+                                              alt="emoji"
+                                              height="50px"
+                                              width="50px"
+                                              draggable={false}
+                                            />
+                                          </div>
+                                        </Tippy>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </>
+                                  )}
+                                </>
+                              );
+                            })}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -2668,6 +3277,7 @@ export default function Data({ data, demo }: any): ReactElement {
                         </p>
                       ) : (
                         <Tippy
+                          zIndex={999999999999999}
                           placement="bottom"
                           trigger={"click"}
                           content={
@@ -2760,6 +3370,7 @@ export default function Data({ data, demo }: any): ReactElement {
             <h3 className="text-gray-900 dark:text-white font-bold text-xl mb-2 flex items-center uppercase">
               {data?.dataFile ? "Their" : "Your"} Connections
               <Tippy
+                zIndex={999999999999999}
                 content={
                   <>
                     <div className="text-white text-xl font-bold">
@@ -3065,6 +3676,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   return (
                     <div className="cursor-pointer" key={i}>
                       <Tippy
+                        zIndex={999999999999999}
                         content={`${(Connections as any)[m.type].name}: ${
                           m?.name
                         } ${m.visible ? "[VISIBLE]" : ""}`}
@@ -3135,232 +3747,385 @@ export default function Data({ data, demo }: any): ReactElement {
           </svg>
         </div>
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] animate__delay-1s rounded-lg text-center w-full">
-          <div id="blur_5_div">
-            <span
-              className=" text-gray-900 dark:text-white lg:text-4xl md:text-3xl text-xl font-bold lg:flex md:flex sm:flex items-center"
-              style={{
-                fontFamily:
-                  "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
-              }}
-            >
-              <ul
-                className="flex items-center lg:mr-6 md:mr-6 sm:mr-6 mr-1 lg:text-lg md:text-lg text-sm font-mono lg:pb-0 md:pb-0 sm:pb-0 pb-1"
+          <div id="blur_5_div_1">
+            <div id="blur_5_div">
+              <span
+                className=" text-gray-900 dark:text-white lg:text-4xl md:text-3xl text-xl font-bold lg:flex md:flex sm:flex items-center"
                 style={{
-                  flexGrow: "0.3",
+                  fontFamily:
+                    "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
                 }}
               >
-                <li
-                  className={
-                    "flex lg:p-2 md:p-2 sm:p-2 p-1 rounded-lg " +
-                    (graphOption === "hourly"
-                      ? "bg-gray-400 dark:bg-[#232323]"
-                      : "")
-                  }
+                <ul
+                  className="flex items-center lg:mr-6 md:mr-6 sm:mr-6 mr-1 lg:text-lg md:text-lg text-sm font-mono lg:pb-0 md:pb-0 sm:pb-0 pb-1"
+                  style={{
+                    flexGrow: "0.3",
+                  }}
                 >
-                  <Tippy
-                    content={"Hourly"}
-                    animation="scale"
-                    arrow={false}
-                    placement="bottom"
+                  <li
+                    className={
+                      "flex lg:p-2 md:p-2 sm:p-2 p-1 rounded-lg " +
+                      (graphOption === "hourly"
+                        ? "bg-gray-400 dark:bg-[#232323]"
+                        : "")
+                    }
                   >
-                    <button
-                      className="rounded-md "
-                      onClick={() => {
-                        setGraphOption("hourly");
-                      }}
-                      aria-label="hourly"
+                    <Tippy
+                      zIndex={999999999999999}
+                      content={"Hourly"}
+                      animation="scale"
+                      arrow={false}
+                      placement="bottom"
                     >
-                      hourly
-                    </button>
-                  </Tippy>
-                </li>{" "}
-                <li
-                  className={
-                    "flex lg:p-2 md:p-2 sm:p-2 p-1 rounded-lg " +
-                    (graphOption === "daily"
-                      ? "bg-gray-400 dark:bg-[#232323]"
-                      : "")
-                  }
-                >
-                  <Tippy
-                    content={"Daily"}
-                    animation="scale"
-                    arrow={false}
-                    placement="bottom"
+                      <button
+                        className="rounded-md "
+                        onClick={() => {
+                          setGraphOption("hourly");
+                        }}
+                        aria-label="hourly"
+                      >
+                        hourly
+                      </button>
+                    </Tippy>
+                  </li>{" "}
+                  <li
+                    className={
+                      "flex lg:p-2 md:p-2 sm:p-2 p-1 rounded-lg " +
+                      (graphOption === "daily"
+                        ? "bg-gray-400 dark:bg-[#232323]"
+                        : "")
+                    }
                   >
-                    <button
-                      className="rounded-md "
-                      onClick={() => {
-                        setGraphOption("daily");
-                      }}
-                      aria-label="daily"
+                    <Tippy
+                      zIndex={999999999999999}
+                      content={"Daily"}
+                      animation="scale"
+                      arrow={false}
+                      placement="bottom"
                     >
-                      daily
-                    </button>
-                  </Tippy>
-                </li>{" "}
-                <li
-                  className={
-                    "flex lg:p-2 md:p-2 sm:p-2 p-1 rounded-lg " +
-                    (graphOption === "monthly"
-                      ? "bg-gray-400 dark:bg-[#232323]"
-                      : "")
-                  }
-                >
-                  <Tippy
-                    content={"Monthly"}
-                    animation="scale"
-                    arrow={false}
-                    placement="bottom"
+                      <button
+                        className="rounded-md "
+                        onClick={() => {
+                          setGraphOption("daily");
+                        }}
+                        aria-label="daily"
+                      >
+                        daily
+                      </button>
+                    </Tippy>
+                  </li>{" "}
+                  <li
+                    className={
+                      "flex lg:p-2 md:p-2 sm:p-2 p-1 rounded-lg " +
+                      (graphOption === "monthly"
+                        ? "bg-gray-400 dark:bg-[#232323]"
+                        : "")
+                    }
                   >
-                    <button
-                      className="rounded-md "
-                      onClick={() => {
-                        setGraphOption("monthly");
-                      }}
-                      aria-label="monthly"
+                    <Tippy
+                      zIndex={999999999999999}
+                      content={"Monthly"}
+                      animation="scale"
+                      arrow={false}
+                      placement="bottom"
                     >
-                      monthly
-                    </button>
-                  </Tippy>
-                </li>{" "}
-                <li
-                  className={
-                    "flex lg:p-2 md:p-2 sm:p-2 p-1 rounded-lg " +
-                    (graphOption === "yearly"
-                      ? "bg-gray-400 dark:bg-[#232323]"
-                      : "")
-                  }
-                >
-                  <Tippy
-                    content={"Yearly"}
-                    animation="scale"
-                    arrow={false}
-                    placement="bottom"
+                      <button
+                        className="rounded-md "
+                        onClick={() => {
+                          setGraphOption("monthly");
+                        }}
+                        aria-label="monthly"
+                      >
+                        monthly
+                      </button>
+                    </Tippy>
+                  </li>{" "}
+                  <li
+                    className={
+                      "flex lg:p-2 md:p-2 sm:p-2 p-1 rounded-lg " +
+                      (graphOption === "yearly"
+                        ? "bg-gray-400 dark:bg-[#232323]"
+                        : "")
+                    }
                   >
-                    <button
-                      className="rounded-md "
-                      onClick={() => {
-                        setGraphOption("yearly");
-                      }}
-                      aria-label=""
+                    <Tippy
+                      zIndex={999999999999999}
+                      content={"Yearly"}
+                      animation="scale"
+                      arrow={false}
+                      placement="bottom"
                     >
-                      yearly
-                    </button>
-                  </Tippy>
-                </li>
-              </ul>
-              <ul className="lg:flex items-center grow-0 space-x-6 p-2 rounded-lg bg-gray-400 dark:bg-[#232323] lg:mr-4 md:mr-4 sm:mr-4 mr-1">
-                <li className="flex">
-                  <Tippy
-                    content={graphType === "areaspline" ? "Bar" : "Line"}
-                    animation="scale"
-                    arrow={false}
-                    placement="bottom"
-                  >
-                    <button
-                      className="rounded-md "
-                      onClick={() => {
-                        setGraphType(
-                          graphType === "areaspline" ? "bar" : "areaspline"
-                        );
-                      }}
-                      aria-label="Toggle graph mode"
+                      <button
+                        className="rounded-md "
+                        onClick={() => {
+                          setGraphOption("yearly");
+                        }}
+                        aria-label=""
+                      >
+                        yearly
+                      </button>
+                    </Tippy>
+                  </li>
+                </ul>
+                <ul className="lg:flex items-center grow-0 space-x-6 p-2 rounded-lg bg-gray-400 dark:bg-[#232323] lg:mr-4 md:mr-4 sm:mr-4 mr-1">
+                  <li className="flex">
+                    <Tippy
+                      zIndex={999999999999999}
+                      content={graphType === "areaspline" ? "Bar" : "Line"}
+                      animation="scale"
+                      arrow={false}
+                      placement="bottom"
                     >
-                      {graphType === "bar" ? (
-                        <svg
-                          className="dark:fill-gray-300 dark:hover:fill-white fill-gray-900"
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="24"
-                          width="24"
-                        >
-                          <path d="M3.4 18 2 16.6l7.4-7.45 4 4L18.6 8H16V6h6v6h-2V9.4L13.4 16l-4-4Z" />
-                        </svg>
-                      ) : (
-                        <svg
-                          className="dark:fill-gray-300 dark:hover:fill-white fill-gray-900"
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="24"
-                          width="24"
-                        >
-                          <path d="M4 20V9h4v11Zm6 0V4h4v16Zm6 0v-7h4v7Z" />
-                        </svg>
-                      )}
-                    </button>
-                  </Tippy>
-                </li>
-              </ul>
-              <p className="flex items-center">
-                Active{" "}
-                {graphOption === "hourly"
-                  ? "Hours"
-                  : graphOption === "daily"
-                  ? "Days"
-                  : graphOption === "monthly"
-                  ? "Months"
-                  : "Years"}
-                <Tippy
-                  content={
-                    <>
-                      <div className="text-white text-xl font-bold">
-                        What are Active Hours?
-                      </div>
-                      <p className="text-white text-lg ">
-                        Active Hours are the hours in which{" "}
-                        {data?.dataFile ? "they " : "you "} are most active on
-                        Discord sending messages.
-                      </p>
-                      <div className="flex items-center">
-                        <svg
-                          className="fill-red-400 mr-2 basis-[40%]"
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="24"
-                          width="24"
-                        >
-                          <path d="M.275 21.425 12 1.15l11.725 20.275ZM12 17.925q.45 0 .788-.338.337-.337.337-.787t-.337-.775Q12.45 15.7 12 15.7t-.787.325q-.338.325-.338.775t.338.787q.337.338.787.338ZM11 15h2v-4.725h-2Z" />
-                        </svg>
-                        <b className="text-red-400 text-lg pt-1 ">
-                          This is based on {data?.dataFile ? "their " : "your "}{" "}
-                          device timezone. If the graph is inacurrate, make sure{" "}
-                          {data?.dataFile ? "their " : "your "} device timezone
-                          is the same timezone as the usual timezone you use
-                          when sending Discord messages.
-                        </b>
-                      </div>
-                    </>
-                  }
-                  animation="scale"
-                  className="shadow-xl"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24"
-                    width="24"
-                    className="cursor-pointer fill-black dark:fill-white ml-2 opacity-90 hover:opacity-100"
+                      <button
+                        className="rounded-md "
+                        onClick={() => {
+                          setGraphType(
+                            graphType === "areaspline" ? "bar" : "areaspline"
+                          );
+                        }}
+                        aria-label="Toggle graph mode"
+                      >
+                        {graphType === "bar" ? (
+                          <svg
+                            className="dark:fill-gray-300 dark:hover:fill-white fill-gray-900"
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24"
+                            width="24"
+                          >
+                            <path d="M3.4 18 2 16.6l7.4-7.45 4 4L18.6 8H16V6h6v6h-2V9.4L13.4 16l-4-4Z" />
+                          </svg>
+                        ) : (
+                          <svg
+                            className="dark:fill-gray-300 dark:hover:fill-white fill-gray-900"
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24"
+                            width="24"
+                          >
+                            <path d="M4 20V9h4v11Zm6 0V4h4v16Zm6 0v-7h4v7Z" />
+                          </svg>
+                        )}
+                      </button>
+                    </Tippy>
+                  </li>
+                </ul>
+                <p className="flex items-center">
+                  Active{" "}
+                  {graphOption === "hourly"
+                    ? "Hours"
+                    : graphOption === "daily"
+                    ? "Days"
+                    : graphOption === "monthly"
+                    ? "Months"
+                    : "Years"}
+                  <Tippy
+                    zIndex={999999999999999}
+                    content={
+                      <>
+                        <div className="text-white text-xl font-bold">
+                          What are Active Hours?
+                        </div>
+                        <p className="text-white text-lg ">
+                          Active Hours are the hours in which{" "}
+                          {data?.dataFile ? "they " : "you "} are most active on
+                          Discord sending messages.
+                        </p>
+                        <div className="flex items-center">
+                          <svg
+                            className="fill-red-400 mr-2 basis-[40%]"
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24"
+                            width="24"
+                          >
+                            <path d="M.275 21.425 12 1.15l11.725 20.275ZM12 17.925q.45 0 .788-.338.337-.337.337-.787t-.337-.775Q12.45 15.7 12 15.7t-.787.325q-.338.325-.338.775t.338.787q.337.338.787.338ZM11 15h2v-4.725h-2Z" />
+                          </svg>
+                          <b className="text-red-400 text-lg pt-1 ">
+                            This is based on{" "}
+                            {data?.dataFile ? "their " : "your "} device
+                            timezone. If the graph is inacurrate, make sure{" "}
+                            {data?.dataFile ? "their " : "your "} device
+                            timezone is the same timezone as the usual timezone
+                            you use when sending Discord messages.
+                          </b>
+                        </div>
+                      </>
+                    }
+                    animation="scale"
+                    className="shadow-xl"
                   >
-                    <path d="M10.625 17.375h2.75V11h-2.75ZM12 9.5q.65 0 1.075-.438Q13.5 8.625 13.5 8q0-.65-.425-1.075Q12.65 6.5 12 6.5q-.625 0-1.062.425Q10.5 7.35 10.5 8q0 .625.438 1.062.437.438 1.062.438Zm0 13.35q-2.275 0-4.25-.85t-3.438-2.312Q2.85 18.225 2 16.25q-.85-1.975-.85-4.25T2 7.75q.85-1.975 2.312-3.438Q5.775 2.85 7.75 2q1.975-.85 4.25-.85t4.25.85q1.975.85 3.438 2.312Q21.15 5.775 22 7.75q.85 1.975.85 4.25T22 16.25q-.85 1.975-2.312 3.438Q18.225 21.15 16.25 22q-1.975.85-4.25.85Z" />
-                  </svg>
-                </Tippy>
-              </p>
-            </span>
-            <div className="row-span-3 ">
-              <div className="lg:mx-10 md:mx-8 mx-2">
-                <HighchartsReact
-                  className="dark:fill-slate-900 fill-gray-300"
-                  highcharts={Highcharts}
-                  options={{
-                    title: {
-                      text: "",
-                    },
-                    xAxis: {
-                      labels: {
-                        formatter: function (a: any): any {
-                          if (graphOption === "hours") return days_[a.value];
-                          else if (graphOption === "daily")
-                            return days_daily[a.value];
-                          else if (graphOption === "monthly")
-                            return days_monthly[a.value];
-                          else if (graphOption === "yearly") {
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24"
+                      width="24"
+                      className="cursor-pointer fill-black dark:fill-white ml-2 opacity-90 hover:opacity-100"
+                    >
+                      <path d="M10.625 17.375h2.75V11h-2.75ZM12 9.5q.65 0 1.075-.438Q13.5 8.625 13.5 8q0-.65-.425-1.075Q12.65 6.5 12 6.5q-.625 0-1.062.425Q10.5 7.35 10.5 8q0 .625.438 1.062.437.438 1.062.438Zm0 13.35q-2.275 0-4.25-.85t-3.438-2.312Q2.85 18.225 2 16.25q-.85-1.975-.85-4.25T2 7.75q.85-1.975 2.312-3.438Q5.775 2.85 7.75 2q1.975-.85 4.25-.85t4.25.85q1.975.85 3.438 2.312Q21.15 5.775 22 7.75q.85 1.975.85 4.25T22 16.25q-.85 1.975-2.312 3.438Q18.225 21.15 16.25 22q-1.975.85-4.25.85Z" />
+                    </svg>
+                  </Tippy>
+                </p>
+              </span>
+              <div className="row-span-3 ">
+                <div className="lg:mx-10 md:mx-8 mx-2">
+                  <HighchartsReact
+                    className="dark:fill-slate-900 fill-gray-300"
+                    highcharts={Highcharts}
+                    options={{
+                      title: {
+                        text: "",
+                      },
+                      xAxis: {
+                        labels: {
+                          formatter: function (a: any): any {
+                            if (graphOption === "hours") return days_[a.value];
+                            else if (graphOption === "daily")
+                              return days_daily[a.value];
+                            else if (graphOption === "monthly")
+                              return days_monthly[a.value];
+                            else if (graphOption === "yearly") {
+                              const years =
+                                data?.messages?.hoursValues?.yearly?.length;
+                              if (years) {
+                                const years_ =
+                                  data?.messages?.hoursValues?.yearly
+                                    ?.map(
+                                      (year: any, index: number) =>
+                                        new Date(Date.now()).getFullYear() -
+                                        index
+                                    )
+                                    .reverse();
+                                return years_[a.value];
+                              }
+                            }
+
+                            return days_[a.value];
+                          },
+                          style: {
+                            fontSize: "9px",
+                            color: "#fff",
+                            fontFamily: "Inter",
+                          },
+                        },
+                      },
+                      yAxis: {
+                        gridLineColor: "#43464A",
+                        gridLineWidth: 1,
+                        title: {
+                          text: "Messages",
+                          style: {
+                            fontSize: "20px",
+                            color: "#fff",
+                            fontFamily: "Inter",
+                            fontWeight: "bold",
+                          },
+                        },
+                        labels: {
+                          style: {
+                            fontSize: "9px",
+                            color: "#fff",
+                            fontFamily: "Inter",
+                          },
+                        },
+                      },
+                      series: [
+                        {
+                          name: "Messages",
+                          data:
+                            graphOption === "hourly"
+                              ? data?.messages?.hoursValues?.hourly
+                                ? makeData(data.messages.hoursValues.hourly, 24)
+                                : new Array(24).fill(0)
+                              : graphOption === "daily"
+                              ? data?.messages?.hoursValues?.daily
+                                ? makeData(data.messages.hoursValues.daily, 7)
+                                : new Array(7).fill(0)
+                              : graphOption === "monthly"
+                              ? data?.messages?.hoursValues?.monthly
+                                ? makeData(
+                                    data.messages.hoursValues.monthly,
+                                    12
+                                  )
+                                : new Array(12).fill(0)
+                              : graphOption === "yearly"
+                              ? data?.messages?.hoursValues?.yearly
+                                ? makeData(
+                                    data.messages.hoursValues.yearly,
+                                    data.messages.hoursValues.yearly.length
+                                  )
+                                : new Array(3).fill(0)
+                              : new Array(12).fill(0),
+                          pointStart:
+                            graphOption === "hourly"
+                              ? data?.messages?.hoursValues?.hourly
+                                ? makeData(
+                                    data.messages.hoursValues.hourly,
+                                    24
+                                  )[0]
+                                : 0
+                              : graphOption === "daily"
+                              ? data?.messages?.hoursValues?.daily
+                                ? makeData(
+                                    data.messages.hoursValues.daily,
+                                    7
+                                  )[0]
+                                : 0
+                              : graphOption === "monthly"
+                              ? data?.messages?.hoursValues?.monthly
+                                ? makeData(
+                                    data.messages.hoursValues.monthly,
+                                    12
+                                  )[0]
+                                : 0
+                              : graphOption === "yearly"
+                              ? data?.messages?.hoursValues?.yearly
+                                ? makeData(
+                                    data.messages.hoursValues.yearly,
+                                    data.messages.hoursValues.yearly.length
+                                  )[0]
+                                : 0
+                              : 0,
+                          pointInterval: 86400000,
+                        },
+                      ],
+                      plotOptions: {
+                        series: {
+                          fillColor: "rgba(124, 181, 236,0.1)",
+                          marker: { enabled: false },
+                          animation: {
+                            duration: 10000,
+                          },
+                        },
+                      },
+                      tooltip: {
+                        crosshairs: true,
+                        backgroundColor: "#212529",
+                        borderWith: 5,
+                        className: "tooltip-hov",
+                        // eslint-disable-next-line no-unused-vars
+                        formatter: function (this: any): string {
+                          if (graphOption === "hourly") {
+                            return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
+                              this.y
+                            }</b> messages ${
+                              this.x && days_[this.x]
+                                ? `at ${days_[this.x]}`
+                                : `at ${days_[0]}`
+                            }</p>`;
+                          } else if (graphOption === "daily") {
+                            return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
+                              this.y
+                            }</b> messages ${
+                              this.x && days_daily[this.x]
+                                ? `at a ${days_daily[this.x]}`
+                                : `at a ${days_daily[0]}`
+                            }</p>`;
+                          } else if (graphOption === "monthly") {
+                            return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
+                              this.y
+                            }</b> messages ${
+                              this.x && days_monthly[this.x]
+                                ? `in ${days_monthly[this.x]}`
+                                : `in ${days_monthly[0]}`
+                            }</p>`;
+                          } else if (graphOption === "yearly") {
                             const years =
                               data?.messages?.hoursValues?.yearly?.length;
                             if (years) {
@@ -3370,174 +4135,40 @@ export default function Data({ data, demo }: any): ReactElement {
                                     new Date(Date.now()).getFullYear() - index
                                 )
                                 .reverse();
-                              return years_[a.value];
-                            }
-                          }
 
-                          return days_[a.value];
-                        },
-                        style: {
-                          fontSize: "9px",
-                          color: "#fff",
-                          fontFamily: "Inter",
-                        },
-                      },
-                    },
-                    yAxis: {
-                      gridLineColor: "#43464A",
-                      gridLineWidth: 1,
-                      title: {
-                        text: "Messages",
-                        style: {
-                          fontSize: "20px",
-                          color: "#fff",
-                          fontFamily: "Inter",
-                          fontWeight: "bold",
-                        },
-                      },
-                      labels: {
-                        style: {
-                          fontSize: "9px",
-                          color: "#fff",
-                          fontFamily: "Inter",
-                        },
-                      },
-                    },
-                    series: [
-                      {
-                        name: "Messages",
-                        data:
-                          graphOption === "hourly"
-                            ? data?.messages?.hoursValues?.hourly
-                              ? makeData(data.messages.hoursValues.hourly, 24)
-                              : new Array(24).fill(0)
-                            : graphOption === "daily"
-                            ? data?.messages?.hoursValues?.daily
-                              ? makeData(data.messages.hoursValues.daily, 7)
-                              : new Array(7).fill(0)
-                            : graphOption === "monthly"
-                            ? data?.messages?.hoursValues?.monthly
-                              ? makeData(data.messages.hoursValues.monthly, 12)
-                              : new Array(12).fill(0)
-                            : graphOption === "yearly"
-                            ? data?.messages?.hoursValues?.yearly
-                              ? makeData(
-                                  data.messages.hoursValues.yearly,
-                                  data.messages.hoursValues.yearly.length
-                                )
-                              : new Array(3).fill(0)
-                            : new Array(12).fill(0),
-                        pointStart:
-                          graphOption === "hourly"
-                            ? data?.messages?.hoursValues?.hourly
-                              ? makeData(
-                                  data.messages.hoursValues.hourly,
-                                  24
-                                )[0]
-                              : 0
-                            : graphOption === "daily"
-                            ? data?.messages?.hoursValues?.daily
-                              ? makeData(data.messages.hoursValues.daily, 7)[0]
-                              : 0
-                            : graphOption === "monthly"
-                            ? data?.messages?.hoursValues?.monthly
-                              ? makeData(
-                                  data.messages.hoursValues.monthly,
-                                  12
-                                )[0]
-                              : 0
-                            : graphOption === "yearly"
-                            ? data?.messages?.hoursValues?.yearly
-                              ? makeData(
-                                  data.messages.hoursValues.yearly,
-                                  data.messages.hoursValues.yearly.length
-                                )[0]
-                              : 0
-                            : 0,
-                        pointInterval: 86400000,
-                      },
-                    ],
-                    plotOptions: {
-                      series: {
-                        fillColor: "rgba(124, 181, 236,0.1)",
-                        marker: { enabled: false },
-                        animation: {
-                          duration: 10000,
-                        },
-                      },
-                    },
-                    tooltip: {
-                      backgroundColor: "#212529",
-                      borderWith: 5,
-                      className: "tooltip-hov",
-                      // eslint-disable-next-line no-unused-vars
-                      formatter: function (this: any): string {
-                        if (graphOption === "hourly") {
-                          return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
-                            this.y
-                          }</b> messages ${
-                            this.x && days_[this.x]
-                              ? `at ${days_[this.x]}`
-                              : `at ${days_[0]}`
-                          }</p>`;
-                        } else if (graphOption === "daily") {
-                          return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
-                            this.y
-                          }</b> messages ${
-                            this.x && days_daily[this.x]
-                              ? `at a ${days_daily[this.x]}`
-                              : `at a ${days_daily[0]}`
-                          }</p>`;
-                        } else if (graphOption === "monthly") {
-                          return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
-                            this.y
-                          }</b> messages ${
-                            this.x && days_monthly[this.x]
-                              ? `in ${days_monthly[this.x]}`
-                              : `in ${days_monthly[0]}`
-                          }</p>`;
-                        } else if (graphOption === "yearly") {
-                          const years =
-                            data?.messages?.hoursValues?.yearly?.length;
-                          if (years) {
-                            const years_ = data?.messages?.hoursValues?.yearly
-                              ?.map(
-                                (year: any, index: number) =>
-                                  new Date(Date.now()).getFullYear() - index
-                              )
-                              .reverse();
-
-                            return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
-                              this.y
-                            }</b> messages ${
-                              this.x && years_[this.x]
-                                ? `in ${years_[this.x]} `
-                                : `in ${years_[0]} `
-                            }</p>`;
+                              return `<p style="font-weight: 200; font-family: Inter; color: white"></span><b style="font-weight: 600; font-family: Inter; color: white" ><span>${
+                                this.y
+                              }</b> messages ${
+                                this.x && years_[this.x]
+                                  ? `in ${years_[this.x]} `
+                                  : `in ${years_[0]} `
+                              }</p>`;
+                            } else return `<p>Unable to find option</p>`;
                           } else return `<p>Unable to find option</p>`;
-                        } else return `<p>Unable to find option</p>`;
+                        },
                       },
-                    },
-                    legend: {
-                      enabled: false,
-                    },
-                    lang: {
-                      noData: "No Data Recorded",
-                    },
-                    noData: {
-                      style: {
-                        fontWeight: "bold",
-                        fontSize: "20px",
-                        color: "grey",
+                      legend: {
+                        enabled: false,
                       },
-                    },
-                    credits: { enabled: false },
-                    chart: {
-                      type: graphType,
-                      backgroundColor: "transparent",
-                    },
-                  }}
-                />
+                      lang: {
+                        noData: "No Data Recorded",
+                      },
+                      noData: {
+                        style: {
+                          fontWeight: "bold",
+                          fontSize: "20px",
+                          color: "grey",
+                        },
+                      },
+                      credits: { enabled: false },
+                      chart: {
+                        type: graphType,
+                        backgroundColor: "transparent",
+                        zoomType: "x",
+                      },
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -3652,7 +4283,7 @@ export default function Data({ data, demo }: any): ReactElement {
               )}
             </span>
             {data?.messages?.topDMs && data?.messages?.topDMs?.length > 0 ? (
-              <span className="text-gray-300 px-4">
+              <span className="text-black dark:text-gray-300 px-4">
                 Showing{" "}
                 {!topDMs.length && topDMs[0] !== "noresults"
                   ? data.messages.topDMs.length
@@ -3710,6 +4341,7 @@ export default function Data({ data, demo }: any): ReactElement {
                               <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
                                 {m?.messageCount ? (
                                   <Tippy
+                                    zIndex={999999999999999}
                                     content={
                                       m.messageCount
                                         .toString()
@@ -3730,6 +4362,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
+                                    zIndex={999999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no messages"
@@ -3750,6 +4383,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                 {m?.favoriteWords &&
                                 m?.favoriteWords?.length > 0 ? (
                                   <Tippy
+                                    zIndex={999999999999999}
                                     content={`${
                                       m.favoriteWords.length
                                     } Favorite Word${
@@ -3801,6 +4435,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
+                                    zIndex={999999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no favorite words"
@@ -3820,11 +4455,14 @@ export default function Data({ data, demo }: any): ReactElement {
                                 )}
                                 {m?.topCursed && m?.topCursed?.length > 0 ? (
                                   <Tippy
+                                    zIndex={999999999999999}
                                     content={
                                       m.topCursed.length
                                         .toString()
                                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-                                      " Curse Word" +
+                                      " Curse Words | Cursed " +
+                                      Utils.getTopCount(m.topCursed) +
+                                      " time" +
                                       (m.topCursed.length > 1 ? "s" : "")
                                     }
                                     animation="scale"
@@ -3873,6 +4511,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
+                                    zIndex={999999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no curse words"
@@ -3892,7 +4531,14 @@ export default function Data({ data, demo }: any): ReactElement {
                                 )}
                                 {m?.topLinks && m?.topLinks?.length > 0 ? (
                                   <Tippy
-                                    content={m.topLinks.length + " Links"}
+                                    zIndex={999999999999999}
+                                    content={
+                                      m.topLinks.length +
+                                      " Links | Sent " +
+                                      Utils.getTopCount(m.topLinks) +
+                                      " unique link" +
+                                      (m.topLinks.length > 1 ? "s" : "")
+                                    }
                                     animation="scale"
                                     className="shadow-xl"
                                   >
@@ -3947,6 +4593,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
+                                    zIndex={999999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no links"
@@ -3967,9 +4614,13 @@ export default function Data({ data, demo }: any): ReactElement {
                                 {m?.topDiscordLinks &&
                                 m?.topDiscordLinks?.length > 0 ? (
                                   <Tippy
+                                    zIndex={999999999999999}
                                     content={
                                       m.topDiscordLinks.length +
-                                      " Discord Links"
+                                      " Discord Links | Sent " +
+                                      Utils.getTopCount(m.topDiscordLinks) +
+                                      " unique Discord link" +
+                                      (m.topDiscordLinks.length > 1 ? "s" : "")
                                     }
                                     animation="scale"
                                     className="shadow-xl"
@@ -4025,6 +4676,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
+                                    zIndex={999999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no Discord links"
@@ -4045,6 +4697,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                 {m?.oldestMessages &&
                                 m?.oldestMessages?.length > 0 ? (
                                   <Tippy
+                                    zIndex={999999999999999}
                                     content={`${
                                       m.oldestMessages.length
                                     } Oldest Message${
@@ -4116,6 +4769,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
+                                    zIndex={999999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no messages"
@@ -4135,6 +4789,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                 )}
                                 {m?.topEmojis && m?.topEmojis?.length > 0 ? (
                                   <Tippy
+                                    zIndex={999999999999999}
                                     content={`${m.topEmojis.length} Top Emoji${
                                       m.topEmojis.length > 1 ? "s" : ""
                                     }`}
@@ -4187,6 +4842,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
+                                    zIndex={999999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no emojis"
@@ -4207,6 +4863,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                 {m?.topCustomEmojis &&
                                 m?.topCustomEmojis?.length > 0 ? (
                                   <Tippy
+                                    zIndex={999999999999999}
                                     content={`${
                                       m.topCustomEmojis.length
                                     } Top Custom Emoji${
@@ -4242,6 +4899,9 @@ export default function Data({ data, demo }: any): ReactElement {
                                                         f.emoji
                                                       ) ? (
                                                         <Tippy
+                                                          zIndex={
+                                                            999999999999999
+                                                          }
                                                           content={`${
                                                             f.emoji
                                                           } used ${
@@ -4273,6 +4933,9 @@ export default function Data({ data, demo }: any): ReactElement {
                                                             f.emoji
                                                           ) ? (
                                                             <Tippy
+                                                              zIndex={
+                                                                999999999999999
+                                                              }
                                                               content={`${
                                                                 f.emoji
                                                               } used ${
@@ -4327,6 +4990,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
+                                    zIndex={999999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no custom emojis"
@@ -4368,6 +5032,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
                                     {m?.messageCount ? (
                                       <Tippy
+                                        zIndex={999999999999999}
                                         content={
                                           m.messageCount
                                             .toString()
@@ -4390,6 +5055,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
+                                        zIndex={999999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no messages"
@@ -4410,6 +5076,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                     {m?.favoriteWords &&
                                     m?.favoriteWords.length > 0 ? (
                                       <Tippy
+                                        zIndex={999999999999999}
                                         content={`${
                                           m.favoriteWords.length
                                         } Favorite Word${
@@ -4464,6 +5131,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
+                                        zIndex={999999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no favorite words"
@@ -4483,6 +5151,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                     )}
                                     {m?.topCursed && m?.topCursed.length > 0 ? (
                                       <Tippy
+                                        zIndex={999999999999999}
                                         content={
                                           m.topCursed.length
                                             .toString()
@@ -4490,7 +5159,9 @@ export default function Data({ data, demo }: any): ReactElement {
                                               /\B(?=(\d{3})+(?!\d))/g,
                                               ","
                                             ) +
-                                          " Curse Word" +
+                                          " Curse Words | Cursed " +
+                                          Utils.getTopCount(m.topCursed) +
+                                          " time" +
                                           (m.topCursed.length > 1 ? "s" : "")
                                         }
                                         animation="scale"
@@ -4542,6 +5213,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
+                                        zIndex={999999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no curse words"
@@ -4561,7 +5233,14 @@ export default function Data({ data, demo }: any): ReactElement {
                                     )}
                                     {m?.topLinks && m?.topLinks?.length > 0 ? (
                                       <Tippy
-                                        content={m.topLinks.length + " Links"}
+                                        zIndex={999999999999999}
+                                        content={
+                                          m.topLinks.length +
+                                          " Links | Sent " +
+                                          Utils.getTopCount(m.topLinks) +
+                                          " unique link" +
+                                          (m.topLinks.length > 1 ? "s" : "")
+                                        }
                                         animation="scale"
                                         className="shadow-xl"
                                       >
@@ -4618,6 +5297,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
+                                        zIndex={999999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no links"
@@ -4638,9 +5318,15 @@ export default function Data({ data, demo }: any): ReactElement {
                                     {m?.topDiscordLinks &&
                                     m?.topDiscordLinks.length > 0 ? (
                                       <Tippy
+                                        zIndex={999999999999999}
                                         content={
                                           m.topDiscordLinks.length +
-                                          " Discord Links"
+                                          " Discord Links | Sent " +
+                                          Utils.getTopCount(m.topDiscordLinks) +
+                                          " unique Discord link" +
+                                          (m.topDiscordLinks.length > 1
+                                            ? "s"
+                                            : "")
                                         }
                                         animation="scale"
                                         className="shadow-xl"
@@ -4699,6 +5385,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
+                                        zIndex={999999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no Discord links"
@@ -4719,6 +5406,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                     {m?.oldestMessages &&
                                     m?.oldestMessages?.length > 0 ? (
                                       <Tippy
+                                        zIndex={999999999999999}
                                         content={`${
                                           m.oldestMessages.length
                                         } Oldest Message${
@@ -4790,6 +5478,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
+                                        zIndex={999999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no messages"
@@ -4810,6 +5499,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                     {m?.topEmojis &&
                                     m?.topEmojis?.length > 0 ? (
                                       <Tippy
+                                        zIndex={999999999999999}
                                         content={`${
                                           m.topEmojis.length
                                         } Top Emoji${
@@ -4866,6 +5556,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
+                                        zIndex={999999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no emojis"
@@ -4886,6 +5577,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                     {m?.topCustomEmojis &&
                                     m?.topCustomEmojis?.length > 0 ? (
                                       <Tippy
+                                        zIndex={999999999999999}
                                         content={`${
                                           m.topCustomEmojis.length
                                         } Top Custom Emoji${
@@ -4924,6 +5616,9 @@ export default function Data({ data, demo }: any): ReactElement {
                                                             f.emoji
                                                           ) ? (
                                                             <Tippy
+                                                              zIndex={
+                                                                999999999999999
+                                                              }
                                                               content={`${
                                                                 f.emoji
                                                               } used ${
@@ -4959,6 +5654,9 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                 f.emoji
                                                               ) ? (
                                                                 <Tippy
+                                                                  zIndex={
+                                                                    999999999999999
+                                                                  }
                                                                   content={`${
                                                                     f.emoji
                                                                   } used ${
@@ -5016,6 +5714,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
+                                        zIndex={999999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no custom emojis"
@@ -5093,2505 +5792,1014 @@ export default function Data({ data, demo }: any): ReactElement {
               <path d="m16.1 13.3-1.45-1.45q.225-1.175-.675-2.2-.9-1.025-2.325-.8L10.2 7.4q.425-.2.862-.3Q11.5 7 12 7q1.875 0 3.188 1.312Q16.5 9.625 16.5 11.5q0 .5-.1.938-.1.437-.3.862Zm3.2 3.15-1.45-1.4q.95-.725 1.688-1.588.737-.862 1.262-1.962-1.25-2.525-3.588-4.013Q14.875 6 12 6q-.725 0-1.425.1-.7.1-1.375.3L7.65 4.85q1.025-.425 2.1-.638Q10.825 4 12 4q3.775 0 6.725 2.087Q21.675 8.175 23 11.5q-.575 1.475-1.512 2.738Q20.55 15.5 19.3 16.45Zm.5 6.15-4.2-4.15q-.875.275-1.762.413Q12.95 19 12 19q-3.775 0-6.725-2.087Q2.325 14.825 1 11.5q.525-1.325 1.325-2.463Q3.125 7.9 4.15 7L1.4 4.2l1.4-1.4 18.4 18.4ZM5.55 8.4q-.725.65-1.325 1.425T3.2 11.5q1.25 2.525 3.587 4.012Q9.125 17 12 17q.5 0 .975-.062.475-.063.975-.138l-.9-.95q-.275.075-.525.112Q12.275 16 12 16q-1.875 0-3.188-1.312Q7.5 13.375 7.5 11.5q0-.275.037-.525.038-.25.113-.525Zm7.975 2.325ZM9.75 12.6Z" />
             </svg>
           </div>
-          <div id="blur_7_div">
-            <div className="lg:flex justify-between md:flex sm:flex items-center">
-              <span
-                className="text-gray-900 dark:text-white text-2xl font-bold pt-4 lg:px-6 md:px-6 px-1 flex items-center mb-2 uppercase"
-                style={{
-                  fontFamily:
-                    "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
-                }}
-              >
-                {messageType === "channelMode"
-                  ? "Top Channels"
-                  : messageType === "guildMode"
-                  ? "Top Guilds"
-                  : "Top Group DMs"}
-                {data?.messages?.topChannels &&
-                data?.messages?.topChannels?.length > 0 ? (
-                  <form className="ml-4">
-                    <label
-                      htmlFor="topChannels-search"
-                      className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
-                    >
-                      Search
-                    </label>
-                    <div className="relative ">
-                      <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                        <svg
-                          aria-hidden="true"
-                          className="w-5 h-5 text-gray-900 dark:text-gray-400"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                          ></path>
-                        </svg>
-                      </div>
-                      <input
-                        type="search"
-                        id="search"
-                        className="font-mono block p-2 pl-10 w-full text-sm bg-transparent rounded-lg border-gray-300  text-gray-900 dark:text-white border-none focus:border-current focus:ring-0 bg-gray-400 dark:bg-[#23272A]"
-                        placeholder={
-                          "Filter " +
-                          (messageType === "channelMode"
-                            ? "channels"
-                            : messageType === "guildMode"
-                            ? "guilds"
-                            : "group DMs")
-                        }
-                        onChange={(e) => {
-                          if (messageType === "channelMode") {
-                            setTimeout(() => {
-                              const possibilities = data?.messages?.topChannels;
-                              if (!possibilities) return;
-                              const search = e.target.value
-                                .toLowerCase()
-                                .trim();
-
-                              if (search === "") {
-                                setTopChannels([]);
-                                return;
-                              }
-                              const filtered = possibilities.filter((p: any) =>
-                                typeof p.name === "object"
-                                  ? p.name[0].toLowerCase().includes(search) ||
-                                    p.guildName.toLowerCase().includes(search)
-                                  : p.name.toLowerCase().includes(search) ||
-                                    p.guildName.toLowerCase().includes(search)
-                              );
-
-                              if (filtered && filtered.length) {
-                                setTopChannels(filtered);
-                              } else setTopChannels(["noresults"]);
-                            }, 100);
-                          } else if (messageType === "guildMode") {
-                            setTimeout(() => {
-                              const possibilities = data?.messages?.topGuilds;
-                              if (!possibilities) return;
-                              const search = e.target.value
-                                .toLowerCase()
-                                .trim();
-
-                              if (search === "") {
-                                setTopGuilds([]);
-                                return;
-                              }
-                              const filtered = possibilities.filter((p: any) =>
-                                p.guildName.toLowerCase().includes(search)
-                              );
-
-                              if (filtered && filtered.length) {
-                                setTopGuilds(filtered);
-                              } else setTopGuilds(["noresults"]);
-                            }, 100);
-                          } else if (messageType === "dmMode") {
-                            setTimeout(() => {
-                              const possibilities = data?.messages?.topGroupDMs;
-                              if (!possibilities) return;
-                              const search = e.target.value
-                                .toLowerCase()
-                                .trim();
-
-                              if (search === "") {
-                                setTopGroupDMs([]);
-                                return;
-                              }
-                              const filtered = possibilities.filter(
-                                (p: any) =>
-                                  p?.name?.toLowerCase()?.includes(search) ||
-                                  p?.recipients?.toString()?.includes(search)
-                              );
-
-                              if (filtered && filtered.length) {
-                                setTopGroupDMs(filtered);
-                              } else setTopGroupDMs(["noresults"]);
-                            }, 100);
-                          }
-                        }}
-                      />
-                    </div>
-                  </form>
-                ) : (
-                  ""
-                )}
-              </span>
-              <ul className="flex items-center rounded-lg ml-2">
-                <li className="flex gap-1">
+          <div id="blur_7_div_1">
+            <div id="blur_7_div">
+              <div className="lg:flex justify-between md:flex sm:flex items-center">
+                <span
+                  className="text-gray-900 dark:text-white text-2xl font-bold pt-4 lg:px-6 md:px-6 px-1 flex items-center mb-2 uppercase"
+                  style={{
+                    fontFamily:
+                      "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+                  }}
+                >
+                  {messageType === "channelMode"
+                    ? "Top Channels"
+                    : messageType === "guildMode"
+                    ? "Top Guilds"
+                    : "Top Group DMs"}
                   {data?.messages?.topChannels &&
                   data?.messages?.topChannels?.length > 0 ? (
-                    <div
-                      className={
-                        "p-2 rounded-lg" +
-                        (messageType === "channelMode"
-                          ? " bg-gray-400 dark:bg-[#232323]"
-                          : "")
-                      }
-                      onClick={() => {
-                        const el: any = document.getElementById("search");
-                        if (el) el.value = "";
-                        setTopChannels([]);
-                        setMessageType("channelMode");
-                      }}
-                    >
-                      <Tippy content="Channel Mode" animation="scale">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="24"
-                          width="24"
-                          className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
-                        >
-                          <path d="m6 20 1-4H3.5l.5-2h3.5l1-4h-4L5 8h4l1-4h2l-1 4h4l1-4h2l-1 4h3.5l-.5 2h-3.5l-1 4h4l-.5 2h-4l-1 4h-2l1-4H9l-1 4Zm3.5-6h4l1-4h-4Z" />
-                        </svg>
-                      </Tippy>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  {data?.messages?.topGuilds &&
-                  data?.messages?.topGuilds?.length > 0 ? (
-                    <div
-                      className={
-                        "p-2 rounded-lg" +
-                        (messageType === "guildMode"
-                          ? " bg-gray-400 dark:bg-[#232323]"
-                          : "")
-                      }
-                      onClick={() => {
-                        const el: any = document.getElementById("search");
-                        if (el) el.value = "";
-                        setTopGuilds([]);
-                        setMessageType("guildMode");
-                      }}
-                    >
-                      <Tippy content="Guild Mode" animation="scale">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="24"
-                          width="24"
-                          className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
-                        >
-                          <path d="M4 13.525 6.525 11 4 8.475 1.475 11ZM17.5 13 20 9l2.5 4ZM0 18v-1.575q0-1.1 1.113-1.763Q2.225 14 4 14q.325 0 .625.012.3.013.575.063-.35.5-.525 1.075-.175.575-.175 1.225V18Zm6 0v-1.625q0-1.625 1.663-2.625 1.662-1 4.337-1 2.7 0 4.35 1 1.65 1 1.65 2.625V18Zm13.5 0v-1.625q0-.65-.163-1.225-.162-.575-.487-1.075.275-.05.563-.063Q19.7 14 20 14q1.8 0 2.9.662 1.1.663 1.1 1.763V18ZM12 12q-1.25 0-2.125-.875T9 9q0-1.275.875-2.138Q10.75 6 12 6q1.275 0 2.137.862Q15 7.725 15 9q0 1.25-.863 2.125Q13.275 12 12 12Z" />
-                        </svg>
-                      </Tippy>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  {data?.messages?.topGroupDMs &&
-                  data?.messages?.topGroupDMs?.length > 0 ? (
-                    <div
-                      className={
-                        "p-2 rounded-lg" +
-                        (messageType === "dmMode"
-                          ? " bg-gray-400 dark:bg-[#232323]"
-                          : "")
-                      }
-                      onClick={() => {
-                        const el: any = document.getElementById("search");
-                        if (el) el.value = "";
-                        setTopGroupDMs([]);
-                        setMessageType("dmMode");
-                      }}
-                    >
-                      <Tippy content="Group DM Mode" animation="scale">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="24"
-                          width="24"
-                          className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
-                        >
-                          <path d="M1 20v-2.8q0-.85.438-1.563.437-.712 1.162-1.087 1.55-.775 3.15-1.163Q7.35 13 9 13t3.25.387q1.6.388 3.15 1.163.725.375 1.162 1.087Q17 16.35 17 17.2V20Zm18 0v-3q0-1.1-.612-2.113-.613-1.012-1.738-1.737 1.275.15 2.4.512 1.125.363 2.1.888.9.5 1.375 1.112Q23 16.275 23 17v3ZM9 12q-1.65 0-2.825-1.175Q5 9.65 5 8q0-1.65 1.175-2.825Q7.35 4 9 4q1.65 0 2.825 1.175Q13 6.35 13 8q0 1.65-1.175 2.825Q10.65 12 9 12Zm10-4q0 1.65-1.175 2.825Q16.65 12 15 12q-.275 0-.7-.062-.425-.063-.7-.138.675-.8 1.037-1.775Q15 9.05 15 8q0-1.05-.363-2.025Q14.275 5 13.6 4.2q.35-.125.7-.163Q14.65 4 15 4q1.65 0 2.825 1.175Q19 6.35 19 8Z" />
-                        </svg>
-                      </Tippy>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </li>
-              </ul>
-            </div>
-            {messageType === "channelMode" ? (
-              <>
-                {data?.messages?.topChannels &&
-                data?.messages?.topChannels?.length > 0 ? (
-                  <span className="text-gray-300 px-4">
-                    Showing{" "}
-                    {!topChannels.length && topChannels[0] !== "noresults"
-                      ? data.messages.topChannels.length
-                      : topChannels[0] !== "noresults"
-                      ? topChannels.length
-                      : "0"}
-                    /{data.messages.topChannels.length}
-                  </span>
-                ) : (
-                  ""
-                )}
-                <div className="flex grow rounded-sm overflow-y-auto overflow-x-hidden h-[700px]">
-                  <div className="flex flex-col w-full px-3 pb-4 lg:px-3 md:px-3 lg:pt-0 md:pt-0 pt-2">
-                    {" "}
-                    {!data?.messages?.topChannels ? (
-                      <div className="px-10 text-gray-900 dark:text-white text-3xl font-bold flex flex-col justify-center content-center align-center w-full h-full">
-                        No Data was found or this option is disabled
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                    {data?.messages?.topChannels &&
-                    data?.messages?.topChannels?.length > 0
-                      ? !(topChannels.length > 0) &&
-                        topChannels[0] !== "noresults"
-                        ? data?.messages?.topChannels.map(
-                            (m: any, i: number) => {
-                              return (
-                                <>
-                                  <div key={i}>
-                                    <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
-                                      <div className="flex items-center max-w-full sm:max-w-4/6">
-                                        <div
-                                          className="text-gray-200 font-bold flex h-8 w-8 rounded-full items-center justify-center bg-gray-400 dark:bg-gray-600 "
-                                          style={{
-                                            backgroundColor:
-                                              i === 0
-                                                ? "#DA9E3B"
-                                                : i === 1
-                                                ? "#989898"
-                                                : i === 2
-                                                ? "#AE7458"
-                                                : "#4E5258",
-                                          }}
-                                        >
-                                          {i + 1}
-                                        </div>
+                    <form className="ml-4">
+                      <label
+                        htmlFor="topChannels-search"
+                        className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
+                      >
+                        Search
+                      </label>
+                      <div className="relative ">
+                        <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                          <svg
+                            aria-hidden="true"
+                            className="w-5 h-5 text-gray-900 dark:text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                            ></path>
+                          </svg>
+                        </div>
+                        <input
+                          type="search"
+                          id="search"
+                          className="font-mono block p-2 pl-10 w-full text-sm bg-transparent rounded-lg border-gray-300  text-gray-900 dark:text-white border-none focus:border-current focus:ring-0 bg-gray-400 dark:bg-[#23272A]"
+                          placeholder={
+                            "Filter " +
+                            (messageType === "channelMode"
+                              ? "channels"
+                              : messageType === "guildMode"
+                              ? "guilds"
+                              : "group DMs")
+                          }
+                          onChange={(e) => {
+                            if (messageType === "channelMode") {
+                              setTimeout(() => {
+                                const possibilities =
+                                  data?.messages?.topChannels;
+                                if (!possibilities) return;
+                                const search = e.target.value
+                                  .toLowerCase()
+                                  .trim();
 
-                                        <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
-                                          <div className="flex items-center text-lg">
-                                            {m?.name ? (
-                                              typeof m.name === "object" ? (
-                                                m?.name[0]?.length > 28 ? (
-                                                  <Tippy
-                                                    content={m.name[0]}
-                                                    animation="scale"
-                                                    className="shadow-xl"
-                                                  >
-                                                    <span>
-                                                      {m.name[0].substring(
-                                                        0,
-                                                        28
-                                                      ) + "..."}
-                                                    </span>
-                                                  </Tippy>
-                                                ) : (
-                                                  m.name[0]
-                                                )
-                                              ) : m?.name?.length > 28 ? (
-                                                <Tippy
-                                                  content={m.name}
-                                                  animation="scale"
-                                                  className="shadow-xl"
-                                                >
-                                                  <span>
-                                                    {m.name.substring(0, 28) +
-                                                      "..."}
-                                                  </span>
-                                                </Tippy>
-                                              ) : (
-                                                m.name
-                                              )
-                                            ) : (
-                                              ""
-                                            )}
-                                          </div>
-                                          <span className="text-gray-400 text-sm -mt-2">
-                                            {m?.guildName?.length > 28 ? (
-                                              <Tippy
-                                                content={m.guildName}
-                                                animation="scale"
-                                                className="shadow-xl"
-                                              >
-                                                <span>
-                                                  {m.guildName.substring(
-                                                    0,
-                                                    28
-                                                  ) + "..."}
-                                                </span>
-                                              </Tippy>
-                                            ) : (
-                                              m.guildName
-                                            )}
-                                          </span>
-                                        </div>
-                                      </div>
-                                      <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
-                                        {m?.messageCount ? (
-                                          <Tippy
-                                            content={
-                                              m.messageCount
-                                                .toString()
-                                                .replace(
-                                                  /\B(?=(\d{3})+(?!\d))/g,
-                                                  ","
-                                                ) + " Messages"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2"
-                                              width="24"
-                                            >
-                                              <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no messages"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
-                                              width="24"
-                                            >
-                                              <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.favoriteWords &&
-                                        m?.favoriteWords?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.favoriteWords.length
-                                            } Favorite Word${
-                                              m.favoriteWords.length > 1
-                                                ? "s"
-                                                : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.favoriteWords.length <
-                                                      10
-                                                        ? "Top 10"
-                                                        : `${m.favoriteWords.length}`}{" "}
-                                                      Favorite Word
-                                                      {m.favoriteWords
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.favoriteWords.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              {f.word}:{" "}
-                                                              {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no favorite words"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topCursed &&
-                                        m?.topCursed?.length > 0 ? (
-                                          <Tippy
-                                            content={
-                                              m.topCursed.length
-                                                .toString()
-                                                .replace(
-                                                  /\B(?=(\d{3})+(?!\d))/g,
-                                                  ","
-                                                ) +
-                                              " Curse Word" +
-                                              (m.topCursed.length > 1
-                                                ? "s"
-                                                : "")
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.topCursed.length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topCursed.length}`}{" "}
-                                                      Curse Word
-                                                      {m.topCursed.length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topCursed.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              {f.word}:{" "}
-                                                              {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no curse words"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topLinks &&
-                                        m?.topLinks?.length > 0 ? (
-                                          <Tippy
-                                            content={
-                                              m.topLinks.length + " Links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.topLinks.length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topLinks.length}`}{" "}
-                                                      Favorite Link
-                                                      {m.topLinks.length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topLinks.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <a
-                                                                href={f.word}
-                                                                className="opacity-80 hover:opacity-100"
-                                                                target="_blank"
-                                                                rel="noreferrer"
-                                                              >
-                                                                {f.word}
-                                                              </a>
-                                                              : {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topDiscordLinks &&
-                                        m?.topDiscordLinks?.length > 0 ? (
-                                          <Tippy
-                                            content={
-                                              m.topDiscordLinks.length +
-                                              " Discord Links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.topDiscordLinks
-                                                        .length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topDiscordLinks.length}`}{" "}
-                                                      Discord Link
-                                                      {m.topDiscordLinks
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topDiscordLinks.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <a
-                                                                href={f.word}
-                                                                className="opacity-80 hover:opacity-100"
-                                                                target="_blank"
-                                                                rel="noreferrer"
-                                                              >
-                                                                {f.word}
-                                                              </a>
-                                                              : {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no Discord links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.oldestMessages &&
-                                        m?.oldestMessages?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.oldestMessages.length
-                                            } Oldest Message${
-                                              m.oldestMessages.length > 1
-                                                ? "s"
-                                                : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "Your"}{" "}
-                                                      {m.oldestMessages.length <
-                                                      10
-                                                        ? "Top 10"
-                                                        : `${m.oldestMessages.length}`}{" "}
-                                                      Oldest Message
-                                                      {m.favoriteWords
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.oldestMessages.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <b>
-                                                                {f.sentence}
-                                                              </b>
-                                                              <ul>
-                                                                <li>
-                                                                  - sent at{" "}
-                                                                  {moment(
-                                                                    f.timestamp
-                                                                  ).format(
-                                                                    "MMMM Do YYYY, h:mm:ss a"
-                                                                  )}{" "}
-                                                                  <b>
-                                                                    (
-                                                                    {moment(
-                                                                      f.timestamp
-                                                                    ).fromNow()}
-                                                                    )
-                                                                  </b>
-                                                                </li>
-                                                                <li>
-                                                                  - sent to{" "}
-                                                                  <b>
-                                                                    {f.author}
-                                                                  </b>
-                                                                </li>
-                                                              </ul>
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no messages"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                            >
-                                              <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topEmojis &&
-                                        m?.topEmojis?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.topEmojis.length
-                                            } Top Emoji${
-                                              m.topEmojis.length > 1 ? "s" : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "Your"}{" "}
-                                                      {m.topEmojis.length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topEmojis.length}`}{" "}
-                                                      Top Emoji
-                                                      {m.topEmojis.length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topEmojis.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <b>
-                                                                {f.emoji}:{" "}
-                                                                {f.count} time
-                                                                {f.count > 1
-                                                                  ? "s"
-                                                                  : ""}
-                                                              </b>
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no emojis"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topCustomEmojis &&
-                                        m?.topCustomEmojis?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.topCustomEmojis.length
-                                            } Top Custom Emoji${
-                                              m.topCustomEmojis.length > 1
-                                                ? "s"
-                                                : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "Your"}{" "}
-                                                      {m.topCustomEmojis
-                                                        .length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topCustomEmojis.length}`}{" "}
-                                                      Top Custom Emoji
-                                                      {m.topCustomEmojis
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topCustomEmojis.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              {/<:.*?:(\d+)>/g.exec(
-                                                                f.emoji
-                                                              ) ? (
-                                                                <Tippy
-                                                                  content={`${
-                                                                    f.emoji
-                                                                  } used ${
-                                                                    f.count
-                                                                  } time${
-                                                                    f.count ===
-                                                                    1
-                                                                      ? ""
-                                                                      : "s"
-                                                                  }`}
-                                                                  animation="scale"
-                                                                  className="shadow-xl"
-                                                                >
-                                                                  <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                                                    <Image
-                                                                      unoptimized={
-                                                                        true
-                                                                      }
-                                                                      src={Utils.createEmoji(
-                                                                        f.emoji
-                                                                      )}
-                                                                      alt="emoji"
-                                                                      height="50px"
-                                                                      width="50px"
-                                                                      draggable={
-                                                                        false
-                                                                      }
-                                                                    />
-                                                                  </div>
-                                                                </Tippy>
-                                                              ) : (
-                                                                <>
-                                                                  {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                                                    f.emoji
-                                                                  ) ? (
-                                                                    <Tippy
-                                                                      content={`${
-                                                                        f.emoji
-                                                                      } used ${
-                                                                        f.count
-                                                                      } time${
-                                                                        f.count ===
-                                                                        1
-                                                                          ? ""
-                                                                          : "s"
-                                                                      }`}
-                                                                      animation="scale"
-                                                                      className="shadow-xl"
-                                                                    >
-                                                                      <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                                                        <Image
-                                                                          unoptimized={
-                                                                            true
-                                                                          }
-                                                                          src={Utils.createCustomEmoji(
-                                                                            f.emoji
-                                                                          )}
-                                                                          alt="emoji"
-                                                                          height="50px"
-                                                                          width="50px"
-                                                                          draggable={
-                                                                            false
-                                                                          }
-                                                                        />
-                                                                      </div>
-                                                                    </Tippy>
-                                                                  ) : (
-                                                                    ""
-                                                                  )}{" "}
-                                                                </>
-                                                              )}
-                                                              : {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no custom emojis"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                      </div>
-                                    </div>
-                                  </div>
-                                </>
-                              );
+                                if (search === "") {
+                                  setTopChannels([]);
+                                  return;
+                                }
+                                const filtered = possibilities.filter(
+                                  (p: any) =>
+                                    typeof p.name === "object"
+                                      ? p.name[0]
+                                          .toLowerCase()
+                                          .includes(search) ||
+                                        p.guildName
+                                          .toLowerCase()
+                                          .includes(search)
+                                      : p.name.toLowerCase().includes(search) ||
+                                        p.guildName
+                                          .toLowerCase()
+                                          .includes(search)
+                                );
+
+                                if (filtered && filtered.length) {
+                                  setTopChannels(filtered);
+                                } else setTopChannels(["noresults"]);
+                              }, 100);
+                            } else if (messageType === "guildMode") {
+                              setTimeout(() => {
+                                const possibilities = data?.messages?.topGuilds;
+                                if (!possibilities) return;
+                                const search = e.target.value
+                                  .toLowerCase()
+                                  .trim();
+
+                                if (search === "") {
+                                  setTopGuilds([]);
+                                  return;
+                                }
+                                const filtered = possibilities.filter(
+                                  (p: any) =>
+                                    p.guildName.toLowerCase().includes(search)
+                                );
+
+                                if (filtered && filtered.length) {
+                                  setTopGuilds(filtered);
+                                } else setTopGuilds(["noresults"]);
+                              }, 100);
+                            } else if (messageType === "dmMode") {
+                              setTimeout(() => {
+                                const possibilities =
+                                  data?.messages?.topGroupDMs;
+                                if (!possibilities) return;
+                                const search = e.target.value
+                                  .toLowerCase()
+                                  .trim();
+
+                                if (search === "") {
+                                  setTopGroupDMs([]);
+                                  return;
+                                }
+                                const filtered = possibilities.filter(
+                                  (p: any) =>
+                                    p?.name?.toLowerCase()?.includes(search) ||
+                                    p?.recipients?.toString()?.includes(search)
+                                );
+
+                                if (filtered && filtered.length) {
+                                  setTopGroupDMs(filtered);
+                                } else setTopGroupDMs(["noresults"]);
+                              }, 100);
                             }
-                          )
-                        : topChannels?.map((m: any, i: number) => {
-                            return (
-                              <>
-                                {m !== "noresults" ? (
-                                  <div key={i}>
-                                    <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
-                                      <div className="flex items-center max-w-full sm:max-w-4/6">
-                                        <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
-                                          <div className="flex items-center text-lg">
-                                            {m?.name
-                                              ? typeof m.name === "object"
-                                                ? m.name[0]
-                                                : m.name
-                                              : ""}
-                                          </div>
-                                          <span className="text-gray-400 text-sm -mt-2">
-                                            {m?.guildName?.length > 28 ? (
-                                              <Tippy
-                                                content={m.guildName}
-                                                animation="scale"
-                                                className="shadow-xl"
-                                              >
-                                                <span>
-                                                  {m.guildName.substring(
-                                                    0,
-                                                    28
-                                                  ) + "..."}
-                                                </span>
-                                              </Tippy>
-                                            ) : (
-                                              m.guildName
-                                            )}
-                                          </span>
-                                        </div>
-                                      </div>
-                                      <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
-                                        {m?.messageCount ? (
-                                          <Tippy
-                                            content={
-                                              m.messageCount
-                                                .toString()
-                                                .replace(
-                                                  /\B(?=(\d{3})+(?!\d))/g,
-                                                  ","
-                                                ) + " Messages"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2"
-                                              width="24"
-                                            >
-                                              <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no messages"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
-                                              width="24"
-                                            >
-                                              <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.favoriteWords &&
-                                        m?.favoriteWords.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.favoriteWords.length
-                                            } Favorite Word${
-                                              m.favoriteWords.length > 1
-                                                ? "s"
-                                                : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.favoriteWords.length <
-                                                      10
-                                                        ? "Top 10"
-                                                        : `${m.favoriteWords.length}`}{" "}
-                                                      Favorite Word
-                                                      {m.favoriteWords
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.favoriteWords.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              {f.word}:{" "}
-                                                              {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no favorite words"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topCursed &&
-                                        m?.topCursed?.length > 0 ? (
-                                          <Tippy
-                                            content={
-                                              m.topCursed.length
-                                                .toString()
-                                                .replace(
-                                                  /\B(?=(\d{3})+(?!\d))/g,
-                                                  ","
-                                                ) +
-                                              " Curse Word" +
-                                              (m.topCursed.length > 1
-                                                ? "s"
-                                                : "")
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.topCursed.length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topCursed.length}`}{" "}
-                                                      Curse Word
-                                                      {m.topCursed.length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topCursed.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              {f.word}:{" "}
-                                                              {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no curse words"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topLinks &&
-                                        m?.topLinks?.length > 0 ? (
-                                          <Tippy
-                                            content={
-                                              m.topLinks.length + " Links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.topLinks.length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topLinks.length}`}{" "}
-                                                      Favorite Link
-                                                      {m.topLinks.length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topLinks.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <a
-                                                                href={f.word}
-                                                                className="opacity-80 hover:opacity-100"
-                                                                target="_blank"
-                                                                rel="noreferrer"
-                                                              >
-                                                                {f.word}
-                                                              </a>
-                                                              : {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topDiscordLinks &&
-                                        m?.topDiscordLinks?.length > 0 ? (
-                                          <Tippy
-                                            content={
-                                              m.topDiscordLinks.length +
-                                              " Discord Links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.topDiscordLinks
-                                                        .length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topDiscordLinks.length}`}{" "}
-                                                      Discord Link
-                                                      {m.topDiscordLinks
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topDiscordLinks.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <a
-                                                                href={f.word}
-                                                                className="opacity-80 hover:opacity-100"
-                                                                target="_blank"
-                                                                rel="noreferrer"
-                                                              >
-                                                                {f.word}
-                                                              </a>
-                                                              : {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no Discord links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.oldestMessages &&
-                                        m?.oldestMessages?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.oldestMessages.length
-                                            } Oldest Message${
-                                              m.oldestMessages.length > 1
-                                                ? "s"
-                                                : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "Your"}{" "}
-                                                      {m.oldestMessages.length <
-                                                      10
-                                                        ? "Top 10"
-                                                        : `${m.oldestMessages.length}`}{" "}
-                                                      Oldest Message
-                                                      {m.favoriteWords
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.oldestMessages.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <b>
-                                                                {f.sentence}
-                                                              </b>
-                                                              <ul>
-                                                                <li>
-                                                                  - sent at{" "}
-                                                                  {moment(
-                                                                    f.timestamp
-                                                                  ).format(
-                                                                    "MMMM Do YYYY, h:mm:ss a"
-                                                                  )}{" "}
-                                                                  <b>
-                                                                    (
-                                                                    {moment(
-                                                                      f.timestamp
-                                                                    ).fromNow()}
-                                                                    )
-                                                                  </b>
-                                                                </li>
-                                                                <li>
-                                                                  - sent to{" "}
-                                                                  <b>
-                                                                    {f.author}
-                                                                  </b>
-                                                                </li>
-                                                              </ul>
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no messages"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                            >
-                                              <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topEmojis &&
-                                        m?.topEmojis?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.topEmojis.length
-                                            } Top Emoji${
-                                              m.topEmojis.length > 1 ? "s" : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "Your"}{" "}
-                                                      {m.topEmojis.length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topEmojis.length}`}{" "}
-                                                      Top Emoji
-                                                      {m.topEmojis.length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topEmojis.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <b>
-                                                                {f.emoji}:{" "}
-                                                                {f.count} time
-                                                                {f.count > 1
-                                                                  ? "s"
-                                                                  : ""}
-                                                              </b>
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no emojis"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topCustomEmojis &&
-                                        m?.topCustomEmojis?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.topCustomEmojis.length
-                                            } Top Custom Emoji${
-                                              m.topCustomEmojis.length > 1
-                                                ? "s"
-                                                : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "Your"}{" "}
-                                                      {m.topCustomEmojis
-                                                        .length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topCustomEmojis.length}`}{" "}
-                                                      Top Custom Emoji
-                                                      {m.topCustomEmojis
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topCustomEmojis.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              {/<:.*?:(\d+)>/g.exec(
-                                                                f.emoji
-                                                              ) ? (
-                                                                <Tippy
-                                                                  content={`${
-                                                                    f.emoji
-                                                                  } used ${
-                                                                    f.count
-                                                                  } time${
-                                                                    f.count ===
-                                                                    1
-                                                                      ? ""
-                                                                      : "s"
-                                                                  }`}
-                                                                  animation="scale"
-                                                                  className="shadow-xl"
-                                                                >
-                                                                  <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                                                    <Image
-                                                                      unoptimized={
-                                                                        true
-                                                                      }
-                                                                      src={Utils.createEmoji(
-                                                                        f.emoji
-                                                                      )}
-                                                                      alt="emoji"
-                                                                      height="50px"
-                                                                      width="50px"
-                                                                      draggable={
-                                                                        false
-                                                                      }
-                                                                    />
-                                                                  </div>
-                                                                </Tippy>
-                                                              ) : (
-                                                                <>
-                                                                  {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                                                    f.emoji
-                                                                  ) ? (
-                                                                    <Tippy
-                                                                      content={`${
-                                                                        f.emoji
-                                                                      } used ${
-                                                                        f.count
-                                                                      } time${
-                                                                        f.count ===
-                                                                        1
-                                                                          ? ""
-                                                                          : "s"
-                                                                      }`}
-                                                                      animation="scale"
-                                                                      className="shadow-xl"
-                                                                    >
-                                                                      <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                                                        <Image
-                                                                          unoptimized={
-                                                                            true
-                                                                          }
-                                                                          src={Utils.createCustomEmoji(
-                                                                            f.emoji
-                                                                          )}
-                                                                          alt="emoji"
-                                                                          height="50px"
-                                                                          width="50px"
-                                                                          draggable={
-                                                                            false
-                                                                          }
-                                                                        />
-                                                                      </div>
-                                                                    </Tippy>
-                                                                  ) : (
-                                                                    ""
-                                                                  )}{" "}
-                                                                </>
-                                                              )}
-                                                              : {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no custom emojis"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                      </div>
-                                    </div>
-                                  </div>
-                                ) : (
-                                  <div className="flex flex-col justify-center items-center">
-                                    <span className="text-gray-900 dark:text-gray-200 text-2xl font-bold">
-                                      NO RESULTS FOUND
-                                    </span>
-                                    <span className="text-gray-700 dark:text-gray-400 text-lg max-w-sm">
-                                      We could not find what you are looking
-                                      for. Try again with a different search
-                                      term.
-                                    </span>
-                                  </div>
-                                )}
-                              </>
-                            );
-                          })
-                      : ""}
-                  </div>
-                </div>
-              </>
-            ) : (
-              ""
-            )}
-            {messageType === "guildMode" ? (
-              <>
-                {data?.messages?.topGuilds &&
-                data?.messages?.topGuilds?.length > 0 ? (
-                  <span className="text-gray-300 px-4">
-                    Showing{" "}
-                    {!topGuilds.length && topGuilds[0] !== "noresults"
-                      ? data.messages.topGuilds.length
-                      : topGuilds[0] !== "noresults"
-                      ? topGuilds.length
-                      : "0"}
-                    /{data.messages.topGuilds.length}
-                  </span>
-                ) : (
-                  ""
-                )}
-                <div className="flex grow rounded-sm overflow-y-auto overflow-x-hidden h-[700px]">
-                  <div className="flex flex-col w-full px-3 pb-4 lg:px-3 md:px-3 lg:pt-0 md:pt-0 pt-2">
-                    {" "}
-                    {!data?.messages?.topGuilds ? (
-                      <div className="px-10 text-gray-900 dark:text-white text-3xl font-bold flex flex-col justify-center content-center align-center w-full h-full">
-                        No Data was found or this option is disabled
+                          }}
+                        />
+                      </div>
+                    </form>
+                  ) : (
+                    ""
+                  )}
+                </span>
+                <ul className="flex items-center rounded-lg ml-2">
+                  <li className="flex gap-1">
+                    {data?.messages?.topChannels &&
+                    data?.messages?.topChannels?.length > 0 ? (
+                      <div
+                        className={
+                          "p-2 rounded-lg" +
+                          (messageType === "channelMode"
+                            ? " bg-gray-400 dark:bg-[#232323]"
+                            : "")
+                        }
+                        onClick={() => {
+                          const el: any = document.getElementById("search");
+                          if (el) el.value = "";
+                          setTopChannels([]);
+                          setMessageType("channelMode");
+                        }}
+                      >
+                        <Tippy
+                          zIndex={999999999999999}
+                          content="Channel Mode"
+                          animation="scale"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24"
+                            width="24"
+                            className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
+                          >
+                            <path d="m6 20 1-4H3.5l.5-2h3.5l1-4h-4L5 8h4l1-4h2l-1 4h4l1-4h2l-1 4h3.5l-.5 2h-3.5l-1 4h4l-.5 2h-4l-1 4h-2l1-4H9l-1 4Zm3.5-6h4l1-4h-4Z" />
+                          </svg>
+                        </Tippy>
                       </div>
                     ) : (
                       ""
                     )}
                     {data?.messages?.topGuilds &&
-                    data?.messages?.topGuilds?.length > 0
-                      ? !(topGuilds.length > 0) && topGuilds[0] !== "noresults"
-                        ? data?.messages?.topGuilds.map((m: any, i: number) => {
-                            return (
-                              <>
-                                <div key={i}>
-                                  <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
-                                    <div className="flex items-center max-w-full sm:max-w-4/6">
-                                      <div
-                                        className="text-gray-200 font-bold flex h-8 w-8 rounded-full items-center justify-center bg-gray-400 dark:bg-gray-600 "
-                                        style={{
-                                          backgroundColor:
-                                            i === 0
-                                              ? "#DA9E3B"
-                                              : i === 1
-                                              ? "#989898"
-                                              : i === 2
-                                              ? "#AE7458"
-                                              : "#4E5258",
-                                        }}
-                                      >
-                                        {i + 1}
-                                      </div>
+                    data?.messages?.topGuilds?.length > 0 ? (
+                      <div
+                        className={
+                          "p-2 rounded-lg" +
+                          (messageType === "guildMode"
+                            ? " bg-gray-400 dark:bg-[#232323]"
+                            : "")
+                        }
+                        onClick={() => {
+                          const el: any = document.getElementById("search");
+                          if (el) el.value = "";
+                          setTopGuilds([]);
+                          setMessageType("guildMode");
+                        }}
+                      >
+                        <Tippy
+                          zIndex={999999999999999}
+                          content="Guild Mode"
+                          animation="scale"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24"
+                            width="24"
+                            className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
+                          >
+                            <path d="M4 13.525 6.525 11 4 8.475 1.475 11ZM17.5 13 20 9l2.5 4ZM0 18v-1.575q0-1.1 1.113-1.763Q2.225 14 4 14q.325 0 .625.012.3.013.575.063-.35.5-.525 1.075-.175.575-.175 1.225V18Zm6 0v-1.625q0-1.625 1.663-2.625 1.662-1 4.337-1 2.7 0 4.35 1 1.65 1 1.65 2.625V18Zm13.5 0v-1.625q0-.65-.163-1.225-.162-.575-.487-1.075.275-.05.563-.063Q19.7 14 20 14q1.8 0 2.9.662 1.1.663 1.1 1.763V18ZM12 12q-1.25 0-2.125-.875T9 9q0-1.275.875-2.138Q10.75 6 12 6q1.275 0 2.137.862Q15 7.725 15 9q0 1.25-.863 2.125Q13.275 12 12 12Z" />
+                          </svg>
+                        </Tippy>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                    {data?.messages?.topGroupDMs &&
+                    data?.messages?.topGroupDMs?.length > 0 ? (
+                      <div
+                        className={
+                          "p-2 rounded-lg" +
+                          (messageType === "dmMode"
+                            ? " bg-gray-400 dark:bg-[#232323]"
+                            : "")
+                        }
+                        onClick={() => {
+                          const el: any = document.getElementById("search");
+                          if (el) el.value = "";
+                          setTopGroupDMs([]);
+                          setMessageType("dmMode");
+                        }}
+                      >
+                        <Tippy
+                          zIndex={999999999999999}
+                          content="Group DM Mode"
+                          animation="scale"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24"
+                            width="24"
+                            className="cursor-pointer fill-black dark:fill-white opacity-90 hover:opacity-100"
+                          >
+                            <path d="M1 20v-2.8q0-.85.438-1.563.437-.712 1.162-1.087 1.55-.775 3.15-1.163Q7.35 13 9 13t3.25.387q1.6.388 3.15 1.163.725.375 1.162 1.087Q17 16.35 17 17.2V20Zm18 0v-3q0-1.1-.612-2.113-.613-1.012-1.738-1.737 1.275.15 2.4.512 1.125.363 2.1.888.9.5 1.375 1.112Q23 16.275 23 17v3ZM9 12q-1.65 0-2.825-1.175Q5 9.65 5 8q0-1.65 1.175-2.825Q7.35 4 9 4q1.65 0 2.825 1.175Q13 6.35 13 8q0 1.65-1.175 2.825Q10.65 12 9 12Zm10-4q0 1.65-1.175 2.825Q16.65 12 15 12q-.275 0-.7-.062-.425-.063-.7-.138.675-.8 1.037-1.775Q15 9.05 15 8q0-1.05-.363-2.025Q14.275 5 13.6 4.2q.35-.125.7-.163Q14.65 4 15 4q1.65 0 2.825 1.175Q19 6.35 19 8Z" />
+                          </svg>
+                        </Tippy>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </li>
+                </ul>
+              </div>
+              {messageType === "channelMode" ? (
+                <>
+                  {data?.messages?.topChannels &&
+                  data?.messages?.topChannels?.length > 0 ? (
+                    <span className="text-black dark:text-gray-300 px-4">
+                      Showing{" "}
+                      {!topChannels.length && topChannels[0] !== "noresults"
+                        ? data.messages.topChannels.length
+                        : topChannels[0] !== "noresults"
+                        ? topChannels.length
+                        : "0"}
+                      /{data.messages.topChannels.length}
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                  <div className="flex grow rounded-sm overflow-y-auto overflow-x-hidden h-[700px]">
+                    <div className="flex flex-col w-full px-3 pb-4 lg:px-3 md:px-3 lg:pt-0 md:pt-0 pt-2">
+                      {" "}
+                      {!data?.messages?.topChannels ? (
+                        <div className="px-10 text-gray-900 dark:text-white text-3xl font-bold flex flex-col justify-center content-center align-center w-full h-full">
+                          No Data was found or this option is disabled
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      {data?.messages?.topChannels &&
+                      data?.messages?.topChannels?.length > 0
+                        ? !(topChannels.length > 0) &&
+                          topChannels[0] !== "noresults"
+                          ? data?.messages?.topChannels.map(
+                              (m: any, i: number) => {
+                                return (
+                                  <>
+                                    <div key={i}>
+                                      <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
+                                        <div className="flex items-center max-w-full sm:max-w-4/6">
+                                          <div
+                                            className="text-gray-200 font-bold flex h-8 w-8 rounded-full items-center justify-center bg-gray-400 dark:bg-gray-600 "
+                                            style={{
+                                              backgroundColor:
+                                                i === 0
+                                                  ? "#DA9E3B"
+                                                  : i === 1
+                                                  ? "#989898"
+                                                  : i === 2
+                                                  ? "#AE7458"
+                                                  : "#4E5258",
+                                            }}
+                                          >
+                                            {i + 1}
+                                          </div>
 
-                                      <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
-                                        <div className="flex items-center text-lg">
-                                          {m?.guildName?.length > 28 ? (
+                                          <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
+                                            <div className="flex items-center text-lg">
+                                              {m?.name ? (
+                                                typeof m.name === "object" ? (
+                                                  m?.name[0]?.length > 28 ? (
+                                                    <Tippy
+                                                      zIndex={999999999999999}
+                                                      content={m.name[0]}
+                                                      animation="scale"
+                                                      className="shadow-xl"
+                                                    >
+                                                      <span>
+                                                        {m.name[0].substring(
+                                                          0,
+                                                          28
+                                                        ) + "..."}
+                                                      </span>
+                                                    </Tippy>
+                                                  ) : (
+                                                    m.name[0]
+                                                  )
+                                                ) : m?.name?.length > 28 ? (
+                                                  <Tippy
+                                                    zIndex={999999999999999}
+                                                    content={m.name}
+                                                    animation="scale"
+                                                    className="shadow-xl"
+                                                  >
+                                                    <span>
+                                                      {m.name.substring(0, 28) +
+                                                        "..."}
+                                                    </span>
+                                                  </Tippy>
+                                                ) : (
+                                                  m.name
+                                                )
+                                              ) : (
+                                                ""
+                                              )}
+                                            </div>
+                                            <span className="text-gray-400 text-sm -mt-2">
+                                              {m?.guildName?.length > 28 ? (
+                                                <Tippy
+                                                  zIndex={999999999999999}
+                                                  content={m.guildName}
+                                                  animation="scale"
+                                                  className="shadow-xl"
+                                                >
+                                                  <span>
+                                                    {m.guildName.substring(
+                                                      0,
+                                                      28
+                                                    ) + "..."}
+                                                  </span>
+                                                </Tippy>
+                                              ) : (
+                                                m.guildName
+                                              )}
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
+                                          {m?.messageCount ? (
                                             <Tippy
-                                              content={m.guildName}
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.messageCount
+                                                  .toString()
+                                                  .replace(
+                                                    /\B(?=(\d{3})+(?!\d))/g,
+                                                    ","
+                                                  ) + " Messages"
+                                              }
                                               animation="scale"
                                               className="shadow-xl"
                                             >
-                                              <span>
-                                                {m.guildName.substring(0, 28) +
-                                                  "..."}
-                                              </span>
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2"
+                                                width="24"
+                                              >
+                                                <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
                                             </Tippy>
                                           ) : (
-                                            m.guildName
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
+                                                width="24"
+                                              >
+                                                <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
                                           )}
-                                        </div>
-                                        <Tippy
-                                          content={m?.name?.join(", ")}
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <span className="text-gray-400 text-sm -mt-2">
-                                            {m?.name?.length} channels
-                                          </span>
-                                        </Tippy>
-                                      </div>
-                                    </div>
-                                    <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
-                                      {m?.messageCount ? (
-                                        <Tippy
-                                          content={
-                                            m.messageCount
-                                              .toString()
-                                              .replace(
-                                                /\B(?=(\d{3})+(?!\d))/g,
-                                                ","
-                                              ) + " Messages"
-                                          }
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2"
-                                            width="24"
-                                          >
-                                            <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                          </svg>
-                                        </Tippy>
-                                      ) : (
-                                        <Tippy
-                                          content={
-                                            (data?.dataFile
-                                              ? "They "
-                                              : "You ") + "have no messages"
-                                          }
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
-                                            width="24"
-                                          >
-                                            <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                          </svg>
-                                        </Tippy>
-                                      )}
-                                      {m?.favoriteWords &&
-                                      m?.favoriteWords?.length > 0 ? (
-                                        <Tippy
-                                          content={`${
-                                            m.favoriteWords.length
-                                          } Favorite Word${
-                                            m.favoriteWords.length > 1
-                                              ? "s"
-                                              : ""
-                                          }`}
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            onClick={() => {
-                                              toast(
-                                                <div className="Toastify__toast-body_">
-                                                  <span className="font-bold text-lg text-black dark:text-white">
-                                                    {data?.dataFile
-                                                      ? "Their"
-                                                      : "your"}{" "}
-                                                    {m.favoriteWords.length < 10
-                                                      ? "Top 10"
-                                                      : `${m.favoriteWords.length}`}{" "}
-                                                    Favorite Word
-                                                    {m.favoriteWords.length ===
-                                                    1
-                                                      ? " is"
-                                                      : "s are"}
-                                                    :
-                                                  </span>
-                                                  <br />
-                                                  <ul className="list-disc ml-4">
-                                                    {m.favoriteWords.map(
-                                                      (f: any, i: number) => {
-                                                        return (
-                                                          <li key={i}>
-                                                            {f.word}: {f.count}{" "}
-                                                            time
-                                                            {f.count > 1
-                                                              ? "s"
-                                                              : ""}
-                                                          </li>
-                                                        );
-                                                      }
-                                                    )}
-                                                  </ul>
-                                                </div>
-                                              );
-                                            }}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            width="24"
-                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                          >
-                                            <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
-                                          </svg>
-                                        </Tippy>
-                                      ) : (
-                                        <Tippy
-                                          content={
-                                            (data?.dataFile
-                                              ? "They "
-                                              : "You ") +
-                                            "have no favorite words"
-                                          }
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            width="24"
-                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                          >
-                                            <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
-                                          </svg>
-                                        </Tippy>
-                                      )}
-                                      {m?.topCursed &&
-                                      m?.topCursed?.length > 0 ? (
-                                        <Tippy
-                                          content={
-                                            m.topCursed.length
-                                              .toString()
-                                              .replace(
-                                                /\B(?=(\d{3})+(?!\d))/g,
-                                                ","
-                                              ) +
-                                            " Curse Word" +
-                                            (m.topCursed.length > 1 ? "s" : "")
-                                          }
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            onClick={() => {
-                                              toast(
-                                                <div className="Toastify__toast-body_">
-                                                  <span className="font-bold text-lg text-black dark:text-white">
-                                                    {data?.dataFile
-                                                      ? "Their"
-                                                      : "your"}{" "}
-                                                    {m.topCursed.length < 10
-                                                      ? "Top 10"
-                                                      : `${m.topCursed.length}`}{" "}
-                                                    Curse Word
-                                                    {m.topCursed.length === 1
-                                                      ? " is"
-                                                      : "s are"}
-                                                    :
-                                                  </span>
-                                                  <br />
-                                                  <ul className="list-disc ml-4">
-                                                    {m.topCursed.map(
-                                                      (f: any, i: number) => {
-                                                        return (
-                                                          <li key={i}>
-                                                            {f.word}: {f.count}{" "}
-                                                            time
-                                                            {f.count > 1
-                                                              ? "s"
-                                                              : ""}
-                                                          </li>
-                                                        );
-                                                      }
-                                                    )}
-                                                  </ul>
-                                                </div>
-                                              );
-                                            }}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            width="24"
-                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                          >
-                                            <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                          </svg>
-                                        </Tippy>
-                                      ) : (
-                                        <Tippy
-                                          content={
-                                            (data?.dataFile
-                                              ? "They "
-                                              : "You ") + "have no curse words"
-                                          }
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            width="24"
-                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                          >
-                                            <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                          </svg>
-                                        </Tippy>
-                                      )}
-                                      {m?.topLinks &&
-                                      m?.topLinks?.length > 0 ? (
-                                        <Tippy
-                                          content={m.topLinks.length + " Links"}
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            onClick={() => {
-                                              toast(
-                                                <div className="Toastify__toast-body_">
-                                                  <span className="font-bold text-lg text-black dark:text-white">
-                                                    {data?.dataFile
-                                                      ? "Their"
-                                                      : "your"}{" "}
-                                                    {m.topLinks.length < 10
-                                                      ? "Top 10"
-                                                      : `${m.topLinks.length}`}{" "}
-                                                    Favorite Link
-                                                    {m.topLinks.length === 1
-                                                      ? " is"
-                                                      : "s are"}
-                                                    :
-                                                  </span>
-                                                  <br />
-                                                  <ul className="list-disc ml-4">
-                                                    {m.topLinks.map(
-                                                      (f: any, i: number) => {
-                                                        return (
-                                                          <li key={i}>
-                                                            <a
-                                                              href={f.word}
-                                                              className="opacity-80 hover:opacity-100"
-                                                              target="_blank"
-                                                              rel="noreferrer"
-                                                            >
-                                                              {f.word}
-                                                            </a>
-                                                            : {f.count} time
-                                                            {f.count > 1
-                                                              ? "s"
-                                                              : ""}
-                                                          </li>
-                                                        );
-                                                      }
-                                                    )}
-                                                  </ul>
-                                                </div>
-                                              );
-                                            }}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            width="24"
-                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                          >
-                                            <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
-                                          </svg>
-                                        </Tippy>
-                                      ) : (
-                                        <Tippy
-                                          content={
-                                            (data?.dataFile
-                                              ? "They "
-                                              : "You ") + "have no links"
-                                          }
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            width="24"
-                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                          >
-                                            <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
-                                          </svg>
-                                        </Tippy>
-                                      )}
-                                      {m?.topDiscordLinks &&
-                                      m?.topDiscordLinks?.length > 0 ? (
-                                        <Tippy
-                                          content={
-                                            m.topDiscordLinks.length +
-                                            " Discord Links"
-                                          }
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            onClick={() => {
-                                              toast(
-                                                <div className="Toastify__toast-body_">
-                                                  <span className="font-bold text-lg text-black dark:text-white">
-                                                    {data?.dataFile
-                                                      ? "Their"
-                                                      : "your"}{" "}
-                                                    {m.topDiscordLinks.length <
-                                                    10
-                                                      ? "Top 10"
-                                                      : `${m.topDiscordLinks.length}`}{" "}
-                                                    Discord Link
-                                                    {m.topDiscordLinks
-                                                      .length === 1
-                                                      ? " is"
-                                                      : "s are"}
-                                                    :
-                                                  </span>
-                                                  <br />
-                                                  <ul className="list-disc ml-4">
-                                                    {m.topDiscordLinks.map(
-                                                      (f: any, i: number) => {
-                                                        return (
-                                                          <li key={i}>
-                                                            <a
-                                                              href={f.word}
-                                                              className="opacity-80 hover:opacity-100"
-                                                              target="_blank"
-                                                              rel="noreferrer"
-                                                            >
-                                                              {f.word}
-                                                            </a>
-                                                            : {f.count} time
-                                                            {f.count > 1
-                                                              ? "s"
-                                                              : ""}
-                                                          </li>
-                                                        );
-                                                      }
-                                                    )}
-                                                  </ul>
-                                                </div>
-                                              );
-                                            }}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            width="24"
-                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                          >
-                                            <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
-                                          </svg>
-                                        </Tippy>
-                                      ) : (
-                                        <Tippy
-                                          content={
-                                            (data?.dataFile
-                                              ? "They "
-                                              : "You ") +
-                                            "have no Discord links"
-                                          }
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            width="24"
-                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                          >
-                                            <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
-                                          </svg>
-                                        </Tippy>
-                                      )}
-                                      {m?.oldestMessages &&
-                                      m?.oldestMessages?.length > 0 ? (
-                                        <Tippy
-                                          content={`${
-                                            m.oldestMessages.length
-                                          } Oldest Message${
-                                            m.oldestMessages.length > 1
-                                              ? "s"
-                                              : ""
-                                          }`}
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            onClick={() => {
-                                              toast(
-                                                <div className="Toastify__toast-body_">
-                                                  <span className="font-bold text-lg text-black dark:text-white">
-                                                    {data?.dataFile
-                                                      ? "Their"
-                                                      : "Your"}{" "}
-                                                    {m.oldestMessages.length <
-                                                    10
-                                                      ? "Top 10"
-                                                      : `${m.oldestMessages.length}`}{" "}
-                                                    Oldest Message
-                                                    {m.favoriteWords.length ===
-                                                    1
-                                                      ? " is"
-                                                      : "s are"}
-                                                    :
-                                                  </span>
-                                                  <br />
-                                                  <ul className="list-disc ml-4">
-                                                    {m.oldestMessages.map(
-                                                      (f: any, i: number) => {
-                                                        return (
-                                                          <li key={i}>
-                                                            <b>{f.sentence}</b>
-                                                            <ul>
-                                                              <li>
-                                                                - sent at{" "}
-                                                                {moment(
-                                                                  f.timestamp
-                                                                ).format(
-                                                                  "MMMM Do YYYY, h:mm:ss a"
-                                                                )}{" "}
+                                          {m?.favoriteWords &&
+                                          m?.favoriteWords?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.favoriteWords.length
+                                              } Favorite Word${
+                                                m.favoriteWords.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.favoriteWords
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.favoriteWords.length}`}{" "}
+                                                        Favorite Word
+                                                        {m.favoriteWords
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.favoriteWords.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {f.word}:{" "}
+                                                                {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no favorite words"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topCursed &&
+                                          m?.topCursed?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topCursed.length
+                                                  .toString()
+                                                  .replace(
+                                                    /\B(?=(\d{3})+(?!\d))/g,
+                                                    ","
+                                                  ) +
+                                                " Curse Words | Cursed " +
+                                                Utils.getTopCount(m.topCursed) +
+                                                " time" +
+                                                (m.topCursed.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topCursed.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topCursed.length}`}{" "}
+                                                        Curse Word
+                                                        {m.topCursed.length ===
+                                                        1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topCursed.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {f.word}:{" "}
+                                                                {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no curse words"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topLinks &&
+                                          m?.topLinks?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topLinks.length +
+                                                " Links | Sent " +
+                                                Utils.getTopCount(m.topLinks) +
+                                                " unique link" +
+                                                (m.topLinks.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topLinks.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topLinks.length}`}{" "}
+                                                        Favorite Link
+                                                        {m.topLinks.length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topLinks.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <a
+                                                                  href={f.word}
+                                                                  className="opacity-80 hover:opacity-100"
+                                                                  target="_blank"
+                                                                  rel="noreferrer"
+                                                                >
+                                                                  {f.word}
+                                                                </a>
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no links"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topDiscordLinks &&
+                                          m?.topDiscordLinks?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topDiscordLinks.length +
+                                                " Discord Links | Sent " +
+                                                Utils.getTopCount(
+                                                  m.topDiscordLinks
+                                                ) +
+                                                " unique Discord link" +
+                                                (m.topDiscordLinks.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topDiscordLinks
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topDiscordLinks.length}`}{" "}
+                                                        Discord Link
+                                                        {m.topDiscordLinks
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topDiscordLinks.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <a
+                                                                  href={f.word}
+                                                                  className="opacity-80 hover:opacity-100"
+                                                                  target="_blank"
+                                                                  rel="noreferrer"
+                                                                >
+                                                                  {f.word}
+                                                                </a>
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no Discord links"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.oldestMessages &&
+                                          m?.oldestMessages?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.oldestMessages.length
+                                              } Oldest Message${
+                                                m.oldestMessages.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.oldestMessages
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.oldestMessages.length}`}{" "}
+                                                        Oldest Message
+                                                        {m.favoriteWords
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.oldestMessages.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
                                                                 <b>
-                                                                  (
-                                                                  {moment(
-                                                                    f.timestamp
-                                                                  ).fromNow()}
-                                                                  )
+                                                                  {f.sentence}
+                                                                </b>
+                                                                <ul>
+                                                                  <li>
+                                                                    - sent at{" "}
+                                                                    {moment(
+                                                                      f.timestamp
+                                                                    ).format(
+                                                                      "MMMM Do YYYY, h:mm:ss a"
+                                                                    )}{" "}
+                                                                    <b>
+                                                                      (
+                                                                      {moment(
+                                                                        f.timestamp
+                                                                      ).fromNow()}
+                                                                      )
+                                                                    </b>
+                                                                  </li>
+                                                                  <li>
+                                                                    - sent to{" "}
+                                                                    <b>
+                                                                      {f.author}
+                                                                    </b>
+                                                                  </li>
+                                                                </ul>
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                              >
+                                                <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topEmojis &&
+                                          m?.topEmojis?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.topEmojis.length
+                                              } Top Emoji${
+                                                m.topEmojis.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.topEmojis.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topEmojis.length}`}{" "}
+                                                        Top Emoji
+                                                        {m.topEmojis.length ===
+                                                        1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topEmojis.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <b>
+                                                                  {f.emoji}:{" "}
+                                                                  {f.count} time
+                                                                  {f.count > 1
+                                                                    ? "s"
+                                                                    : ""}
                                                                 </b>
                                                               </li>
-                                                              <li>
-                                                                - sent to{" "}
-                                                                <b>
-                                                                  {f.author}
-                                                                </b>
-                                                              </li>
-                                                            </ul>
-                                                          </li>
-                                                        );
-                                                      }
-                                                    )}
-                                                  </ul>
-                                                </div>
-                                              );
-                                            }}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            width="24"
-                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                          >
-                                            <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
-                                          </svg>
-                                        </Tippy>
-                                      ) : (
-                                        <Tippy
-                                          content={
-                                            (data?.dataFile
-                                              ? "They "
-                                              : "You ") + "have no messages"
-                                          }
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            width="24"
-                                          >
-                                            <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
-                                          </svg>
-                                        </Tippy>
-                                      )}
-                                      {m?.topEmojis &&
-                                      m?.topEmojis?.length > 0 ? (
-                                        <Tippy
-                                          content={`${
-                                            m.topEmojis.length
-                                          } Top Emoji${
-                                            m.topEmojis.length > 1 ? "s" : ""
-                                          }`}
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            onClick={() => {
-                                              toast(
-                                                <div className="Toastify__toast-body_">
-                                                  <span className="font-bold text-lg text-black dark:text-white">
-                                                    {data?.dataFile
-                                                      ? "Their"
-                                                      : "Your"}{" "}
-                                                    {m.topEmojis.length < 10
-                                                      ? "Top 10"
-                                                      : `${m.topEmojis.length}`}{" "}
-                                                    Top Emoji
-                                                    {m.topEmojis.length === 1
-                                                      ? " is"
-                                                      : "s are"}
-                                                    :
-                                                  </span>
-                                                  <br />
-                                                  <ul className="list-disc ml-4">
-                                                    {m.topEmojis.map(
-                                                      (f: any, i: number) => {
-                                                        return (
-                                                          <li key={i}>
-                                                            <b>
-                                                              {f.emoji}:{" "}
-                                                              {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </b>
-                                                          </li>
-                                                        );
-                                                      }
-                                                    )}
-                                                  </ul>
-                                                </div>
-                                              );
-                                            }}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            width="24"
-                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                          >
-                                            <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
-                                          </svg>
-                                        </Tippy>
-                                      ) : (
-                                        <Tippy
-                                          content={
-                                            (data?.dataFile
-                                              ? "They "
-                                              : "You ") + "have no emojis"
-                                          }
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            width="24"
-                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                          >
-                                            <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
-                                          </svg>
-                                        </Tippy>
-                                      )}
-                                      {m?.topCustomEmojis &&
-                                      m?.topCustomEmojis?.length > 0 ? (
-                                        <Tippy
-                                          content={`${
-                                            m.topCustomEmojis.length
-                                          } Top Custom Emoji${
-                                            m.topCustomEmojis.length > 1
-                                              ? "s"
-                                              : ""
-                                          }`}
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            onClick={() => {
-                                              toast(
-                                                <div className="Toastify__toast-body_">
-                                                  <span className="font-bold text-lg text-black dark:text-white">
-                                                    {data?.dataFile
-                                                      ? "Their"
-                                                      : "Your"}{" "}
-                                                    {m.topCustomEmojis.length <
-                                                    10
-                                                      ? "Top 10"
-                                                      : `${m.topCustomEmojis.length}`}{" "}
-                                                    Top Custom Emoji
-                                                    {m.topCustomEmojis
-                                                      .length === 1
-                                                      ? " is"
-                                                      : "s are"}
-                                                    :
-                                                  </span>
-                                                  <br />
-                                                  <ul className="list-disc ml-4">
-                                                    {m.topCustomEmojis.map(
-                                                      (f: any, i: number) => {
-                                                        return (
-                                                          <li key={i}>
-                                                            {/<:.*?:(\d+)>/g.exec(
-                                                              f.emoji
-                                                            ) ? (
-                                                              <Tippy
-                                                                content={`${
-                                                                  f.emoji
-                                                                } used ${
-                                                                  f.count
-                                                                } time${
-                                                                  f.count === 1
-                                                                    ? ""
-                                                                    : "s"
-                                                                }`}
-                                                                animation="scale"
-                                                                className="shadow-xl"
-                                                              >
-                                                                <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                                                  <Image
-                                                                    unoptimized={
-                                                                      true
-                                                                    }
-                                                                    src={Utils.createEmoji(
-                                                                      f.emoji
-                                                                    )}
-                                                                    alt="emoji"
-                                                                    height="50px"
-                                                                    width="50px"
-                                                                    draggable={
-                                                                      false
-                                                                    }
-                                                                  />
-                                                                </div>
-                                                              </Tippy>
-                                                            ) : (
-                                                              <>
-                                                                {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no emojis"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topCustomEmojis &&
+                                          m?.topCustomEmojis?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.topCustomEmojis.length
+                                              } Top Custom Emoji${
+                                                m.topCustomEmojis.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.topCustomEmojis
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topCustomEmojis.length}`}{" "}
+                                                        Top Custom Emoji
+                                                        {m.topCustomEmojis
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topCustomEmojis.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {/<:.*?:(\d+)>/g.exec(
                                                                   f.emoji
                                                                 ) ? (
                                                                   <Tippy
+                                                                    zIndex={
+                                                                      999999999999999
+                                                                    }
                                                                     content={`${
                                                                       f.emoji
                                                                     } used ${
@@ -7610,7 +6818,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                         unoptimized={
                                                                           true
                                                                         }
-                                                                        src={Utils.createCustomEmoji(
+                                                                        src={Utils.createEmoji(
                                                                           f.emoji
                                                                         )}
                                                                         alt="emoji"
@@ -7623,2332 +6831,4243 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                     </div>
                                                                   </Tippy>
                                                                 ) : (
-                                                                  ""
-                                                                )}{" "}
-                                                              </>
-                                                            )}
-                                                            : {f.count} time
-                                                            {f.count > 1
-                                                              ? "s"
-                                                              : ""}
-                                                          </li>
-                                                        );
-                                                      }
-                                                    )}
-                                                  </ul>
-                                                </div>
-                                              );
-                                            }}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            width="24"
-                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                          >
-                                            <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
-                                          </svg>
-                                        </Tippy>
-                                      ) : (
-                                        <Tippy
-                                          content={
-                                            (data?.dataFile
-                                              ? "They "
-                                              : "You ") +
-                                            "have no custom emojis"
-                                          }
-                                          animation="scale"
-                                          className="shadow-xl"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="24"
-                                            width="24"
-                                            className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                          >
-                                            <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
-                                          </svg>
-                                        </Tippy>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              </>
-                            );
-                          })
-                        : topGuilds?.map((m: any, i: number) => {
-                            return (
-                              <>
-                                {m !== "noresults" ? (
-                                  <div key={i}>
-                                    <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
-                                      <div className="flex items-center max-w-full sm:max-w-4/6">
-                                        <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
-                                          <div className="flex items-center text-lg">
-                                            {m?.guildName?.length > 28 ? (
-                                              <Tippy
-                                                content={m.guildName}
-                                                animation="scale"
-                                                className="shadow-xl"
-                                              >
-                                                <span>
-                                                  {m.guildName.substring(
-                                                    0,
-                                                    28
-                                                  ) + "..."}
-                                                </span>
-                                              </Tippy>
-                                            ) : (
-                                              m.guildName
-                                            )}
-                                          </div>
-                                          <Tippy
-                                            content={m?.name?.join(", ")}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <span className="text-gray-400 text-sm -mt-2">
-                                              {m?.name?.length} channels
-                                            </span>
-                                          </Tippy>
-                                        </div>
-                                      </div>
-                                      <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
-                                        {m?.messageCount ? (
-                                          <Tippy
-                                            content={
-                                              m.messageCount
-                                                .toString()
-                                                .replace(
-                                                  /\B(?=(\d{3})+(?!\d))/g,
-                                                  ","
-                                                ) + " Messages"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2"
-                                              width="24"
-                                            >
-                                              <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no messages"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
-                                              width="24"
-                                            >
-                                              <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.favoriteWords &&
-                                        m?.favoriteWords.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.favoriteWords.length
-                                            } Favorite Word${
-                                              m.favoriteWords.length > 1
-                                                ? "s"
-                                                : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.favoriteWords.length <
-                                                      10
-                                                        ? "Top 10"
-                                                        : `${m.favoriteWords.length}`}{" "}
-                                                      Favorite Word
-                                                      {m.favoriteWords
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.favoriteWords.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              {f.word}:{" "}
-                                                              {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no favorite words"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topCursed &&
-                                        m?.topCursed?.length > 0 ? (
-                                          <Tippy
-                                            content={
-                                              m.topCursed.length
-                                                .toString()
-                                                .replace(
-                                                  /\B(?=(\d{3})+(?!\d))/g,
-                                                  ","
-                                                ) +
-                                              " Curse Word" +
-                                              (m.topCursed.length > 1
-                                                ? "s"
-                                                : "")
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.topCursed.length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topCursed.length}`}{" "}
-                                                      Curse Word
-                                                      {m.topCursed.length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topCursed.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              {f.word}:{" "}
-                                                              {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no curse words"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topLinks &&
-                                        m?.topLinks?.length > 0 ? (
-                                          <Tippy
-                                            content={
-                                              m.topLinks.length + " Links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.topLinks.length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topLinks.length}`}{" "}
-                                                      Favorite Link
-                                                      {m.topLinks.length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topLinks.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <a
-                                                                href={f.word}
-                                                                className="opacity-80 hover:opacity-100"
-                                                                target="_blank"
-                                                                rel="noreferrer"
-                                                              >
-                                                                {f.word}
-                                                              </a>
-                                                              : {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topDiscordLinks &&
-                                        m?.topDiscordLinks?.length > 0 ? (
-                                          <Tippy
-                                            content={
-                                              m.topDiscordLinks.length +
-                                              " Discord Links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.topDiscordLinks
-                                                        .length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topDiscordLinks.length}`}{" "}
-                                                      Discord Link
-                                                      {m.topDiscordLinks
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topDiscordLinks.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <a
-                                                                href={f.word}
-                                                                className="opacity-80 hover:opacity-100"
-                                                                target="_blank"
-                                                                rel="noreferrer"
-                                                              >
-                                                                {f.word}
-                                                              </a>
-                                                              : {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no Discord links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.oldestMessages &&
-                                        m?.oldestMessages?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.oldestMessages.length
-                                            } Oldest Message${
-                                              m.oldestMessages.length > 1
-                                                ? "s"
-                                                : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "Your"}{" "}
-                                                      {m.oldestMessages.length <
-                                                      10
-                                                        ? "Top 10"
-                                                        : `${m.oldestMessages.length}`}{" "}
-                                                      Oldest Message
-                                                      {m.favoriteWords
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.oldestMessages.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <b>
-                                                                {f.sentence}
-                                                              </b>
-                                                              <ul>
-                                                                <li>
-                                                                  - sent at{" "}
-                                                                  {moment(
-                                                                    f.timestamp
-                                                                  ).format(
-                                                                    "MMMM Do YYYY, h:mm:ss a"
-                                                                  )}{" "}
-                                                                  <b>
-                                                                    (
-                                                                    {moment(
-                                                                      f.timestamp
-                                                                    ).fromNow()}
-                                                                    )
-                                                                  </b>
-                                                                </li>
-                                                                <li>
-                                                                  - sent to{" "}
-                                                                  <b>
-                                                                    {f.author}
-                                                                  </b>
-                                                                </li>
-                                                              </ul>
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no messages"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                            >
-                                              <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topEmojis &&
-                                        m?.topEmojis?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.topEmojis.length
-                                            } Top Emoji${
-                                              m.topEmojis.length > 1 ? "s" : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "Your"}{" "}
-                                                      {m.topEmojis.length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topEmojis.length}`}{" "}
-                                                      Top Emoji
-                                                      {m.topEmojis.length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topEmojis.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <b>
-                                                                {f.emoji}:{" "}
-                                                                {f.count} time
+                                                                  <>
+                                                                    {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                                      f.emoji
+                                                                    ) ? (
+                                                                      <Tippy
+                                                                        zIndex={
+                                                                          999999999999999
+                                                                        }
+                                                                        content={`${
+                                                                          f.emoji
+                                                                        } used ${
+                                                                          f.count
+                                                                        } time${
+                                                                          f.count ===
+                                                                          1
+                                                                            ? ""
+                                                                            : "s"
+                                                                        }`}
+                                                                        animation="scale"
+                                                                        className="shadow-xl"
+                                                                      >
+                                                                        <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                                          <Image
+                                                                            unoptimized={
+                                                                              true
+                                                                            }
+                                                                            src={Utils.createCustomEmoji(
+                                                                              f.emoji
+                                                                            )}
+                                                                            alt="emoji"
+                                                                            height="50px"
+                                                                            width="50px"
+                                                                            draggable={
+                                                                              false
+                                                                            }
+                                                                          />
+                                                                        </div>
+                                                                      </Tippy>
+                                                                    ) : (
+                                                                      ""
+                                                                    )}{" "}
+                                                                  </>
+                                                                )}
+                                                                : {f.count} time
                                                                 {f.count > 1
                                                                   ? "s"
                                                                   : ""}
-                                                              </b>
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no custom emojis"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
                                             >
-                                              <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no emojis"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topCustomEmojis &&
-                                        m?.topCustomEmojis?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.topCustomEmojis.length
-                                            } Top Custom Emoji${
-                                              m.topCustomEmojis.length > 1
-                                                ? "s"
-                                                : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "Your"}{" "}
-                                                      {m.topCustomEmojis
-                                                        .length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topCustomEmojis.length}`}{" "}
-                                                      Top Custom Emoji
-                                                      {m.topCustomEmojis
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topCustomEmojis.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              {/<:.*?:(\d+)>/g.exec(
-                                                                f.emoji
-                                                              ) ? (
-                                                                <Tippy
-                                                                  content={`${
-                                                                    f.emoji
-                                                                  } used ${
-                                                                    f.count
-                                                                  } time${
-                                                                    f.count ===
-                                                                    1
-                                                                      ? ""
-                                                                      : "s"
-                                                                  }`}
-                                                                  animation="scale"
-                                                                  className="shadow-xl"
-                                                                >
-                                                                  <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                                                    <Image
-                                                                      unoptimized={
-                                                                        true
-                                                                      }
-                                                                      src={Utils.createEmoji(
-                                                                        f.emoji
-                                                                      )}
-                                                                      alt="emoji"
-                                                                      height="50px"
-                                                                      width="50px"
-                                                                      draggable={
-                                                                        false
-                                                                      }
-                                                                    />
-                                                                  </div>
-                                                                </Tippy>
-                                                              ) : (
-                                                                <>
-                                                                  {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                                                    f.emoji
-                                                                  ) ? (
-                                                                    <Tippy
-                                                                      content={`${
-                                                                        f.emoji
-                                                                      } used ${
-                                                                        f.count
-                                                                      } time${
-                                                                        f.count ===
-                                                                        1
-                                                                          ? ""
-                                                                          : "s"
-                                                                      }`}
-                                                                      animation="scale"
-                                                                      className="shadow-xl"
-                                                                    >
-                                                                      <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                                                        <Image
-                                                                          unoptimized={
-                                                                            true
-                                                                          }
-                                                                          src={Utils.createCustomEmoji(
-                                                                            f.emoji
-                                                                          )}
-                                                                          alt="emoji"
-                                                                          height="50px"
-                                                                          width="50px"
-                                                                          draggable={
-                                                                            false
-                                                                          }
-                                                                        />
-                                                                      </div>
-                                                                    </Tippy>
-                                                                  ) : (
-                                                                    ""
-                                                                  )}{" "}
-                                                                </>
-                                                              )}
-                                                              : {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no custom emojis"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                ) : (
-                                  <div className="flex flex-col justify-center items-center">
-                                    <span className="text-gray-900 dark:text-gray-200 text-2xl font-bold">
-                                      NO RESULTS FOUND
-                                    </span>
-                                    <span className="text-gray-700 dark:text-gray-400 text-lg max-w-sm">
-                                      We could not find what you are looking
-                                      for. Try again with a different search
-                                      term.
-                                    </span>
-                                  </div>
-                                )}
-                              </>
-                            );
-                          })
-                      : ""}
-                  </div>
-                </div>
-              </>
-            ) : (
-              ""
-            )}
-            {messageType === "dmMode" ? (
-              <>
-                {data?.messages?.topGroupDMs &&
-                data?.messages?.topGroupDMs?.length > 0 ? (
-                  <span className="text-gray-300 px-4">
-                    Showing{" "}
-                    {!topGroupDMs.length && topGroupDMs[0] !== "noresults"
-                      ? data.messages.topGroupDMs.length
-                      : topGroupDMs[0] !== "noresults"
-                      ? topGroupDMs.length
-                      : "0"}
-                    /{data.messages.topGroupDMs.length}
-                  </span>
-                ) : (
-                  ""
-                )}
-                <div className="flex grow rounded-sm overflow-y-auto overflow-x-hidden h-[700px]">
-                  <div className="flex flex-col w-full px-3 pb-4 lg:px-3 md:px-3 lg:pt-0 md:pt-0 pt-2">
-                    {" "}
-                    {!data?.messages?.topGroupDMs ? (
-                      <div className="px-10 text-gray-900 dark:text-white text-3xl font-bold flex flex-col justify-center content-center align-center w-full h-full">
-                        No Data was found or this option is disabled
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                    {data?.messages?.topGroupDMs &&
-                    data?.messages?.topGroupDMs?.length > 0
-                      ? !(topGroupDMs.length > 0) &&
-                        topChannels[0] !== "noresults"
-                        ? data?.messages?.topGroupDMs.map(
-                            (m: any, i: number) => {
+                                  </>
+                                );
+                              }
+                            )
+                          : topChannels?.map((m: any, i: number) => {
                               return (
                                 <>
-                                  <div key={i}>
-                                    <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
-                                      <div className="flex items-center max-w-full sm:max-w-4/6">
-                                        <div
-                                          className="text-gray-200 font-bold flex h-8 w-8 rounded-full items-center justify-center bg-gray-400 dark:bg-gray-600 "
-                                          style={{
-                                            backgroundColor:
-                                              i === 0
-                                                ? "#DA9E3B"
-                                                : i === 1
-                                                ? "#989898"
-                                                : i === 2
-                                                ? "#AE7458"
-                                                : "#4E5258",
-                                          }}
-                                        >
-                                          {i + 1}
-                                        </div>
-
-                                        <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
-                                          <div className="flex items-center text-lg">
-                                            {m?.name ? m.name : "Unamed Group"}
+                                  {m !== "noresults" ? (
+                                    <div key={i}>
+                                      <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
+                                        <div className="flex items-center max-w-full sm:max-w-4/6">
+                                          <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
+                                            <div className="flex items-center text-lg">
+                                              {m?.name
+                                                ? typeof m.name === "object"
+                                                  ? m.name[0]
+                                                  : m.name
+                                                : ""}
+                                            </div>
+                                            <span className="text-gray-400 text-sm -mt-2">
+                                              {m?.guildName?.length > 28 ? (
+                                                <Tippy
+                                                  zIndex={999999999999999}
+                                                  content={m.guildName}
+                                                  animation="scale"
+                                                  className="shadow-xl"
+                                                >
+                                                  <span>
+                                                    {m.guildName.substring(
+                                                      0,
+                                                      28
+                                                    ) + "..."}
+                                                  </span>
+                                                </Tippy>
+                                              ) : (
+                                                m.guildName
+                                              )}
+                                            </span>
                                           </div>
-                                          <span className="text-gray-400 text-sm -mt-2">
-                                            {m?.recipients} group members
-                                          </span>
                                         </div>
-                                      </div>
-                                      <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
-                                        {m?.messageCount ? (
-                                          <Tippy
-                                            content={
-                                              m.messageCount
-                                                .toString()
-                                                .replace(
-                                                  /\B(?=(\d{3})+(?!\d))/g,
-                                                  ","
-                                                ) + " Messages"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2"
-                                              width="24"
+                                        <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
+                                          {m?.messageCount ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.messageCount
+                                                  .toString()
+                                                  .replace(
+                                                    /\B(?=(\d{3})+(?!\d))/g,
+                                                    ","
+                                                  ) + " Messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
                                             >
-                                              <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no messages"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
-                                              width="24"
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2"
+                                                width="24"
+                                              >
+                                                <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
                                             >
-                                              <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.favoriteWords &&
-                                        m?.favoriteWords?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.favoriteWords.length
-                                            } Favorite Word${
-                                              m.favoriteWords.length > 1
-                                                ? "s"
-                                                : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.favoriteWords.length <
-                                                      10
-                                                        ? "Top 10"
-                                                        : `${m.favoriteWords.length}`}{" "}
-                                                      Favorite Word
-                                                      {m.favoriteWords
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.favoriteWords.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              {f.word}:{" "}
-                                                              {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
+                                                width="24"
+                                              >
+                                                <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.favoriteWords &&
+                                          m?.favoriteWords.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.favoriteWords.length
+                                              } Favorite Word${
+                                                m.favoriteWords.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
                                             >
-                                              <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no favorite words"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topCursed &&
-                                        m?.topCursed?.length > 0 ? (
-                                          <Tippy
-                                            content={
-                                              m.topCursed.length
-                                                .toString()
-                                                .replace(
-                                                  /\B(?=(\d{3})+(?!\d))/g,
-                                                  ","
-                                                ) +
-                                              " Curse Word" +
-                                              (m.topCursed.length > 1
-                                                ? "s"
-                                                : "")
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.topCursed.length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topCursed.length}`}{" "}
-                                                      Curse Word
-                                                      {m.topCursed.length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topCursed.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              {f.word}:{" "}
-                                                              {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no curse words"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topLinks &&
-                                        m?.topLinks?.length > 0 ? (
-                                          <Tippy
-                                            content={
-                                              m.topLinks.length + " Links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.topLinks.length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topLinks.length}`}{" "}
-                                                      Favorite Link
-                                                      {m.topLinks.length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topLinks.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <a
-                                                                href={f.word}
-                                                                className="opacity-80 hover:opacity-100"
-                                                                target="_blank"
-                                                                rel="noreferrer"
-                                                              >
-                                                                {f.word}
-                                                              </a>
-                                                              : {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topDiscordLinks &&
-                                        m?.topDiscordLinks?.length > 0 ? (
-                                          <Tippy
-                                            content={
-                                              m.topDiscordLinks.length +
-                                              " Discord Links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.topDiscordLinks
-                                                        .length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topDiscordLinks.length}`}{" "}
-                                                      Discord Link
-                                                      {m.topDiscordLinks
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topDiscordLinks.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <a
-                                                                href={f.word}
-                                                                className="opacity-80 hover:opacity-100"
-                                                                target="_blank"
-                                                                rel="noreferrer"
-                                                              >
-                                                                {f.word}
-                                                              </a>
-                                                              : {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no Discord links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.oldestMessages &&
-                                        m?.oldestMessages?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.oldestMessages.length
-                                            } Oldest Message${
-                                              m.oldestMessages.length > 1
-                                                ? "s"
-                                                : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "Your"}{" "}
-                                                      {m.oldestMessages.length <
-                                                      10
-                                                        ? "Top 10"
-                                                        : `${m.oldestMessages.length}`}{" "}
-                                                      Oldest Message
-                                                      {m.favoriteWords
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.oldestMessages.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <b>
-                                                                {f.sentence}
-                                                              </b>
-                                                              <ul>
-                                                                <li>
-                                                                  - sent at{" "}
-                                                                  {moment(
-                                                                    f.timestamp
-                                                                  ).format(
-                                                                    "MMMM Do YYYY, h:mm:ss a"
-                                                                  )}{" "}
-                                                                  <b>
-                                                                    (
-                                                                    {moment(
-                                                                      f.timestamp
-                                                                    ).fromNow()}
-                                                                    )
-                                                                  </b>
-                                                                </li>
-                                                                <li>
-                                                                  - sent to{" "}
-                                                                  <b>
-                                                                    {f.author}
-                                                                  </b>
-                                                                </li>
-                                                              </ul>
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no messages"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                            >
-                                              <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topEmojis &&
-                                        m?.topEmojis?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.topEmojis.length
-                                            } Top Emoji${
-                                              m.topEmojis.length > 1 ? "s" : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "Your"}{" "}
-                                                      {m.topEmojis.length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topEmojis.length}`}{" "}
-                                                      Top Emoji
-                                                      {m.topEmojis.length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topEmojis.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <b>
-                                                                {f.emoji}:{" "}
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.favoriteWords
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.favoriteWords.length}`}{" "}
+                                                        Favorite Word
+                                                        {m.favoriteWords
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.favoriteWords.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {f.word}:{" "}
                                                                 {f.count} time
                                                                 {f.count > 1
                                                                   ? "s"
                                                                   : ""}
-                                                              </b>
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no favorite words"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
                                             >
-                                              <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no emojis"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topCursed &&
+                                          m?.topCursed?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topCursed.length
+                                                  .toString()
+                                                  .replace(
+                                                    /\B(?=(\d{3})+(?!\d))/g,
+                                                    ","
+                                                  ) +
+                                                " Curse Words | Cursed " +
+                                                Utils.getTopCount(m.topCursed) +
+                                                " time" +
+                                                (m.topCursed.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
                                             >
-                                              <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topCustomEmojis &&
-                                        m?.topCustomEmojis?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.topCustomEmojis.length
-                                            } Top Custom Emoji${
-                                              m.topCustomEmojis.length > 1
-                                                ? "s"
-                                                : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "Your"}{" "}
-                                                      {m.topCustomEmojis
-                                                        .length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topCustomEmojis.length}`}{" "}
-                                                      Top Custom Emoji
-                                                      {m.topCustomEmojis
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topCustomEmojis.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              {/<:.*?:(\d+)>/g.exec(
-                                                                f.emoji
-                                                              ) ? (
-                                                                <Tippy
-                                                                  content={`${
-                                                                    f.emoji
-                                                                  } used ${
-                                                                    f.count
-                                                                  } time${
-                                                                    f.count ===
-                                                                    1
-                                                                      ? ""
-                                                                      : "s"
-                                                                  }`}
-                                                                  animation="scale"
-                                                                  className="shadow-xl"
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topCursed.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topCursed.length}`}{" "}
+                                                        Curse Word
+                                                        {m.topCursed.length ===
+                                                        1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topCursed.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {f.word}:{" "}
+                                                                {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no curse words"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topLinks &&
+                                          m?.topLinks?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topLinks.length +
+                                                " Links | Sent " +
+                                                Utils.getTopCount(m.topLinks) +
+                                                " unique link" +
+                                                (m.topLinks.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topLinks.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topLinks.length}`}{" "}
+                                                        Favorite Link
+                                                        {m.topLinks.length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topLinks.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <a
+                                                                  href={f.word}
+                                                                  className="opacity-80 hover:opacity-100"
+                                                                  target="_blank"
+                                                                  rel="noreferrer"
                                                                 >
-                                                                  <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                                                    <Image
-                                                                      unoptimized={
-                                                                        true
-                                                                      }
-                                                                      src={Utils.createEmoji(
-                                                                        f.emoji
-                                                                      )}
-                                                                      alt="emoji"
-                                                                      height="50px"
-                                                                      width="50px"
-                                                                      draggable={
-                                                                        false
-                                                                      }
-                                                                    />
-                                                                  </div>
-                                                                </Tippy>
-                                                              ) : (
-                                                                <>
-                                                                  {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                                                    f.emoji
-                                                                  ) ? (
-                                                                    <Tippy
-                                                                      content={`${
-                                                                        f.emoji
-                                                                      } used ${
-                                                                        f.count
-                                                                      } time${
-                                                                        f.count ===
-                                                                        1
-                                                                          ? ""
-                                                                          : "s"
-                                                                      }`}
-                                                                      animation="scale"
-                                                                      className="shadow-xl"
-                                                                    >
-                                                                      <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                                                        <Image
-                                                                          unoptimized={
-                                                                            true
-                                                                          }
-                                                                          src={Utils.createCustomEmoji(
-                                                                            f.emoji
-                                                                          )}
-                                                                          alt="emoji"
-                                                                          height="50px"
-                                                                          width="50px"
-                                                                          draggable={
-                                                                            false
-                                                                          }
-                                                                        />
-                                                                      </div>
-                                                                    </Tippy>
-                                                                  ) : (
-                                                                    ""
-                                                                  )}{" "}
-                                                                </>
-                                                              )}
-                                                              : {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                                                  {f.word}
+                                                                </a>
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no links"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
                                             >
-                                              <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no custom emojis"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topDiscordLinks &&
+                                          m?.topDiscordLinks?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topDiscordLinks.length +
+                                                " Discord Links | Sent " +
+                                                Utils.getTopCount(
+                                                  m.topDiscordLinks
+                                                ) +
+                                                " unique Discord link" +
+                                                (m.topDiscordLinks.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
                                             >
-                                              <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topDiscordLinks
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topDiscordLinks.length}`}{" "}
+                                                        Discord Link
+                                                        {m.topDiscordLinks
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topDiscordLinks.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <a
+                                                                  href={f.word}
+                                                                  className="opacity-80 hover:opacity-100"
+                                                                  target="_blank"
+                                                                  rel="noreferrer"
+                                                                >
+                                                                  {f.word}
+                                                                </a>
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no Discord links"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.oldestMessages &&
+                                          m?.oldestMessages?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.oldestMessages.length
+                                              } Oldest Message${
+                                                m.oldestMessages.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.oldestMessages
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.oldestMessages.length}`}{" "}
+                                                        Oldest Message
+                                                        {m.favoriteWords
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.oldestMessages.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <b>
+                                                                  {f.sentence}
+                                                                </b>
+                                                                <ul>
+                                                                  <li>
+                                                                    - sent at{" "}
+                                                                    {moment(
+                                                                      f.timestamp
+                                                                    ).format(
+                                                                      "MMMM Do YYYY, h:mm:ss a"
+                                                                    )}{" "}
+                                                                    <b>
+                                                                      (
+                                                                      {moment(
+                                                                        f.timestamp
+                                                                      ).fromNow()}
+                                                                      )
+                                                                    </b>
+                                                                  </li>
+                                                                  <li>
+                                                                    - sent to{" "}
+                                                                    <b>
+                                                                      {f.author}
+                                                                    </b>
+                                                                  </li>
+                                                                </ul>
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                              >
+                                                <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topEmojis &&
+                                          m?.topEmojis?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.topEmojis.length
+                                              } Top Emoji${
+                                                m.topEmojis.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.topEmojis.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topEmojis.length}`}{" "}
+                                                        Top Emoji
+                                                        {m.topEmojis.length ===
+                                                        1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topEmojis.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <b>
+                                                                  {f.emoji}:{" "}
+                                                                  {f.count} time
+                                                                  {f.count > 1
+                                                                    ? "s"
+                                                                    : ""}
+                                                                </b>
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no emojis"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topCustomEmojis &&
+                                          m?.topCustomEmojis?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.topCustomEmojis.length
+                                              } Top Custom Emoji${
+                                                m.topCustomEmojis.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.topCustomEmojis
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topCustomEmojis.length}`}{" "}
+                                                        Top Custom Emoji
+                                                        {m.topCustomEmojis
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topCustomEmojis.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {/<:.*?:(\d+)>/g.exec(
+                                                                  f.emoji
+                                                                ) ? (
+                                                                  <Tippy
+                                                                    zIndex={
+                                                                      999999999999999
+                                                                    }
+                                                                    content={`${
+                                                                      f.emoji
+                                                                    } used ${
+                                                                      f.count
+                                                                    } time${
+                                                                      f.count ===
+                                                                      1
+                                                                        ? ""
+                                                                        : "s"
+                                                                    }`}
+                                                                    animation="scale"
+                                                                    className="shadow-xl"
+                                                                  >
+                                                                    <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                                      <Image
+                                                                        unoptimized={
+                                                                          true
+                                                                        }
+                                                                        src={Utils.createEmoji(
+                                                                          f.emoji
+                                                                        )}
+                                                                        alt="emoji"
+                                                                        height="50px"
+                                                                        width="50px"
+                                                                        draggable={
+                                                                          false
+                                                                        }
+                                                                      />
+                                                                    </div>
+                                                                  </Tippy>
+                                                                ) : (
+                                                                  <>
+                                                                    {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                                      f.emoji
+                                                                    ) ? (
+                                                                      <Tippy
+                                                                        zIndex={
+                                                                          999999999999999
+                                                                        }
+                                                                        content={`${
+                                                                          f.emoji
+                                                                        } used ${
+                                                                          f.count
+                                                                        } time${
+                                                                          f.count ===
+                                                                          1
+                                                                            ? ""
+                                                                            : "s"
+                                                                        }`}
+                                                                        animation="scale"
+                                                                        className="shadow-xl"
+                                                                      >
+                                                                        <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                                          <Image
+                                                                            unoptimized={
+                                                                              true
+                                                                            }
+                                                                            src={Utils.createCustomEmoji(
+                                                                              f.emoji
+                                                                            )}
+                                                                            alt="emoji"
+                                                                            height="50px"
+                                                                            width="50px"
+                                                                            draggable={
+                                                                              false
+                                                                            }
+                                                                          />
+                                                                        </div>
+                                                                      </Tippy>
+                                                                    ) : (
+                                                                      ""
+                                                                    )}{" "}
+                                                                  </>
+                                                                )}
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no custom emojis"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
+                                  ) : (
+                                    <div className="flex flex-col justify-center items-center">
+                                      <span className="text-gray-900 dark:text-gray-200 text-2xl font-bold">
+                                        NO RESULTS FOUND
+                                      </span>
+                                      <span className="text-gray-700 dark:text-gray-400 text-lg max-w-sm">
+                                        We could not find what you are looking
+                                        for. Try again with a different search
+                                        term.
+                                      </span>
+                                    </div>
+                                  )}
                                 </>
                               );
-                            }
-                          )
-                        : topGroupDMs?.map((m: any, i: number) => {
-                            return (
-                              <>
-                                {m !== "noresults" ? (
-                                  <div key={i}>
-                                    <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
-                                      <div className="flex items-center max-w-full sm:max-w-4/6">
-                                        <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
-                                          <div className="flex items-center text-lg">
-                                            {m?.name}
+                            })
+                        : ""}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                ""
+              )}
+              {messageType === "guildMode" ? (
+                <>
+                  {data?.messages?.topGuilds &&
+                  data?.messages?.topGuilds?.length > 0 ? (
+                    <span className="text-black dark:text-gray-300 px-4">
+                      Showing{" "}
+                      {!topGuilds.length && topGuilds[0] !== "noresults"
+                        ? data.messages.topGuilds.length
+                        : topGuilds[0] !== "noresults"
+                        ? topGuilds.length
+                        : "0"}
+                      /{data.messages.topGuilds.length}
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                  <div className="flex grow rounded-sm overflow-y-auto overflow-x-hidden h-[700px]">
+                    <div className="flex flex-col w-full px-3 pb-4 lg:px-3 md:px-3 lg:pt-0 md:pt-0 pt-2">
+                      {" "}
+                      {!data?.messages?.topGuilds ? (
+                        <div className="px-10 text-gray-900 dark:text-white text-3xl font-bold flex flex-col justify-center content-center align-center w-full h-full">
+                          No Data was found or this option is disabled
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      {data?.messages?.topGuilds &&
+                      data?.messages?.topGuilds?.length > 0
+                        ? !(topGuilds.length > 0) &&
+                          topGuilds[0] !== "noresults"
+                          ? data?.messages?.topGuilds.map(
+                              (m: any, i: number) => {
+                                return (
+                                  <>
+                                    <div key={i}>
+                                      <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
+                                        <div className="flex items-center max-w-full sm:max-w-4/6">
+                                          <div
+                                            className="text-gray-200 font-bold flex h-8 w-8 rounded-full items-center justify-center bg-gray-400 dark:bg-gray-600 "
+                                            style={{
+                                              backgroundColor:
+                                                i === 0
+                                                  ? "#DA9E3B"
+                                                  : i === 1
+                                                  ? "#989898"
+                                                  : i === 2
+                                                  ? "#AE7458"
+                                                  : "#4E5258",
+                                            }}
+                                          >
+                                            {i + 1}
                                           </div>
-                                          <span className="text-gray-400 text-sm -mt-2">
-                                            {m?.recipients} group members
-                                          </span>
+
+                                          <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
+                                            <div className="flex items-center text-lg">
+                                              {m?.guildName?.length > 28 ? (
+                                                <Tippy
+                                                  zIndex={999999999999999}
+                                                  content={m.guildName}
+                                                  animation="scale"
+                                                  className="shadow-xl"
+                                                >
+                                                  <span>
+                                                    {m.guildName.substring(
+                                                      0,
+                                                      28
+                                                    ) + "..."}
+                                                  </span>
+                                                </Tippy>
+                                              ) : (
+                                                m.guildName
+                                              )}
+                                            </div>
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={m?.name?.join(", ")}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <span className="text-gray-400 text-sm -mt-2">
+                                                {m?.name?.length} channels
+                                              </span>
+                                            </Tippy>
+                                          </div>
                                         </div>
-                                      </div>
-                                      <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
-                                        {m?.messageCount ? (
-                                          <Tippy
-                                            content={
-                                              m.messageCount
-                                                .toString()
-                                                .replace(
-                                                  /\B(?=(\d{3})+(?!\d))/g,
-                                                  ","
-                                                ) + " Messages"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2"
-                                              width="24"
+                                        <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
+                                          {m?.messageCount ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.messageCount
+                                                  .toString()
+                                                  .replace(
+                                                    /\B(?=(\d{3})+(?!\d))/g,
+                                                    ","
+                                                  ) + " Messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
                                             >
-                                              <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no messages"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
-                                              width="24"
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2"
+                                                width="24"
+                                              >
+                                                <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
                                             >
-                                              <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.favoriteWords &&
-                                        m?.favoriteWords.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.favoriteWords.length
-                                            } Favorite Word${
-                                              m.favoriteWords.length > 1
-                                                ? "s"
-                                                : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.favoriteWords.length <
-                                                      10
-                                                        ? "Top 10"
-                                                        : `${m.favoriteWords.length}`}{" "}
-                                                      Favorite Word
-                                                      {m.favoriteWords
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.favoriteWords.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              {f.word}:{" "}
-                                                              {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
+                                                width="24"
+                                              >
+                                                <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.favoriteWords &&
+                                          m?.favoriteWords?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.favoriteWords.length
+                                              } Favorite Word${
+                                                m.favoriteWords.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
                                             >
-                                              <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no favorite words"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topCursed &&
-                                        m?.topCursed?.length > 0 ? (
-                                          <Tippy
-                                            content={
-                                              m.topCursed.length
-                                                .toString()
-                                                .replace(
-                                                  /\B(?=(\d{3})+(?!\d))/g,
-                                                  ","
-                                                ) +
-                                              " Curse Word" +
-                                              (m.topCursed.length > 1
-                                                ? "s"
-                                                : "")
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.topCursed.length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topCursed.length}`}{" "}
-                                                      Curse Word
-                                                      {m.topCursed.length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topCursed.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              {f.word}:{" "}
-                                                              {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no curse words"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topLinks &&
-                                        m?.topLinks?.length > 0 ? (
-                                          <Tippy
-                                            content={
-                                              m.topLinks.length + " Links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.topLinks.length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topLinks.length}`}{" "}
-                                                      Favorite Link
-                                                      {m.topLinks.length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topLinks.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <a
-                                                                href={f.word}
-                                                                className="opacity-80 hover:opacity-100"
-                                                                target="_blank"
-                                                                rel="noreferrer"
-                                                              >
-                                                                {f.word}
-                                                              </a>
-                                                              : {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topDiscordLinks &&
-                                        m?.topDiscordLinks?.length > 0 ? (
-                                          <Tippy
-                                            content={
-                                              m.topDiscordLinks.length +
-                                              " Discord Links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "your"}{" "}
-                                                      {m.topDiscordLinks
-                                                        .length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topDiscordLinks.length}`}{" "}
-                                                      Discord Link
-                                                      {m.topDiscordLinks
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topDiscordLinks.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <a
-                                                                href={f.word}
-                                                                className="opacity-80 hover:opacity-100"
-                                                                target="_blank"
-                                                                rel="noreferrer"
-                                                              >
-                                                                {f.word}
-                                                              </a>
-                                                              : {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no Discord links"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                            >
-                                              <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.oldestMessages &&
-                                        m?.oldestMessages?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.oldestMessages.length
-                                            } Oldest Message${
-                                              m.oldestMessages.length > 1
-                                                ? "s"
-                                                : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "Your"}{" "}
-                                                      {m.oldestMessages.length <
-                                                      10
-                                                        ? "Top 10"
-                                                        : `${m.oldestMessages.length}`}{" "}
-                                                      Oldest Message
-                                                      {m.favoriteWords
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.oldestMessages.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <b>
-                                                                {f.sentence}
-                                                              </b>
-                                                              <ul>
-                                                                <li>
-                                                                  - sent at{" "}
-                                                                  {moment(
-                                                                    f.timestamp
-                                                                  ).format(
-                                                                    "MMMM Do YYYY, h:mm:ss a"
-                                                                  )}{" "}
-                                                                  <b>
-                                                                    (
-                                                                    {moment(
-                                                                      f.timestamp
-                                                                    ).fromNow()}
-                                                                    )
-                                                                  </b>
-                                                                </li>
-                                                                <li>
-                                                                  - sent to{" "}
-                                                                  <b>
-                                                                    {f.author}
-                                                                  </b>
-                                                                </li>
-                                                              </ul>
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
-                                            >
-                                              <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no messages"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                            >
-                                              <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topEmojis &&
-                                        m?.topEmojis?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.topEmojis.length
-                                            } Top Emoji${
-                                              m.topEmojis.length > 1 ? "s" : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "Your"}{" "}
-                                                      {m.topEmojis.length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topEmojis.length}`}{" "}
-                                                      Top Emoji
-                                                      {m.topEmojis.length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topEmojis.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              <b>
-                                                                {f.emoji}:{" "}
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.favoriteWords
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.favoriteWords.length}`}{" "}
+                                                        Favorite Word
+                                                        {m.favoriteWords
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.favoriteWords.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {f.word}:{" "}
                                                                 {f.count} time
                                                                 {f.count > 1
                                                                   ? "s"
                                                                   : ""}
-                                                              </b>
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no favorite words"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
                                             >
-                                              <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") + "have no emojis"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topCursed &&
+                                          m?.topCursed?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topCursed.length
+                                                  .toString()
+                                                  .replace(
+                                                    /\B(?=(\d{3})+(?!\d))/g,
+                                                    ","
+                                                  ) +
+                                                " Curse Words | Cursed " +
+                                                Utils.getTopCount(m.topCursed) +
+                                                " time" +
+                                                (m.topCursed.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
                                             >
-                                              <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
-                                        {m?.topCustomEmojis &&
-                                        m?.topCustomEmojis?.length > 0 ? (
-                                          <Tippy
-                                            content={`${
-                                              m.topCustomEmojis.length
-                                            } Top Custom Emoji${
-                                              m.topCustomEmojis.length > 1
-                                                ? "s"
-                                                : ""
-                                            }`}
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              onClick={() => {
-                                                toast(
-                                                  <div className="Toastify__toast-body_">
-                                                    <span className="font-bold text-lg text-black dark:text-white">
-                                                      {data?.dataFile
-                                                        ? "Their"
-                                                        : "Your"}{" "}
-                                                      {m.topCustomEmojis
-                                                        .length < 10
-                                                        ? "Top 10"
-                                                        : `${m.topCustomEmojis.length}`}{" "}
-                                                      Top Custom Emoji
-                                                      {m.topCustomEmojis
-                                                        .length === 1
-                                                        ? " is"
-                                                        : "s are"}
-                                                      :
-                                                    </span>
-                                                    <br />
-                                                    <ul className="list-disc ml-4">
-                                                      {m.topCustomEmojis.map(
-                                                        (f: any, i: number) => {
-                                                          return (
-                                                            <li key={i}>
-                                                              {/<:.*?:(\d+)>/g.exec(
-                                                                f.emoji
-                                                              ) ? (
-                                                                <Tippy
-                                                                  content={`${
-                                                                    f.emoji
-                                                                  } used ${
-                                                                    f.count
-                                                                  } time${
-                                                                    f.count ===
-                                                                    1
-                                                                      ? ""
-                                                                      : "s"
-                                                                  }`}
-                                                                  animation="scale"
-                                                                  className="shadow-xl"
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topCursed.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topCursed.length}`}{" "}
+                                                        Curse Word
+                                                        {m.topCursed.length ===
+                                                        1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topCursed.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {f.word}:{" "}
+                                                                {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no curse words"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topLinks &&
+                                          m?.topLinks?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topLinks.length +
+                                                " Links | Sent " +
+                                                Utils.getTopCount(m.topLinks) +
+                                                " unique link" +
+                                                (m.topLinks.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topLinks.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topLinks.length}`}{" "}
+                                                        Favorite Link
+                                                        {m.topLinks.length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topLinks.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <a
+                                                                  href={f.word}
+                                                                  className="opacity-80 hover:opacity-100"
+                                                                  target="_blank"
+                                                                  rel="noreferrer"
                                                                 >
-                                                                  <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                                                    <Image
-                                                                      unoptimized={
-                                                                        true
-                                                                      }
-                                                                      src={Utils.createEmoji(
-                                                                        f.emoji
-                                                                      )}
-                                                                      alt="emoji"
-                                                                      height="50px"
-                                                                      width="50px"
-                                                                      draggable={
-                                                                        false
-                                                                      }
-                                                                    />
-                                                                  </div>
-                                                                </Tippy>
-                                                              ) : (
-                                                                <>
-                                                                  {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
-                                                                    f.emoji
-                                                                  ) ? (
-                                                                    <Tippy
-                                                                      content={`${
-                                                                        f.emoji
-                                                                      } used ${
-                                                                        f.count
-                                                                      } time${
-                                                                        f.count ===
-                                                                        1
-                                                                          ? ""
-                                                                          : "s"
-                                                                      }`}
-                                                                      animation="scale"
-                                                                      className="shadow-xl"
-                                                                    >
-                                                                      <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
-                                                                        <Image
-                                                                          unoptimized={
-                                                                            true
-                                                                          }
-                                                                          src={Utils.createCustomEmoji(
-                                                                            f.emoji
-                                                                          )}
-                                                                          alt="emoji"
-                                                                          height="50px"
-                                                                          width="50px"
-                                                                          draggable={
-                                                                            false
-                                                                          }
-                                                                        />
-                                                                      </div>
-                                                                    </Tippy>
-                                                                  ) : (
-                                                                    ""
-                                                                  )}{" "}
-                                                                </>
-                                                              )}
-                                                              : {f.count} time
-                                                              {f.count > 1
-                                                                ? "s"
-                                                                : ""}
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
-                                                  </div>
-                                                );
-                                              }}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                                                  {f.word}
+                                                                </a>
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no links"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
                                             >
-                                              <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
-                                            </svg>
-                                          </Tippy>
-                                        ) : (
-                                          <Tippy
-                                            content={
-                                              (data?.dataFile
-                                                ? "They "
-                                                : "You ") +
-                                              "have no custom emojis"
-                                            }
-                                            animation="scale"
-                                            className="shadow-xl"
-                                          >
-                                            <svg
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              height="24"
-                                              width="24"
-                                              className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topDiscordLinks &&
+                                          m?.topDiscordLinks?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topDiscordLinks.length +
+                                                " Discord Links | Sent " +
+                                                Utils.getTopCount(
+                                                  m.topDiscordLinks
+                                                ) +
+                                                " unique Discord link" +
+                                                (m.topDiscordLinks.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
                                             >
-                                              <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
-                                            </svg>
-                                          </Tippy>
-                                        )}
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topDiscordLinks
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topDiscordLinks.length}`}{" "}
+                                                        Discord Link
+                                                        {m.topDiscordLinks
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topDiscordLinks.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <a
+                                                                  href={f.word}
+                                                                  className="opacity-80 hover:opacity-100"
+                                                                  target="_blank"
+                                                                  rel="noreferrer"
+                                                                >
+                                                                  {f.word}
+                                                                </a>
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no Discord links"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.oldestMessages &&
+                                          m?.oldestMessages?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.oldestMessages.length
+                                              } Oldest Message${
+                                                m.oldestMessages.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.oldestMessages
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.oldestMessages.length}`}{" "}
+                                                        Oldest Message
+                                                        {m.favoriteWords
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.oldestMessages.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <b>
+                                                                  {f.sentence}
+                                                                </b>
+                                                                <ul>
+                                                                  <li>
+                                                                    - sent at{" "}
+                                                                    {moment(
+                                                                      f.timestamp
+                                                                    ).format(
+                                                                      "MMMM Do YYYY, h:mm:ss a"
+                                                                    )}{" "}
+                                                                    <b>
+                                                                      (
+                                                                      {moment(
+                                                                        f.timestamp
+                                                                      ).fromNow()}
+                                                                      )
+                                                                    </b>
+                                                                  </li>
+                                                                  <li>
+                                                                    - sent to{" "}
+                                                                    <b>
+                                                                      {f.author}
+                                                                    </b>
+                                                                  </li>
+                                                                </ul>
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                              >
+                                                <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topEmojis &&
+                                          m?.topEmojis?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.topEmojis.length
+                                              } Top Emoji${
+                                                m.topEmojis.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.topEmojis.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topEmojis.length}`}{" "}
+                                                        Top Emoji
+                                                        {m.topEmojis.length ===
+                                                        1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topEmojis.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <b>
+                                                                  {f.emoji}:{" "}
+                                                                  {f.count} time
+                                                                  {f.count > 1
+                                                                    ? "s"
+                                                                    : ""}
+                                                                </b>
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no emojis"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topCustomEmojis &&
+                                          m?.topCustomEmojis?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.topCustomEmojis.length
+                                              } Top Custom Emoji${
+                                                m.topCustomEmojis.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.topCustomEmojis
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topCustomEmojis.length}`}{" "}
+                                                        Top Custom Emoji
+                                                        {m.topCustomEmojis
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topCustomEmojis.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {/<:.*?:(\d+)>/g.exec(
+                                                                  f.emoji
+                                                                ) ? (
+                                                                  <Tippy
+                                                                    zIndex={
+                                                                      999999999999999
+                                                                    }
+                                                                    content={`${
+                                                                      f.emoji
+                                                                    } used ${
+                                                                      f.count
+                                                                    } time${
+                                                                      f.count ===
+                                                                      1
+                                                                        ? ""
+                                                                        : "s"
+                                                                    }`}
+                                                                    animation="scale"
+                                                                    className="shadow-xl"
+                                                                  >
+                                                                    <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                                      <Image
+                                                                        unoptimized={
+                                                                          true
+                                                                        }
+                                                                        src={Utils.createEmoji(
+                                                                          f.emoji
+                                                                        )}
+                                                                        alt="emoji"
+                                                                        height="50px"
+                                                                        width="50px"
+                                                                        draggable={
+                                                                          false
+                                                                        }
+                                                                      />
+                                                                    </div>
+                                                                  </Tippy>
+                                                                ) : (
+                                                                  <>
+                                                                    {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                                      f.emoji
+                                                                    ) ? (
+                                                                      <Tippy
+                                                                        zIndex={
+                                                                          999999999999999
+                                                                        }
+                                                                        content={`${
+                                                                          f.emoji
+                                                                        } used ${
+                                                                          f.count
+                                                                        } time${
+                                                                          f.count ===
+                                                                          1
+                                                                            ? ""
+                                                                            : "s"
+                                                                        }`}
+                                                                        animation="scale"
+                                                                        className="shadow-xl"
+                                                                      >
+                                                                        <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                                          <Image
+                                                                            unoptimized={
+                                                                              true
+                                                                            }
+                                                                            src={Utils.createCustomEmoji(
+                                                                              f.emoji
+                                                                            )}
+                                                                            alt="emoji"
+                                                                            height="50px"
+                                                                            width="50px"
+                                                                            draggable={
+                                                                              false
+                                                                            }
+                                                                          />
+                                                                        </div>
+                                                                      </Tippy>
+                                                                    ) : (
+                                                                      ""
+                                                                    )}{" "}
+                                                                  </>
+                                                                )}
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no custom emojis"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                ) : (
-                                  <div className="flex flex-col justify-center items-center">
-                                    <span className="text-gray-900 dark:text-gray-200 text-2xl font-bold">
-                                      NO RESULTS FOUND
-                                    </span>
-                                    <span className="text-gray-700 dark:text-gray-400 text-lg max-w-sm">
-                                      We could not find what you are looking
-                                      for. Try again with a different search
-                                      term.
-                                    </span>
-                                  </div>
-                                )}
-                              </>
-                            );
-                          })
-                      : ""}
+                                  </>
+                                );
+                              }
+                            )
+                          : topGuilds?.map((m: any, i: number) => {
+                              return (
+                                <>
+                                  {m !== "noresults" ? (
+                                    <div key={i}>
+                                      <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
+                                        <div className="flex items-center max-w-full sm:max-w-4/6">
+                                          <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
+                                            <div className="flex items-center text-lg">
+                                              {m?.guildName?.length > 28 ? (
+                                                <Tippy
+                                                  zIndex={999999999999999}
+                                                  content={m.guildName}
+                                                  animation="scale"
+                                                  className="shadow-xl"
+                                                >
+                                                  <span>
+                                                    {m.guildName.substring(
+                                                      0,
+                                                      28
+                                                    ) + "..."}
+                                                  </span>
+                                                </Tippy>
+                                              ) : (
+                                                m.guildName
+                                              )}
+                                            </div>
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={m?.name?.join(", ")}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <span className="text-gray-400 text-sm -mt-2">
+                                                {m?.name?.length} channels
+                                              </span>
+                                            </Tippy>
+                                          </div>
+                                        </div>
+                                        <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
+                                          {m?.messageCount ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.messageCount
+                                                  .toString()
+                                                  .replace(
+                                                    /\B(?=(\d{3})+(?!\d))/g,
+                                                    ","
+                                                  ) + " Messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2"
+                                                width="24"
+                                              >
+                                                <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
+                                                width="24"
+                                              >
+                                                <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.favoriteWords &&
+                                          m?.favoriteWords.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.favoriteWords.length
+                                              } Favorite Word${
+                                                m.favoriteWords.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.favoriteWords
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.favoriteWords.length}`}{" "}
+                                                        Favorite Word
+                                                        {m.favoriteWords
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.favoriteWords.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {f.word}:{" "}
+                                                                {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no favorite words"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topCursed &&
+                                          m?.topCursed?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topCursed.length
+                                                  .toString()
+                                                  .replace(
+                                                    /\B(?=(\d{3})+(?!\d))/g,
+                                                    ","
+                                                  ) +
+                                                " Curse Words | Cursed " +
+                                                Utils.getTopCount(m.topCursed) +
+                                                " time" +
+                                                (m.topCursed.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topCursed.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topCursed.length}`}{" "}
+                                                        Curse Word
+                                                        {m.topCursed.length ===
+                                                        1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topCursed.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {f.word}:{" "}
+                                                                {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no curse words"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topLinks &&
+                                          m?.topLinks?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topLinks.length +
+                                                " Links | Sent " +
+                                                Utils.getTopCount(m.topLinks) +
+                                                " unique link" +
+                                                (m.topLinks.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topLinks.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topLinks.length}`}{" "}
+                                                        Favorite Link
+                                                        {m.topLinks.length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topLinks.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <a
+                                                                  href={f.word}
+                                                                  className="opacity-80 hover:opacity-100"
+                                                                  target="_blank"
+                                                                  rel="noreferrer"
+                                                                >
+                                                                  {f.word}
+                                                                </a>
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no links"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topDiscordLinks &&
+                                          m?.topDiscordLinks?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topDiscordLinks.length +
+                                                " Discord Links | Sent " +
+                                                Utils.getTopCount(
+                                                  m.topDiscordLinks
+                                                ) +
+                                                " unique Discord link" +
+                                                (m.topDiscordLinks.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topDiscordLinks
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topDiscordLinks.length}`}{" "}
+                                                        Discord Link
+                                                        {m.topDiscordLinks
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topDiscordLinks.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <a
+                                                                  href={f.word}
+                                                                  className="opacity-80 hover:opacity-100"
+                                                                  target="_blank"
+                                                                  rel="noreferrer"
+                                                                >
+                                                                  {f.word}
+                                                                </a>
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no Discord links"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.oldestMessages &&
+                                          m?.oldestMessages?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.oldestMessages.length
+                                              } Oldest Message${
+                                                m.oldestMessages.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.oldestMessages
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.oldestMessages.length}`}{" "}
+                                                        Oldest Message
+                                                        {m.favoriteWords
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.oldestMessages.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <b>
+                                                                  {f.sentence}
+                                                                </b>
+                                                                <ul>
+                                                                  <li>
+                                                                    - sent at{" "}
+                                                                    {moment(
+                                                                      f.timestamp
+                                                                    ).format(
+                                                                      "MMMM Do YYYY, h:mm:ss a"
+                                                                    )}{" "}
+                                                                    <b>
+                                                                      (
+                                                                      {moment(
+                                                                        f.timestamp
+                                                                      ).fromNow()}
+                                                                      )
+                                                                    </b>
+                                                                  </li>
+                                                                  <li>
+                                                                    - sent to{" "}
+                                                                    <b>
+                                                                      {f.author}
+                                                                    </b>
+                                                                  </li>
+                                                                </ul>
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                              >
+                                                <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topEmojis &&
+                                          m?.topEmojis?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.topEmojis.length
+                                              } Top Emoji${
+                                                m.topEmojis.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.topEmojis.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topEmojis.length}`}{" "}
+                                                        Top Emoji
+                                                        {m.topEmojis.length ===
+                                                        1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topEmojis.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <b>
+                                                                  {f.emoji}:{" "}
+                                                                  {f.count} time
+                                                                  {f.count > 1
+                                                                    ? "s"
+                                                                    : ""}
+                                                                </b>
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no emojis"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topCustomEmojis &&
+                                          m?.topCustomEmojis?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.topCustomEmojis.length
+                                              } Top Custom Emoji${
+                                                m.topCustomEmojis.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.topCustomEmojis
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topCustomEmojis.length}`}{" "}
+                                                        Top Custom Emoji
+                                                        {m.topCustomEmojis
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topCustomEmojis.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {/<:.*?:(\d+)>/g.exec(
+                                                                  f.emoji
+                                                                ) ? (
+                                                                  <Tippy
+                                                                    zIndex={
+                                                                      999999999999999
+                                                                    }
+                                                                    content={`${
+                                                                      f.emoji
+                                                                    } used ${
+                                                                      f.count
+                                                                    } time${
+                                                                      f.count ===
+                                                                      1
+                                                                        ? ""
+                                                                        : "s"
+                                                                    }`}
+                                                                    animation="scale"
+                                                                    className="shadow-xl"
+                                                                  >
+                                                                    <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                                      <Image
+                                                                        unoptimized={
+                                                                          true
+                                                                        }
+                                                                        src={Utils.createEmoji(
+                                                                          f.emoji
+                                                                        )}
+                                                                        alt="emoji"
+                                                                        height="50px"
+                                                                        width="50px"
+                                                                        draggable={
+                                                                          false
+                                                                        }
+                                                                      />
+                                                                    </div>
+                                                                  </Tippy>
+                                                                ) : (
+                                                                  <>
+                                                                    {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                                      f.emoji
+                                                                    ) ? (
+                                                                      <Tippy
+                                                                        zIndex={
+                                                                          999999999999999
+                                                                        }
+                                                                        content={`${
+                                                                          f.emoji
+                                                                        } used ${
+                                                                          f.count
+                                                                        } time${
+                                                                          f.count ===
+                                                                          1
+                                                                            ? ""
+                                                                            : "s"
+                                                                        }`}
+                                                                        animation="scale"
+                                                                        className="shadow-xl"
+                                                                      >
+                                                                        <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                                          <Image
+                                                                            unoptimized={
+                                                                              true
+                                                                            }
+                                                                            src={Utils.createCustomEmoji(
+                                                                              f.emoji
+                                                                            )}
+                                                                            alt="emoji"
+                                                                            height="50px"
+                                                                            width="50px"
+                                                                            draggable={
+                                                                              false
+                                                                            }
+                                                                          />
+                                                                        </div>
+                                                                      </Tippy>
+                                                                    ) : (
+                                                                      ""
+                                                                    )}{" "}
+                                                                  </>
+                                                                )}
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no custom emojis"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div className="flex flex-col justify-center items-center">
+                                      <span className="text-gray-900 dark:text-gray-200 text-2xl font-bold">
+                                        NO RESULTS FOUND
+                                      </span>
+                                      <span className="text-gray-700 dark:text-gray-400 text-lg max-w-sm">
+                                        We could not find what you are looking
+                                        for. Try again with a different search
+                                        term.
+                                      </span>
+                                    </div>
+                                  )}
+                                </>
+                              );
+                            })
+                        : ""}
+                    </div>
                   </div>
-                </div>
-              </>
-            ) : (
-              ""
-            )}
+                </>
+              ) : (
+                ""
+              )}
+              {messageType === "dmMode" ? (
+                <>
+                  {data?.messages?.topGroupDMs &&
+                  data?.messages?.topGroupDMs?.length > 0 ? (
+                    <span className="text-black dark:text-gray-300 px-4">
+                      Showing{" "}
+                      {!topGroupDMs.length && topGroupDMs[0] !== "noresults"
+                        ? data.messages.topGroupDMs.length
+                        : topGroupDMs[0] !== "noresults"
+                        ? topGroupDMs.length
+                        : "0"}
+                      /{data.messages.topGroupDMs.length}
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                  <div className="flex grow rounded-sm overflow-y-auto overflow-x-hidden h-[700px]">
+                    <div className="flex flex-col w-full px-3 pb-4 lg:px-3 md:px-3 lg:pt-0 md:pt-0 pt-2">
+                      {" "}
+                      {!data?.messages?.topGroupDMs ? (
+                        <div className="px-10 text-gray-900 dark:text-white text-3xl font-bold flex flex-col justify-center content-center align-center w-full h-full">
+                          No Data was found or this option is disabled
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      {data?.messages?.topGroupDMs &&
+                      data?.messages?.topGroupDMs?.length > 0
+                        ? !(topGroupDMs.length > 0) &&
+                          topChannels[0] !== "noresults"
+                          ? data?.messages?.topGroupDMs.map(
+                              (m: any, i: number) => {
+                                return (
+                                  <>
+                                    <div key={i}>
+                                      <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
+                                        <div className="flex items-center max-w-full sm:max-w-4/6">
+                                          <div
+                                            className="text-gray-200 font-bold flex h-8 w-8 rounded-full items-center justify-center bg-gray-400 dark:bg-gray-600 "
+                                            style={{
+                                              backgroundColor:
+                                                i === 0
+                                                  ? "#DA9E3B"
+                                                  : i === 1
+                                                  ? "#989898"
+                                                  : i === 2
+                                                  ? "#AE7458"
+                                                  : "#4E5258",
+                                            }}
+                                          >
+                                            {i + 1}
+                                          </div>
+
+                                          <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
+                                            <div className="flex items-center text-lg">
+                                              {m?.name
+                                                ? m.name
+                                                : "Unamed Group"}
+                                            </div>
+                                            <span className="text-gray-400 text-sm -mt-2">
+                                              {m?.recipients} group members
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
+                                          {m?.messageCount ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.messageCount
+                                                  .toString()
+                                                  .replace(
+                                                    /\B(?=(\d{3})+(?!\d))/g,
+                                                    ","
+                                                  ) + " Messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2"
+                                                width="24"
+                                              >
+                                                <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
+                                                width="24"
+                                              >
+                                                <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.favoriteWords &&
+                                          m?.favoriteWords?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.favoriteWords.length
+                                              } Favorite Word${
+                                                m.favoriteWords.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.favoriteWords
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.favoriteWords.length}`}{" "}
+                                                        Favorite Word
+                                                        {m.favoriteWords
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.favoriteWords.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {f.word}:{" "}
+                                                                {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no favorite words"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topCursed &&
+                                          m?.topCursed?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topCursed.length
+                                                  .toString()
+                                                  .replace(
+                                                    /\B(?=(\d{3})+(?!\d))/g,
+                                                    ","
+                                                  ) +
+                                                " Curse Words | Cursed " +
+                                                Utils.getTopCount(m.topCursed) +
+                                                " time" +
+                                                (m.topCursed.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topCursed.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topCursed.length}`}{" "}
+                                                        Curse Word
+                                                        {m.topCursed.length ===
+                                                        1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topCursed.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {f.word}:{" "}
+                                                                {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no curse words"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topLinks &&
+                                          m?.topLinks?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topLinks.length +
+                                                " Links | Sent " +
+                                                Utils.getTopCount(m.topLinks) +
+                                                " unique link" +
+                                                (m.topLinks.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topLinks.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topLinks.length}`}{" "}
+                                                        Favorite Link
+                                                        {m.topLinks.length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topLinks.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <a
+                                                                  href={f.word}
+                                                                  className="opacity-80 hover:opacity-100"
+                                                                  target="_blank"
+                                                                  rel="noreferrer"
+                                                                >
+                                                                  {f.word}
+                                                                </a>
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no links"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topDiscordLinks &&
+                                          m?.topDiscordLinks?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topDiscordLinks.length +
+                                                " Discord Links | Sent " +
+                                                Utils.getTopCount(
+                                                  m.topDiscordLinks
+                                                ) +
+                                                " unique Discord link" +
+                                                (m.topDiscordLinks.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topDiscordLinks
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topDiscordLinks.length}`}{" "}
+                                                        Discord Link
+                                                        {m.topDiscordLinks
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topDiscordLinks.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <a
+                                                                  href={f.word}
+                                                                  className="opacity-80 hover:opacity-100"
+                                                                  target="_blank"
+                                                                  rel="noreferrer"
+                                                                >
+                                                                  {f.word}
+                                                                </a>
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no Discord links"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.oldestMessages &&
+                                          m?.oldestMessages?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.oldestMessages.length
+                                              } Oldest Message${
+                                                m.oldestMessages.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.oldestMessages
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.oldestMessages.length}`}{" "}
+                                                        Oldest Message
+                                                        {m.favoriteWords
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.oldestMessages.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <b>
+                                                                  {f.sentence}
+                                                                </b>
+                                                                <ul>
+                                                                  <li>
+                                                                    - sent at{" "}
+                                                                    {moment(
+                                                                      f.timestamp
+                                                                    ).format(
+                                                                      "MMMM Do YYYY, h:mm:ss a"
+                                                                    )}{" "}
+                                                                    <b>
+                                                                      (
+                                                                      {moment(
+                                                                        f.timestamp
+                                                                      ).fromNow()}
+                                                                      )
+                                                                    </b>
+                                                                  </li>
+                                                                  <li>
+                                                                    - sent to{" "}
+                                                                    <b>
+                                                                      {f.author}
+                                                                    </b>
+                                                                  </li>
+                                                                </ul>
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                              >
+                                                <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topEmojis &&
+                                          m?.topEmojis?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.topEmojis.length
+                                              } Top Emoji${
+                                                m.topEmojis.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.topEmojis.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topEmojis.length}`}{" "}
+                                                        Top Emoji
+                                                        {m.topEmojis.length ===
+                                                        1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topEmojis.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <b>
+                                                                  {f.emoji}:{" "}
+                                                                  {f.count} time
+                                                                  {f.count > 1
+                                                                    ? "s"
+                                                                    : ""}
+                                                                </b>
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no emojis"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topCustomEmojis &&
+                                          m?.topCustomEmojis?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.topCustomEmojis.length
+                                              } Top Custom Emoji${
+                                                m.topCustomEmojis.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.topCustomEmojis
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topCustomEmojis.length}`}{" "}
+                                                        Top Custom Emoji
+                                                        {m.topCustomEmojis
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topCustomEmojis.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {/<:.*?:(\d+)>/g.exec(
+                                                                  f.emoji
+                                                                ) ? (
+                                                                  <Tippy
+                                                                    zIndex={
+                                                                      999999999999999
+                                                                    }
+                                                                    content={`${
+                                                                      f.emoji
+                                                                    } used ${
+                                                                      f.count
+                                                                    } time${
+                                                                      f.count ===
+                                                                      1
+                                                                        ? ""
+                                                                        : "s"
+                                                                    }`}
+                                                                    animation="scale"
+                                                                    className="shadow-xl"
+                                                                  >
+                                                                    <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                                      <Image
+                                                                        unoptimized={
+                                                                          true
+                                                                        }
+                                                                        src={Utils.createEmoji(
+                                                                          f.emoji
+                                                                        )}
+                                                                        alt="emoji"
+                                                                        height="50px"
+                                                                        width="50px"
+                                                                        draggable={
+                                                                          false
+                                                                        }
+                                                                      />
+                                                                    </div>
+                                                                  </Tippy>
+                                                                ) : (
+                                                                  <>
+                                                                    {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                                      f.emoji
+                                                                    ) ? (
+                                                                      <Tippy
+                                                                        zIndex={
+                                                                          999999999999999
+                                                                        }
+                                                                        content={`${
+                                                                          f.emoji
+                                                                        } used ${
+                                                                          f.count
+                                                                        } time${
+                                                                          f.count ===
+                                                                          1
+                                                                            ? ""
+                                                                            : "s"
+                                                                        }`}
+                                                                        animation="scale"
+                                                                        className="shadow-xl"
+                                                                      >
+                                                                        <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                                          <Image
+                                                                            unoptimized={
+                                                                              true
+                                                                            }
+                                                                            src={Utils.createCustomEmoji(
+                                                                              f.emoji
+                                                                            )}
+                                                                            alt="emoji"
+                                                                            height="50px"
+                                                                            width="50px"
+                                                                            draggable={
+                                                                              false
+                                                                            }
+                                                                          />
+                                                                        </div>
+                                                                      </Tippy>
+                                                                    ) : (
+                                                                      ""
+                                                                    )}{" "}
+                                                                  </>
+                                                                )}
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no custom emojis"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </>
+                                );
+                              }
+                            )
+                          : topGroupDMs?.map((m: any, i: number) => {
+                              return (
+                                <>
+                                  {m !== "noresults" ? (
+                                    <div key={i}>
+                                      <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
+                                        <div className="flex items-center max-w-full sm:max-w-4/6">
+                                          <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
+                                            <div className="flex items-center text-lg">
+                                              {m?.name}
+                                            </div>
+                                            <span className="text-gray-400 text-sm -mt-2">
+                                              {m?.recipients} group members
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
+                                          {m?.messageCount ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.messageCount
+                                                  .toString()
+                                                  .replace(
+                                                    /\B(?=(\d{3})+(?!\d))/g,
+                                                    ","
+                                                  ) + " Messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2"
+                                                width="24"
+                                              >
+                                                <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white cursor-not-allowed ml-2 opacity-60"
+                                                width="24"
+                                              >
+                                                <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.favoriteWords &&
+                                          m?.favoriteWords.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.favoriteWords.length
+                                              } Favorite Word${
+                                                m.favoriteWords.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.favoriteWords
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.favoriteWords.length}`}{" "}
+                                                        Favorite Word
+                                                        {m.favoriteWords
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.favoriteWords.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {f.word}:{" "}
+                                                                {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no favorite words"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="m12 21-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4 2 9.3 2 8.15 2 5.8 3.575 4.225 5.15 2.65 7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55 1.175-.55 2.475-.55 2.35 0 3.925 1.575Q22 5.8 22 8.15q0 1.15-.387 2.25-.388 1.1-1.363 2.412-.975 1.313-2.625 2.963-1.65 1.65-4.175 3.925Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topCursed &&
+                                          m?.topCursed?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topCursed.length
+                                                  .toString()
+                                                  .replace(
+                                                    /\B(?=(\d{3})+(?!\d))/g,
+                                                    ","
+                                                  ) +
+                                                " Curse Words | Cursed " +
+                                                Utils.getTopCount(m.topCursed) +
+                                                " time" +
+                                                (m.topCursed.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topCursed.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topCursed.length}`}{" "}
+                                                        Curse Word
+                                                        {m.topCursed.length ===
+                                                        1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topCursed.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {f.word}:{" "}
+                                                                {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no curse words"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M11 11h2V5h-2Zm1 4q.425 0 .713-.288Q13 14.425 13 14t-.287-.713Q12.425 13 12 13t-.712.287Q11 13.575 11 14t.288.712Q11.575 15 12 15ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topLinks &&
+                                          m?.topLinks?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topLinks.length +
+                                                " Links | Sent " +
+                                                Utils.getTopCount(m.topLinks) +
+                                                " unique link" +
+                                                (m.topLinks.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topLinks.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topLinks.length}`}{" "}
+                                                        Favorite Link
+                                                        {m.topLinks.length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topLinks.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <a
+                                                                  href={f.word}
+                                                                  className="opacity-80 hover:opacity-100"
+                                                                  target="_blank"
+                                                                  rel="noreferrer"
+                                                                >
+                                                                  {f.word}
+                                                                </a>
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no links"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12t1.463-3.538Q4.925 7 7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h8v2Zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.462Q22 9.925 22 12q0 2.075-1.462 3.537Q19.075 17 17 17Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topDiscordLinks &&
+                                          m?.topDiscordLinks?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                m.topDiscordLinks.length +
+                                                " Discord Links | Sent " +
+                                                Utils.getTopCount(
+                                                  m.topDiscordLinks
+                                                ) +
+                                                " unique Discord link" +
+                                                (m.topDiscordLinks.length > 1
+                                                  ? "s"
+                                                  : "")
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "your"}{" "}
+                                                        {m.topDiscordLinks
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topDiscordLinks.length}`}{" "}
+                                                        Discord Link
+                                                        {m.topDiscordLinks
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topDiscordLinks.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <a
+                                                                  href={f.word}
+                                                                  className="opacity-80 hover:opacity-100"
+                                                                  target="_blank"
+                                                                  rel="noreferrer"
+                                                                >
+                                                                  {f.word}
+                                                                </a>
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no Discord links"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="m19.25 16.45-1.5-1.55q.975-.275 1.613-1.063Q20 13.05 20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.438Q22 9.875 22 12q0 1.425-.75 2.637-.75 1.213-2 1.813ZM15.85 13l-2-2H16v2Zm3.95 9.6L1.4 4.2l1.4-1.4 18.4 18.4ZM11 17H7q-2.075 0-3.537-1.463Q2 14.075 2 12q0-1.75 1.062-3.088Q4.125 7.575 5.75 7.15L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4Zm-3-4v-2h1.625l1.975 2Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.oldestMessages &&
+                                          m?.oldestMessages?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.oldestMessages.length
+                                              } Oldest Message${
+                                                m.oldestMessages.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.oldestMessages
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.oldestMessages.length}`}{" "}
+                                                        Oldest Message
+                                                        {m.favoriteWords
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.oldestMessages.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <b>
+                                                                  {f.sentence}
+                                                                </b>
+                                                                <ul>
+                                                                  <li>
+                                                                    - sent at{" "}
+                                                                    {moment(
+                                                                      f.timestamp
+                                                                    ).format(
+                                                                      "MMMM Do YYYY, h:mm:ss a"
+                                                                    )}{" "}
+                                                                    <b>
+                                                                      (
+                                                                      {moment(
+                                                                        f.timestamp
+                                                                      ).fromNow()}
+                                                                      )
+                                                                    </b>
+                                                                  </li>
+                                                                  <li>
+                                                                    - sent to{" "}
+                                                                    <b>
+                                                                      {f.author}
+                                                                    </b>
+                                                                  </li>
+                                                                </ul>
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M4 14q0 2.2 1.075 4.012Q6.15 19.825 7.9 20.875q-.425-.6-.662-1.313Q7 18.85 7 18.05q0-1 .375-1.875t1.1-1.6L12 11.1l3.55 3.475q.7.7 1.075 1.588.375.887.375 1.887 0 .8-.237 1.512-.238.713-.663 1.313 1.75-1.05 2.825-2.863Q20 16.2 20 14q0-2.225-1.1-4.088Q17.8 8.05 16 7l-.45.55q-.325.4-.712.575-.388.175-.813.175-.775 0-1.4-.538Q12 7.225 12 6.3V3l-1.25.737Q9.5 4.475 8 5.875t-2.75 3.45Q4 11.375 4 14Zm8-.1-2.125 2.075q-.425.425-.65.963Q9 17.475 9 18.05q0 1.225.875 2.087Q10.75 21 12 21t2.125-.863Q15 19.275 15 18.05q0-.6-.225-1.125t-.65-.95Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no messages"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                              >
+                                                <path d="M7.9 20.875q-1.75-1.05-2.825-2.863Q4 16.2 4 14q0-2.625 1.25-4.675T8 5.875q1.5-1.4 2.75-2.138L12 3v3.3q0 .925.625 1.462.625.538 1.4.538.425 0 .813-.175.387-.175.712-.575L16 7q1.8 1.05 2.9 2.912Q20 11.775 20 14q0 2.2-1.075 4.012-1.075 1.813-2.825 2.863.425-.6.663-1.313Q17 18.85 17 18.05q0-1-.375-1.887-.375-.888-1.075-1.588L12 11.1l-3.525 3.475q-.725.725-1.1 1.6Q7 17.05 7 18.05q0 .8.238 1.512.237.713.662 1.313ZM12 21q-1.25 0-2.125-.863Q9 19.275 9 18.05q0-.575.225-1.112.225-.538.65-.963L12 13.9l2.125 2.075q.425.425.65.95.225.525.225 1.125 0 1.225-.875 2.087Q13.25 21 12 21Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topEmojis &&
+                                          m?.topEmojis?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.topEmojis.length
+                                              } Top Emoji${
+                                                m.topEmojis.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.topEmojis.length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topEmojis.length}`}{" "}
+                                                        Top Emoji
+                                                        {m.topEmojis.length ===
+                                                        1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topEmojis.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                <b>
+                                                                  {f.emoji}:{" "}
+                                                                  {f.count} time
+                                                                  {f.count > 1
+                                                                    ? "s"
+                                                                    : ""}
+                                                                </b>
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") + "have no emojis"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M15.5 11q.65 0 1.075-.425Q17 10.15 17 9.5q0-.65-.425-1.075Q16.15 8 15.5 8q-.65 0-1.075.425Q14 8.85 14 9.5q0 .65.425 1.075Q14.85 11 15.5 11Zm-7 0q.65 0 1.075-.425Q10 10.15 10 9.5q0-.65-.425-1.075Q9.15 8 8.5 8q-.65 0-1.075.425Q7 8.85 7 9.5q0 .65.425 1.075Q7.85 11 8.5 11Zm3.5 6.5q1.775 0 3.137-.975Q16.5 15.55 17.1 14H6.9q.6 1.55 1.963 2.525 1.362.975 3.137.975Zm0 4.5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                          {m?.topCustomEmojis &&
+                                          m?.topCustomEmojis?.length > 0 ? (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={`${
+                                                m.topCustomEmojis.length
+                                              } Top Custom Emoji${
+                                                m.topCustomEmojis.length > 1
+                                                  ? "s"
+                                                  : ""
+                                              }`}
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                onClick={() => {
+                                                  toast(
+                                                    <div className="Toastify__toast-body_">
+                                                      <span className="font-bold text-lg text-black dark:text-white">
+                                                        {data?.dataFile
+                                                          ? "Their"
+                                                          : "Your"}{" "}
+                                                        {m.topCustomEmojis
+                                                          .length < 10
+                                                          ? "Top 10"
+                                                          : `${m.topCustomEmojis.length}`}{" "}
+                                                        Top Custom Emoji
+                                                        {m.topCustomEmojis
+                                                          .length === 1
+                                                          ? " is"
+                                                          : "s are"}
+                                                        :
+                                                      </span>
+                                                      <br />
+                                                      <ul className="list-disc ml-4">
+                                                        {m.topCustomEmojis.map(
+                                                          (
+                                                            f: any,
+                                                            i: number
+                                                          ) => {
+                                                            return (
+                                                              <li key={i}>
+                                                                {/<:.*?:(\d+)>/g.exec(
+                                                                  f.emoji
+                                                                ) ? (
+                                                                  <Tippy
+                                                                    zIndex={
+                                                                      999999999999999
+                                                                    }
+                                                                    content={`${
+                                                                      f.emoji
+                                                                    } used ${
+                                                                      f.count
+                                                                    } time${
+                                                                      f.count ===
+                                                                      1
+                                                                        ? ""
+                                                                        : "s"
+                                                                    }`}
+                                                                    animation="scale"
+                                                                    className="shadow-xl"
+                                                                  >
+                                                                    <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                                      <Image
+                                                                        unoptimized={
+                                                                          true
+                                                                        }
+                                                                        src={Utils.createEmoji(
+                                                                          f.emoji
+                                                                        )}
+                                                                        alt="emoji"
+                                                                        height="50px"
+                                                                        width="50px"
+                                                                        draggable={
+                                                                          false
+                                                                        }
+                                                                      />
+                                                                    </div>
+                                                                  </Tippy>
+                                                                ) : (
+                                                                  <>
+                                                                    {/<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(
+                                                                      f.emoji
+                                                                    ) ? (
+                                                                      <Tippy
+                                                                        zIndex={
+                                                                          999999999999999
+                                                                        }
+                                                                        content={`${
+                                                                          f.emoji
+                                                                        } used ${
+                                                                          f.count
+                                                                        } time${
+                                                                          f.count ===
+                                                                          1
+                                                                            ? ""
+                                                                            : "s"
+                                                                        }`}
+                                                                        animation="scale"
+                                                                        className="shadow-xl"
+                                                                      >
+                                                                        <div className="cursor-pointer text-4xl opacity-90 hover:opacity-100">
+                                                                          <Image
+                                                                            unoptimized={
+                                                                              true
+                                                                            }
+                                                                            src={Utils.createCustomEmoji(
+                                                                              f.emoji
+                                                                            )}
+                                                                            alt="emoji"
+                                                                            height="50px"
+                                                                            width="50px"
+                                                                            draggable={
+                                                                              false
+                                                                            }
+                                                                          />
+                                                                        </div>
+                                                                      </Tippy>
+                                                                    ) : (
+                                                                      ""
+                                                                    )}{" "}
+                                                                  </>
+                                                                )}
+                                                                : {f.count} time
+                                                                {f.count > 1
+                                                                  ? "s"
+                                                                  : ""}
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
+                                                  );
+                                                }}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-pointer"
+                                              >
+                                                <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                              </svg>
+                                            </Tippy>
+                                          ) : (
+                                            <Tippy
+                                              zIndex={999999999999999}
+                                              content={
+                                                (data?.dataFile
+                                                  ? "They "
+                                                  : "You ") +
+                                                "have no custom emojis"
+                                              }
+                                              animation="scale"
+                                              className="shadow-xl"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                width="24"
+                                                className="dark:fill-gray-300 dark:hover:fill-white ml-2 cursor-not-allowed opacity-60"
+                                              >
+                                                <path d="M12 22q-2.05 0-3.875-.788-1.825-.787-3.187-2.15-1.363-1.362-2.15-3.187Q2 14.05 2 12q0-2.15.825-3.988.825-1.837 2.213-3.187 1.387-1.35 3.187-2.1Q10.025 1.975 12 2q1.025 0 2 .175.975.175 2 .675l-3.475 1.6 4.75 2.3 1.45 3.175q-2.275.275-4.688-.525-2.412-.8-4.287-3.1-.875 2.125-2.387 3.5Q5.85 11.175 4 11.85q0 3.475 2.338 5.813Q8.675 20 12 20q3.4 0 5.725-2.4Q20.05 15.2 20 12q0-.35-.025-.625t-.075-.625L21.15 8q.45 1.05.65 2.012.2.963.2 1.988 0 2-.762 3.812-.763 1.813-2.1 3.188-1.338 1.375-3.163 2.188Q14.15 22 12 22Zm-3-7.75q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363Zm6 0q-.525 0-.887-.363-.363-.362-.363-.887t.363-.887q.362-.363.887-.363t.887.363q.363.362.363.887t-.363.887q-.362.363-.887.363ZM19.5 8l-1.1-2.4L16 4.5l2.4-1.1L19.5 1l1.1 2.4L23 4.5l-2.4 1.1Z" />
+                                              </svg>
+                                            </Tippy>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div className="flex flex-col justify-center items-center">
+                                      <span className="text-gray-900 dark:text-gray-200 text-2xl font-bold">
+                                        NO RESULTS FOUND
+                                      </span>
+                                      <span className="text-gray-700 dark:text-gray-400 text-lg max-w-sm">
+                                        We could not find what you are looking
+                                        for. Try again with a different search
+                                        term.
+                                      </span>
+                                    </div>
+                                  )}
+                                </>
+                              );
+                            })
+                        : ""}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                ""
+              )}
+            </div>{" "}
           </div>
         </div>
       </div>
@@ -10033,6 +11152,7 @@ export default function Data({ data, demo }: any): ReactElement {
                           }}
                         >
                           <Tippy
+                            zIndex={999999999999999}
                             content={`${b?.verified ? "[🗸 VERIFIED]" : ""} ${
                               b.name
                             }`}
@@ -10135,6 +11255,7 @@ export default function Data({ data, demo }: any): ReactElement {
                 <div className="flex items-center gap-2">
                   <span className="text-gray-900 dark:text-white text-xl flex items-center">
                     <Tippy
+                      zIndex={999999999999999}
                       content="How much did I spend?"
                       animation="scale"
                       className="shadow-xl"
@@ -10214,6 +11335,7 @@ export default function Data({ data, demo }: any): ReactElement {
                             </p>
                             at
                             <Tippy
+                              zIndex={999999999999999}
                               content={`${moment(t?.date).format(
                                 "MMMM Do YYYY, h:mm:ss a"
                               )} (${moment(t?.date).fromNow()})`}
@@ -10233,6 +11355,7 @@ export default function Data({ data, demo }: any): ReactElement {
                 <h3 className="text-gray-900 dark:text-white font-bold text-xl mt-2 flex items-center uppercase">
                   {data?.dataFile ? "Their" : "Your"} Gifted Nitro{" "}
                   <Tippy
+                    zIndex={999999999999999}
                     content={
                       <>
                         <div className="text-white text-xl font-bold">
@@ -10344,6 +11467,7 @@ export default function Data({ data, demo }: any): ReactElement {
             >
               Statistics{" "}
               <Tippy
+                zIndex={999999999999999}
                 content={
                   <>
                     <div className="text-white text-xl font-bold">
@@ -10378,23 +11502,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   <path d="M10.625 17.375h2.75V11h-2.75ZM12 9.5q.65 0 1.075-.438Q13.5 8.625 13.5 8q0-.65-.425-1.075Q12.65 6.5 12 6.5q-.625 0-1.062.425Q10.5 7.35 10.5 8q0 .625.438 1.062.437.438 1.062.438Zm0 13.35q-2.275 0-4.25-.85t-3.438-2.312Q2.85 18.225 2 16.25q-.85-1.975-.85-4.25T2 7.75q.85-1.975 2.312-3.438Q5.775 2.85 7.75 2q1.975-.85 4.25-.85t4.25.85q1.975.85 3.438 2.312Q21.15 5.775 22 7.75q.85 1.975.85 4.25T22 16.25q-.85 1.975-2.312 3.438Q18.225 21.15 16.25 22q-1.975.85-4.25.85Z" />
                 </svg>
               </Tippy>
-            </span>
-            {data?.fakeInfo || data?.dataFile ? (
-              ""
-            ) : (
-              <p className="text-gray-900 dark:text-white font-mono text-md">
-                <u>Note:</u> you can view more statistics.{" "}
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold"
-                  href="https://github.com/peterhanania/Discord-Package/blob/main/features.md#13"
-                >
-                  Learn More
-                </a>
-                .
-              </p>
-            )}
+            </span> 
             <div className="text-gray-900 dark:text-white md:text-xl lg:text-xl font-bold text-[16px] mt-2">
               {data?.statistics
                 ? Object.keys(data?.statistics)?.map((t: any, i: number) => {
@@ -10405,6 +11513,7 @@ export default function Data({ data, demo }: any): ReactElement {
                           <div className="flex items-center mb-4">
                             {(statIcons as any)[t] ? (
                               <Tippy
+                                zIndex={999999999999999}
                                 animation="scale"
                                 className="shadow-xl"
                                 content={(EventsJSON.events as any)[t]}
@@ -10500,6 +11609,7 @@ export default function Data({ data, demo }: any): ReactElement {
                 </span>
                 <div className="flex justify-end">
                   <Tippy
+                    zIndex={999999999999999}
                     content={"Close"}
                     animation="scale"
                     className="shadow-xl"

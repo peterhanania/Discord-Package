@@ -31,7 +31,7 @@ export default function Loading({ skeleton }: any): ReactElement {
   return !skeleton ? (
     <>
       <Head>
-        <title>📦 Discord Package Explorer Demo ✨</title>
+        <title>📦 Discord Package Explorer and Viewer ✨</title>
       </Head>
       <div className="sp">
         <div className="sp1"></div>

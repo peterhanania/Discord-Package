@@ -2077,11 +2077,11 @@ export default function Upload(): ReactElement {
                   chalk.bold.cyan(
                     `[${moment(Date.now()).format("h:mm:ss a")}]`
                   ) +
-                  `  ${chalk.yellow(`Calculating your top hours on discord`)}`
+                  `  ${chalk.yellow(`Calculating your top hours on Discord`)}`
               );
             if (isDebug)
               setLoading(
-                "Loading Messages|||Calculating your top hours on discord"
+                "Loading Messages|||Calculating your top hours on Discord"
               );
 
             const hourlyMessages = [];
@@ -2215,7 +2215,7 @@ export default function Upload(): ReactElement {
                   chalk.bold.cyan(
                     `[${moment(Date.now()).format("h:mm:ss a")}]`
                   ) +
-                  `  ${chalk.yellow(`Calculated your top hours on discord`)}`
+                  `  ${chalk.yellow(`Calculated your top hours on Discord`)}`
               );
             }
           }
@@ -2310,7 +2310,7 @@ export default function Upload(): ReactElement {
           if (options.other.showDiscordLinks) {
             setPercent(79);
             if (isDebug) {
-              setLoading("Loading Messages|||Calculating your discord links");
+              setLoading("Loading Messages|||Calculating your Discord links");
               await delay(700);
             } else await delay(100);
 
@@ -2323,7 +2323,7 @@ export default function Upload(): ReactElement {
                     `[${moment(Date.now()).format("h:mm:ss a")}]`
                   ) +
                   `  ${chalk.yellow(
-                    `Loaded ${data?.messages?.topDiscordLinks?.length} discord links`
+                    `Loaded ${data?.messages?.topDiscordLinks?.length} Discord links`
                   )}`
               );
           }
@@ -2383,7 +2383,7 @@ export default function Upload(): ReactElement {
                   chalk.bold.cyan(
                     `[${moment(Date.now()).format("h:mm:ss a")}]`
                   ) +
-                  `  ${chalk.yellow(`Loading your discord bots`)}`
+                  `  ${chalk.yellow(`Loading your Discord bots`)}`
               );
 
             if (isDebug) await delay(2000);
@@ -2666,78 +2666,449 @@ export default function Upload(): ReactElement {
     </Suspense>
   ) : (
     <>
-      <div className="h-screen">
-        <Alerts />
-        <Privacy />
-        <Header />{" "}
-        <ToastContainer
-          position="top-right"
-          autoClose={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-        />
-        <Transition
-          show={showLargeModal}
-          enter="transition-opacity delay-200 duration-200"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="transition-opacity duration-150"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-          as={Fragment}
+      <Alerts />
+      <Privacy />
+      <Header />{" "}
+      <ToastContainer
+        position="top-right"
+        autoClose={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+      />
+      <Transition
+        show={showLargeModal}
+        enter="transition-opacity delay-200 duration-200"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-150"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+        as={Fragment}
+      >
+        <Dialog
+          onClose={() => {
+            setSelectedFeatures(oldSelected ? oldSelected : defaultOptions);
+            setShowLargeModal(false);
+          }}
+          className="fixed z-[999999] inset-0 overflow-y-auto"
         >
-          <Dialog
-            onClose={() => {
-              setSelectedFeatures(oldSelected ? oldSelected : defaultOptions);
-              setShowLargeModal(false);
-            }}
-            className="fixed z-[999999] inset-0 overflow-y-auto"
-          >
-            <div className="flex items-center justify-center min-h-screen">
-              <Dialog.Overlay className="fixed inset-0  bg-black/30" />
-              <div className="relative p-4 w-full max-w-7xl md:h-auto h-full">
-                <div className="relative shadow-lg bg-[#36393f] ">
-                  <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
-                    <h3
-                      className="text-xl font-medium text-white uppercase"
+          <div className="flex items-center justify-center min-h-screen">
+            <Dialog.Overlay className="fixed inset-0  bg-black/30" />
+            <div className="relative p-4 w-full max-w-7xl md:h-auto h-full">
+              <div className="relative shadow-lg bg-[#36393f] ">
+                <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
+                  <h3
+                    className="text-xl font-medium text-white uppercase"
+                    style={{
+                      fontFamily:
+                        "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+                    }}
+                  >
+                    Customize Options
+                    {oldSelected || saveToDevice ? (
+                      <span
+                        onClick={() => {
+                          setOldSelected(null);
+                          setShowLargeModal(false);
+                          setSelectedFeatures(defaultOptions);
+                          localStorage.removeItem("defaultOptions");
+
+                          toast.success("Successfully set options to default", {
+                            position: "top-right",
+                            autoClose: 3000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                          });
+                        }}
+                        className="cursor-pointer text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-sm font-sans ml-2 font-bold"
+                      >
+                        Reset to default
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </h3>
+                  <button
+                    onClick={() => {
+                      setSelectedFeatures(
+                        oldSelected ? oldSelected : defaultOptions
+                      );
+                      setShowLargeModal(false);
+                    }}
+                    type="button"
+                    className="text-gray-400 bg-transparent hover:bg-[#2f3136] hover:text-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+
+                <div className="overflow-y-auto h-[560px]">
+                  <div className="space-y-6 md:p-5 sm:p-3 lg:p-6 p-1">
+                    {[
+                      [
+                        "user",
+                        "settings",
+                        "connections",
+                        "payments",
+                        "messages",
+                        "guilds",
+                        "bots",
+                        "other",
+                      ].map((item, i) => {
+                        return (
+                          <div key={i}>
+                            <details className="cursor-pointer">
+                              <summary className="font-bold uppercase text-gray-200">
+                                {item}
+
+                                <svg
+                                  className="control-icon control-icon-expand"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  height="24"
+                                  width="24"
+                                >
+                                  <path d="m12 15.375-6-6 1.4-1.4 4.6 4.6 4.6-4.6 1.4 1.4Z" />
+                                </svg>
+
+                                <svg
+                                  className="control-icon control-icon-close"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  height="24"
+                                  width="24"
+                                >
+                                  <path d="M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6Z" />
+                                </svg>
+                              </summary>
+
+                              {typeof (Utils.classifyOBJ(Features) as any)[
+                                item
+                              ] === "string" ? (
+                                <>
+                                  {" "}
+                                  <div
+                                    className="flex items-center cursor-pointer"
+                                    key={i}
+                                  >
+                                    <input
+                                      defaultChecked={selectedFeatures[item]}
+                                      onChange={(e) => {
+                                        setSelectedFeatures({
+                                          ...selectedFeatures,
+                                          [item]: e.target.checked
+                                            ? true
+                                            : null,
+                                        });
+                                      }}
+                                      id={(Utils.classifyOBJ(Features) as any)[
+                                        item
+                                      ]
+                                        .split(" ")
+                                        .join("")
+                                        .toLowerCase()}
+                                      type="checkbox"
+                                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded  border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                    />
+                                    <label
+                                      onClick={(e: any) => {
+                                        e.preventDefault();
+                                        e.target.previousElementSibling.click();
+                                      }}
+                                      htmlFor={(
+                                        Utils.classifyOBJ(Features) as any
+                                      )[item]
+                                        .split(" ")
+                                        .join("")
+                                        .toLowerCase()}
+                                      className="ml-4 text-sm font-medium text-gray-200"
+                                    >
+                                      {
+                                        (Utils.classifyOBJ(Features) as any)[
+                                          item
+                                        ]
+                                      }
+                                    </label>
+                                  </div>
+                                </>
+                              ) : (
+                                <>
+                                  {Object.values(
+                                    (Utils.classifyOBJ(Features) as any)[item]
+                                  ).map((item_: any, i: number): any => {
+                                    return (
+                                      <div
+                                        className="flex items-center cursor-pointer pb-1"
+                                        key={i}
+                                      >
+                                        <input
+                                          checked={
+                                            Object.values(
+                                              selectedFeatures[item]
+                                            )[i]
+                                              ? true
+                                              : false
+                                          }
+                                          onChange={(e) => {
+                                            const key = Object.keys(
+                                              (
+                                                Utils.classifyOBJ(
+                                                  Features
+                                                ) as any
+                                              )[item]
+                                            ).find(
+                                              (key) =>
+                                                (
+                                                  Utils.classifyOBJ(
+                                                    Features
+                                                  ) as any
+                                                )[item][key] === item_
+                                            );
+
+                                            setSelectedFeatures({
+                                              ...selectedFeatures,
+                                              [item]: {
+                                                ...selectedFeatures[item],
+                                                [key as string]: e.target
+                                                  .checked
+                                                  ? true
+                                                  : null,
+                                              },
+                                            });
+                                          }}
+                                          id={item_
+                                            .split(" ")
+                                            .join("")
+                                            .toLowerCase()}
+                                          type="checkbox"
+                                          className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                        />
+                                        <label
+                                          htmlFor={item_
+                                            .split(" ")
+                                            .join("")
+                                            .toLowerCase()}
+                                          className="ml-4 text-sm font-medium text-gray-200"
+                                        >
+                                          {item_}
+                                        </label>
+                                      </div>
+                                    );
+                                  })}
+                                </>
+                              )}
+                            </details>
+                          </div>
+                        );
+                      }),
+                    ]}
+                    <div>
+                      <details className="cursor-pointer">
+                        <summary className="font-bold uppercase text-gray-200">
+                          Statistics{" "}
+                          <svg
+                            className="control-icon control-icon-expand"
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24"
+                            width="24"
+                          >
+                            <path d="m12 15.375-6-6 1.4-1.4 4.6 4.6 4.6-4.6 1.4 1.4Z" />
+                          </svg>
+                          <svg
+                            className="control-icon control-icon-close"
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24"
+                            width="24"
+                          >
+                            <path d="M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6Z" />
+                          </svg>
+                        </summary>
+                        {selectedFeatures?.statistics?.length ===
+                        Object.keys(EventsJSON.events).length ? (
+                          <span
+                            onClick={() => {
+                              setSelectedFeatures({
+                                ...selectedFeatures,
+                                statistics: [],
+                              });
+                            }}
+                            className="-mt-2 absolute text-sm text-gray-400 hover:text-gray-200 font-bold cursor-pointer"
+                          >
+                            unselect all
+                          </span>
+                        ) : (
+                          <span
+                            onClick={() => {
+                              setSelectedFeatures({
+                                ...selectedFeatures,
+                                statistics: Object.keys(EventsJSON.events),
+                              });
+                            }}
+                            className="-mt-2 absolute text-sm text-gray-400 hover:text-gray-200 font-bold cursor-pointer"
+                          >
+                            select all
+                          </span>
+                        )}
+                        {selectedFeatures?.statistics !==
+                        EventsJSON.defaultEvents ? (
+                          <span
+                            onClick={() => {
+                              setSelectedFeatures({
+                                ...selectedFeatures,
+                                statistics: EventsJSON.defaultEvents,
+                              });
+                            }}
+                            className="-mt-2 ml-20 absolute text-sm text-gray-400 hover:text-gray-200 font-bold cursor-pointer"
+                          >
+                            important events
+                          </span>
+                        ) : (
+                          ""
+                        )}
+                        <div className="mb-5"></div>
+                        {Object.values(EventsJSON.events).map((item, i) => {
+                          return (
+                            <div
+                              className="flex items-center cursor-pointer pb-1"
+                              key={i}
+                            >
+                              <input
+                                checked={Utils.isCheckedStats(
+                                  selectedFeatures,
+                                  item
+                                )}
+                                onChange={(e) => {
+                                  if (e.target.checked) {
+                                    setSelectedFeatures({
+                                      ...selectedFeatures,
+                                      statistics: [
+                                        ...selectedFeatures.statistics,
+                                        Utils.findSelectedStats(item),
+                                      ],
+                                    });
+                                  } else {
+                                    setSelectedFeatures({
+                                      ...selectedFeatures,
+                                      statistics: Utils.filterStatistics(
+                                        item,
+                                        selectedFeatures
+                                      ),
+                                    });
+                                  }
+                                }}
+                                id={item.split(" ").join("").toLowerCase()}
+                                type="checkbox"
+                                className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                              />
+                              <label
+                                onClick={(e: any) => {
+                                  e.preventDefault();
+                                  e.target.previousElementSibling.click();
+                                }}
+                                htmlFor={item.split(" ").join("").toLowerCase()}
+                                className="ml-4 text-sm font-medium text-gray-200"
+                              >
+                                {item}
+                              </label>
+                            </div>
+                          );
+                        })}
+                      </details>{" "}
+                    </div>
+                  </div>{" "}
+                </div>
+
+                <div className="lg:p-6 md:p-6 sm:p-6 p-3 rounded-b bg-[#2b2d31]">
+                  <div className="flex items-center cursor-pointer mb-4">
+                    <input
+                      onChange={() => {
+                        if (saveToDevice) {
+                          setSaveToDevice(false);
+                          localStorage.setItem(
+                            "defaultOptions_enabled",
+                            "false"
+                          );
+                        } else {
+                          setSaveToDevice(true);
+                          localStorage.setItem(
+                            "defaultOptions_enabled",
+                            "true"
+                          );
+                        }
+                      }}
+                      checked={saveToDevice}
+                      id={"defaultOptions_enabled"}
+                      type="checkbox"
+                      className="w-[21px] h-[21px] text-blue-600 bg-gray-100 rounded  border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      onClick={(e: any) => {
+                        e.preventDefault();
+                        e.target.previousElementSibling.click();
+                      }}
+                      htmlFor={"defaultOptions_enabled"}
+                      className="pl-2 text-white font-mono"
                       style={{
-                        fontFamily:
-                          "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+                        fontSize: "18px",
                       }}
                     >
-                      Customize Options
-                      {oldSelected || saveToDevice ? (
-                        <span
-                          onClick={() => {
-                            setOldSelected(null);
-                            setShowLargeModal(false);
-                            setSelectedFeatures(defaultOptions);
-                            localStorage.removeItem("defaultOptions");
-
-                            toast.success(
-                              "Successfully set options to default",
-                              {
-                                position: "top-right",
-                                autoClose: 3000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: true,
-                                draggable: true,
-                                progress: undefined,
-                              }
-                            );
-                          }}
-                          className="cursor-pointer text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-sm font-sans ml-2 font-bold"
-                        >
-                          Reset to default
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </h3>
+                      Save options to device
+                    </label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => {
+                        if (
+                          JSON.stringify(selectedFeatures) ===
+                          JSON.stringify(defaultOptions)
+                        ) {
+                          return setShowLargeModal(false);
+                        }
+                        setOldSelected(selectedFeatures);
+                        setShowLargeModal(false);
+                        const savetodevice =
+                          localStorage.getItem("defaultOptions_enabled") ===
+                          "true";
+                        if (savetodevice) {
+                          localStorage.setItem(
+                            "defaultOptions",
+                            JSON.stringify(selectedFeatures)
+                          );
+                        }
+                        toast.success(
+                          "Successfully saved options" +
+                            (savetodevice ? " to device" : ""),
+                          {
+                            position: "top-right",
+                            autoClose: 3000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                          }
+                        );
+                      }}
+                      type="button"
+                      className="button-green text-gray-200"
+                    >
+                      Save
+                    </button>
                     <button
                       onClick={() => {
                         setSelectedFeatures(
@@ -2746,859 +3117,451 @@ export default function Upload(): ReactElement {
                         setShowLargeModal(false);
                       }}
                       type="button"
-                      className="text-gray-400 bg-transparent hover:bg-[#2f3136] hover:text-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                      className="button-cancel text-gray-200"
                     >
-                      <svg
-                        className="w-5 h-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+                      Cancel
                     </button>
-                  </div>
-
-                  <div className="overflow-y-auto h-[560px]">
-                    <div className="space-y-6 md:p-5 sm:p-3 lg:p-6 p-1">
-                      {[
-                        [
-                          "user",
-                          "settings",
-                          "connections",
-                          "payments",
-                          "messages",
-                          "guilds",
-                          "bots",
-                          "other",
-                        ].map((item, i) => {
-                          return (
-                            <div key={i}>
-                              <details className="cursor-pointer">
-                                <summary className="font-bold uppercase text-gray-200">
-                                  {item}
-
-                                  <svg
-                                    className="control-icon control-icon-expand"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    height="24"
-                                    width="24"
-                                  >
-                                    <path d="m12 15.375-6-6 1.4-1.4 4.6 4.6 4.6-4.6 1.4 1.4Z" />
-                                  </svg>
-
-                                  <svg
-                                    className="control-icon control-icon-close"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    height="24"
-                                    width="24"
-                                  >
-                                    <path d="M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6Z" />
-                                  </svg>
-                                </summary>
-
-                                {typeof (Utils.classifyOBJ(Features) as any)[
-                                  item
-                                ] === "string" ? (
-                                  <>
-                                    {" "}
-                                    <div
-                                      className="flex items-center cursor-pointer"
-                                      key={i}
-                                    >
-                                      <input
-                                        defaultChecked={selectedFeatures[item]}
-                                        onChange={(e) => {
-                                          setSelectedFeatures({
-                                            ...selectedFeatures,
-                                            [item]: e.target.checked
-                                              ? true
-                                              : null,
-                                          });
-                                        }}
-                                        id={(
-                                          Utils.classifyOBJ(Features) as any
-                                        )[item]
-                                          .split(" ")
-                                          .join("")
-                                          .toLowerCase()}
-                                        type="checkbox"
-                                        className="w-4 h-4 text-blue-600 bg-gray-100 rounded  border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                      />
-                                      <label
-                                        onClick={(e: any) => {
-                                          e.preventDefault();
-                                          e.target.previousElementSibling.click();
-                                        }}
-                                        htmlFor={(
-                                          Utils.classifyOBJ(Features) as any
-                                        )[item]
-                                          .split(" ")
-                                          .join("")
-                                          .toLowerCase()}
-                                        className="ml-4 text-sm font-medium text-gray-200"
-                                      >
-                                        {
-                                          (Utils.classifyOBJ(Features) as any)[
-                                            item
-                                          ]
-                                        }
-                                      </label>
-                                    </div>
-                                  </>
-                                ) : (
-                                  <>
-                                    {Object.values(
-                                      (Utils.classifyOBJ(Features) as any)[item]
-                                    ).map((item_: any, i: number): any => {
-                                      return (
-                                        <div
-                                          className="flex items-center cursor-pointer pb-1"
-                                          key={i}
-                                        >
-                                          <input
-                                            checked={
-                                              Object.values(
-                                                selectedFeatures[item]
-                                              )[i]
-                                                ? true
-                                                : false
-                                            }
-                                            onChange={(e) => {
-                                              const key = Object.keys(
-                                                (
-                                                  Utils.classifyOBJ(
-                                                    Features
-                                                  ) as any
-                                                )[item]
-                                              ).find(
-                                                (key) =>
-                                                  (
-                                                    Utils.classifyOBJ(
-                                                      Features
-                                                    ) as any
-                                                  )[item][key] === item_
-                                              );
-
-                                              setSelectedFeatures({
-                                                ...selectedFeatures,
-                                                [item]: {
-                                                  ...selectedFeatures[item],
-                                                  [key as string]: e.target
-                                                    .checked
-                                                    ? true
-                                                    : null,
-                                                },
-                                              });
-                                            }}
-                                            id={item_
-                                              .split(" ")
-                                              .join("")
-                                              .toLowerCase()}
-                                            type="checkbox"
-                                            className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                          />
-                                          <label
-                                            htmlFor={item_
-                                              .split(" ")
-                                              .join("")
-                                              .toLowerCase()}
-                                            className="ml-4 text-sm font-medium text-gray-200"
-                                          >
-                                            {item_}
-                                          </label>
-                                        </div>
-                                      );
-                                    })}
-                                  </>
-                                )}
-                              </details>
-                            </div>
-                          );
-                        }),
-                      ]}
-                      <div>
-                        <details className="cursor-pointer">
-                          <summary className="font-bold uppercase text-gray-200">
-                            Statistics{" "}
-                            <svg
-                              className="control-icon control-icon-expand"
-                              xmlns="http://www.w3.org/2000/svg"
-                              height="24"
-                              width="24"
-                            >
-                              <path d="m12 15.375-6-6 1.4-1.4 4.6 4.6 4.6-4.6 1.4 1.4Z" />
-                            </svg>
-                            <svg
-                              className="control-icon control-icon-close"
-                              xmlns="http://www.w3.org/2000/svg"
-                              height="24"
-                              width="24"
-                            >
-                              <path d="M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6Z" />
-                            </svg>
-                          </summary>
-                          {selectedFeatures?.statistics?.length ===
-                          Object.keys(EventsJSON.events).length ? (
-                            <span
-                              onClick={() => {
-                                setSelectedFeatures({
-                                  ...selectedFeatures,
-                                  statistics: [],
-                                });
-                              }}
-                              className="-mt-2 absolute text-sm text-gray-400 hover:text-gray-200 font-bold cursor-pointer"
-                            >
-                              unselect all
-                            </span>
-                          ) : (
-                            <span
-                              onClick={() => {
-                                setSelectedFeatures({
-                                  ...selectedFeatures,
-                                  statistics: Object.keys(EventsJSON.events),
-                                });
-                              }}
-                              className="-mt-2 absolute text-sm text-gray-400 hover:text-gray-200 font-bold cursor-pointer"
-                            >
-                              select all
-                            </span>
-                          )}
-                          {selectedFeatures?.statistics !==
-                          EventsJSON.defaultEvents ? (
-                            <span
-                              onClick={() => {
-                                setSelectedFeatures({
-                                  ...selectedFeatures,
-                                  statistics: EventsJSON.defaultEvents,
-                                });
-                              }}
-                              className="-mt-2 ml-20 absolute text-sm text-gray-400 hover:text-gray-200 font-bold cursor-pointer"
-                            >
-                              default
-                            </span>
-                          ) : (
-                            ""
-                          )}
-                          <div className="mb-5"></div>
-                          {Object.values(EventsJSON.events).map((item, i) => {
-                            return (
-                              <div
-                                className="flex items-center cursor-pointer pb-1"
-                                key={i}
-                              >
-                                <input
-                                  checked={Utils.isCheckedStats(
-                                    selectedFeatures,
-                                    item
-                                  )}
-                                  onChange={(e) => {
-                                    if (e.target.checked) {
-                                      setSelectedFeatures({
-                                        ...selectedFeatures,
-                                        statistics: [
-                                          ...selectedFeatures.statistics,
-                                          Utils.findSelectedStats(item),
-                                        ],
-                                      });
-                                    } else {
-                                      setSelectedFeatures({
-                                        ...selectedFeatures,
-                                        statistics: Utils.filterStatistics(
-                                          item,
-                                          selectedFeatures
-                                        ),
-                                      });
-                                    }
-                                  }}
-                                  id={item.split(" ").join("").toLowerCase()}
-                                  type="checkbox"
-                                  className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                />
-                                <label
-                                  onClick={(e: any) => {
-                                    e.preventDefault();
-                                    e.target.previousElementSibling.click();
-                                  }}
-                                  htmlFor={item
-                                    .split(" ")
-                                    .join("")
-                                    .toLowerCase()}
-                                  className="ml-4 text-sm font-medium text-gray-200"
-                                >
-                                  {item}
-                                </label>
-                              </div>
-                            );
-                          })}
-                        </details>{" "}
-                      </div>
-                    </div>{" "}
-                  </div>
-
-                  <div className="lg:p-6 md:p-6 sm:p-6 p-3 rounded-b bg-[#2b2d31]">
-                    <div className="flex items-center cursor-pointer mb-4">
-                      <input
-                        onChange={() => {
-                          if (saveToDevice) {
-                            setSaveToDevice(false);
-                            localStorage.setItem(
-                              "defaultOptions_enabled",
-                              "false"
-                            );
-                          } else {
-                            setSaveToDevice(true);
-                            localStorage.setItem(
-                              "defaultOptions_enabled",
-                              "true"
-                            );
-                          }
-                        }}
-                        checked={saveToDevice}
-                        id={"defaultOptions_enabled"}
-                        type="checkbox"
-                        className="w-[21px] h-[21px] text-blue-600 bg-gray-100 rounded  border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      />
-                      <label
-                        onClick={(e: any) => {
-                          e.preventDefault();
-                          e.target.previousElementSibling.click();
-                        }}
-                        htmlFor={"defaultOptions_enabled"}
-                        className="pl-2 text-white font-mono"
-                        style={{
-                          fontSize: "18px",
-                        }}
-                      >
-                        Save options to device
-                      </label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <button
-                        onClick={() => {
-                          if (
-                            JSON.stringify(selectedFeatures) ===
-                            JSON.stringify(defaultOptions)
-                          ) {
-                            return setShowLargeModal(false);
-                          }
-                          setOldSelected(selectedFeatures);
-                          setShowLargeModal(false);
-                          const savetodevice =
-                            localStorage.getItem("defaultOptions_enabled") ===
-                            "true";
-                          if (savetodevice) {
-                            localStorage.setItem(
-                              "defaultOptions",
-                              JSON.stringify(selectedFeatures)
-                            );
-                          }
-                          toast.success(
-                            "Successfully saved options" +
-                              (savetodevice ? " to device" : ""),
-                            {
-                              position: "top-right",
-                              autoClose: 3000,
-                              hideProgressBar: false,
-                              closeOnClick: true,
-                              pauseOnHover: true,
-                              draggable: true,
-                              progress: undefined,
-                            }
-                          );
-                        }}
-                        type="button"
-                        className="button-green text-gray-200"
-                      >
-                        Save
-                      </button>
-                      <button
-                        onClick={() => {
-                          setSelectedFeatures(
-                            oldSelected ? oldSelected : defaultOptions
-                          );
-                          setShowLargeModal(false);
-                        }}
-                        type="button"
-                        className="button-cancel text-gray-200"
-                      >
-                        Cancel
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </Dialog>
-        </Transition>
-        <div
-          className="flex items-center lg:justify-center  h-2/5 mt-8"
-          id="file"
-        >
-          <div className="flex justify-center items-center w-full lg:w-1/2 px-6 lg:px-0">
-            {dragging && !error && !loading ? (
-              <label
-                id="dropzone-label"
-                htmlFor="dropzone-file"
-                className="flex flex-col justify-center items-center w-full lg:h-64 md:h-64 h-52 lg:landscape:h-64 md:landscape:h-64 landscape:h-44 lg:landscape:mt-0 md:landscape:mt-0 landscape:mt-4 rounded-lg border-4 border-dashed cursor-pointer border-gray-400 opacity-75 shadow-lg transition-all duration-200"
-              >
-                <div className="flex flex-col justify-center items-center pt-5 pb-6">
-                  <svg
-                    className="mb-3 w-10 h-10 text-gray-400 rotate-180"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                    />
-                  </svg>
-                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                    Release the mouse to drop the package file
-                  </p>
-                </div>
-                <input
-                  type="file"
-                  className="hidden"
-                  accept=".zip, .json"
-                  onChange={(e) => {
-                    onUpload(e.target.files);
-                  }}
-                />
-              </label>
-            ) : (
-              <>
-                {" "}
-                {!dragging && !error && !loading ? (
-                  <label
-                    id="dropzone-label"
-                    htmlFor="dropzone-file"
-                    className="animate__animated animate__headShake flex flex-col justify-center items-center w-full lg:h-64 md:h-64 h-52 lg:landscape:h-64 md:landscape:h-64 landscape:h-44 lg:landscape:mt-0 md:landscape:mt-0 landscape:mt-4 rounded-lg border-4 border-dashed cursor-pointer dark:border-gray-200 dark:hover:border-gray-400 dark:hover:opacity-75 dark:hover:shadow-lg dark:hover:transition-all duration-200"
-                  >
-                    <div className="flex flex-col justify-center items-center pt-5 pb-6">
-                      <svg
-                        className="mb-3 w-10 h-10 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                        />
-                      </svg>
-                      <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                        <span className="font-semibold">Click to upload</span>{" "}
-                        or drag and drop
-                      </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        Upload your discord package or JSON here
-                      </p>
+          </div>
+        </Dialog>
+      </Transition>
+      <div
+        className="flex items-center lg:justify-center  h-2/5 mt-8"
+        id="file"
+      >
+        <div className="flex justify-center items-center w-full lg:w-1/2 px-6 lg:px-0">
+          {dragging && !error && !loading ? (
+            <label
+              id="dropzone-label"
+              htmlFor="dropzone-file"
+              className="flex flex-col justify-center items-center w-full lg:h-64 md:h-64 h-52 lg:landscape:h-64 md:landscape:h-64 landscape:h-44 lg:landscape:mt-0 md:landscape:mt-0 landscape:mt-4 rounded-lg border-4 border-dashed cursor-pointer border-gray-400 opacity-75 shadow-lg transition-all duration-200"
+            >
+              <div className="flex flex-col justify-center items-center pt-5 pb-6">
+                <svg
+                  className="mb-3 w-10 h-10 text-gray-400 rotate-180"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  />
+                </svg>
+                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                  Release the mouse to drop the package file
+                </p>
+              </div>
+              <input
+                type="file"
+                className="hidden"
+                accept=".zip, .json"
+                onChange={(e) => {
+                  onUpload(e.target.files);
+                }}
+              />
+            </label>
+          ) : (
+            <>
+              {" "}
+              {!dragging && !error && !loading ? (
+                <label
+                  id="dropzone-label"
+                  htmlFor="dropzone-file"
+                  className="animate__animated animate__headShake flex flex-col justify-center items-center w-full lg:h-64 md:h-64 h-52 lg:landscape:h-64 md:landscape:h-64 landscape:h-44 lg:landscape:mt-0 md:landscape:mt-0 landscape:mt-4 rounded-lg border-4 border-dashed cursor-pointer dark:border-gray-200 dark:hover:border-gray-400 dark:hover:opacity-75 dark:hover:shadow-lg dark:hover:transition-all duration-200"
+                >
+                  <div className="flex flex-col justify-center items-center pt-5 pb-6">
+                    <svg
+                      className="mb-3 w-10 h-10 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                      />
+                    </svg>
+                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                      <span className="font-semibold">Click to upload</span> or
+                      drag and drop
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Upload your Discord package or extracted JSON here
+                    </p>
 
-                      <button
-                        onClick={() => {
-                          setShowLargeModal(true);
-                        }}
-                        className="mt-4 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-xs font-medium px-3 py-2 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
-                      >
-                        More Options
-                      </button>
-                    </div>
-                    <input
-                      id="dropzone-file"
-                      type="file"
-                      className="hidden"
-                      accept=".zip, .json"
-                      onChange={(e) => {
-                        onUpload(e.target.files);
+                    <button
+                      onClick={() => {
+                        setShowLargeModal(true);
                       }}
-                    />
-                  </label>
-                ) : (
-                  <>
-                    {error && !loading ? (
-                      <label
-                        id="dropzone-label"
-                        htmlFor="dropzone-file"
-                        className="flex flex-col justify-center items-center w-full lg:h-64 md:h-64 h-52 lg:landscape:h-64 md:landscape:h-64 landscape:h-44 lg:landscape:mt-0 md:landscape:mt-0 landscape:mt-4 rounded-lg border-4 border-dashed cursor-pointer dark:border-gray-200 dark:hover:border-gray-400 dark:hover:opacity-75 dark:hover:shadow-lg dark:hover:transition-all duration-200"
-                      >
-                        <div className="flex flex-col justify-center items-center pt-5 pb-6">
-                          <svg
-                            className="mb-3 fill-gray-400"
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="48"
-                            width="48"
-                          >
-                            <path d="M24.1 26.5q-.65 0-1.075-.425Q22.6 25.65 22.6 25v-9.45q0-.65.425-1.075.425-.425 1.075-.425.65 0 1.075.425.425.425.425 1.075V25q0 .65-.425 1.075-.425.425-1.075.425Zm-.1 7.4q-.6 0-1.05-.45-.45-.45-.45-1.05 0-.6.45-1.05.45-.45 1.05-.45.6 0 1.05.45.45.45.45 1.05 0 .6-.45 1.05-.45.45-1.05.45Zm8.2 4.9q-.75.4-1.35-.025-.6-.425-.6-1.325 0-.4.275-.825.275-.425.675-.625 3.4-1.65 5.4-4.95 2-3.3 2-7.2 0-2.7-.9-5.025t-2.95-4.175l-1.5-1.35v4.35q0 .65-.425 1.075-.425.425-1.075.425-.65 0-1.075-.425-.425-.425-.425-1.075V9.5q0-.65.425-1.075Q31.1 8 31.75 8h8.15q.65 0 1.075.425.425.425.425 1.075 0 .65-.425 1.075Q40.55 11 39.9 11h-4.7l.75.7q3.3 2.65 4.475 5.9 1.175 3.25 1.175 6.25 0 4.85-2.575 8.875T32.2 38.8ZM8.1 40q-.65 0-1.075-.425Q6.6 39.15 6.6 38.5q0-.65.425-1.075Q7.45 37 8.1 37h4.65l-.7-.7q-3.3-2.6-4.475-5.875Q6.4 27.15 6.4 24.2q0-4.9 2.575-8.9t6.875-6.05q.75-.35 1.325.025t.575 1.275q0 .4-.275.825-.275.425-.675.625-3.4 1.7-5.4 5-2 3.3-2 7.2 0 2.6.875 4.925.875 2.325 2.975 4.225l1.5 1.35v-4.35q0-.65.425-1.075.425-.425 1.075-.425.65 0 1.075.425.425.425.425 1.075v8.15q0 .65-.425 1.075Q16.9 40 16.25 40Z" />
-                          </svg>
-                          <p className="max-w-md mb-2 text-sm text-gray-500 dark:text-gray-400 p-2">
-                            {error}
-                          </p>
-                          <a
-                            href="https://discord.gg/W2zPcgG9F5 "
-                            target="_blank"
-                            rel="noreferrer"
-                            className="lg:text-xl md:text-xl hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold mx-1"
-                          >
-                            Join the Discord Server for Help
-                          </a>
-                        </div>
-                        <input
-                          id="dropzone-file"
-                          type="file"
-                          className="hidden"
-                          accept=".zip, .json"
-                          onChange={(e) => onUpload(e.target.files)}
-                        />
-                      </label>
-                    ) : (
-                      <>
-                        {loading ? (
-                          <>
-                            <label
-                              onClick={(e) => {
-                                function hasClass(
-                                  el: Element,
-                                  cl: string
-                                ): boolean {
-                                  return el.classList
-                                    ? el.classList.contains(cl)
-                                    : !!el.className &&
-                                        !!el.className.match(
-                                          new RegExp("(?: |^)" + cl + "(?: |$)")
-                                        );
-                                }
-                                e.preventDefault();
-                                const element =
-                                  document.getElementById("dropzone-label");
-                                if (element) {
-                                  const check = hasClass(
-                                    element,
-                                    "animate__animated"
+                      className="mt-4 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-xs font-medium px-3 py-2 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                    >
+                      More Options
+                    </button>
+                  </div>
+                  <input
+                    id="dropzone-file"
+                    type="file"
+                    className="hidden"
+                    accept=".zip, .json"
+                    onChange={(e) => {
+                      onUpload(e.target.files);
+                    }}
+                  />
+                </label>
+              ) : (
+                <>
+                  {error && !loading ? (
+                    <label
+                      id="dropzone-label"
+                      htmlFor="dropzone-file"
+                      className="flex flex-col justify-center items-center w-full lg:h-64 md:h-64 h-52 lg:landscape:h-64 md:landscape:h-64 landscape:h-44 lg:landscape:mt-0 md:landscape:mt-0 landscape:mt-4 rounded-lg border-4 border-dashed cursor-pointer dark:border-gray-200 dark:hover:border-gray-400 dark:hover:opacity-75 dark:hover:shadow-lg dark:hover:transition-all duration-200"
+                    >
+                      <div className="flex flex-col justify-center items-center pt-5 pb-6">
+                        <svg
+                          className="mb-3 fill-gray-400"
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="48"
+                          width="48"
+                        >
+                          <path d="M24.1 26.5q-.65 0-1.075-.425Q22.6 25.65 22.6 25v-9.45q0-.65.425-1.075.425-.425 1.075-.425.65 0 1.075.425.425.425.425 1.075V25q0 .65-.425 1.075-.425.425-1.075.425Zm-.1 7.4q-.6 0-1.05-.45-.45-.45-.45-1.05 0-.6.45-1.05.45-.45 1.05-.45.6 0 1.05.45.45.45.45 1.05 0 .6-.45 1.05-.45.45-1.05.45Zm8.2 4.9q-.75.4-1.35-.025-.6-.425-.6-1.325 0-.4.275-.825.275-.425.675-.625 3.4-1.65 5.4-4.95 2-3.3 2-7.2 0-2.7-.9-5.025t-2.95-4.175l-1.5-1.35v4.35q0 .65-.425 1.075-.425.425-1.075.425-.65 0-1.075-.425-.425-.425-.425-1.075V9.5q0-.65.425-1.075Q31.1 8 31.75 8h8.15q.65 0 1.075.425.425.425.425 1.075 0 .65-.425 1.075Q40.55 11 39.9 11h-4.7l.75.7q3.3 2.65 4.475 5.9 1.175 3.25 1.175 6.25 0 4.85-2.575 8.875T32.2 38.8ZM8.1 40q-.65 0-1.075-.425Q6.6 39.15 6.6 38.5q0-.65.425-1.075Q7.45 37 8.1 37h4.65l-.7-.7q-3.3-2.6-4.475-5.875Q6.4 27.15 6.4 24.2q0-4.9 2.575-8.9t6.875-6.05q.75-.35 1.325.025t.575 1.275q0 .4-.275.825-.275.425-.675.625-3.4 1.7-5.4 5-2 3.3-2 7.2 0 2.6.875 4.925.875 2.325 2.975 4.225l1.5 1.35v-4.35q0-.65.425-1.075.425-.425 1.075-.425.65 0 1.075.425.425.425.425 1.075v8.15q0 .65-.425 1.075Q16.9 40 16.25 40Z" />
+                        </svg>
+                        <p className="max-w-md mb-2 text-sm text-gray-500 dark:text-gray-400 p-2">
+                          {error}
+                        </p>
+                        <a
+                          href="https://discord.gg/W2zPcgG9F5 "
+                          target="_blank"
+                          rel="noreferrer"
+                          className="lg:text-xl md:text-xl hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold mx-1"
+                        >
+                          Join the Discord Server for Help
+                        </a>
+                      </div>
+                      <input
+                        id="dropzone-file"
+                        type="file"
+                        className="hidden"
+                        accept=".zip, .json"
+                        onChange={(e) => onUpload(e.target.files)}
+                      />
+                    </label>
+                  ) : (
+                    <>
+                      {loading ? (
+                        <>
+                          <label
+                            onClick={(e) => {
+                              function hasClass(
+                                el: Element,
+                                cl: string
+                              ): boolean {
+                                return el.classList
+                                  ? el.classList.contains(cl)
+                                  : !!el.className &&
+                                      !!el.className.match(
+                                        new RegExp("(?: |^)" + cl + "(?: |$)")
+                                      );
+                              }
+                              e.preventDefault();
+                              const element =
+                                document.getElementById("dropzone-label");
+                              if (element) {
+                                const check = hasClass(
+                                  element,
+                                  "animate__animated"
+                                );
+
+                                if (check) {
+                                  element.classList.remove(
+                                    "animate__animated",
+                                    "animate__flash",
+                                    "animate__headShake"
                                   );
 
-                                  if (check) {
-                                    element.classList.remove(
-                                      "animate__animated",
-                                      "animate__flash",
-                                      "animate__headShake"
-                                    );
-
-                                    setTimeout(() => {
-                                      element.classList.add(
-                                        "animate__animated",
-                                        "animate__flash",
-                                        "animate__headShake"
-                                      );
-                                    }, 100);
-                                  } else {
+                                  setTimeout(() => {
                                     element.classList.add(
                                       "animate__animated",
                                       "animate__flash",
                                       "animate__headShake"
                                     );
-                                  }
-                                  if (!cancel) setCancel(true);
+                                  }, 100);
+                                } else {
+                                  element.classList.add(
+                                    "animate__animated",
+                                    "animate__flash",
+                                    "animate__headShake"
+                                  );
                                 }
-                              }}
-                              id="dropzone-label"
-                              htmlFor="dropzone-file"
-                              className="flex flex-col justify-center items-center w-full lg:h-64 md:h-64 h-52 lg:landscape:h-64 md:landscape:h-64 landscape:h-44 lg:landscape:mt-0 md:landscape:mt-0 landscape:mt-4 rounded-lg border-4 border-dashed cursor-pointer dark:border-gray-200 dark:hover:border-gray-400 dark:hover:opacity-75 dark:hover:shadow-lg dark:hover:transition-all duration-200"
-                            >
-                              <div className="flex flex-col justify-center items-center pt-5 pb-6">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  height="48"
-                                  width="48"
-                                  className="mb-3 fill-gray-400 animate-spin"
-                                >
-                                  <path d="M24.1 40.55q-6.6 0-11.4-4.625Q7.9 31.3 7.6 24.75v-2.2l-3.7 3.7-2.4-2.45 7.95-7.95 7.95 7.95-2.4 2.45-3.7-3.75v2.2q.2 5 3.9 8.6 3.7 3.6 8.9 3.6 1.5 0 2.85-.275t2.45-.775l2.6 2.6q-1.95 1.1-3.9 1.6t-4 .5Zm14.55-8.45-7.95-7.95 2.4-2.45 3.7 3.65v-2q-.25-4.95-3.95-8.55-3.7-3.6-8.85-3.6-1.55 0-2.9.3-1.35.3-2.4.7l-2.6-2.6q1.9-1.1 3.85-1.575Q21.9 7.55 24 7.55q6.55 0 11.35 4.625t5.1 11.175v2.1l3.7-3.7 2.45 2.4Z" />
-                                </svg>
-                                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                  {typeof loading === "string"
-                                    ? loading.split("|||")[0]
-                                    : ""}
-                                </p>{" "}
-                                <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">
-                                  {typeof loading === "string"
-                                    ? loading.split("|||")[1]
-                                    : ""}
-                                </p>
-                              </div>
-                              <div className="w-[200px] m-1">
-                                <Line
-                                  percent={percent}
-                                  strokeWidth={4}
-                                  strokeColor="#D3D3D3"
-                                />
-                              </div>
-                            </label>
-
-                            <div className="py-6 flex flex-col justify-center sm:py-12 fixed z-50">
-                              <section>
-                                <Transition
-                                  show={cancel}
-                                  appear={true}
-                                  enter="transition-opacity delay-500 duration-1000"
-                                  enterFrom="opacity-0"
-                                  enterTo="opacity-100"
-                                  leave="transition-opacity duration-150"
-                                  leaveFrom="opacity-100"
-                                  leaveTo="opacity-0"
-                                >
-                                  <div className="animate-fadeIn max-w-screen-lg mx-auto fixed bg-[#2b2d31] inset-x-5 p-5 bottom-10 rounded-lg drop-shadow-2xl flex gap-4 flex-wrap md:flex-nowrap text-center md:text-left items-center justify-center md:justify-between">
-                                    <div
-                                      className="w-full flex align-center text-gray-200"
-                                      style={{
-                                        fontFamily: "Product Sans",
-                                      }}
-                                    >
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="24"
-                                        width="24"
-                                        fill="#fff"
-                                        className="mr-2"
-                                      >
-                                        <path d="M12 12.5ZM1 21 12 2l11 19Zm10-6h2v-5h-2Zm1 3q.425 0 .713-.288Q13 17.425 13 17t-.287-.712Q12.425 16 12 16t-.712.288Q11 16.575 11 17t.288.712Q11.575 18 12 18Zm-7.55 1h15.1L12 6Z" />
-                                      </svg>
-                                      Are you sure you want to cancel your
-                                      package upload?
-                                    </div>
-                                    <div className="flex gap-4 items-center flex-shrink-0">
-                                      <button
-                                        onClick={() => {
-                                          window.location.reload();
-                                        }}
-                                        className="button-green text-gray-200"
-                                      >
-                                        Confirm
-                                      </button>
-                                      <button
-                                        onClick={() => {
-                                          setCancel(false);
-                                        }}
-                                        className="button-cancel text-gray-200"
-                                      >
-                                        Cancel
-                                      </button>
-                                    </div>
-                                  </div>
-                                </Transition>
-                              </section>
+                                if (!cancel) setCancel(true);
+                              }
+                            }}
+                            id="dropzone-label"
+                            htmlFor="dropzone-file"
+                            className="flex flex-col justify-center items-center w-full lg:h-64 md:h-64 h-52 lg:landscape:h-64 md:landscape:h-64 landscape:h-44 lg:landscape:mt-0 md:landscape:mt-0 landscape:mt-4 rounded-lg border-4 border-dashed cursor-pointer dark:border-gray-200 dark:hover:border-gray-400 dark:hover:opacity-75 dark:hover:shadow-lg dark:hover:transition-all duration-200"
+                          >
+                            <div className="flex flex-col justify-center items-center pt-5 pb-6">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="48"
+                                width="48"
+                                className="mb-3 fill-gray-400 animate-spin"
+                              >
+                                <path d="M24.1 40.55q-6.6 0-11.4-4.625Q7.9 31.3 7.6 24.75v-2.2l-3.7 3.7-2.4-2.45 7.95-7.95 7.95 7.95-2.4 2.45-3.7-3.75v2.2q.2 5 3.9 8.6 3.7 3.6 8.9 3.6 1.5 0 2.85-.275t2.45-.775l2.6 2.6q-1.95 1.1-3.9 1.6t-4 .5Zm14.55-8.45-7.95-7.95 2.4-2.45 3.7 3.65v-2q-.25-4.95-3.95-8.55-3.7-3.6-8.85-3.6-1.55 0-2.9.3-1.35.3-2.4.7l-2.6-2.6q1.9-1.1 3.85-1.575Q21.9 7.55 24 7.55q6.55 0 11.35 4.625t5.1 11.175v2.1l3.7-3.7 2.45 2.4Z" />
+                              </svg>
+                              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                {typeof loading === "string"
+                                  ? loading.split("|||")[0]
+                                  : ""}
+                              </p>{" "}
+                              <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">
+                                {typeof loading === "string"
+                                  ? loading.split("|||")[1]
+                                  : ""}
+                              </p>
                             </div>
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </>
-                    )}
-                  </>
-                )}
-              </>
-            )}
-          </div>
-        </div>
-        <div className="lg:landscape:flex md:landscape:flex landscape:hidden flex flex-col animate__delay-1s animate__animated animate__fadeIn">
-          <span className="flex justify-center text-slate-900 dark:text-gray-200 pointer-events-none select-none">
-            -- or --
-          </span>
-          <div className=" lg:text-xl md:text-xl text-sm mt-1  flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
-            <Link href="/demo">
-              <a
-                className="button-green text-gray-200  my-2 flex items-center"
-                onClick={() => {
-                  enqueueSnackbar("Loading demo, please wait...", {
-                    persist: true,
-                    preventDuplicate: true,
-                    anchorOrigin: {
-                      vertical: "bottom",
-                      horizontal: "center",
-                    },
-                  });
-                }}
-              >
-                View a Demo
-              </a>
-            </Link>
-          </div>
+                            <div className="w-[200px] m-1">
+                              <Line
+                                percent={percent}
+                                strokeWidth={4}
+                                strokeColor="#D3D3D3"
+                              />
+                            </div>
+                          </label>
+
+                          <div className="py-6 flex flex-col justify-center sm:py-12 fixed z-50">
+                            <section>
+                              <Transition
+                                show={cancel}
+                                appear={true}
+                                enter="transition-opacity delay-500 duration-1000"
+                                enterFrom="opacity-0"
+                                enterTo="opacity-100"
+                                leave="transition-opacity duration-150"
+                                leaveFrom="opacity-100"
+                                leaveTo="opacity-0"
+                              >
+                                <div className="animate-fadeIn max-w-screen-lg mx-auto fixed bg-[#2b2d31] inset-x-5 p-5 bottom-10 rounded-lg drop-shadow-2xl flex gap-4 flex-wrap md:flex-nowrap text-center md:text-left items-center justify-center md:justify-between">
+                                  <div
+                                    className="w-full flex align-center text-gray-200"
+                                    style={{
+                                      fontFamily: "Product Sans",
+                                    }}
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      height="24"
+                                      width="24"
+                                      fill="#fff"
+                                      className="mr-2"
+                                    >
+                                      <path d="M12 12.5ZM1 21 12 2l11 19Zm10-6h2v-5h-2Zm1 3q.425 0 .713-.288Q13 17.425 13 17t-.287-.712Q12.425 16 12 16t-.712.288Q11 16.575 11 17t.288.712Q11.575 18 12 18Zm-7.55 1h15.1L12 6Z" />
+                                    </svg>
+                                    Are you sure you want to cancel your package
+                                    upload?
+                                  </div>
+                                  <div className="flex gap-4 items-center flex-shrink-0">
+                                    <button
+                                      onClick={() => {
+                                        window.location.reload();
+                                      }}
+                                      className="button-green text-gray-200"
+                                    >
+                                      Confirm
+                                    </button>
+                                    <button
+                                      onClick={() => {
+                                        setCancel(false);
+                                      }}
+                                      className="button-cancel text-gray-200"
+                                    >
+                                      Cancel
+                                    </button>
+                                  </div>
+                                </div>
+                              </Transition>
+                            </section>
+                          </div>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </>
+                  )}
+                </>
+              )}
+            </>
+          )}
         </div>
       </div>
-      <div className="h-screen mt-10 relative">
-        <h1
-          className="text-2xl text-black dark:text-white flex items-center justify-center uppercase"
-          style={{
-            fontFamily:
-              "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
-          }}
-        >
-          So, how does it work?
-        </h1>
-
-        <div className="mb-4">
-          <div className="flex flex-col items-center justify-center ">
-            <p className="text-black dark:text-white font-mono max-w-2xl">
-              Discord Package allows you to view your data package just by
-              uploading it. Once you upload your data package, our algorythm
-              will work hard on calculating and rendering your statistics.
-            </p>
-          </div>
+      <div className="lg:landscape:flex md:landscape:flex landscape:hidden flex flex-col animate__delay-1s animate__animated animate__fadeIn">
+        <span className="flex justify-center text-slate-900 dark:text-gray-200 pointer-events-none select-none">
+          -- or --
+        </span>
+        <div className=" lg:text-xl md:text-xl text-sm mt-1  flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
+          <Link href="/demo">
+            <a
+              className="button-green text-gray-200  my-2 flex items-center"
+              onClick={() => {
+                enqueueSnackbar("Loading demo, please wait...", {
+                  persist: true,
+                  preventDuplicate: true,
+                  anchorOrigin: {
+                    vertical: "bottom",
+                    horizontal: "center",
+                  },
+                });
+              }}
+            >
+              View a Demo
+            </a>
+          </Link>
         </div>
-        <h1
-          className="mt-4 text-2xl text-black dark:text-white flex items-center justify-center uppercase"
-          style={{
-            fontFamily:
-              "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
-          }}
-        >
-          Feeling Stuck?
-        </h1>
-        <div className="flex flex-col items-center justify-center ">
-          <p className="text-black dark:text-white font-mono max-w-2xl mb-2">
-            Watch this video to get started
-          </p>
-          <div>
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube-nocookie.com/embed/ByNY60Nty4A"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
-
-          <span className="mb-1 flex justify-center text-slate-900 dark:text-gray-200 pointer-events-none select-none">
-            -- or --
-          </span>
-          <div className="mb-2 lg:text-xl md:text-xl text-sm mt-1  flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
-            <a
-              className="button-green text-gray-200 my-2 flex items-center "
-              href="/discord"
-              target={"_blank"}
-            >
-              Join the Discord
-            </a>
-          </div>
-        </div>
-        <div
-          id="made_by"
-          className="flex items-center justify-center mb-4 mt-[2%]"
-        >
-          <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] text-slate-800 dark:text-white font-bold flex items-center rounded-md">
-            <a
-              href="/discord"
-              target="_blank"
-              rel="noreferrer"
-              className="mr-1"
-            >
-              <Tippy
-                content={"Join our Discord Server"}
-                animation="scale"
-                className="shadow-xl"
-              >
-                <svg
-                  className="w-6 h-6 dark:filter dark:grayscale dark:invert cursor-pointer"
-                  width="71"
-                  height="55"
-                  viewBox="0 0 71 55"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                >
-                  <g>
-                    <path
-                      d="M60.1045 4.8978C55.5792 2.8214 50.7265 1.2916 45.6527 0.41542C45.5603 0.39851 45.468 0.440769 45.4204 0.525289C44.7963 1.6353 44.105 3.0834 43.6209 4.2216C38.1637 3.4046 32.7345 3.4046 27.3892 4.2216C26.905 3.0581 26.1886 1.6353 25.5617 0.525289C25.5141 0.443589 25.4218 0.40133 25.3294 0.41542C20.2584 1.2888 15.4057 2.8186 10.8776 4.8978C10.8384 4.9147 10.8048 4.9429 10.7825 4.9795C1.57795 18.7309 -0.943561 32.1443 0.293408 45.3914C0.299005 45.4562 0.335386 45.5182 0.385761 45.5576C6.45866 50.0174 12.3413 52.7249 18.1147 54.5195C18.2071 54.5477 18.305 54.5139 18.3638 54.4378C19.7295 52.5728 20.9469 50.6063 21.9907 48.5383C22.0523 48.4172 21.9935 48.2735 21.8676 48.2256C19.9366 47.4931 18.0979 46.6 16.3292 45.5858C16.1893 45.5041 16.1781 45.304 16.3068 45.2082C16.679 44.9293 17.0513 44.6391 17.4067 44.3461C17.471 44.2926 17.5606 44.2813 17.6362 44.3151C29.2558 49.6202 41.8354 49.6202 53.3179 44.3151C53.3935 44.2785 53.4831 44.2898 53.5502 44.3433C53.9057 44.6363 54.2779 44.9293 54.6529 45.2082C54.7816 45.304 54.7732 45.5041 54.6333 45.5858C52.8646 46.6197 51.0259 47.4931 49.0921 48.2228C48.9662 48.2707 48.9102 48.4172 48.9718 48.5383C50.038 50.6034 51.2554 52.5699 52.5959 54.435C52.6519 54.5139 52.7526 54.5477 52.845 54.5195C58.6464 52.7249 64.529 50.0174 70.6019 45.5576C70.6551 45.5182 70.6887 45.459 70.6943 45.3942C72.1747 30.0791 68.2147 16.7757 60.1968 4.9823C60.1772 4.9429 60.1437 4.9147 60.1045 4.8978ZM23.7259 37.3253C20.2276 37.3253 17.3451 34.1136 17.3451 30.1693C17.3451 26.225 20.1717 23.0133 23.7259 23.0133C27.308 23.0133 30.1626 26.2532 30.1066 30.1693C30.1066 34.1136 27.28 37.3253 23.7259 37.3253ZM47.3178 37.3253C43.8196 37.3253 40.9371 34.1136 40.9371 30.1693C40.9371 26.225 43.7636 23.0133 47.3178 23.0133C50.9 23.0133 53.7545 26.2532 53.6986 30.1693C53.6986 34.1136 50.9 37.3253 47.3178 37.3253Z"
-                      fill="#000"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0">
-                      <rect width="71" height="55" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </Tippy>
-            </a>
-            |{" "}
-            <u className="mx-2">
-              <a
-                className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                href="/privacy"
-                target="_blank"
-                rel="noreferrer"
-              >
-                PRIVACY
-              </a>
-            </u>{" "}
-            | Made by{" "}
-            <a
-              className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1"
-              href="https://github.com/peterhanania"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Peter
-            </a>
-            using
-            <Tippy content={"Next.js"} animation="scale" className="shadow-xl">
-              <svg
-                className="h-6 w-6 rounded-lg ml-2 mr-1 dark:filter dark:grayscale dark:invert"
-                viewBox="0 0 256 256"
-                version="1.1"
-                preserveAspectRatio="xMidYMid"
-              >
-                <g>
-                  <path
-                    d="M119.616813,0.0688905149 C119.066276,0.118932037 117.314565,0.294077364 115.738025,0.419181169 C79.3775171,3.69690087 45.3192571,23.3131775 23.7481916,53.4631946 C11.7364614,70.2271045 4.05395894,89.2428829 1.15112414,109.384595 C0.12512219,116.415429 0,118.492153 0,128.025062 C0,137.557972 0.12512219,139.634696 1.15112414,146.665529 C8.10791789,194.730411 42.3163245,235.11392 88.7116325,250.076335 C97.0197458,252.753556 105.778299,254.580072 115.738025,255.680985 C119.616813,256.106338 136.383187,256.106338 140.261975,255.680985 C157.453763,253.779407 172.017986,249.525878 186.382014,242.194795 C188.584164,241.068861 189.00958,240.768612 188.709286,240.518404 C188.509091,240.36828 179.124927,227.782837 167.86393,212.570214 L147.393939,184.922273 L121.743891,146.965779 C107.630108,126.098464 96.0187683,109.034305 95.9186706,109.034305 C95.8185728,109.009284 95.7184751,125.873277 95.6684262,146.465363 C95.5933529,182.52028 95.5683284,183.971484 95.1178886,184.82219 C94.4672532,186.048207 93.9667644,186.548623 92.915738,187.099079 C92.114956,187.499411 91.4142717,187.574474 87.6355816,187.574474 L83.3063539,187.574474 L82.1552297,186.848872 C81.4044966,186.373477 80.8539589,185.747958 80.4785924,185.022356 L79.9530792,183.896422 L80.0031281,133.729796 L80.0782014,83.5381493 L80.8539589,82.5623397 C81.25435,82.0369037 82.1051808,81.3613431 82.7057674,81.0360732 C83.7317693,80.535658 84.1321603,80.4856165 88.4613881,80.4856165 C93.5663734,80.4856165 94.4172043,80.6857826 95.7434995,82.1369867 C96.1188661,82.5373189 110.007429,103.454675 126.623656,128.650581 C143.239883,153.846488 165.962072,188.250034 177.122972,205.139048 L197.392766,235.839522 L198.418768,235.163961 C207.502639,229.259062 217.112023,220.852086 224.719453,212.09482 C240.910264,193.504394 251.345455,170.835585 254.848876,146.665529 C255.874878,139.634696 256,137.557972 256,128.025062 C256,118.492153 255.874878,116.415429 254.848876,109.384595 C247.892082,61.3197135 213.683675,20.9362052 167.288368,5.97379012 C159.105376,3.32158945 150.396872,1.49507389 140.637341,0.394160408 C138.234995,0.143952798 121.693842,-0.131275573 119.616813,0.0688905149 L119.616813,0.0688905149 Z M172.017986,77.4831252 C173.219159,78.0836234 174.195112,79.2345784 174.545455,80.435575 C174.74565,81.0861148 174.795699,94.9976579 174.74565,126.348671 L174.670577,171.336 L166.73783,159.17591 L158.780059,147.01582 L158.780059,114.313685 C158.780059,93.1711423 158.880156,81.2862808 159.030303,80.7108033 C159.430694,79.3096407 160.306549,78.2087272 161.507722,77.5581875 C162.533724,77.0327515 162.909091,76.98271 166.837928,76.98271 C170.541544,76.98271 171.19218,77.0327515 172.017986,77.4831252 Z"
-                    fill="#000000"
-                  ></path>
-                </g>
-              </svg>
-            </Tippy>
+      </div>
+      <div
+        id="made_by"
+        className="group lg:landscape:flex md:landscape:flex landscape:hidden animate__animated animate__fadeIn animate__delay-1s flex justify-center items-center absolute bottom-8 right-0 left-0"
+      >
+        <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] text-slate-800 dark:text-white font-bold flex items-center rounded-md">
+          <a href="/discord" target="_blank" rel="noreferrer" className="mr-1">
             <Tippy
-              content={"Tailwind CSS"}
+              zIndex={999999999999999}
+              content={"Join our Discord Server"}
               animation="scale"
               className="shadow-xl"
             >
               <svg
-                viewBox="0 0 24 24"
+                className="w-6 h-6 dark:filter dark:grayscale dark:invert cursor-pointer"
+                width="71"
+                height="55"
+                viewBox="0 0 71 55"
+                xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                className="h-6 w-6 rounded-lg"
               >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M6.333 9.933C7.088 6.911 8.978 5.4 12 5.4c4.533 0 5.1 3.4 7.367 3.967 1.511.377 2.833-.189 3.966-1.7-.755 3.022-2.644 4.533-5.666 4.533-4.534 0-5.1-3.4-7.367-3.967-1.511-.378-2.833.189-3.967 1.7zm-5.666 6.8C1.422 13.711 3.31 12.2 6.333 12.2c4.534 0 5.1 3.4 7.367 3.967 1.51.377 2.833-.19 3.967-1.7C16.91 17.489 15.022 19 12 19c-4.533 0-5.1-3.4-7.367-3.967-1.511-.378-2.833.189-3.966 1.7z"
-                  fill="url(#prefix__paint0_linear)"
-                ></path>
+                <g>
+                  <path
+                    d="M60.1045 4.8978C55.5792 2.8214 50.7265 1.2916 45.6527 0.41542C45.5603 0.39851 45.468 0.440769 45.4204 0.525289C44.7963 1.6353 44.105 3.0834 43.6209 4.2216C38.1637 3.4046 32.7345 3.4046 27.3892 4.2216C26.905 3.0581 26.1886 1.6353 25.5617 0.525289C25.5141 0.443589 25.4218 0.40133 25.3294 0.41542C20.2584 1.2888 15.4057 2.8186 10.8776 4.8978C10.8384 4.9147 10.8048 4.9429 10.7825 4.9795C1.57795 18.7309 -0.943561 32.1443 0.293408 45.3914C0.299005 45.4562 0.335386 45.5182 0.385761 45.5576C6.45866 50.0174 12.3413 52.7249 18.1147 54.5195C18.2071 54.5477 18.305 54.5139 18.3638 54.4378C19.7295 52.5728 20.9469 50.6063 21.9907 48.5383C22.0523 48.4172 21.9935 48.2735 21.8676 48.2256C19.9366 47.4931 18.0979 46.6 16.3292 45.5858C16.1893 45.5041 16.1781 45.304 16.3068 45.2082C16.679 44.9293 17.0513 44.6391 17.4067 44.3461C17.471 44.2926 17.5606 44.2813 17.6362 44.3151C29.2558 49.6202 41.8354 49.6202 53.3179 44.3151C53.3935 44.2785 53.4831 44.2898 53.5502 44.3433C53.9057 44.6363 54.2779 44.9293 54.6529 45.2082C54.7816 45.304 54.7732 45.5041 54.6333 45.5858C52.8646 46.6197 51.0259 47.4931 49.0921 48.2228C48.9662 48.2707 48.9102 48.4172 48.9718 48.5383C50.038 50.6034 51.2554 52.5699 52.5959 54.435C52.6519 54.5139 52.7526 54.5477 52.845 54.5195C58.6464 52.7249 64.529 50.0174 70.6019 45.5576C70.6551 45.5182 70.6887 45.459 70.6943 45.3942C72.1747 30.0791 68.2147 16.7757 60.1968 4.9823C60.1772 4.9429 60.1437 4.9147 60.1045 4.8978ZM23.7259 37.3253C20.2276 37.3253 17.3451 34.1136 17.3451 30.1693C17.3451 26.225 20.1717 23.0133 23.7259 23.0133C27.308 23.0133 30.1626 26.2532 30.1066 30.1693C30.1066 34.1136 27.28 37.3253 23.7259 37.3253ZM47.3178 37.3253C43.8196 37.3253 40.9371 34.1136 40.9371 30.1693C40.9371 26.225 43.7636 23.0133 47.3178 23.0133C50.9 23.0133 53.7545 26.2532 53.6986 30.1693C53.6986 34.1136 50.9 37.3253 47.3178 37.3253Z"
+                    fill="#000"
+                  />
+                </g>
                 <defs>
-                  <linearGradient
-                    id="prefix__paint0_linear"
-                    x1=".667"
-                    y1="-6.689"
-                    x2="23.333"
-                    y2="31.089"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#2383AE"></stop>
-                    <stop offset="1" stopColor="#6DD7B9"></stop>
-                  </linearGradient>
+                  <clipPath id="clip0">
+                    <rect width="71" height="55" fill="white" />
+                  </clipPath>
                 </defs>
               </svg>
             </Tippy>
-          </div>
+          </a>
+          |{" "}
+          <Tippy
+            zIndex={999999999999999}
+            content={"View the privacy policy"}
+            animation="scale"
+            className="shadow-xl"
+          >
+            <a
+              href="/privacy"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1 uppercase"
+            >
+              privacy
+            </a>
+          </Tippy>
+          | Made by{" "}
+          <a
+            className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1"
+            href="https://github.com/peterhanania"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Peter
+          </a>
+          using
+          <Tippy
+            zIndex={999999999999999}
+            content={"Next.js"}
+            animation="scale"
+            className="shadow-xl"
+          >
+            <svg
+              className="h-6 w-6 rounded-lg ml-2 mr-1 dark:filter dark:grayscale dark:invert"
+              viewBox="0 0 256 256"
+              version="1.1"
+              preserveAspectRatio="xMidYMid"
+            >
+              <g>
+                <path
+                  d="M119.616813,0.0688905149 C119.066276,0.118932037 117.314565,0.294077364 115.738025,0.419181169 C79.3775171,3.69690087 45.3192571,23.3131775 23.7481916,53.4631946 C11.7364614,70.2271045 4.05395894,89.2428829 1.15112414,109.384595 C0.12512219,116.415429 0,118.492153 0,128.025062 C0,137.557972 0.12512219,139.634696 1.15112414,146.665529 C8.10791789,194.730411 42.3163245,235.11392 88.7116325,250.076335 C97.0197458,252.753556 105.778299,254.580072 115.738025,255.680985 C119.616813,256.106338 136.383187,256.106338 140.261975,255.680985 C157.453763,253.779407 172.017986,249.525878 186.382014,242.194795 C188.584164,241.068861 189.00958,240.768612 188.709286,240.518404 C188.509091,240.36828 179.124927,227.782837 167.86393,212.570214 L147.393939,184.922273 L121.743891,146.965779 C107.630108,126.098464 96.0187683,109.034305 95.9186706,109.034305 C95.8185728,109.009284 95.7184751,125.873277 95.6684262,146.465363 C95.5933529,182.52028 95.5683284,183.971484 95.1178886,184.82219 C94.4672532,186.048207 93.9667644,186.548623 92.915738,187.099079 C92.114956,187.499411 91.4142717,187.574474 87.6355816,187.574474 L83.3063539,187.574474 L82.1552297,186.848872 C81.4044966,186.373477 80.8539589,185.747958 80.4785924,185.022356 L79.9530792,183.896422 L80.0031281,133.729796 L80.0782014,83.5381493 L80.8539589,82.5623397 C81.25435,82.0369037 82.1051808,81.3613431 82.7057674,81.0360732 C83.7317693,80.535658 84.1321603,80.4856165 88.4613881,80.4856165 C93.5663734,80.4856165 94.4172043,80.6857826 95.7434995,82.1369867 C96.1188661,82.5373189 110.007429,103.454675 126.623656,128.650581 C143.239883,153.846488 165.962072,188.250034 177.122972,205.139048 L197.392766,235.839522 L198.418768,235.163961 C207.502639,229.259062 217.112023,220.852086 224.719453,212.09482 C240.910264,193.504394 251.345455,170.835585 254.848876,146.665529 C255.874878,139.634696 256,137.557972 256,128.025062 C256,118.492153 255.874878,116.415429 254.848876,109.384595 C247.892082,61.3197135 213.683675,20.9362052 167.288368,5.97379012 C159.105376,3.32158945 150.396872,1.49507389 140.637341,0.394160408 C138.234995,0.143952798 121.693842,-0.131275573 119.616813,0.0688905149 L119.616813,0.0688905149 Z M172.017986,77.4831252 C173.219159,78.0836234 174.195112,79.2345784 174.545455,80.435575 C174.74565,81.0861148 174.795699,94.9976579 174.74565,126.348671 L174.670577,171.336 L166.73783,159.17591 L158.780059,147.01582 L158.780059,114.313685 C158.780059,93.1711423 158.880156,81.2862808 159.030303,80.7108033 C159.430694,79.3096407 160.306549,78.2087272 161.507722,77.5581875 C162.533724,77.0327515 162.909091,76.98271 166.837928,76.98271 C170.541544,76.98271 171.19218,77.0327515 172.017986,77.4831252 Z"
+                  fill="#000000"
+                ></path>
+              </g>
+            </svg>
+          </Tippy>
+          <Tippy
+            zIndex={999999999999999}
+            content={"Tailwind CSS"}
+            animation="scale"
+            className="shadow-xl"
+          >
+            <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6 rounded-lg">
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M6.333 9.933C7.088 6.911 8.978 5.4 12 5.4c4.533 0 5.1 3.4 7.367 3.967 1.511.377 2.833-.189 3.966-1.7-.755 3.022-2.644 4.533-5.666 4.533-4.534 0-5.1-3.4-7.367-3.967-1.511-.378-2.833.189-3.967 1.7zm-5.666 6.8C1.422 13.711 3.31 12.2 6.333 12.2c4.534 0 5.1 3.4 7.367 3.967 1.51.377 2.833-.19 3.967-1.7C16.91 17.489 15.022 19 12 19c-4.533 0-5.1-3.4-7.367-3.967-1.511-.378-2.833.189-3.966 1.7z"
+                fill="url(#prefix__paint0_linear)"
+              ></path>
+              <defs>
+                <linearGradient
+                  id="prefix__paint0_linear"
+                  x1=".667"
+                  y1="-6.689"
+                  x2="23.333"
+                  y2="31.089"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop stopColor="#2383AE"></stop>
+                  <stop offset="1" stopColor="#6DD7B9"></stop>
+                </linearGradient>
+              </defs>
+            </svg>
+          </Tippy>
+          <Tippy
+            zIndex={999999999999999}
+            content={"Close"}
+            animation="scale"
+            className="shadow-xl"
+          >
+            <div className="ml-3 justify-center items-center">
+              <div
+                className="hover:bg-[#232323] p-1 hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden"
+                onClick={() => {
+                  const madeBy = document.getElementById("made_by");
+                  if (madeBy) {
+                    madeBy.remove();
+                  }
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24"
+                  width="24"
+                  className="fill-white cursor-pointer"
+                >
+                  <path d="M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6Z" />
+                </svg>
+              </div>
+            </div>
+          </Tippy>
         </div>
       </div>
     </>

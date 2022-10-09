@@ -9,6 +9,7 @@ export default function Header() {
   const [help, setHelp] = useState(false);
   const [settings, setSettings] = useState(false);
   const [info, setInfo] = useState(false);
+  const [tutorial, setTutorial] = useState(false);
 
   function classNames(...classes: any): any {
     return classes.filter(Boolean).join(" ");
@@ -31,6 +32,152 @@ export default function Header() {
 
   return (
     <>
+      <Transition
+        show={tutorial}
+        enter="transition-opacity delay-200 duration-200"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-150"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+        as={Fragment}
+      >
+        <Dialog
+          onClose={() => {
+            setTutorial(false);
+          }}
+          className="fixed z-[999999] inset-0 overflow-y-auto"
+        >
+          <div className="flex items-center justify-center min-h-screen">
+            <Dialog.Overlay className="fixed inset-0  bg-black/30" />
+            <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
+              <div className="relative shadow-lg bg-[#36393f] ">
+                <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
+                  <h3
+                    className="text-xl font-medium text-white uppercase"
+                    style={{
+                      fontFamily:
+                        "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+                    }}
+                  >
+                    tutorials
+                  </h3>
+                  <button
+                    onClick={() => {
+                      setTutorial(false);
+                    }}
+                    type="button"
+                    className="text-gray-400 bg-transparent hover:bg-[#2f3136] hover:text-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div className="overflow-y-auto h-[560px] px-5 py-2">
+                  <code className="dark:text-white text-black font-bold">
+                    🎇 If you made a video about DP, make sure to join the
+                    discord and let us know! 🎊
+                  </code>
+                  <div className="mt-2">
+                    <span className="dark:text-white text-black font-bold text-xl">
+                      1. Tutorial by{" "}
+                      <a
+                        href="https://youtube.com/c/laaw_tutorials"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1 "
+                      >
+                        <b>Law Tutorials</b>
+                      </a>
+                    </span>
+                    <div className="py-3">
+                      <iframe
+                        width="560"
+                        height="315"
+                        src="https://www.youtube-nocookie.com/embed/ByNY60Nty4A"
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="dark:text-white text-black font-bold text-xl">
+                      2. Tutorial by{" "}
+                      <a
+                        href="https://www.youtube.com/c/MrMothDevs"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1 "
+                      >
+                        <b>Mr Moth Devs</b>
+                      </a>
+                    </span>
+                    <div className="py-3">
+                      <iframe
+                        width="560"
+                        height="315"
+                        src="https://www.youtube-nocookie.com/embed/m5BSKDi-4gk"
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="dark:text-white text-black font-bold text-xl">
+                      3. Tutorial by{" "}
+                      <a
+                        href="https://www.youtube.com/c/Spaceonyoutube"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1 "
+                      >
+                        <b>Space</b>
+                      </a>
+                    </span>
+                    <div className="py-3">
+                      <iframe
+                        width="560"
+                        height="315"
+                        src="https://www.youtube-nocookie.com/embed/hYHMaieRPGI"
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
+                  <button
+                    onClick={() => {
+                      setTutorial(false);
+                    }}
+                    type="button"
+                    className="button-green text-gray-200"
+                  >
+                    Got It
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
       <Transition
         show={help}
         enter="transition-opacity delay-200 duration-200"
@@ -266,7 +413,7 @@ export default function Header() {
                       </a>
                     </u>
                     <br />
-                    Discord Package Explorer is a new tool made by{" "}
+                    Discord Package Explorer and Viewer is a new tool made by{" "}
                     <a
                       className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
                       href="https://github.com/peterhanania"
@@ -616,7 +763,7 @@ export default function Header() {
           >
             Open Sourced
           </a>{" "}
-          Discord Package Explorer; Read your data with ease!
+          Discord Package Explorer and Viewer; Read your data with ease!
         </p>
         <div className="portrait:hidden lg:hidden landscape:flex md:landscape:hidden lg:text-xl md:text-xl text-sm mt-1 animate__delay-1s animate__animated animate__fadeIn flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
           <Link href="/demo" target="_blank" rel="noreferrer" type="button">
@@ -626,7 +773,12 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex justify-center items-center mt-2">
-          <Tippy content={"Help"} animation="scale" className="shadow-xl ">
+          <Tippy
+            zIndex={999999999999999}
+            content={"Help"}
+            animation="scale"
+            className="shadow-xl "
+          >
             <svg
               onClick={() => setHelp(true)}
               xmlns="http://www.w3.org/2000/svg"
@@ -637,7 +789,12 @@ export default function Header() {
               <path d="M20.125 29.625q.667 0 1.167-.479t.5-1.188q0-.708-.48-1.187-.479-.479-1.187-.479-.708 0-1.187.479-.48.479-.48 1.187 0 .667.48 1.167.479.5 1.187.5Zm-1.458-6.083h2.541q0-1.125.292-1.98.292-.854 1.708-2.062 1.209-1.042 1.75-2.062.542-1.021.542-2.271 0-2.209-1.479-3.5-1.479-1.292-3.771-1.292-2.125 0-3.625 1.063-1.5 1.062-2.167 2.812l2.292.875q.375-1.042 1.229-1.729.854-.688 2.146-.688 1.417 0 2.208.75.792.75.792 1.834 0 .916-.521 1.687t-1.437 1.563q-1.417 1.208-1.959 2.208-.541 1-.541 2.792ZM20 36.375q-3.375 0-6.375-1.292-3-1.291-5.208-3.521-2.209-2.229-3.5-5.208Q3.625 23.375 3.625 20q0-3.417 1.292-6.396 1.291-2.979 3.521-5.208 2.229-2.229 5.208-3.5T20 3.625q3.417 0 6.396 1.292 2.979 1.291 5.208 3.5 2.229 2.208 3.5 5.187T36.375 20q0 3.375-1.292 6.375-1.291 3-3.5 5.208-2.208 2.209-5.187 3.5-2.979 1.292-6.396 1.292Z" />
             </svg>
           </Tippy>
-          <Tippy content={"Settings"} animation="scale" className="shadow-xl">
+          <Tippy
+            zIndex={999999999999999}
+            content={"Settings"}
+            animation="scale"
+            className="shadow-xl"
+          >
             <svg
               onClick={() => setSettings(true)}
               xmlns="http://www.w3.org/2000/svg"
@@ -648,7 +805,12 @@ export default function Header() {
               <path d="m16.083 36.375-.791-5.167q-.375-.125-1.167-.583-.792-.458-1.708-1.042l-4.834 2.125-4-6.958L8 21.5q-.083-.333-.104-.708-.021-.375-.021-.792 0-.333.021-.75T8 18.417l-4.417-3.209 4-6.916 4.875 2.166Q13 10 13.771 9.542q.771-.459 1.521-.709l.791-5.25h7.834l.791 5.209q.709.25 1.48.687.77.438 1.354.979l4.916-2.166 3.959 6.916-4.459 3.209q.042.375.063.771.021.395.021.812 0 .417-.021.812-.021.396-.063.73l4.417 3.208-3.958 6.958-4.875-2.166q-.542.458-1.271.896-.729.437-1.563.77l-.791 5.167Zm3.875-10.958q2.25 0 3.834-1.584Q25.375 22.25 25.375 20t-1.583-3.833q-1.584-1.584-3.834-1.584t-3.833 1.584Q14.542 17.75 14.542 20t1.583 3.833q1.583 1.584 3.833 1.584Z" />
             </svg>
           </Tippy>
-          <Tippy content={"About"} animation="scale" className="shadow-xl">
+          <Tippy
+            zIndex={999999999999999}
+            content={"About"}
+            animation="scale"
+            className="shadow-xl"
+          >
             <svg
               onClick={() => setInfo(true)}
               xmlns="http://www.w3.org/2000/svg"
@@ -657,6 +819,22 @@ export default function Header() {
               className="dark:fill-white ml-2 cursor-pointer animate__animated animate__fadeIn animate__delay-1s opacity-90 hover:opacity-100"
             >
               <path d="M18.792 28.208h2.625v-9.833h-2.625ZM20 15.292q.583 0 1-.396.417-.396.417-1.021 0-.625-.396-1.021-.396-.396-1.021-.396-.625 0-1.021.396-.396.396-.396 1.021 0 .583.417 1 .417.417 1 .417Zm0 21.083q-3.375 0-6.375-1.292-3-1.291-5.208-3.521-2.209-2.229-3.5-5.208Q3.625 23.375 3.625 20q0-3.417 1.292-6.396 1.291-2.979 3.521-5.208 2.229-2.229 5.208-3.5T20 3.625q3.417 0 6.396 1.292 2.979 1.291 5.208 3.5 2.229 2.208 3.5 5.187T36.375 20q0 3.375-1.292 6.375-1.291 3-3.5 5.208-2.208 2.209-5.187 3.5-2.979 1.292-6.396 1.292Z" />
+            </svg>
+          </Tippy>
+          <Tippy
+            zIndex={999999999999999}
+            content={"Tutorials"}
+            animation="scale"
+            className="shadow-xl"
+          >
+            <svg
+              onClick={() => setTutorial(true)}
+              xmlns="http://www.w3.org/2000/svg"
+              height="40"
+              width="40"
+              className="dark:fill-white ml-2 cursor-pointer animate__animated animate__fadeIn animate__delay-1s opacity-90 hover:opacity-100"
+            >
+              <path d="m16.167 27.125 11.125-7.167-11.125-7.208ZM6.125 33.333q-1.125 0-1.958-.833-.834-.833-.834-1.958V9.458q0-1.125.834-1.958.833-.833 1.958-.833h27.75q1.125 0 1.958.833.834.833.834 1.958v21.084q0 1.125-.834 1.958-.833.833-1.958.833Z" />
             </svg>
           </Tippy>
         </div>

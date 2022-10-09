@@ -521,3 +521,32 @@ input[type="search"]:focus {
     display: block !important;
   }
 }
+
+.walkthrough {
+  background: var(--bg-color) !important;
+  color: var(--text-color) !important;
+}
+
+.walkthrough button {
+  background: #5865f2 !important;
+  border-color: #5865f2 !important;
+  color: rgb(255, 255, 255)!important;
+  text-shadow: none !important;
+  white-space: nowrap!important;
+  padding: 0px 14px!important;
+  border-width: 2px!important;
+  border-style: solid!important;
+  border-color: transparent!important;
+  border-radius: 3px!important;
+  cursor: pointer!important;
+  transition: background-color 167ms ease 0s, border-color, color!important;
+}
+
+.driver-popover-tip {
+  border: 5px solid var(--bg-color) !important;
+  border-color: transparent transparent  var(--bg-color) !important;
+}
+
+.driver-popover-description {
+  color: var(--text-color) !important;
+}

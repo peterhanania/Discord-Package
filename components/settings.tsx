@@ -241,7 +241,12 @@ export default function Settings(): ReactElement {
           </div>
         </Dialog>
       </Transition>
-      <Tippy content={"Settings"} animation="scale" className="shadow-xl">
+      <Tippy
+        zIndex={999999999999999}
+        content={"Settings"}
+        animation="scale"
+        className="shadow-xl"
+      >
         <svg
           onClick={() => setSettings(true)}
           xmlns="http://www.w3.org/2000/svg"

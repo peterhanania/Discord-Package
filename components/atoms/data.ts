@@ -70,7 +70,7 @@ export const selectedFeaturesAtom = atom<any>(
     "other.oldestMessages": true,
     "other.topEmojis": true,
     "other.topCustomEmojis": true,
-    statistics: EventsJSON.defaultEvents,
+    statistics: Object.keys(EventsJSON.events),
   })
 );
 

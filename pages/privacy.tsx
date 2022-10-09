@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>📦 Discord Package Explorer | Privacy 📦</title>
+        <title>📦 Discord Package Explorer and Viewer | Privacy 📦</title>
       </Head>
       <div className="h-screen mt-10 relative px-20 text-black dark:text-white py-10">
         <h1
@@ -46,10 +46,10 @@ export default function Home() {
                 browser, on your device, not anywhere else.
               </p>
               <p>
-                <b>Data We Collect Automatically:</b> When you interact with us through
-                the Services, we receive and store certain information such as
-                an Session statistics; Approximate geolocation; Browser and
-                device information using google analytics. We may store such
+                <b>Data We Collect Automatically:</b> When you interact with us
+                through the Services, we receive and store certain information
+                such as an Session statistics; Approximate geolocation; Browser
+                and device information using google analytics. We may store such
                 information or such information may be included in databases
                 owned and maintained by affiliates, agents or service providers.
                 The Services may use such information and pool it with other
@@ -74,13 +74,14 @@ export default function Home() {
               </p>
               <p className="py-1 font-bold">Use of information</p>
               <p>
-                We only use the data collected by google analytics to track our growth. Your personal package data is not stored anywhere so;
+                We only use the data collected by google analytics to track our
+                growth. Your personal package data is not stored anywhere so;
               </p>
               <ul className="list-disc">
                 <li>
-                  Analysing and improving our site, e.g. collecting
-                  information about how you use our Services to optimize the
-                  design and placement of certain features;
+                  Analysing and improving our site, e.g. collecting information
+                  about how you use our Services to optimize the design and
+                  placement of certain features;
                 </li>
                 <li>Tracking site growth.</li>
               </ul>
@@ -90,7 +91,6 @@ export default function Home() {
                 information because we simply don't have any information of you.
                 <ul className="font-bold list-disc">
                   <li>
-
                     We do not store any form of data as we don't have any third
                     party services.
                   </li>
@@ -99,7 +99,6 @@ export default function Home() {
                     on the Github repository.
                   </li>
                   <li>
-     
                     We do not have a backend server. Everything runs on the
                     frontend.
                   </li>
@@ -112,7 +111,7 @@ export default function Home() {
                   </li>
                 </ul>
               </p>
-            
+
               <p className="py-2 font-bold">Third parties</p>
               <ul className="list-disc">
                 <li>Google Analytics</li>

@@ -10,5 +10,11 @@
     "id": "alert_2",
     "url": "/discord",
     "button": "Give Feedback"
+  },
+  {
+    "title": "We just updated our site, tell us what you think!",
+    "id": "alert_3",
+    "url": "/discord",
+    "button": "Join the Discord"
   }
 ]
