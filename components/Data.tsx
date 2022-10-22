@@ -11552,7 +11552,7 @@ export default function Data({ data, demo }: any): ReactElement {
                             className="lg:inline-flex md:inline-flex lg:text-xl md:text-xl text-sm"
                           >
                             - {data?.dataFile ? "They " : "You "} send ~
-                            {data?.statistics[t].day} Average Messages messages
+                            {data?.statistics[t].day} average messages
                             per day, {data?.statistics[t].week} messages per
                             week, {data?.statistics[t].month} messages per
                             month, and {data?.statistics[t].year} messages per
