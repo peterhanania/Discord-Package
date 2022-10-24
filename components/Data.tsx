@@ -1864,7 +1864,7 @@ export default function Data({ data, demo }: any): ReactElement {
             <div>
               <div className="lg:flex md:flex items-center text-gray-900 dark:text-white">
                 <p className="text-xl md:text-2xl lg:text-3xl">
-                  {data?.user?.username}#{data?.user?.discriminator}
+                  {data?.user?.username}#{"0".repeat(4-data?.user?.discriminator.toString().length) + data?.user?.discriminator.toString()}
                 </p>
                 <div className="flex items-center">
                   {data?.messages?.characterCount &&
