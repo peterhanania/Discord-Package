@@ -8,9 +8,10 @@
 
 <div align=left>
 
-<a>[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/peterhanania/Discord-Package)</a>
-<a>
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/peterhanania/discord-package)</a>
+[![Deploy to Vercel](https://binbashbanana.github.io/deploy-buttons/buttons/remade/vercel.svg)](https://vercel.com/new/clone?repository-url=https://github.com/peterhanania/Discord-Package)
+[![Deploy to Heroku](https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg)](https://heroku.com/deploy/?template=https://github.com/peterhanania/discord-package)
+[![Deploy to Netlify](https://binbashbanana.github.io/deploy-buttons/buttons/remade/netlify.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/peterhanania/discord-package)
+ 
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/9b15f9e3-a39a-4b15-a3c8-1e73226006c2/deploy-status)](https://app.netlify.com/sites/discordpackage/deploys)
 
