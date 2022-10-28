@@ -11538,6 +11538,9 @@ export default function Data({ data, demo }: any): ReactElement {
                                   .replace(
                                     /{you}/g,
                                     data?.dataFile ? "They" : "You"
+                                  ).replace(
+                                    /{you've}/g,
+                                    data?.dataFile ? "They've" : "You've"
                                   ),
                               }}
                             />
