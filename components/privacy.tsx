@@ -42,17 +42,17 @@ export default function Privacy(): ReactElement {
 									</svg>
 									<div>
 										Discord Package <b className="px-1">does not</b> store any information about you. We do not use any third party services other
-										than Google Analytics. This website is directly hosted from the
+										than Google Analytics. This website is directly hosted from the{' '}
 										<a
-											className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1"
+											className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold"
 											href="https://github.com/peterhanania/discord-package"
 											target="_blank"
 											rel="noreferrer">
 											Github Repository
-										</a>
+										</a>{' '}
 										using{' '}
 										<a
-											className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1"
+											className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold"
 											href="https://Netlify.com"
 											target="_blank"
 											rel="noreferrer">
@@ -60,19 +60,19 @@ export default function Privacy(): ReactElement {
 										</a>
 										. If you do not trust this website the{' '}
 										<a
-											className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1"
+											className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold"
 											href="https://github.com/peterhanania/discord-package"
 											target="_blank"
 											rel="noreferrer">
-											Source Code
+											source code
 										</a>{' '}
 										is available for self hosting.{' '}
 										<a
-											className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1"
+											className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold"
 											target="_blank"
 											rel="noreferrer"
 											href="/privacy">
-											Read more by Clicking Here.
+											Read more by clicking here.
 										</a>
 									</div>
 								</div>
