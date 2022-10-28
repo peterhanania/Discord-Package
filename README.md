@@ -152,7 +152,7 @@ This Repo is directly hosted via Netlify to discordpackage.com
 
 ### Notice
 
-This project **does not** store any information, and does not have any third party services other than google analytics. If you would like to self host it yourself, you could follow the following instructions.
+This project **does not** store any information, and does not have any third party services other than Google Analytics. If you would like to self host it yourself, you could follow the following instructions.
 
 ### Production Deployment
 
