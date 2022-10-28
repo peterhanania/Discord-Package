@@ -66,18 +66,18 @@ export default function Privacy(): ReactElement {
 											rel="noreferrer">
 											source code
 										</a>{' '}
-										is available for self hosting.{' '}
-										<a
-											className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold"
-											target="_blank"
-											rel="noreferrer"
-											href="/privacy">
-											Read more by clicking here.
-										</a>
+										is available for analysis or self hosting.
 									</div>
 								</div>
 							</div>
-							<div className="flex gap-4 items-center flex-shrink-0">
+							<div className="flex gap-2 items-center flex-shrink-0">
+								<button
+									onClick={() => {
+										window.open(window.location.origin + '/privacy', '_self');
+									}}
+									className="px-4 py-1 text-white rounded-md focus:outline-none font-bold hover:text-[#B2B2B2]">
+									Learn more
+								</button>
 								<button
 									onClick={() => {
 										setTimeout(() => {
