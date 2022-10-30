@@ -5,12 +5,13 @@ import "./styles/skeleton.scss";
 import "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import Loading from "../components/Loading";
 import { useRouter } from "next/router";
 import { AppProps } from "next/app";
 import { SnackbarProvider } from "notistack";
-import * as ga from '../lib/ga'
+import * as ga from "../lib/ga";
+import ErrorBoundary from "components/error/errorBoundary";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = React.useState(true);
@@ -70,11 +71,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     };
   }, [router.events]);
 
-  return loading ? (
-    <SnackbarProvider>
-      <Loading skeleton={false} />
-    </SnackbarProvider>
-  ) : (
-    <Component {...pageProps} />
+  return (
+    <ErrorBoundary>
+      {loading ? (
+        <SnackbarProvider>
+          <Loading skeleton={false} />
+        </SnackbarProvider>
+      ) : (
+        <Component {...pageProps} />
+      )}
+    </ErrorBoundary>
   );
 }

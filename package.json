@@ -33,7 +33,6 @@
     "random-words": "^1.2.0",
     "rc-progress": "^3.4.0",
     "react": "18.2.0",
-    "react-countup": "^6.3.0",
     "react-dom": "18.2.0",
     "react-particles": "^2.3.3",
     "react-toastify": "^9.0.8",

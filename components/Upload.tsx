@@ -975,14 +975,17 @@ export default function Upload(): ReactElement {
                   }
                 });
 
-                const favoriteWords = Utils.getFavoriteWords(words);
+                const favoriteWords = Utils.getFavoriteWords(words).slice(
+                  0,
+                  100
+                );
                 const curseWords = Utils.getCursedWords(
                   words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
                 );
-                const topCursed = curseWords;
-                const links = Utils.getTopLinks(words);
-                const topLinks = links;
-                const discordLink = Utils.getDiscordLinks(words);
+                const topCursed = curseWords.slice(0, 1000);
+                const links = Utils.getTopLinks(words).slice(0, 1000);
+                const topLinks = links.slice(0, 1000);
+                const discordLink = Utils.getDiscordLinks(words).slice(0, 1000);
                 const topDiscordLinks = discordLink;
 
                 return {
@@ -1133,14 +1136,17 @@ export default function Upload(): ReactElement {
                     topCustomEmojis[index].count += 1;
                   }
                 });
-                const favoriteWords = Utils.getFavoriteWords(words);
+                const favoriteWords = Utils.getFavoriteWords(words).slice(
+                  0,
+                  100
+                );
                 const curseWords = Utils.getCursedWords(
                   words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
                 );
-                const topCursed = curseWords;
+                const topCursed = curseWords.slice(0, 1000);
                 const links = Utils.getTopLinks(words);
-                const topLinks = links;
-                const discordLink = Utils.getDiscordLinks(words);
+                const topLinks = links.slice(0, 1000);
+                const discordLink = Utils.getDiscordLinks(words).slice(0, 1000);
                 const topDiscordLinks = discordLink;
 
                 return {
@@ -1285,14 +1291,17 @@ export default function Upload(): ReactElement {
                   }
                 });
 
-                const favoriteWords = Utils.getFavoriteWords(words);
+                const favoriteWords = Utils.getFavoriteWords(words).slice(
+                  0,
+                  100
+                );
                 const curseWords = Utils.getCursedWords(
                   words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
                 );
-                const topCursed = curseWords;
+                const topCursed = curseWords.slice(0, 1000);
                 const links = Utils.getTopLinks(words);
-                const topLinks = links;
-                const discordLink = Utils.getDiscordLinks(words);
+                const topLinks = links.slice(0, 1000);
+                const discordLink = Utils.getDiscordLinks(words).slice(0, 1000);
                 const topDiscordLinks = discordLink;
 
                 return {
@@ -1514,14 +1523,14 @@ export default function Upload(): ReactElement {
                 }
               });
 
-              const favoriteWords = Utils.getFavoriteWords(words);
+              const favoriteWords = Utils.getFavoriteWords(words).slice(0, 100);
               const curseWords = Utils.getCursedWords(
                 words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
               );
-              const topCursed = curseWords;
+              const topCursed = curseWords.slice(0, 1000);
               const links = Utils.getTopLinks(words);
-              const topLinks = links;
-              const discordLink = Utils.getDiscordLinks(words);
+              const topLinks = links.slice(0, 1000);
+              const discordLink = Utils.getDiscordLinks(words).slice(0, 1000);
               const topDiscordLinks = discordLink;
 
               return {
@@ -2250,7 +2259,10 @@ export default function Upload(): ReactElement {
             } else await delay(100);
             setPercent(74);
 
-            data.messages.favoriteWords = Utils.getFavoriteWords(words);
+            data.messages.favoriteWords = Utils.getFavoriteWords(words).slice(
+              0,
+              100
+            );
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
@@ -2273,7 +2285,7 @@ export default function Upload(): ReactElement {
             const curseWords = Utils.getCursedWords(
               words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
             );
-            data.messages.topCursed = curseWords;
+            data.messages.topCursed = curseWords.slice(0, 1000);
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
@@ -2294,7 +2306,7 @@ export default function Upload(): ReactElement {
             } else await delay(100);
 
             const links = Utils.getTopLinks(words);
-            data.messages.topLinks = links;
+            data.messages.topLinks = links.slice(0, 1000);
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
@@ -2314,7 +2326,7 @@ export default function Upload(): ReactElement {
               await delay(700);
             } else await delay(100);
 
-            const discordLink = Utils.getDiscordLinks(words);
+            const discordLink = Utils.getDiscordLinks(words).slice(0, 1000);
             data.messages.topDiscordLinks = discordLink;
             if (isDebug)
               console.log(
@@ -3434,7 +3446,7 @@ export default function Upload(): ReactElement {
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] text-slate-800 dark:text-white font-bold flex items-center rounded-md">
           <a href="/discord" target="_blank" rel="noreferrer" className="mr-1">
             <Tippy
-              zIndex={999999999999999}
+              zIndex={"99999999999999"}
               content={"Join our Discord Server"}
               animation="scale"
               className="shadow-xl"
@@ -3463,7 +3475,7 @@ export default function Upload(): ReactElement {
           </a>
           |{" "}
           <Tippy
-            zIndex={999999999999999}
+            zIndex={"99999999999999"}
             content={"View the privacy policy"}
             animation="scale"
             className="shadow-xl"
@@ -3488,7 +3500,7 @@ export default function Upload(): ReactElement {
           </a>
           using
           <Tippy
-            zIndex={999999999999999}
+            zIndex={"99999999999999"}
             content={"Next.js"}
             animation="scale"
             className="shadow-xl"
@@ -3508,7 +3520,7 @@ export default function Upload(): ReactElement {
             </svg>
           </Tippy>
           <Tippy
-            zIndex={999999999999999}
+            zIndex={"99999999999999"}
             content={"Tailwind CSS"}
             animation="scale"
             className="shadow-xl"
@@ -3536,7 +3548,7 @@ export default function Upload(): ReactElement {
             </svg>
           </Tippy>
           <Tippy
-            zIndex={999999999999999}
+            zIndex={"99999999999999"}
             content={"Close"}
             animation="scale"
             className="shadow-xl"
