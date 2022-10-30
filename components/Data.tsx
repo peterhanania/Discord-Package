@@ -1604,7 +1604,7 @@ export default function Data({ data, demo }: any): ReactElement {
         id="walkthrough-1"
       >
         <Tippy
-          zIndex={"99999999999999"}
+          zIndex={99999999999999}
           content={
             <>
               <div className="text-white text-lg font-bold">Take a guide</div>
@@ -1636,7 +1636,7 @@ export default function Data({ data, demo }: any): ReactElement {
         </Tippy>
         {!data.dataFile ? (
           <Tippy
-            zIndex={"99999999999999"}
+            zIndex={99999999999999}
             content={
               <>
                 <div className="text-white text-lg font-bold">Why Export?</div>
@@ -1704,7 +1704,7 @@ export default function Data({ data, demo }: any): ReactElement {
         {demo ? (
           <>
             <Tippy
-              zIndex={"99999999999999"}
+              zIndex={99999999999999}
               content={
                 <>
                   <div className="text-white text-lg font-bold">
@@ -1874,7 +1874,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.characterCount &&
                   data?.messages?.messageCount ? (
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={
                         data.messages.characterCount
                           .toString()
@@ -1899,7 +1899,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     </Tippy>
                   ) : (
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={
                         (data?.dataFile ? "They " : "You ") + "have no messages"
                       }
@@ -1919,7 +1919,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.favoriteWords &&
                   data?.messages?.favoriteWords.length > 0 ? (
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={`${
                         data.messages.favoriteWords.length
                       } Favorite Word${
@@ -1969,7 +1969,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     </Tippy>
                   ) : (
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={
                         (data?.dataFile ? "They " : "You ") +
                         "have no favorite words"
@@ -1990,7 +1990,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.topCursed &&
                   data?.messages?.topCursed?.length > 0 ? (
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={
                         data.messages.topCursed.length
                           .toString()
@@ -2043,7 +2043,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     </Tippy>
                   ) : (
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={
                         (data?.dataFile ? "They " : "You ") +
                         "have no curse words"
@@ -2064,7 +2064,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.topLinks &&
                   data?.messages?.topLinks?.length > 0 ? (
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={
                         data.messages.topLinks.length +
                         " Links | Sent " +
@@ -2123,7 +2123,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     </Tippy>
                   ) : (
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={
                         (data?.dataFile ? "They " : "You ") + "have no links"
                       }
@@ -2143,7 +2143,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.topDiscordLinks &&
                   data?.messages?.topDiscordLinks?.length > 0 ? (
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={
                         data.messages.topDiscordLinks.length +
                         " Discord Links | Sent " +
@@ -2202,7 +2202,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     </Tippy>
                   ) : (
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={
                         (data?.dataFile ? "They " : "You ") +
                         "have no Discord links"
@@ -2223,7 +2223,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.oldestMessages &&
                   data?.messages?.oldestMessages?.length > 0 ? (
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={"Your 1000 Oldest Messages"}
                       animation="scale"
                       className="shadow-xl"
@@ -2279,7 +2279,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     </Tippy>
                   ) : (
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={
                         (data?.dataFile ? "They " : "You ") + "have no messages"
                       }
@@ -2299,7 +2299,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.attachmentCount &&
                   data?.messages?.attachmentCount?.length > 0 ? (
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={
                         data.messages.attachmentCount.length + " Attachments"
                       }
@@ -2392,7 +2392,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   {data?.messages?.mentionCount &&
                   Object.keys(data?.messages?.mentionCount)?.length > 0 ? (
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={
                         Object.values(data.messages.mentionCount)?.reduce(
                           (a: any, b: any): number => a + b
@@ -2465,7 +2465,7 @@ export default function Data({ data, demo }: any): ReactElement {
               {data?.user?.badges?.map((m: any, id: number) => {
                 return (
                   <Tippy
-                    zIndex={"99999999999999"}
+                    zIndex={99999999999999}
                     key={id}
                     content={(Badges as any)[m].description
                       .replace(
@@ -2548,7 +2548,7 @@ export default function Data({ data, demo }: any): ReactElement {
                         }}
                       >
                         <Tippy
-                          zIndex={"99999999999999"}
+                          zIndex={99999999999999}
                           content="Your Top Emojis"
                           animation="scale"
                         >
@@ -2579,7 +2579,7 @@ export default function Data({ data, demo }: any): ReactElement {
                         }}
                       >
                         <Tippy
-                          zIndex={"99999999999999"}
+                          zIndex={99999999999999}
                           content="Your Top Custom Emojis"
                           animation="scale"
                         >
@@ -2610,7 +2610,7 @@ export default function Data({ data, demo }: any): ReactElement {
                         }}
                       >
                         <Tippy
-                          zIndex={"99999999999999"}
+                          zIndex={99999999999999}
                           content="Your Recent Emojis"
                           animation="scale"
                         >
@@ -2692,7 +2692,7 @@ export default function Data({ data, demo }: any): ReactElement {
                           if (isCustomEmoji) {
                             return (
                               <Tippy
-                                zIndex={"99999999999999"}
+                                zIndex={99999999999999}
                                 key={id}
                                 content={`used ${m.count} time${
                                   m.count === 1 ? "" : "s"
@@ -2728,7 +2728,7 @@ export default function Data({ data, demo }: any): ReactElement {
                           } else {
                             return (
                               <Tippy
-                                zIndex={"99999999999999"}
+                                zIndex={99999999999999}
                                 key={id}
                                 content={`:${m.name}: used ${m.count} time${
                                   m.count === 1 ? "" : "s"
@@ -2778,7 +2778,7 @@ export default function Data({ data, demo }: any): ReactElement {
 
                               return m.count !== "ignore" ? (
                                 <Tippy
-                                  zIndex={"99999999999999"}
+                                  zIndex={99999999999999}
                                   key={id}
                                   content={`${m.emoji} used ${m.count} time${
                                     m.count === 1 ? "" : "s"
@@ -2800,7 +2800,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                 </Tippy>
                               ) : (
                                 <Tippy
-                                  zIndex={"99999999999999"}
+                                  zIndex={99999999999999}
                                   key={id}
                                   content={`Click to view the rest`}
                                   animation="scale"
@@ -2858,7 +2858,7 @@ export default function Data({ data, demo }: any): ReactElement {
 
                               return (
                                 <Tippy
-                                  zIndex={"99999999999999"}
+                                  zIndex={99999999999999}
                                   key={id}
                                   content={`${m.emoji} used ${m.count} time${
                                     m.count === 1 ? "" : "s"
@@ -2905,7 +2905,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                 <>
                                   {/<:.*?:(\d+)>/g.exec(m.emoji) ? (
                                     <Tippy
-                                      zIndex={"99999999999999"}
+                                      zIndex={99999999999999}
                                       key={id}
                                       content={`${m.emoji} used ${
                                         m.count
@@ -2939,7 +2939,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                         m.emoji
                                       ) ? (
                                         <Tippy
-                                          zIndex={"99999999999999"}
+                                          zIndex={99999999999999}
                                           key={id}
                                           content={`${m.emoji} used ${
                                             m.count
@@ -2980,7 +2980,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                 </>
                               ) : (
                                 <Tippy
-                                  zIndex={"99999999999999"}
+                                  zIndex={99999999999999}
                                   key={id}
                                   content={`Click to view the rest`}
                                   animation="scale"
@@ -3018,9 +3018,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                       f.emoji
                                                     ) ? (
                                                       <Tippy
-                                                        zIndex={
-                                                          "99999999999999"
-                                                        }
+                                                        zIndex={99999999999999}
                                                         key={id}
                                                         content={`${
                                                           f.emoji
@@ -3053,7 +3051,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                         ) ? (
                                                           <Tippy
                                                             zIndex={
-                                                              "99999999999999"
+                                                              99999999999999
                                                             }
                                                             key={id}
                                                             content={`${
@@ -3120,7 +3118,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                 <>
                                   {/<:.*?:(\d+)>/g.exec(m.emoji) ? (
                                     <Tippy
-                                      zIndex={"99999999999999"}
+                                      zIndex={99999999999999}
                                       key={id}
                                       content={`${m.emoji} used ${
                                         m.count
@@ -3146,7 +3144,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                         m.emoji
                                       ) ? (
                                         <Tippy
-                                          zIndex={"99999999999999"}
+                                          zIndex={99999999999999}
                                           key={id}
                                           content={`${m.emoji} used ${
                                             m.count
@@ -3279,7 +3277,7 @@ export default function Data({ data, demo }: any): ReactElement {
                         </p>
                       ) : (
                         <Tippy
-                          zIndex={"99999999999999"}
+                          zIndex={99999999999999}
                           placement="bottom"
                           trigger={"click"}
                           content={
@@ -3366,7 +3364,7 @@ export default function Data({ data, demo }: any): ReactElement {
             <h3 className="text-gray-900 dark:text-white font-bold text-xl mb-2 flex items-center uppercase">
               {data?.dataFile ? "Their" : "Your"} Connections
               <Tippy
-                zIndex={"99999999999999"}
+                zIndex={99999999999999}
                 content={
                   <>
                     <div className="text-white text-xl font-bold">
@@ -3672,7 +3670,7 @@ export default function Data({ data, demo }: any): ReactElement {
                   return (
                     <div className="cursor-pointer" key={i}>
                       <Tippy
-                        zIndex={"99999999999999"}
+                        zIndex={99999999999999}
                         content={`${(Connections as any)[m.type].name}: ${
                           m?.name
                         } ${m.visible ? "[VISIBLE]" : ""}`}
@@ -3767,7 +3765,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     }
                   >
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={"Hourly"}
                       animation="scale"
                       arrow={false}
@@ -3793,7 +3791,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     }
                   >
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={"Daily"}
                       animation="scale"
                       arrow={false}
@@ -3819,7 +3817,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     }
                   >
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={"Monthly"}
                       animation="scale"
                       arrow={false}
@@ -3845,7 +3843,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     }
                   >
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={"Yearly"}
                       animation="scale"
                       arrow={false}
@@ -3866,7 +3864,7 @@ export default function Data({ data, demo }: any): ReactElement {
                 <ul className="lg:flex items-center grow-0 space-x-6 p-2 rounded-lg bg-gray-400 dark:bg-[#232323] lg:mr-4 md:mr-4 sm:mr-4 mr-1">
                   <li className="flex">
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content={graphType === "areaspline" ? "Bar" : "Line"}
                       animation="scale"
                       arrow={false}
@@ -3914,7 +3912,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     ? "Months"
                     : "Years"}
                   <Tippy
-                    zIndex={"99999999999999"}
+                    zIndex={99999999999999}
                     content={
                       <>
                         <div className="text-white text-xl font-bold">
@@ -4337,7 +4335,7 @@ export default function Data({ data, demo }: any): ReactElement {
                               <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
                                 {m?.messageCount ? (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={
                                       m.messageCount
                                         .toString()
@@ -4358,7 +4356,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no messages"
@@ -4379,7 +4377,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                 {m?.favoriteWords &&
                                 m?.favoriteWords?.length > 0 ? (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={`${
                                       m.favoriteWords.length
                                     } Favorite Word${
@@ -4431,7 +4429,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no favorite words"
@@ -4451,7 +4449,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                 )}
                                 {m?.topCursed && m?.topCursed?.length > 0 ? (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={
                                       m.topCursed.length
                                         .toString()
@@ -4507,7 +4505,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no curse words"
@@ -4527,7 +4525,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                 )}
                                 {m?.topLinks && m?.topLinks?.length > 0 ? (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={
                                       m.topLinks.length +
                                       " Links | Sent " +
@@ -4589,7 +4587,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no links"
@@ -4610,7 +4608,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                 {m?.topDiscordLinks &&
                                 m?.topDiscordLinks?.length > 0 ? (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={
                                       m.topDiscordLinks.length +
                                       " Discord Links | Sent " +
@@ -4672,7 +4670,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no Discord links"
@@ -4693,7 +4691,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                 {m?.oldestMessages &&
                                 m?.oldestMessages?.length > 0 ? (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={`${
                                       m.oldestMessages.length
                                     } Oldest Message${
@@ -4765,7 +4763,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no messages"
@@ -4785,7 +4783,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                 )}
                                 {m?.topEmojis && m?.topEmojis?.length > 0 ? (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={`${m.topEmojis.length} Top Emoji${
                                       m.topEmojis.length > 1 ? "s" : ""
                                     }`}
@@ -4838,7 +4836,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no emojis"
@@ -4859,7 +4857,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                 {m?.topCustomEmojis &&
                                 m?.topCustomEmojis?.length > 0 ? (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={`${
                                       m.topCustomEmojis.length
                                     } Top Custom Emoji${
@@ -4896,7 +4894,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                       ) ? (
                                                         <Tippy
                                                           zIndex={
-                                                            "99999999999999"
+                                                            99999999999999
                                                           }
                                                           content={`${
                                                             f.emoji
@@ -4930,7 +4928,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                           ) ? (
                                                             <Tippy
                                                               zIndex={
-                                                                "99999999999999"
+                                                                99999999999999
                                                               }
                                                               content={`${
                                                                 f.emoji
@@ -4986,7 +4984,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   </Tippy>
                                 ) : (
                                   <Tippy
-                                    zIndex={"99999999999999"}
+                                    zIndex={99999999999999}
                                     content={
                                       (data?.dataFile ? "They " : "You ") +
                                       "have no custom emojis"
@@ -5028,7 +5026,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                   <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
                                     {m?.messageCount ? (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={
                                           m.messageCount
                                             .toString()
@@ -5051,7 +5049,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no messages"
@@ -5072,7 +5070,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                     {m?.favoriteWords &&
                                     m?.favoriteWords.length > 0 ? (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={`${
                                           m.favoriteWords.length
                                         } Favorite Word${
@@ -5127,7 +5125,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no favorite words"
@@ -5147,7 +5145,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                     )}
                                     {m?.topCursed && m?.topCursed.length > 0 ? (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={
                                           m.topCursed.length
                                             .toString()
@@ -5209,7 +5207,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no curse words"
@@ -5229,7 +5227,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                     )}
                                     {m?.topLinks && m?.topLinks?.length > 0 ? (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={
                                           m.topLinks.length +
                                           " Links | Sent " +
@@ -5293,7 +5291,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no links"
@@ -5314,7 +5312,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                     {m?.topDiscordLinks &&
                                     m?.topDiscordLinks.length > 0 ? (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={
                                           m.topDiscordLinks.length +
                                           " Discord Links | Sent " +
@@ -5381,7 +5379,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no Discord links"
@@ -5402,7 +5400,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                     {m?.oldestMessages &&
                                     m?.oldestMessages?.length > 0 ? (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={`${
                                           m.oldestMessages.length
                                         } Oldest Message${
@@ -5474,7 +5472,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no messages"
@@ -5495,7 +5493,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                     {m?.topEmojis &&
                                     m?.topEmojis?.length > 0 ? (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={`${
                                           m.topEmojis.length
                                         } Top Emoji${
@@ -5552,7 +5550,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no emojis"
@@ -5573,7 +5571,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                     {m?.topCustomEmojis &&
                                     m?.topCustomEmojis?.length > 0 ? (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={`${
                                           m.topCustomEmojis.length
                                         } Top Custom Emoji${
@@ -5613,7 +5611,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                           ) ? (
                                                             <Tippy
                                                               zIndex={
-                                                                "99999999999999"
+                                                                99999999999999
                                                               }
                                                               content={`${
                                                                 f.emoji
@@ -5651,7 +5649,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                               ) ? (
                                                                 <Tippy
                                                                   zIndex={
-                                                                    "99999999999999"
+                                                                    99999999999999
                                                                   }
                                                                   content={`${
                                                                     f.emoji
@@ -5710,7 +5708,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                       </Tippy>
                                     ) : (
                                       <Tippy
-                                        zIndex={"99999999999999"}
+                                        zIndex={99999999999999}
                                         content={
                                           (data?.dataFile ? "They " : "You ") +
                                           "have no custom emojis"
@@ -5947,7 +5945,7 @@ export default function Data({ data, demo }: any): ReactElement {
                         }}
                       >
                         <Tippy
-                          zIndex={"99999999999999"}
+                          zIndex={99999999999999}
                           content="Channel Mode"
                           animation="scale"
                         >
@@ -5981,7 +5979,7 @@ export default function Data({ data, demo }: any): ReactElement {
                         }}
                       >
                         <Tippy
-                          zIndex={"99999999999999"}
+                          zIndex={99999999999999}
                           content="Guild Mode"
                           animation="scale"
                         >
@@ -6015,7 +6013,7 @@ export default function Data({ data, demo }: any): ReactElement {
                         }}
                       >
                         <Tippy
-                          zIndex={"99999999999999"}
+                          zIndex={99999999999999}
                           content="Group DM Mode"
                           animation="scale"
                         >
@@ -6094,7 +6092,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                 typeof m.name === "object" ? (
                                                   m?.name[0]?.length > 28 ? (
                                                     <Tippy
-                                                      zIndex={"99999999999999"}
+                                                      zIndex={99999999999999}
                                                       content={m.name[0]}
                                                       animation="scale"
                                                       className="shadow-xl"
@@ -6111,7 +6109,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                   )
                                                 ) : m?.name?.length > 28 ? (
                                                   <Tippy
-                                                    zIndex={"99999999999999"}
+                                                    zIndex={99999999999999}
                                                     content={m.name}
                                                     animation="scale"
                                                     className="shadow-xl"
@@ -6131,7 +6129,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             <span className="text-gray-400 text-sm -mt-2">
                                               {m?.guildName?.length > 28 ? (
                                                 <Tippy
-                                                  zIndex={"99999999999999"}
+                                                  zIndex={99999999999999}
                                                   content={m.guildName}
                                                   animation="scale"
                                                   className="shadow-xl"
@@ -6152,7 +6150,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                         <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
                                           {m?.messageCount ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.messageCount
                                                   .toString()
@@ -6175,7 +6173,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -6197,7 +6195,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.favoriteWords &&
                                           m?.favoriteWords?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.favoriteWords.length
                                               } Favorite Word${
@@ -6259,7 +6257,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -6282,7 +6280,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topCursed &&
                                           m?.topCursed?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topCursed.length
                                                   .toString()
@@ -6350,7 +6348,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -6373,7 +6371,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topLinks &&
                                           m?.topLinks?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topLinks.length +
                                                 " Links | Sent " +
@@ -6442,7 +6440,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -6464,7 +6462,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topDiscordLinks &&
                                           m?.topDiscordLinks?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topDiscordLinks.length +
                                                 " Discord Links | Sent " +
@@ -6537,7 +6535,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -6560,7 +6558,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.oldestMessages &&
                                           m?.oldestMessages?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.oldestMessages.length
                                               } Oldest Message${
@@ -6643,7 +6641,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -6665,7 +6663,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topEmojis &&
                                           m?.topEmojis?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.topEmojis.length
                                               } Top Emoji${
@@ -6728,7 +6726,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -6750,7 +6748,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topCustomEmojis &&
                                           m?.topCustomEmojis?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.topCustomEmojis.length
                                               } Top Custom Emoji${
@@ -6794,7 +6792,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                 ) ? (
                                                                   <Tippy
                                                                     zIndex={
-                                                                      "99999999999999"
+                                                                      99999999999999
                                                                     }
                                                                     content={`${
                                                                       f.emoji
@@ -6833,7 +6831,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                     ) ? (
                                                                       <Tippy
                                                                         zIndex={
-                                                                          "99999999999999"
+                                                                          99999999999999
                                                                         }
                                                                         content={`${
                                                                           f.emoji
@@ -6892,7 +6890,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -6937,7 +6935,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             <span className="text-gray-400 text-sm -mt-2">
                                               {m?.guildName?.length > 28 ? (
                                                 <Tippy
-                                                  zIndex={"99999999999999"}
+                                                  zIndex={99999999999999}
                                                   content={m.guildName}
                                                   animation="scale"
                                                   className="shadow-xl"
@@ -6958,7 +6956,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                         <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
                                           {m?.messageCount ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.messageCount
                                                   .toString()
@@ -6981,7 +6979,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -7003,7 +7001,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.favoriteWords &&
                                           m?.favoriteWords.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.favoriteWords.length
                                               } Favorite Word${
@@ -7065,7 +7063,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -7088,7 +7086,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topCursed &&
                                           m?.topCursed?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topCursed.length
                                                   .toString()
@@ -7156,7 +7154,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -7179,7 +7177,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topLinks &&
                                           m?.topLinks?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topLinks.length +
                                                 " Links | Sent " +
@@ -7248,7 +7246,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -7270,7 +7268,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topDiscordLinks &&
                                           m?.topDiscordLinks?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topDiscordLinks.length +
                                                 " Discord Links | Sent " +
@@ -7343,7 +7341,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -7366,7 +7364,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.oldestMessages &&
                                           m?.oldestMessages?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.oldestMessages.length
                                               } Oldest Message${
@@ -7449,7 +7447,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -7471,7 +7469,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topEmojis &&
                                           m?.topEmojis?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.topEmojis.length
                                               } Top Emoji${
@@ -7534,7 +7532,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -7556,7 +7554,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topCustomEmojis &&
                                           m?.topCustomEmojis?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.topCustomEmojis.length
                                               } Top Custom Emoji${
@@ -7600,7 +7598,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                 ) ? (
                                                                   <Tippy
                                                                     zIndex={
-                                                                      "99999999999999"
+                                                                      99999999999999
                                                                     }
                                                                     content={`${
                                                                       f.emoji
@@ -7639,7 +7637,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                     ) ? (
                                                                       <Tippy
                                                                         zIndex={
-                                                                          "99999999999999"
+                                                                          99999999999999
                                                                         }
                                                                         content={`${
                                                                           f.emoji
@@ -7698,7 +7696,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -7800,7 +7798,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             <div className="flex items-center text-lg">
                                               {m?.guildName?.length > 28 ? (
                                                 <Tippy
-                                                  zIndex={"99999999999999"}
+                                                  zIndex={99999999999999}
                                                   content={m.guildName}
                                                   animation="scale"
                                                   className="shadow-xl"
@@ -7817,7 +7815,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                               )}
                                             </div>
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={m?.name?.join(", ")}
                                               animation="scale"
                                               className="shadow-xl"
@@ -7831,7 +7829,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                         <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
                                           {m?.messageCount ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.messageCount
                                                   .toString()
@@ -7854,7 +7852,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -7876,7 +7874,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.favoriteWords &&
                                           m?.favoriteWords?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.favoriteWords.length
                                               } Favorite Word${
@@ -7938,7 +7936,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -7961,7 +7959,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topCursed &&
                                           m?.topCursed?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topCursed.length
                                                   .toString()
@@ -8029,7 +8027,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -8052,7 +8050,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topLinks &&
                                           m?.topLinks?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topLinks.length +
                                                 " Links | Sent " +
@@ -8121,7 +8119,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -8143,7 +8141,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topDiscordLinks &&
                                           m?.topDiscordLinks?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topDiscordLinks.length +
                                                 " Discord Links | Sent " +
@@ -8216,7 +8214,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -8239,7 +8237,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.oldestMessages &&
                                           m?.oldestMessages?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.oldestMessages.length
                                               } Oldest Message${
@@ -8322,7 +8320,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -8344,7 +8342,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topEmojis &&
                                           m?.topEmojis?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.topEmojis.length
                                               } Top Emoji${
@@ -8407,7 +8405,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -8429,7 +8427,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topCustomEmojis &&
                                           m?.topCustomEmojis?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.topCustomEmojis.length
                                               } Top Custom Emoji${
@@ -8473,7 +8471,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                 ) ? (
                                                                   <Tippy
                                                                     zIndex={
-                                                                      "99999999999999"
+                                                                      99999999999999
                                                                     }
                                                                     content={`${
                                                                       f.emoji
@@ -8512,7 +8510,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                     ) ? (
                                                                       <Tippy
                                                                         zIndex={
-                                                                          "99999999999999"
+                                                                          99999999999999
                                                                         }
                                                                         content={`${
                                                                           f.emoji
@@ -8571,7 +8569,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -8609,7 +8607,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             <div className="flex items-center text-lg">
                                               {m?.guildName?.length > 28 ? (
                                                 <Tippy
-                                                  zIndex={"99999999999999"}
+                                                  zIndex={99999999999999}
                                                   content={m.guildName}
                                                   animation="scale"
                                                   className="shadow-xl"
@@ -8626,7 +8624,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                               )}
                                             </div>
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={m?.name?.join(", ")}
                                               animation="scale"
                                               className="shadow-xl"
@@ -8640,7 +8638,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                         <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
                                           {m?.messageCount ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.messageCount
                                                   .toString()
@@ -8663,7 +8661,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -8685,7 +8683,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.favoriteWords &&
                                           m?.favoriteWords.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.favoriteWords.length
                                               } Favorite Word${
@@ -8747,7 +8745,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -8770,7 +8768,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topCursed &&
                                           m?.topCursed?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topCursed.length
                                                   .toString()
@@ -8838,7 +8836,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -8861,7 +8859,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topLinks &&
                                           m?.topLinks?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topLinks.length +
                                                 " Links | Sent " +
@@ -8930,7 +8928,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -8952,7 +8950,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topDiscordLinks &&
                                           m?.topDiscordLinks?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topDiscordLinks.length +
                                                 " Discord Links | Sent " +
@@ -9025,7 +9023,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -9048,7 +9046,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.oldestMessages &&
                                           m?.oldestMessages?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.oldestMessages.length
                                               } Oldest Message${
@@ -9131,7 +9129,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -9153,7 +9151,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topEmojis &&
                                           m?.topEmojis?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.topEmojis.length
                                               } Top Emoji${
@@ -9216,7 +9214,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -9238,7 +9236,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topCustomEmojis &&
                                           m?.topCustomEmojis?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.topCustomEmojis.length
                                               } Top Custom Emoji${
@@ -9282,7 +9280,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                 ) ? (
                                                                   <Tippy
                                                                     zIndex={
-                                                                      "99999999999999"
+                                                                      99999999999999
                                                                     }
                                                                     content={`${
                                                                       f.emoji
@@ -9321,7 +9319,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                     ) ? (
                                                                       <Tippy
                                                                         zIndex={
-                                                                          "99999999999999"
+                                                                          99999999999999
                                                                         }
                                                                         content={`${
                                                                           f.emoji
@@ -9380,7 +9378,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -9492,7 +9490,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                         <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
                                           {m?.messageCount ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.messageCount
                                                   .toString()
@@ -9515,7 +9513,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -9537,7 +9535,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.favoriteWords &&
                                           m?.favoriteWords?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.favoriteWords.length
                                               } Favorite Word${
@@ -9599,7 +9597,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -9622,7 +9620,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topCursed &&
                                           m?.topCursed?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topCursed.length
                                                   .toString()
@@ -9690,7 +9688,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -9713,7 +9711,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topLinks &&
                                           m?.topLinks?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topLinks.length +
                                                 " Links | Sent " +
@@ -9782,7 +9780,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -9804,7 +9802,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topDiscordLinks &&
                                           m?.topDiscordLinks?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topDiscordLinks.length +
                                                 " Discord Links | Sent " +
@@ -9877,7 +9875,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -9900,7 +9898,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.oldestMessages &&
                                           m?.oldestMessages?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.oldestMessages.length
                                               } Oldest Message${
@@ -9983,7 +9981,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -10005,7 +10003,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topEmojis &&
                                           m?.topEmojis?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.topEmojis.length
                                               } Top Emoji${
@@ -10068,7 +10066,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -10090,7 +10088,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topCustomEmojis &&
                                           m?.topCustomEmojis?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.topCustomEmojis.length
                                               } Top Custom Emoji${
@@ -10134,7 +10132,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                 ) ? (
                                                                   <Tippy
                                                                     zIndex={
-                                                                      "99999999999999"
+                                                                      99999999999999
                                                                     }
                                                                     content={`${
                                                                       f.emoji
@@ -10173,7 +10171,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                     ) ? (
                                                                       <Tippy
                                                                         zIndex={
-                                                                          "99999999999999"
+                                                                          99999999999999
                                                                         }
                                                                         content={`${
                                                                           f.emoji
@@ -10232,7 +10230,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -10278,7 +10276,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                         <div className="flex items-center self-center ml-auto lg:grid my-4 grid-rows-2 grid-flow-col gap-1">
                                           {m?.messageCount ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.messageCount
                                                   .toString()
@@ -10301,7 +10299,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -10323,7 +10321,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.favoriteWords &&
                                           m?.favoriteWords.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.favoriteWords.length
                                               } Favorite Word${
@@ -10385,7 +10383,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -10408,7 +10406,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topCursed &&
                                           m?.topCursed?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topCursed.length
                                                   .toString()
@@ -10476,7 +10474,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -10499,7 +10497,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topLinks &&
                                           m?.topLinks?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topLinks.length +
                                                 " Links | Sent " +
@@ -10568,7 +10566,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -10590,7 +10588,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topDiscordLinks &&
                                           m?.topDiscordLinks?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 m.topDiscordLinks.length +
                                                 " Discord Links | Sent " +
@@ -10663,7 +10661,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -10686,7 +10684,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.oldestMessages &&
                                           m?.oldestMessages?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.oldestMessages.length
                                               } Oldest Message${
@@ -10769,7 +10767,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -10791,7 +10789,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topEmojis &&
                                           m?.topEmojis?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.topEmojis.length
                                               } Top Emoji${
@@ -10854,7 +10852,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -10876,7 +10874,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                           {m?.topCustomEmojis &&
                                           m?.topCustomEmojis?.length > 0 ? (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={`${
                                                 m.topCustomEmojis.length
                                               } Top Custom Emoji${
@@ -10920,7 +10918,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                 ) ? (
                                                                   <Tippy
                                                                     zIndex={
-                                                                      "99999999999999"
+                                                                      99999999999999
                                                                     }
                                                                     content={`${
                                                                       f.emoji
@@ -10959,7 +10957,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                     ) ? (
                                                                       <Tippy
                                                                         zIndex={
-                                                                          "99999999999999"
+                                                                          99999999999999
                                                                         }
                                                                         content={`${
                                                                           f.emoji
@@ -11018,7 +11016,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                             </Tippy>
                                           ) : (
                                             <Tippy
-                                              zIndex={"99999999999999"}
+                                              zIndex={99999999999999}
                                               content={
                                                 (data?.dataFile
                                                   ? "They "
@@ -11148,7 +11146,7 @@ export default function Data({ data, demo }: any): ReactElement {
                           }}
                         >
                           <Tippy
-                            zIndex={"99999999999999"}
+                            zIndex={99999999999999}
                             content={`${b?.verified ? "[🗸 VERIFIED]" : ""} ${
                               b.name
                             }`}
@@ -11251,7 +11249,7 @@ export default function Data({ data, demo }: any): ReactElement {
                 <div className="flex items-center gap-2">
                   <span className="text-gray-900 dark:text-white text-xl flex items-center">
                     <Tippy
-                      zIndex={"99999999999999"}
+                      zIndex={99999999999999}
                       content="How much did I spend?"
                       animation="scale"
                       className="shadow-xl"
@@ -11319,7 +11317,7 @@ export default function Data({ data, demo }: any): ReactElement {
                             </p>
                             at
                             <Tippy
-                              zIndex={"99999999999999"}
+                              zIndex={99999999999999}
                               content={`${moment(t?.date).format(
                                 "MMMM Do YYYY, h:mm:ss a"
                               )} (${moment(t?.date).fromNow()})`}
@@ -11339,7 +11337,7 @@ export default function Data({ data, demo }: any): ReactElement {
                 <h3 className="text-gray-900 dark:text-white font-bold text-xl mt-2 flex items-center uppercase">
                   {data?.dataFile ? "Their" : "Your"} Gifted Nitro{" "}
                   <Tippy
-                    zIndex={"99999999999999"}
+                    zIndex={99999999999999}
                     content={
                       <>
                         <div className="text-white text-xl font-bold">
@@ -11445,7 +11443,7 @@ export default function Data({ data, demo }: any): ReactElement {
             >
               Statistics{" "}
               <Tippy
-                zIndex={"99999999999999"}
+                zIndex={99999999999999}
                 content={
                   <>
                     <div className="text-white text-xl font-bold">
@@ -11491,7 +11489,7 @@ export default function Data({ data, demo }: any): ReactElement {
                           <div className="flex items-center mb-4">
                             {(statIcons as any)[t] ? (
                               <Tippy
-                                zIndex={"99999999999999"}
+                                zIndex={99999999999999}
                                 animation="scale"
                                 className="shadow-xl"
                                 content={(EventsJSON.events as any)[t]}
@@ -11591,7 +11589,7 @@ export default function Data({ data, demo }: any): ReactElement {
                 </span>
                 <div className="flex justify-end">
                   <Tippy
-                    zIndex={"99999999999999"}
+                    zIndex={99999999999999}
                     content={"Close"}
                     animation="scale"
                     className="shadow-xl"

@@ -774,7 +774,7 @@ export default function Header() {
         </div>
         <div className="flex justify-center items-center mt-2">
           <Tippy
-            zIndex={"99999999999999"}
+            zIndex={99999999999999}
             content={"Help"}
             animation="scale"
             className="shadow-xl "
@@ -790,7 +790,7 @@ export default function Header() {
             </svg>
           </Tippy>
           <Tippy
-            zIndex={"99999999999999"}
+            zIndex={99999999999999}
             content={"Settings"}
             animation="scale"
             className="shadow-xl"
@@ -806,7 +806,7 @@ export default function Header() {
             </svg>
           </Tippy>
           <Tippy
-            zIndex={"99999999999999"}
+            zIndex={99999999999999}
             content={"About"}
             animation="scale"
             className="shadow-xl"
@@ -822,7 +822,7 @@ export default function Header() {
             </svg>
           </Tippy>
           <Tippy
-            zIndex={"99999999999999"}
+            zIndex={99999999999999}
             content={"Tutorials"}
             animation="scale"
             className="shadow-xl"

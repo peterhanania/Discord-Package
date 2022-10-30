@@ -1007,7 +1007,9 @@ export default function Upload(): ReactElement {
                     ? topEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
                     : null,
                   topCustomEmojis: options.other.topCustomEmojis
-                    ? topCustomEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
+                    ? topCustomEmojis
+                        .sort((a, b) => b.count - a.count)
+                        .slice(0, 1000)
                     : null,
                 };
               });
@@ -1167,7 +1169,9 @@ export default function Upload(): ReactElement {
                     ? topEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
                     : null,
                   topCustomEmojis: options.other.topCustomEmojis
-                    ? topCustomEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
+                    ? topCustomEmojis
+                        .sort((a, b) => b.count - a.count)
+                        .slice(0, 1000)
                     : null,
                 };
               });
@@ -1323,7 +1327,9 @@ export default function Upload(): ReactElement {
                     ? topEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
                     : null,
                   topCustomEmojis: options.other.topCustomEmojis
-                    ? topCustomEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
+                    ? topCustomEmojis
+                        .sort((a, b) => b.count - a.count)
+                        .slice(0, 1000)
                     : null,
                 };
               });
@@ -1552,7 +1558,9 @@ export default function Upload(): ReactElement {
                   ? topEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
                   : null,
                 topCustomEmojis: options.other.topCustomEmojis
-                  ? topCustomEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
+                  ? topCustomEmojis
+                      .sort((a, b) => b.count - a.count)
+                      .slice(0, 1000)
                   : null,
               };
             });
@@ -3446,7 +3454,7 @@ export default function Upload(): ReactElement {
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] text-slate-800 dark:text-white font-bold flex items-center rounded-md">
           <a href="/discord" target="_blank" rel="noreferrer" className="mr-1">
             <Tippy
-              zIndex={"99999999999999"}
+              zIndex={99999999999999}
               content={"Join our Discord Server"}
               animation="scale"
               className="shadow-xl"
@@ -3475,7 +3483,7 @@ export default function Upload(): ReactElement {
           </a>
           |{" "}
           <Tippy
-            zIndex={"99999999999999"}
+            zIndex={99999999999999}
             content={"View the privacy policy"}
             animation="scale"
             className="shadow-xl"
@@ -3500,7 +3508,7 @@ export default function Upload(): ReactElement {
           </a>
           using
           <Tippy
-            zIndex={"99999999999999"}
+            zIndex={99999999999999}
             content={"Next.js"}
             animation="scale"
             className="shadow-xl"
@@ -3520,7 +3528,7 @@ export default function Upload(): ReactElement {
             </svg>
           </Tippy>
           <Tippy
-            zIndex={"99999999999999"}
+            zIndex={99999999999999}
             content={"Tailwind CSS"}
             animation="scale"
             className="shadow-xl"
@@ -3548,7 +3556,7 @@ export default function Upload(): ReactElement {
             </svg>
           </Tippy>
           <Tippy
-            zIndex={"99999999999999"}
+            zIndex={99999999999999}
             content={"Close"}
             animation="scale"
             className="shadow-xl"
