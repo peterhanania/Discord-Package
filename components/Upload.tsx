@@ -1004,10 +1004,10 @@ export default function Upload(): ReactElement {
                     ? oldestMessages
                     : null,
                   topEmojis: options.other.topEmojis
-                    ? topEmojis.sort((a, b) => b.count - a.count)
+                    ? topEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
                     : null,
                   topCustomEmojis: options.other.topCustomEmojis
-                    ? topCustomEmojis.sort((a, b) => b.count - a.count)
+                    ? topCustomEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
                     : null,
                 };
               });
@@ -1164,10 +1164,10 @@ export default function Upload(): ReactElement {
                     : null,
                   oldestMessages,
                   topEmojis: options.other.topEmojis
-                    ? topEmojis.sort((a, b) => b.count - a.count)
+                    ? topEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
                     : null,
                   topCustomEmojis: options.other.topCustomEmojis
-                    ? topCustomEmojis.sort((a, b) => b.count - a.count)
+                    ? topCustomEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
                     : null,
                 };
               });
@@ -1320,10 +1320,10 @@ export default function Upload(): ReactElement {
                     ? oldestMessages
                     : null,
                   topEmojis: options.other.topEmojis
-                    ? topEmojis.sort((a, b) => b.count - a.count)
+                    ? topEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
                     : null,
                   topCustomEmojis: options.other.topCustomEmojis
-                    ? topCustomEmojis.sort((a, b) => b.count - a.count)
+                    ? topCustomEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
                     : null,
                 };
               });
@@ -1549,10 +1549,10 @@ export default function Upload(): ReactElement {
                   ? oldestMessages
                   : null,
                 topEmojis: options.other.topEmojis
-                  ? topEmojis.sort((a, b) => b.count - a.count)
+                  ? topEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
                   : null,
                 topCustomEmojis: options.other.topCustomEmojis
-                  ? topCustomEmojis.sort((a, b) => b.count - a.count)
+                  ? topCustomEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
                   : null,
               };
             });
