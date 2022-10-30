@@ -49,9 +49,7 @@ export default function Document() {
         />
         <meta
           name="description"
-          content="Discord Data Package Viewer makes it easy to explore and view your Discord data package. Dig through all your old dms, messages, guilds, and more. Find forgotten memories & uncovered hidden gems.
-
- Find forgotten memories & uncovered hidden gems."
+          content="Discord Data Package Viewer makes it easy to explore and view your Discord data package. Dig through all your old dms, messages, guilds, and more. Find forgotten memories & uncovered hidden gems."
         />
         <meta
           name="image"
@@ -72,9 +70,7 @@ export default function Document() {
         />
         <meta
           property="og:description"
-          content="Discord Data Package Viewer makes it easy to explore and view your Discord data package. Dig through all your old dms, messages, guilds, and more. Find forgotten memories & uncovered hidden gems.
-
- Find forgotten memories & uncovered hidden gems."
+          content="Discord Data Package Viewer makes it easy to explore and view your Discord data package. Dig through all your old dms, messages, guilds, and more. Find forgotten memories & uncovered hidden gems."
         />
         <meta
           property="og:image"
@@ -88,9 +84,7 @@ export default function Document() {
         />
         <meta
           property="twitter:description"
-          content="Discord Data Package Viewer makes it easy to explore and view your Discord data package. Dig through all your old dms, messages, guilds, and more. Find forgotten memories & uncovered hidden gems.
-
- Find forgotten memories & uncovered hidden gems."
+          content="Discord Data Package Viewer makes it easy to explore and view your Discord data package. Dig through all your old dms, messages, guilds, and more. Find forgotten memories & uncovered hidden gems."
         />
         <meta
           property="twitter:image"
