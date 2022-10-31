@@ -977,7 +977,7 @@ export default function Upload(): ReactElement {
 
                 const favoriteWords = Utils.getFavoriteWords(words).slice(
                   0,
-                  100
+                  1000
                 );
                 const curseWords = Utils.getCursedWords(
                   words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
@@ -1140,7 +1140,7 @@ export default function Upload(): ReactElement {
                 });
                 const favoriteWords = Utils.getFavoriteWords(words).slice(
                   0,
-                  100
+                  1000
                 );
                 const curseWords = Utils.getCursedWords(
                   words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
@@ -1297,7 +1297,7 @@ export default function Upload(): ReactElement {
 
                 const favoriteWords = Utils.getFavoriteWords(words).slice(
                   0,
-                  100
+                  1000
                 );
                 const curseWords = Utils.getCursedWords(
                   words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
@@ -1529,7 +1529,7 @@ export default function Upload(): ReactElement {
                 }
               });
 
-              const favoriteWords = Utils.getFavoriteWords(words).slice(0, 100);
+              const favoriteWords = Utils.getFavoriteWords(words).slice(0, 1000);
               const curseWords = Utils.getCursedWords(
                 words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
               );
@@ -2269,7 +2269,7 @@ export default function Upload(): ReactElement {
 
             data.messages.favoriteWords = Utils.getFavoriteWords(words).slice(
               0,
-              100
+              1000
             );
             if (isDebug)
               console.log(
