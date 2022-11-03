@@ -13,6 +13,8 @@
 [![Deploy to Netlify](https://binbashbanana.github.io/deploy-buttons/buttons/remade/netlify.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/peterhanania/discord-package)
  
 
+[![Status](https://github.com/peterhanania/Discord-Package/actions/workflows/nextjs.yml/badge.svg?branch=main)](https://github.com/peterhanania/Discord-Package/actions/workflows/nextjs.yml)
+
 <a href="https://github.com/peterhanania/discord-package/blob/main/LICENSE.md">
 <img src="https://img.shields.io/badge/license-GPL-blue" alt="license">
 </a>
