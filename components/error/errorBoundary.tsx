@@ -73,7 +73,7 @@ class ErrorBoundary extends React.Component<any> {
                   >
                     Retry
                   </a>
-                  <Link href="/discord">
+                  <Link href="https://discordpackage.com/discord">
                     <a
                       className="cursor-pointer button-green ml-3"
                       style={{

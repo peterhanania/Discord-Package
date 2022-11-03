@@ -233,7 +233,7 @@ export default function Header() {
                 <p className="text-white text-lg py-2 px-8">
                   If you need help, kindly join our
                   <a
-                    href="/discord"
+                    href="https://discordpackage.com/discord"
                     className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold mx-1"
                     target="_blank"
                     rel="noreferrer"
@@ -394,7 +394,7 @@ export default function Header() {
                     <u className="mr-1">
                       <a
                         className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                        href="/privacy"
+                        href="https://discordpackage.com/privacy"
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -405,7 +405,7 @@ export default function Header() {
                     <u className="ml-1">
                       <a
                         className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                        href="/discord"
+                        href="https://discordpackage.com/discord"
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -766,7 +766,7 @@ export default function Header() {
           Discord Package Explorer and Viewer; Read your data with ease!
         </p>
         <div className="portrait:hidden lg:hidden landscape:flex md:landscape:hidden lg:text-xl md:text-xl text-sm mt-1 animate__delay-1s animate__animated animate__fadeIn flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
-          <Link href="/demo" target="_blank" rel="noreferrer" type="button">
+          <Link href="https://discordpackage.com/demo" target="_blank" rel="noreferrer" type="button">
             <a className="button-green text-gray-200  my-2 flex items-center">
               Click to View Demo
             </a>

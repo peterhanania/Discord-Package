@@ -28,7 +28,7 @@ export default function fof() {
               removed, or you mistyped the link.
             </p>
 
-            <Link href="/">
+            <Link href="https://discordpackage.com/">
               <a
                 className="cursor-pointer button-green"
                 style={{

@@ -3428,7 +3428,7 @@ export default function Upload(): ReactElement {
           -- or --
         </span>
         <div className=" lg:text-xl md:text-xl text-sm mt-1  flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
-          <Link href="/demo">
+          <Link href="https://discordpackage.com/demo">
             <a
               className="button-green text-gray-200  my-2 flex items-center"
               onClick={() => {
@@ -3452,7 +3452,7 @@ export default function Upload(): ReactElement {
         className="group lg:landscape:flex md:landscape:flex landscape:hidden animate__animated animate__fadeIn animate__delay-1s flex justify-center items-center absolute bottom-8 right-0 left-0"
       >
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] text-slate-800 dark:text-white font-bold flex items-center rounded-md">
-          <a href="/discord" target="_blank" rel="noreferrer" className="mr-1">
+          <a href="https://discordpackage.com/discord" target="_blank" rel="noreferrer" className="mr-1">
             <Tippy
               zIndex={99999999999999}
               content={"Join our Discord Server"}
@@ -3489,7 +3489,7 @@ export default function Upload(): ReactElement {
             className="shadow-xl"
           >
             <a
-              href="/privacy"
+              href="https://discordpackage.com/privacy"
               target="_blank"
               rel="noreferrer"
               className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1 uppercase"
