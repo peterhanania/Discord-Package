@@ -6,7 +6,8 @@
   font-family: "Material Symbols Rounded";
   font-style: normal;
   font-weight: 100 700;
-  src: url(/sykg-zNym6YjUruM-QrEh7-nyTnjDwKNJ_190Fjzag.woff2) format("woff2");
+  /* use http://localhost:port for local hosting */
+  src: url(https://discordpackage.com/sykg-zNym6YjUruM-QrEh7-nyTnjDwKNJ_190Fjzag.woff2) format("woff2");
 }
 
 @font-face {

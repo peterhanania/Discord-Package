@@ -32,13 +32,13 @@ class ErrorBoundary extends React.Component<any> {
               <div className="w-full lg:w-1/4 flex items-center justify-center">
                 <img
                   className="hidden lg:block"
-                  src="/discord-package.png"
+                  src="https://discordpackage.com/discord-package.png"
                   alt=""
                   draggable="false"
                 />
                 <img
                   className="hidden md:block lg:hidden w-1/2"
-                  src="/discord-package.png"
+                  src="https://discordpackage.com/discord-package.png"
                   alt=""
                   draggable="false"
                 />

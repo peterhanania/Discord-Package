@@ -248,7 +248,7 @@ export default function Header() {
                     </h3>
                     <Image
                       unoptimized={true}
-                      src="/help/1.png"
+                      src="https://discordpackage.com/help/1.png"
                       alt="1"
                       width={500}
                       height={300}
@@ -258,7 +258,7 @@ export default function Header() {
                     </h3>
                     <Image
                       unoptimized={true}
-                      src="/help/2.png"
+                      src="https://discordpackage.com/help/2.png"
                       alt="2"
                       width={500}
                       height={300}
@@ -269,7 +269,7 @@ export default function Header() {
                     </h3>
                     <Image
                       unoptimized={true}
-                      src="/help/3.png"
+                      src="https://discordpackage.com/help/3.png"
                       alt="3"
                       width={500}
                       height={300}
@@ -282,14 +282,14 @@ export default function Header() {
                     </h3>
                     <Image
                       unoptimized={true}
-                      src="/help/4.png"
+                      src="https://discordpackage.com/help/4.png"
                       alt="4"
                       width={500}
                       height={30}
                     />{" "}
                     <Image
                       unoptimized={true}
-                      src="/help/5.png"
+                      src="https://discordpackage.com/help/5.png"
                       alt="5"
                       width={500}
                       height={300}
@@ -299,7 +299,7 @@ export default function Header() {
                       on the box.
                     </h3>
                     <video controls>
-                      <source src="/help/1.mp4" type="video/webm" />
+                      <source src="https://discordpackage.com/help/1.mp4" type="video/webm" />
                       Your browser does not support embedded videos
                     </video>{" "}
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
@@ -307,7 +307,7 @@ export default function Header() {
                       uploading.
                     </h3>
                     <video controls>
-                      <source src="/help/2.mp4" type="video/webm" />
+                      <source src="https://discordpackage.com/help/2.mp4" type="video/webm" />
                       Your browser does not support embedded videos.
                     </video>
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
@@ -315,7 +315,7 @@ export default function Header() {
                       data you want to display
                     </h3>
                     <video controls>
-                      <source src="/help/3.mp4" type="video/webm" />
+                      <source src="https://discordpackage.com/help/3.mp4" type="video/webm" />
                       Your browser does not support embedded videos
                     </video>
                   </div>
@@ -454,11 +454,11 @@ export default function Header() {
                     This website is also deployed on{" "}
                     <a
                       className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                      href="https://Netlify.com"
+                      href="https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=github-pages"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      Netlify
+                      Github Pages
                     </a>{" "}
                     from the{" "}
                     <a

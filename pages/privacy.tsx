@@ -70,7 +70,7 @@ export default function Home() {
 									<li>We do not store any form of data as we don't have any third party services.</li>
 									<li>Our code is fully open sourced and available for inspection on the Github repository.</li>
 									<li>We do not have a backend server. Everything runs on the frontend.</li>
-									<li>We run the website using Netlify (Netlify.com) directly from the main repository</li>
+									<li>We run the website using Github Pages (https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=github-pages) directly from the main repository</li>
 									<li>No database, no storage or any other form of data is stored.</li>
 								</ul>
 							</p>

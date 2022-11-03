@@ -21,7 +21,7 @@ We understand that most websites shared on Discord are scams. They tend to steal
 
 > We **do not** have a backend server. Everything runs on the frontend.
 
-> We run the website using Netlify (Netlify.com) directly from the main repository. [https://app.netlify.com/sites/discordpackage/deploys](https://app.netlify.com/sites/discordpackage/deploys)
+> We run the website using Github Pages (pages.github.com) directly from the main repository. [https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=github-pages](https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=github-pages)
 
 > No database, no storage or any other form of data is stored.
 

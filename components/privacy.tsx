@@ -53,10 +53,10 @@ export default function Privacy(): ReactElement {
 										using{' '}
 										<a
 											className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold"
-											href="https://Netlify.com"
+											href="https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=github-pages"
 											target="_blank"
 											rel="noreferrer">
-											Netlify
+											Github Pages
 										</a>
 										. If you do not trust this website the{' '}
 										<a

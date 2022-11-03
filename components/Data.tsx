@@ -1444,7 +1444,7 @@ export default function Data({ data, demo }: any): ReactElement {
 
                     <div className="mt-2">
                       <Image
-                        src="/help/step_by_step.png"
+                        src="https://discordpackage.com/help/step_by_step.png"
                         alt="steps"
                         height={550}
                         width={1000}
