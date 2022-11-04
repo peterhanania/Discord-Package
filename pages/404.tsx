@@ -9,15 +9,19 @@ export default function fof() {
           <div className="w-full lg:w-1/4">
             <img
               className="hidden lg:block"
-              src="https://discordpackage.com/discord-package.png"
+              src={process.env.NEXT_PUBLIC_DOMAIN + "/discord-package.png"}
               alt=""
             />
             <img
               className="hidden md:block lg:hidden"
-              src="https://discordpackage.com/discord-package.png"
+              src={process.env.NEXT_PUBLIC_DOMAIN + "/discord-package.png"}
               alt=""
             />
-            <img className="md:hidden" src="https://discordpackage.com/discord-package.png" alt="" />
+            <img
+              className="md:hidden"
+              src={process.env.NEXT_PUBLIC_DOMAIN + "/discord-package.png"}
+              alt=""
+            />
           </div>
           <div className="w-full lg:w-1/2">
             <h1 className="py-4 text-4xl lg:text-6xl md:text-6xl font-extrabold dark:text-white text-gray-800">
@@ -28,7 +32,7 @@ export default function fof() {
               removed, or you mistyped the link.
             </p>
 
-            <Link href="https://discordpackage.com/">
+            <Link href={process.env.NEXT_PUBLIC_DOMAIN!}>
               <a
                 className="cursor-pointer button-green"
                 style={{

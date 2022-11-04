@@ -1529,7 +1529,10 @@ export default function Upload(): ReactElement {
                 }
               });
 
-              const favoriteWords = Utils.getFavoriteWords(words).slice(0, 1000);
+              const favoriteWords = Utils.getFavoriteWords(words).slice(
+                0,
+                1000
+              );
               const curseWords = Utils.getCursedWords(
                 words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
               );
@@ -3428,7 +3431,7 @@ export default function Upload(): ReactElement {
           -- or --
         </span>
         <div className=" lg:text-xl md:text-xl text-sm mt-1  flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
-          <Link href="https://discordpackage.com/demo">
+          <Link href={process.env.NEXT_PUBLIC_DOMAIN + "/demo"}>
             <a
               className="button-green text-gray-200  my-2 flex items-center"
               onClick={() => {
@@ -3452,7 +3455,12 @@ export default function Upload(): ReactElement {
         className="group lg:landscape:flex md:landscape:flex landscape:hidden animate__animated animate__fadeIn animate__delay-1s flex justify-center items-center absolute bottom-8 right-0 left-0"
       >
         <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] text-slate-800 dark:text-white font-bold flex items-center rounded-md">
-          <a href="https://discordpackage.com/discord" target="_blank" rel="noreferrer" className="mr-1">
+          <a
+            href={process.env.NEXT_PUBLIC_DOMAIN + "/discord"}
+            target="_blank"
+            rel="noreferrer"
+            className="mr-1"
+          >
             <Tippy
               zIndex={99999999999999}
               content={"Join our Discord Server"}
@@ -3489,7 +3497,7 @@ export default function Upload(): ReactElement {
             className="shadow-xl"
           >
             <a
-              href="https://discordpackage.com/privacy"
+              href={process.env.NEXT_PUBLIC_DOMAIN + "/privacy"}
               target="_blank"
               rel="noreferrer"
               className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1 uppercase"

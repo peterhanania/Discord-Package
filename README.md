@@ -12,6 +12,7 @@
 [![Deploy to Heroku](https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg)](https://heroku.com/deploy/?template=https://github.com/peterhanania/discord-package)
 [![Deploy to Netlify](https://binbashbanana.github.io/deploy-buttons/buttons/remade/netlify.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/peterhanania/discord-package)
  
+⬆️ Read [installation instructions](#installation) before hosting locally or externally.
 
 [![Deploy Discord Package](https://github.com/peterhanania/Discord-Package/actions/workflows/nextjs.yml/badge.svg)](https://github.com/peterhanania/Discord-Package/actions/workflows/nextjs.yml)
 
@@ -162,6 +163,11 @@ Discord Data Package Explorer is built with **[Next.js](https://nextjs.org/)** a
 - Install the dependencies using `npm install` or `yarn install`.
 - Start the app using `npm run dev`.
 
+## Installation
+When hosting locally or externally, make sure you change the `NEXT_PUBLIC_DOMAIN` environment variable in the `.env.local` file to your domain or it will use the default domain `https://discordpackage.com`.
+
+- Local: Just edit it manually
+- External: You need to customize it via the provider dashboard settings.
 #### Using Docker
 
 - Run `docker build -t discord-package-explorer .` to build the image.

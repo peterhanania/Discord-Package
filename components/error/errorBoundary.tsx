@@ -32,13 +32,13 @@ class ErrorBoundary extends React.Component<any> {
               <div className="w-full lg:w-1/4 flex items-center justify-center">
                 <img
                   className="hidden lg:block"
-                  src="https://discordpackage.com/discord-package.png"
+                  src={process.env.NEXT_PUBLIC_DOMAIN + "/discord-package.png"}
                   alt=""
                   draggable="false"
                 />
                 <img
                   className="hidden md:block lg:hidden w-1/2"
-                  src="https://discordpackage.com/discord-package.png"
+                  src={process.env.NEXT_PUBLIC_DOMAIN + "/discord-package.png"}
                   alt=""
                   draggable="false"
                 />
@@ -73,7 +73,7 @@ class ErrorBoundary extends React.Component<any> {
                   >
                     Retry
                   </a>
-                  <Link href="https://discordpackage.com/discord">
+                  <Link href={process.env.NEXT_PUBLIC_DOMAIN + "/discord"}>
                     <a
                       className="cursor-pointer button-green ml-3"
                       style={{

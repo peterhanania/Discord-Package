@@ -53,7 +53,7 @@ export default function Document() {
         />
         <meta
           name="image"
-          content="https://discordpackage.com/discord-package.png"
+          content={process.env.NEXT_PUBLIC_DOMAIN + "/discord-package.png"}
         />
         <meta
           name="keywords"
@@ -74,7 +74,7 @@ export default function Document() {
         />
         <meta
           property="og:image"
-          content="https://discordpackage.com/thumbnail.png"
+          content={process.env.NEXT_PUBLIC_DOMAIN + "/thumbnail.png"}
         />
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://discordpackage.com" />
@@ -88,7 +88,7 @@ export default function Document() {
         />
         <meta
           property="twitter:image"
-          content="https://discordpackage.com/discord-package.png"
+          content={process.env.NEXT_PUBLIC_DOMAIN + "/discord-package.png"}
         />
         <noscript>
           <div

@@ -233,7 +233,7 @@ export default function Header() {
                 <p className="text-white text-lg py-2 px-8">
                   If you need help, kindly join our
                   <a
-                    href="https://discordpackage.com/discord"
+                    href={process.env.NEXT_PUBLIC_DOMAIN +"/discord"}
                     className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold mx-1"
                     target="_blank"
                     rel="noreferrer"
@@ -248,7 +248,7 @@ export default function Header() {
                     </h3>
                     <Image
                       unoptimized={true}
-                      src="https://discordpackage.com/help/1.png"
+                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/1.png"}
                       alt="1"
                       width={500}
                       height={300}
@@ -258,7 +258,7 @@ export default function Header() {
                     </h3>
                     <Image
                       unoptimized={true}
-                      src="https://discordpackage.com/help/2.png"
+                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/2.png"}
                       alt="2"
                       width={500}
                       height={300}
@@ -269,7 +269,7 @@ export default function Header() {
                     </h3>
                     <Image
                       unoptimized={true}
-                      src="https://discordpackage.com/help/3.png"
+                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/3.png"}
                       alt="3"
                       width={500}
                       height={300}
@@ -282,14 +282,14 @@ export default function Header() {
                     </h3>
                     <Image
                       unoptimized={true}
-                      src="https://discordpackage.com/help/4.png"
+                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/4.png"}
                       alt="4"
                       width={500}
                       height={30}
                     />{" "}
                     <Image
                       unoptimized={true}
-                      src="https://discordpackage.com/help/5.png"
+                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/5.png"}
                       alt="5"
                       width={500}
                       height={300}
@@ -299,7 +299,10 @@ export default function Header() {
                       on the box.
                     </h3>
                     <video controls>
-                      <source src="https://discordpackage.com/help/1.mp4" type="video/webm" />
+                      <source
+                        src={process.env.NEXT_PUBLIC_DOMAIN +"/help/1.mp4"}
+                        type="video/webm"
+                      />
                       Your browser does not support embedded videos
                     </video>{" "}
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
@@ -307,7 +310,10 @@ export default function Header() {
                       uploading.
                     </h3>
                     <video controls>
-                      <source src="https://discordpackage.com/help/2.mp4" type="video/webm" />
+                      <source
+                        src={process.env.NEXT_PUBLIC_DOMAIN +"/help/2.mp4"}
+                        type="video/webm"
+                      />
                       Your browser does not support embedded videos.
                     </video>
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
@@ -315,7 +321,10 @@ export default function Header() {
                       data you want to display
                     </h3>
                     <video controls>
-                      <source src="https://discordpackage.com/help/3.mp4" type="video/webm" />
+                      <source
+                        src={process.env.NEXT_PUBLIC_DOMAIN +"/help/3.mp4"}
+                        type="video/webm"
+                      />
                       Your browser does not support embedded videos
                     </video>
                   </div>
@@ -394,7 +403,7 @@ export default function Header() {
                     <u className="mr-1">
                       <a
                         className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                        href="https://discordpackage.com/privacy"
+                        href={process.env.NEXT_PUBLIC_DOMAIN +"/privacy"}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -405,7 +414,7 @@ export default function Header() {
                     <u className="ml-1">
                       <a
                         className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                        href="https://discordpackage.com/discord"
+                        href={process.env.NEXT_PUBLIC_DOMAIN +"/discord"}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -766,7 +775,12 @@ export default function Header() {
           Discord Package Explorer and Viewer; Read your data with ease!
         </p>
         <div className="portrait:hidden lg:hidden landscape:flex md:landscape:hidden lg:text-xl md:text-xl text-sm mt-1 animate__delay-1s animate__animated animate__fadeIn flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
-          <Link href="https://discordpackage.com/demo" target="_blank" rel="noreferrer" type="button">
+          <Link
+            href={process.env.NEXT_PUBLIC_DOMAIN +"/demo"}
+            target="_blank"
+            rel="noreferrer"
+            type="button"
+          >
             <a className="button-green text-gray-200  my-2 flex items-center">
               Click to View Demo
             </a>

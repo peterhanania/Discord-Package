@@ -7,17 +7,17 @@ export default function fof() {
           <div className="w-full lg:w-1/4">
             <img
               className="hidden lg:block"
-              src="https://discordpackage.com/discord-package.png"
+              src={process.env.NEXT_PUBLIC_DOMAIN + "/discord-package.png"}
               alt=""
             />
             <img
               className="hidden md:block lg:hidden"
-              src="https://discordpackage.com/discord-package.png"
+              src={process.env.NEXT_PUBLIC_DOMAIN + "/discord-package.png"}
               alt=""
             />
             <img
               className="md:hidden"
-              src="https://discordpackage.com/discord-package.png"
+              src={process.env.NEXT_PUBLIC_DOMAIN + "/discord-package.png"}
               alt=""
             />
           </div>
