@@ -2201,7 +2201,7 @@ export default function Upload(): ReactElement {
               });
 
             years.forEach((year: any) => {
-              yearlyMessages.push(
+              yearlyMessages.unshift(
                 channels
                   .map((c) => c.messages)
                   .flat()
