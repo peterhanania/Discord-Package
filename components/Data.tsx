@@ -11233,9 +11233,6 @@ export default function Data({ data, demo }: any): ReactElement {
             </svg>
           </div>
           <div id="blur_9_div">
-            <h3 className="text-gray-900 dark:text-white font-bold text-xl mb-2 mt-2 uppercase">
-              {data?.dataFile ? "Their" : "Your"} Payments
-            </h3>
             {!data?.payments ? (
               <div className="flex items-center gap-2">
                 {" "}
@@ -11318,7 +11315,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     {!data?.payments?.giftedNitro
                       ? `${
                           data?.dataFile ? "They " : "You "
-                        } have no gifted nitro`
+                        } have not been gifted Nitro by anyone.`
                       : ""}
                   </span>
                   <ul className="text-gray-900 dark:text-white text-xl font-bold list-disc mt-2 ml-6">
