@@ -120,7 +120,7 @@
     "undocumented": false
   },
   "HIGH_GLOBAL_RATE_LIMIT": {
-    "description": "{p_1} have a premium discriminator",
+    "description": "Account has a high global ratelimit",
     "shift": 33,
     "undocumented": true
   },
