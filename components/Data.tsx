@@ -11263,7 +11263,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     {data?.dataFile ? "They've " : "You've "}spent{" "}
                     <p className="mx-1 font-extrabold text-blue-500 inline-flex">
                       { Utils.getMostUsedCurrency(data.payments.transactions) }
-                      { data?.payments?.total.toFixed(2) || 0 }
+                      { data?.payments?.total?.toFixed(2) || 0 }
                     </p>
                     on Discord
                   </span>
