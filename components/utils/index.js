@@ -8,6 +8,7 @@ import emojis from "../json/demo/emojis.json";
 import randomWords from "random-words";
 import curseWords from "../json/demo/curse.json";
 import Events from "../json/events.json";
+import currencies from "../json/other/currencies.json";
 
 class Utils {
   static getMostUsedCurrency(transactions) {
@@ -19,10 +20,16 @@ class Utils {
         currenciesUsed[a.currency] = 1;
       }
     });
+
     const mostUsedCurrency = Object.keys(currenciesUsed)
       .sort((a, b) => currenciesUsed[b] - currenciesUsed[a])
       .shift();
-    return mostUsedCurrency;
+
+    const currency = currencies?.find(
+      (a) => a?.abbreviation.toLowerCase() === mostUsedCurrency
+    );
+
+    return currency.symbol;
   }
   static readFile(name, files) {
     return new Promise((resolve) => {

@@ -2,576 +2,576 @@
   {
     "currency": "Albania Lek",
     "abbreviation": "ALL",
-    "symbol": "&#76;&#101;&#107;"
+    "symbol": "LEK"
   },
   {
     "currency": "Afghanistan Afghani",
     "abbreviation": "AFN",
-    "symbol": "&#1547;"
+    "symbol": "؋"
   },
   {
     "currency": "Argentina Peso",
     "abbreviation": "ARS",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Aruba Guilder",
     "abbreviation": "AWG",
-    "symbol": "&#402;"
+    "symbol": "ƒ"
   },
   {
     "currency": "Australia Dollar",
     "abbreviation": "AUD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Azerbaijan New Manat",
     "abbreviation": "AZN",
-    "symbol": "&#1084;&#1072;&#1085;"
+    "symbol": "₼"
   },
   {
     "currency": "Bahamas Dollar",
     "abbreviation": "BSD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Barbados Dollar",
     "abbreviation": "BBD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Belarus Ruble",
     "abbreviation": "BYR",
-    "symbol": "&#112;&#46;"
+    "symbol": "BYN"
   },
   {
     "currency": "Belize Dollar",
     "abbreviation": "BZD",
-    "symbol": "&#66;&#90;&#36;"
+    "symbol": "BZ$"
   },
   {
     "currency": "Bermuda Dollar",
     "abbreviation": "BMD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Bolivia Boliviano",
     "abbreviation": "BOB",
-    "symbol": "&#36;&#98;"
+    "symbol": "Bs"
   },
   {
     "currency": "Bosnia and Herzegovina Convertible Marka",
     "abbreviation": "BAM",
-    "symbol": "&#75;&#77;"
+    "symbol": "KM"
   },
   {
     "currency": "Botswana Pula",
     "abbreviation": "BWP",
-    "symbol": "&#80;"
+    "symbol": "P"
   },
   {
     "currency": "Bulgaria Lev",
     "abbreviation": "BGN",
-    "symbol": "&#1083;&#1074;"
+    "symbol": "лв"
   },
   {
     "currency": "Brazil Real",
     "abbreviation": "BRL",
-    "symbol": "&#82;&#36;"
+    "symbol": "R$"
   },
   {
     "currency": "Brunei Darussalam Dollar",
     "abbreviation": "BND",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Cambodia Riel",
     "abbreviation": "KHR",
-    "symbol": "&#6107;"
+    "symbol": "៛"
   },
   {
     "currency": "Canada Dollar",
     "abbreviation": "CAD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Cayman Islands Dollar",
     "abbreviation": "KYD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Chile Peso",
     "abbreviation": "CLP",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "China Yuan Renminbi",
     "abbreviation": "CNY",
-    "symbol": "&#165;"
+    "symbol": "¥"
   },
   {
     "currency": "Colombia Peso",
     "abbreviation": "COP",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Costa Rica Colon",
     "abbreviation": "CRC",
-    "symbol": "&#8353;"
+    "symbol": "₡"
   },
   {
     "currency": "Croatia Kuna",
     "abbreviation": "HRK",
-    "symbol": "&#107;&#110;"
+    "symbol": "kn"
   },
   {
     "currency": "Cuba Peso",
     "abbreviation": "CUP",
-    "symbol": "&#8369;"
+    "symbol": "₱"
   },
   {
     "currency": "Czech Republic Koruna",
     "abbreviation": "CZK",
-    "symbol": "&#75;&#269;"
+    "symbol": "Kč"
   },
   {
     "currency": "Denmark Krone",
     "abbreviation": "DKK",
-    "symbol": "&#107;&#114;"
+    "symbol": "Kr"
   },
   {
     "currency": "Dominican Republic Peso",
     "abbreviation": "DOP",
-    "symbol": "&#82;&#68;&#36;"
+    "symbol": "RD$"
   },
   {
     "currency": "East Caribbean Dollar",
     "abbreviation": "XCD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Egypt Pound",
     "abbreviation": "EGP",
-    "symbol": "&#163;"
+    "symbol": "£"
   },
   {
     "currency": "El Salvador Colon",
     "abbreviation": "SVC",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Estonia Kroon",
     "abbreviation": "EEK",
-    "symbol": "&#107;&#114;"
+    "symbol": "Kr"
   },
   {
     "currency": "Euro Member Countries",
     "abbreviation": "EUR",
-    "symbol": "&#8364;"
+    "symbol": "€"
   },
   {
     "currency": "Falkland Islands (Malvinas) Pound",
     "abbreviation": "FKP",
-    "symbol": "&#163;"
+    "symbol": "£"
   },
   {
     "currency": "Fiji Dollar",
     "abbreviation": "FJD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Ghana Cedis",
     "abbreviation": "GHC",
-    "symbol": "&#162;"
+    "symbol": "¢"
   },
   {
     "currency": "Gibraltar Pound",
     "abbreviation": "GIP",
-    "symbol": "&#163;"
+    "symbol": "£"
   },
   {
     "currency": "Guatemala Quetzal",
     "abbreviation": "GTQ",
-    "symbol": "&#81;"
+    "symbol": "Q"
   },
   {
     "currency": "Guernsey Pound",
     "abbreviation": "GGP",
-    "symbol": "&#163;"
+    "symbol": "£"
   },
   {
     "currency": "Guyana Dollar",
     "abbreviation": "GYD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Honduras Lempira",
     "abbreviation": "HNL",
-    "symbol": "&#76;"
+    "symbol": "L"
   },
   {
     "currency": "Hong Kong Dollar",
     "abbreviation": "HKD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Hungary Forint",
     "abbreviation": "HUF",
-    "symbol": "&#70;&#116;"
+    "symbol": "FT"
   },
   {
     "currency": "Iceland Krona",
     "abbreviation": "ISK",
-    "symbol": "&#107;&#114;"
+    "symbol": "Kr"
   },
   {
     "currency": "India Rupee",
     "abbreviation": "INR",
-    "symbol": null
+    "symbol": "₹"
   },
   {
     "currency": "Indonesia Rupiah",
     "abbreviation": "IDR",
-    "symbol": "&#82;&#112;"
+    "symbol": "Rp"
   },
   {
     "currency": "Iran Rial",
     "abbreviation": "IRR",
-    "symbol": "&#65020;"
+    "symbol": "﷼"
   },
   {
     "currency": "Isle of Man Pound",
     "abbreviation": "IMP",
-    "symbol": "&#163;"
+    "symbol": "£"
   },
   {
     "currency": "Israel Shekel",
     "abbreviation": "ILS",
-    "symbol": "&#8362;"
+    "symbol": "₪"
   },
   {
     "currency": "Jamaica Dollar",
     "abbreviation": "JMD",
-    "symbol": "&#74;&#36;"
+    "symbol": "J$"
   },
   {
     "currency": "Japan Yen",
     "abbreviation": "JPY",
-    "symbol": "&#165;"
+    "symbol": "¥"
   },
   {
     "currency": "Jersey Pound",
     "abbreviation": "JEP",
-    "symbol": "&#163;"
+    "symbol": "£"
   },
   {
     "currency": "Kazakhstan Tenge",
     "abbreviation": "KZT",
-    "symbol": "&#1083;&#1074;"
+    "symbol": "лв"
   },
   {
     "currency": "Korea (North) Won",
     "abbreviation": "KPW",
-    "symbol": "&#8361;"
+    "symbol": "₩"
   },
   {
     "currency": "Korea (South) Won",
     "abbreviation": "KRW",
-    "symbol": "&#8361;"
+    "symbol": "₩"
   },
   {
     "currency": "Kyrgyzstan Som",
     "abbreviation": "KGS",
-    "symbol": "&#1083;&#1074;"
+    "symbol": "лв"
   },
   {
     "currency": "Laos Kip",
     "abbreviation": "LAK",
-    "symbol": "&#8365;"
+    "symbol": "₭"
   },
   {
     "currency": "Latvia Lat",
     "abbreviation": "LVL",
-    "symbol": "&#76;&#115;"
+    "symbol": "Ls"
   },
   {
     "currency": "Lebanon Pound",
     "abbreviation": "LBP",
-    "symbol": "&#163;"
+    "symbol": "£"
   },
   {
     "currency": "Liberia Dollar",
     "abbreviation": "LRD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Lithuania Litas",
     "abbreviation": "LTL",
-    "symbol": "&#76;&#116;"
+    "symbol": "Lt"
   },
   {
     "currency": "Macedonia Denar",
     "abbreviation": "MKD",
-    "symbol": "&#1076;&#1077;&#1085;"
+    "symbol": "Ден"
   },
   {
     "currency": "Malaysia Ringgit",
     "abbreviation": "MYR",
-    "symbol": "&#82;&#77;"
+    "symbol": "RM"
   },
   {
     "currency": "Mauritius Rupee",
     "abbreviation": "MUR",
-    "symbol": "&#8360;"
+    "symbol": "Rs"
   },
   {
     "currency": "Mexico Peso",
     "abbreviation": "MXN",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Mongolia Tughrik",
     "abbreviation": "MNT",
-    "symbol": "&#8366;"
+    "symbol": "₮"
   },
   {
     "currency": "Mozambique Metical",
     "abbreviation": "MZN",
-    "symbol": "&#77;&#84;"
+    "symbol": "MT"
   },
   {
     "currency": "Namibia Dollar",
     "abbreviation": "NAD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Nepal Rupee",
     "abbreviation": "NPR",
-    "symbol": "&#8360;"
+    "symbol": "Rs"
   },
   {
     "currency": "Netherlands Antilles Guilder",
     "abbreviation": "ANG",
-    "symbol": "&#402;"
+    "symbol": "ƒ"
   },
   {
     "currency": "New Zealand Dollar",
     "abbreviation": "NZD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Nicaragua Cordoba",
     "abbreviation": "NIO",
-    "symbol": "&#67;&#36;"
+    "symbol": "C$"
   },
   {
     "currency": "Nigeria Naira",
     "abbreviation": "NGN",
-    "symbol": "&#8358;"
+    "symbol": "₦"
   },
   {
     "currency": "Korea (North) Won",
     "abbreviation": "KPW",
-    "symbol": "&#8361;"
+    "symbol": "₩"
   },
   {
     "currency": "Norway Krone",
     "abbreviation": "NOK",
-    "symbol": "&#107;&#114;"
+    "symbol": "Kr"
   },
   {
     "currency": "Oman Rial",
     "abbreviation": "OMR",
-    "symbol": "&#65020;"
+    "symbol": "﷼"
   },
   {
     "currency": "Pakistan Rupee",
     "abbreviation": "PKR",
-    "symbol": "&#8360;"
+    "symbol": "Rs"
   },
   {
     "currency": "Panama Balboa",
     "abbreviation": "PAB",
-    "symbol": "&#66;&#47;&#46;"
+    "symbol": "B/"
   },
   {
     "currency": "Paraguay Guarani",
     "abbreviation": "PYG",
-    "symbol": "&#71;&#115;"
+    "symbol": "Gs"
   },
   {
     "currency": "Peru Nuevo Sol",
     "abbreviation": "PEN",
-    "symbol": "&#83;&#47;&#46;"
+    "symbol": "S/"
   },
   {
     "currency": "Philippines Peso",
     "abbreviation": "PHP",
-    "symbol": "&#8369;"
+    "symbol": "₱"
   },
   {
     "currency": "Poland Zloty",
     "abbreviation": "PLN",
-    "symbol": "&#122;&#322;"
+    "symbol": "zł"
   },
   {
     "currency": "Qatar Riyal",
     "abbreviation": "QAR",
-    "symbol": "&#65020;"
+    "symbol": "﷼"
   },
   {
     "currency": "Romania New Leu",
     "abbreviation": "RON",
-    "symbol": "&#108;&#101;&#105;"
+    "symbol": "lEi"
   },
   {
     "currency": "Russia Ruble",
     "abbreviation": "RUB",
-    "symbol": "&#1088;&#1091;&#1073;"
+    "symbol": "₽"
   },
   {
     "currency": "Saint Helena Pound",
     "abbreviation": "SHP",
-    "symbol": "&#163;"
+    "symbol": "£"
   },
   {
     "currency": "Saudi Arabia Riyal",
     "abbreviation": "SAR",
-    "symbol": "&#65020;"
+    "symbol": "﷼"
   },
   {
     "currency": "Serbia Dinar",
     "abbreviation": "RSD",
-    "symbol": "&#1044;&#1080;&#1085;&#46;"
+    "symbol": "din"
   },
   {
     "currency": "Seychelles Rupee",
     "abbreviation": "SCR",
-    "symbol": "&#8360;"
+    "symbol": "Rs"
   },
   {
     "currency": "Singapore Dollar",
     "abbreviation": "SGD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Solomon Islands Dollar",
     "abbreviation": "SBD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Somalia Shilling",
     "abbreviation": "SOS",
-    "symbol": "&#83;"
+    "symbol": "S"
   },
   {
     "currency": "South Africa Rand",
     "abbreviation": "ZAR",
-    "symbol": "&#82;"
+    "symbol": "R"
   },
   {
     "currency": "Korea (South) Won",
     "abbreviation": "KRW",
-    "symbol": "&#8361;"
+    "symbol": "₩"
   },
   {
     "currency": "Sri Lanka Rupee",
     "abbreviation": "LKR",
-    "symbol": "&#8360;"
+    "symbol": "Rs"
   },
   {
     "currency": "Sweden Krona",
     "abbreviation": "SEK",
-    "symbol": "&#107;&#114;"
+    "symbol": "Kr"
   },
   {
     "currency": "Switzerland Franc",
     "abbreviation": "CHF",
-    "symbol": "&#67;&#72;&#70;"
+    "symbol": "CHF"
   },
   {
     "currency": "Suriname Dollar",
     "abbreviation": "SRD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Syria Pound",
     "abbreviation": "SYP",
-    "symbol": "&#163;"
+    "symbol": "£"
   },
   {
     "currency": "Taiwan New Dollar",
     "abbreviation": "TWD",
-    "symbol": "&#78;&#84;&#36;"
+    "symbol": "NT$"
   },
   {
     "currency": "Thailand Baht",
     "abbreviation": "THB",
-    "symbol": "&#3647;"
+    "symbol": "฿"
   },
   {
     "currency": "Trinidad and Tobago Dollar",
     "abbreviation": "TTD",
-    "symbol": "&#84;&#84;&#36;"
+    "symbol": "TT$"
   },
   {
     "currency": "Turkey Lira",
     "abbreviation": "TRY",
-    "symbol": null
+    "symbol": "₺"
   },
   {
     "currency": "Turkey Lira",
     "abbreviation": "TRL",
-    "symbol": "&#8356;"
+    "symbol": "₺"
   },
   {
     "currency": "Tuvalu Dollar",
     "abbreviation": "TVD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Ukraine Hryvna",
     "abbreviation": "UAH",
-    "symbol": "&#8372;"
+    "symbol": "₴"
   },
   {
     "currency": "United Kingdom Pound",
     "abbreviation": "GBP",
-    "symbol": "&#163;"
+    "symbol": "£"
   },
   {
     "currency": "United States Dollar",
     "abbreviation": "USD",
-    "symbol": "&#36;"
+    "symbol": "$"
   },
   {
     "currency": "Uruguay Peso",
     "abbreviation": "UYU",
-    "symbol": "&#36;&#85;"
+    "symbol": "$U"
   },
   {
     "currency": "Uzbekistan Som",
     "abbreviation": "UZS",
-    "symbol": "&#1083;&#1074;"
+    "symbol": "лв"
   },
   {
     "currency": "Venezuela Bolivar",
     "abbreviation": "VEF",
-    "symbol": "&#66;&#115;"
+    "symbol": "Bs"
   },
   {
     "currency": "Viet Nam Dong",
     "abbreviation": "VND",
-    "symbol": "&#8363;"
+    "symbol": "₫"
   },
   {
     "currency": "Yemen Rial",
     "abbreviation": "YER",
-    "symbol": "&#65020;"
+    "symbol": "﷼"
   },
   {
     "currency": "Zimbabwe Dollar",
     "abbreviation": "ZWD",
-    "symbol": "&#90;&#36;"
+    "symbol": "Z$"
   }
 ]

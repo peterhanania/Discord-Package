@@ -11233,9 +11233,6 @@ export default function Data({ data, demo }: any): ReactElement {
             </svg>
           </div>
           <div id="blur_9_div">
-            <h3 className="text-gray-900 dark:text-white font-bold text-xl mb-2 mt-2 uppercase">
-              {data?.dataFile ? "Their" : "Your"} Payments
-            </h3>
             {!data?.payments ? (
               <div className="flex items-center gap-2">
                 {" "}
@@ -11263,25 +11260,10 @@ export default function Data({ data, demo }: any): ReactElement {
                         <path d="M4.458 33.333q-1.166 0-1.979-.812-.812-.813-.812-1.979V11.667h2.791v18.875h28.875v2.791ZM10 27.792q-1.167 0-1.979-.813-.813-.812-.813-1.979V9.458q0-1.166.813-1.979.812-.812 1.979-.812h25.542q1.166 0 1.979.812.812.813.812 1.979V25q0 1.167-.812 1.979-.813.813-1.979.813ZM10 25h3.875q0-1.625-1.125-2.75T10 21.125V25Zm21.667 0h3.875v-3.875q-1.625 0-2.75 1.125T31.667 25Zm-8.875-2.792q2.083 0 3.541-1.458 1.459-1.458 1.459-3.542 0-2.083-1.459-3.541-1.458-1.459-3.541-1.459-2.084 0-3.542 1.459-1.458 1.458-1.458 3.541 0 2.084 1.458 3.542 1.458 1.458 3.542 1.458ZM10 13.333q1.625 0 2.75-1.125t1.125-2.75H10Zm25.542 0V9.458h-3.875q0 1.625 1.125 2.75t2.75 1.125Z" />
                       </svg>
                     </Tippy>
-                    {data?.dataFile ? "They " : "You "}spent{" "}
+                    {data?.dataFile ? "They've " : "You've "}spent{" "}
                     <p className="mx-1 font-extrabold text-blue-500 inline-flex">
-                      {data?.payments?.total || 0}
-                      {data?.payments?.transactions?.length > 0 ? (
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html:
-                              currencies.find(
-                                (a) =>
-                                  a.abbreviation.toLowerCase() ===
-                                  Utils.getMostUsedCurrency(
-                                    data.payments.transactions
-                                  )
-                              )?.symbol || "",
-                          }}
-                        ></div>
-                      ) : (
-                        "$"
-                      )}
+                      { Utils.getMostUsedCurrency(data.payments.transactions) }
+                      { data?.payments?.total.toFixed(2) || 0 }
                     </p>
                     on Discord
                   </span>
@@ -11302,20 +11284,11 @@ export default function Data({ data, demo }: any): ReactElement {
                       return (
                         <li key={i}>
                           <div className="inline-flex">
-                            <p className="mx-1 font-extrabold text-blue-500 inline-flex">
-                              {t?.amount ? t.amount : 0}
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    currencies?.find(
-                                      (a) =>
-                                        a?.abbreviation.toLowerCase() ===
-                                        t?.currency
-                                    )?.symbol || "",
-                                }}
-                              ></div>
+                            <p className="mx-1 font-extrabold inline-flex">
+                              { Utils.getMostUsedCurrency(data.payments.transactions) }
+                              { t?.amount ? t.amount : 0 }
                             </p>
-                            at
+                            on
                             <Tippy
                               zIndex={99999999999999}
                               content={`${moment(t?.date).format(
@@ -11335,39 +11308,14 @@ export default function Data({ data, demo }: any): ReactElement {
                   </ul>
                 </div>
                 <h3 className="text-gray-900 dark:text-white font-bold text-xl mt-2 flex items-center uppercase">
-                  {data?.dataFile ? "Their" : "Your"} Gifted Nitro{" "}
-                  <Tippy
-                    zIndex={99999999999999}
-                    content={
-                      <>
-                        <div className="text-white text-xl font-bold">
-                          What is Gifted Nitro?
-                        </div>
-                        <p className="text-white text-lg ">
-                          Gifted Nitro is the Nitro Gifted to{" "}
-                          {data?.dataFile ? "them " : "you "} by others.
-                        </p>
-                      </>
-                    }
-                    animation="scale"
-                    className="shadow-xl"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24"
-                      width="24"
-                      className="cursor-pointer fill-black dark:fill-white ml-2 opacity-90 hover:opacity-100"
-                    >
-                      <path d="M10.625 17.375h2.75V11h-2.75ZM12 9.5q.65 0 1.075-.438Q13.5 8.625 13.5 8q0-.65-.425-1.075Q12.65 6.5 12 6.5q-.625 0-1.062.425Q10.5 7.35 10.5 8q0 .625.438 1.062.437.438 1.062.438Zm0 13.35q-2.275 0-4.25-.85t-3.438-2.312Q2.85 18.225 2 16.25q-.85-1.975-.85-4.25T2 7.75q.85-1.975 2.312-3.438Q5.775 2.85 7.75 2q1.975-.85 4.25-.85t4.25.85q1.975.85 3.438 2.312Q21.15 5.775 22 7.75q.85 1.975.85 4.25T22 16.25q-.85 1.975-2.312 3.438Q18.225 21.15 16.25 22q-1.975.85-4.25.85Z" />
-                    </svg>
-                  </Tippy>
+                  Nitro gifted to {data?.dataFile ? "Them" : "You"} by others
                 </h3>
                 <div className="flex items-center gap-2">
                   <span className="text-gray-900 dark:text-white font-bold">
                     {!data?.payments?.giftedNitro
                       ? `${
                           data?.dataFile ? "They " : "You "
-                        } have no gifted nitro`
+                        } have not been gifted Nitro by anyone.`
                       : ""}
                   </span>
                   <ul className="text-gray-900 dark:text-white text-xl font-bold list-disc mt-2 ml-6">
