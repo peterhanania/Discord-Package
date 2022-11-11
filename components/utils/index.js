@@ -12,6 +12,8 @@ import currencies from "../json/other/currencies.json";
 
 class Utils {
   static getMostUsedCurrency(transactions) {
+    if(transactions == null) { return; }
+
     const currenciesUsed = {};
     transactions.forEach((a) => {
       if (currenciesUsed[a.currency]) {
