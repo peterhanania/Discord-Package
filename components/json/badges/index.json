@@ -114,6 +114,31 @@
     "shift": 21,
     "undocumented": true
   },
+  "ACTIVE_DEVELOPER": {
+    "description": "{p_1} are a active developer",
+    "shift": 22,
+    "undocumented": false
+  },
+  "HIGH_GLOBAL_RATE_LIMIT": {
+    "description": "Account has a high global ratelimit",
+    "shift": 33,
+    "undocumented": true
+  },
+  "DELETED": {
+    "description": "Account has been deleted",
+    "shift": 34,
+    "undocumented": true
+  },
+  "DISABLED_SUSPICIOUS_ACTIVITY": {
+    "description": "Account has been disabled for suspicious activity",
+    "shift": 35,
+    "undocumented": true
+  },
+  "SELF_DELETED": {
+    "description": "Account was deleted by the user",
+    "shift": 36,
+    "undocumented": true
+  },
   "PREMIUM_DISCRIMINATOR": {
     "description": "{p_1} have a premium discriminator",
     "shift": 37,
