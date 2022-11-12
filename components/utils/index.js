@@ -299,6 +299,7 @@ class Utils {
         "USED_WEB_CLIENT",
         "USED_MOBILE_CLIENT",
         "VERIFIED_EMAIL",
+        "ACTIVE_DEVELOPER",
       ],
       [
         "DISCORD_EMPLOYEE",
@@ -333,6 +334,7 @@ class Utils {
         "USED_WEB_CLIENT",
         "USED_MOBILE_CLIENT",
         "VERIFIED_EMAIL",
+        "ACTIVE_DEVELOPER",
       ],
       [
         "DISCORD_EMPLOYEE",
@@ -367,6 +369,7 @@ class Utils {
         "USED_DESKTOP_CLIENT",
         "USED_WEB_CLIENT",
         "USED_MOBILE_CLIENT",
+        "ACTIVE_DEVELOPER",
       ],
       [
         "MFA_SMS",
@@ -385,6 +388,7 @@ class Utils {
         "USED_MOBILE_CLIENT",
         "USED_WEB_CLIENT",
         "VERIFIED_TRUE",
+        "ACTIVE_DEVELOPER",
       ],
     ];
 
