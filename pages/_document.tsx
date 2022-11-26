@@ -49,11 +49,11 @@ export default function Document() {
         />
         <meta
           name="description"
-          content="Discord Data Package Viewer makes it easy to explore your Discord data package. Dig through all your old dms, messages, guilds, and more. Find forgotten memories & uncovered hidden gems."
+          content="Discord Data Package Viewer makes it easy to explore and view your Discord data package. Dig through all your old dms, messages, guilds, and more. Find forgotten memories & uncovered hidden gems."
         />
         <meta
           name="image"
-          content="https://discordpackage.com/discord-package.png"
+          content={process.env.NEXT_PUBLIC_DOMAIN + "/discord-package.png"}
         />
         <meta
           name="keywords"
@@ -70,11 +70,11 @@ export default function Document() {
         />
         <meta
           property="og:description"
-          content="Discord Data Package Viewer makes it easy to explore your Discord data package. Dig through all your old dms, messages, guilds, and more. Find forgotten memories & uncovered hidden gems."
+          content="Discord Data Package Viewer makes it easy to explore and view your Discord data package. Dig through all your old dms, messages, guilds, and more. Find forgotten memories & uncovered hidden gems."
         />
         <meta
           property="og:image"
-          content="https://discordpackage.com/thumbnail.png"
+          content={process.env.NEXT_PUBLIC_DOMAIN + "/thumbnail.png"}
         />
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://discordpackage.com" />
@@ -84,11 +84,11 @@ export default function Document() {
         />
         <meta
           property="twitter:description"
-          content="Discord Data Package Viewer makes it easy to explore your Discord data package. Dig through all your old dms, messages, guilds, and more. Find forgotten memories & uncovered hidden gems."
+          content="Discord Data Package Viewer makes it easy to explore and view your Discord data package. Dig through all your old dms, messages, guilds, and more. Find forgotten memories & uncovered hidden gems."
         />
         <meta
           property="twitter:image"
-          content="https://discordpackage.com/discord-package.png"
+          content={process.env.NEXT_PUBLIC_DOMAIN + "/discord-package.png"}
         />
         <noscript>
           <div

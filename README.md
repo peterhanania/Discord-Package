@@ -8,11 +8,13 @@
 
 <div align=left>
 
-<a>[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/peterhanania/Discord-Package)</a>
-<a>
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/peterhanania/discord-package)</a>
+[![Deploy to Vercel](https://binbashbanana.github.io/deploy-buttons/buttons/remade/vercel.svg)](https://vercel.com/new/clone?repository-url=https://github.com/peterhanania/Discord-Package)
+[![Deploy to Heroku](https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg)](https://heroku.com/deploy/?template=https://github.com/peterhanania/discord-package)
+[![Deploy to Netlify](https://binbashbanana.github.io/deploy-buttons/buttons/remade/netlify.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/peterhanania/discord-package)
+ 
+⬆️ Read [installation instructions](#installation) before hosting locally or externally.
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/9b15f9e3-a39a-4b15-a3c8-1e73226006c2/deploy-status)](https://app.netlify.com/sites/discordpackage/deploys)
+[![Deploy Discord Package](https://github.com/peterhanania/Discord-Package/actions/workflows/nextjs.yml/badge.svg)](https://github.com/peterhanania/Discord-Package/actions/workflows/nextjs.yml)
 
 <a href="https://github.com/peterhanania/discord-package/blob/main/LICENSE.md">
 <img src="https://img.shields.io/badge/license-GPL-blue" alt="license">
@@ -151,7 +153,7 @@ This Repo is directly hosted via Netlify to discordpackage.com
 
 ### Notice
 
-This project **does not** store any information, and does not have any third party services other than google analytics. If you would like to self host it yourself, you could follow the following instructions.
+This project **does not** store any information, and does not have any third party services other than Google Analytics. If you would like to self host it yourself, you could follow the following instructions.
 
 ### Production Deployment
 
@@ -161,6 +163,11 @@ Discord Data Package Explorer is built with **[Next.js](https://nextjs.org/)** a
 - Install the dependencies using `npm install` or `yarn install`.
 - Start the app using `npm run dev`.
 
+## Installation
+When hosting locally or externally, make sure you change the `NEXT_PUBLIC_DOMAIN` environment variable in the `.env.local` file to your domain or it will use the default domain `https://discordpackage.com`.
+
+- Local: Just edit it manually
+- External: You need to customize it via the provider dashboard settings.
 #### Using Docker
 
 - Run `docker build -t discord-package-explorer .` to build the image.

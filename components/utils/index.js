@@ -8,9 +8,12 @@ import emojis from "../json/demo/emojis.json";
 import randomWords from "random-words";
 import curseWords from "../json/demo/curse.json";
 import Events from "../json/events.json";
+import currencies from "../json/other/currencies.json";
 
 class Utils {
   static getMostUsedCurrency(transactions) {
+    if(transactions == null) { return; }
+
     const currenciesUsed = {};
     transactions.forEach((a) => {
       if (currenciesUsed[a.currency]) {
@@ -19,10 +22,16 @@ class Utils {
         currenciesUsed[a.currency] = 1;
       }
     });
+
     const mostUsedCurrency = Object.keys(currenciesUsed)
       .sort((a, b) => currenciesUsed[b] - currenciesUsed[a])
       .shift();
-    return mostUsedCurrency;
+
+    const currency = currencies?.find(
+      (a) => a?.abbreviation.toLowerCase() === mostUsedCurrency
+    );
+
+    return currency.symbol;
   }
   static readFile(name, files) {
     return new Promise((resolve) => {
@@ -299,6 +308,7 @@ class Utils {
         "USED_WEB_CLIENT",
         "USED_MOBILE_CLIENT",
         "VERIFIED_EMAIL",
+        "ACTIVE_DEVELOPER",
       ],
       [
         "DISCORD_EMPLOYEE",
@@ -333,6 +343,7 @@ class Utils {
         "USED_WEB_CLIENT",
         "USED_MOBILE_CLIENT",
         "VERIFIED_EMAIL",
+        "ACTIVE_DEVELOPER",
       ],
       [
         "DISCORD_EMPLOYEE",
@@ -367,6 +378,7 @@ class Utils {
         "USED_DESKTOP_CLIENT",
         "USED_WEB_CLIENT",
         "USED_MOBILE_CLIENT",
+        "ACTIVE_DEVELOPER",
       ],
       [
         "MFA_SMS",
@@ -385,6 +397,7 @@ class Utils {
         "USED_MOBILE_CLIENT",
         "USED_WEB_CLIENT",
         "VERIFIED_TRUE",
+        "ACTIVE_DEVELOPER",
       ],
     ];
 

@@ -242,7 +242,7 @@ export default function Settings(): ReactElement {
         </Dialog>
       </Transition>
       <Tippy
-        zIndex={999999999999999}
+        zIndex={99999999999999}
         content={"Settings"}
         animation="scale"
         className="shadow-xl"

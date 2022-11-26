@@ -25,11 +25,10 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# local env files
-.env*.local
+#env
+.env.local
 
 # vercel
 .vercel
 yarn.lock
-package-lock.json
 components/json/test.json

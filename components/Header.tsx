@@ -233,7 +233,7 @@ export default function Header() {
                 <p className="text-white text-lg py-2 px-8">
                   If you need help, kindly join our
                   <a
-                    href="/discord"
+                    href={process.env.NEXT_PUBLIC_DOMAIN +"/discord"}
                     className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold mx-1"
                     target="_blank"
                     rel="noreferrer"
@@ -248,7 +248,7 @@ export default function Header() {
                     </h3>
                     <Image
                       unoptimized={true}
-                      src="/help/1.png"
+                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/1.png"}
                       alt="1"
                       width={500}
                       height={300}
@@ -258,7 +258,7 @@ export default function Header() {
                     </h3>
                     <Image
                       unoptimized={true}
-                      src="/help/2.png"
+                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/2.png"}
                       alt="2"
                       width={500}
                       height={300}
@@ -269,7 +269,7 @@ export default function Header() {
                     </h3>
                     <Image
                       unoptimized={true}
-                      src="/help/3.png"
+                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/3.png"}
                       alt="3"
                       width={500}
                       height={300}
@@ -282,14 +282,14 @@ export default function Header() {
                     </h3>
                     <Image
                       unoptimized={true}
-                      src="/help/4.png"
+                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/4.png"}
                       alt="4"
                       width={500}
                       height={30}
                     />{" "}
                     <Image
                       unoptimized={true}
-                      src="/help/5.png"
+                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/5.png"}
                       alt="5"
                       width={500}
                       height={300}
@@ -299,7 +299,10 @@ export default function Header() {
                       on the box.
                     </h3>
                     <video controls>
-                      <source src="/help/1.mp4" type="video/webm" />
+                      <source
+                        src={process.env.NEXT_PUBLIC_DOMAIN +"/help/1.mp4"}
+                        type="video/webm"
+                      />
                       Your browser does not support embedded videos
                     </video>{" "}
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
@@ -307,7 +310,10 @@ export default function Header() {
                       uploading.
                     </h3>
                     <video controls>
-                      <source src="/help/2.mp4" type="video/webm" />
+                      <source
+                        src={process.env.NEXT_PUBLIC_DOMAIN +"/help/2.mp4"}
+                        type="video/webm"
+                      />
                       Your browser does not support embedded videos.
                     </video>
                     <h3 className="text-xl font-medium text-white mb-2 mt-4">
@@ -315,7 +321,10 @@ export default function Header() {
                       data you want to display
                     </h3>
                     <video controls>
-                      <source src="/help/3.mp4" type="video/webm" />
+                      <source
+                        src={process.env.NEXT_PUBLIC_DOMAIN +"/help/3.mp4"}
+                        type="video/webm"
+                      />
                       Your browser does not support embedded videos
                     </video>
                   </div>
@@ -394,7 +403,7 @@ export default function Header() {
                     <u className="mr-1">
                       <a
                         className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                        href="/privacy"
+                        href={process.env.NEXT_PUBLIC_DOMAIN +"/privacy"}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -405,7 +414,7 @@ export default function Header() {
                     <u className="ml-1">
                       <a
                         className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                        href="/discord"
+                        href={process.env.NEXT_PUBLIC_DOMAIN +"/discord"}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -448,17 +457,17 @@ export default function Header() {
                     <br />
                     <br />
                     This project does not store any information, and does not
-                    have any third party services other than google analytics.
+                    have any third party services other than Google Analytics.
                     <br />
                     <br />
                     This website is also deployed on{" "}
                     <a
                       className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                      href="https://Netlify.com"
+                      href="https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=github-pages"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      Netlify
+                      Github Pages
                     </a>{" "}
                     from the{" "}
                     <a
@@ -748,7 +757,7 @@ export default function Header() {
               fontFamily:
                 "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
             }}
-            className="animate__animated animate__zoomIn animate__delay-0s dark:text-white text-gray-900 font-bold lg:text-5xl md:text-3xl sm:text-2xl text-xl uppercase dark:drop-shadow-[0_0_25px_#000] drop-shadow-[0_0_25px_#fff]"
+            className="dark:text-white text-gray-900 font-bold lg:text-5xl md:text-3xl sm:text-2xl text-xl uppercase dark:drop-shadow-[0_0_25px_#000] drop-shadow-[0_0_25px_#fff]"
           >
             Discord Package
           </h1>
@@ -761,12 +770,17 @@ export default function Header() {
             className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold"
             href="https://github.com/peterhanania/discord-package"
           >
-            Open Sourced
+            Open Source
           </a>{" "}
           Discord Package Explorer and Viewer; Read your data with ease!
         </p>
         <div className="portrait:hidden lg:hidden landscape:flex md:landscape:hidden lg:text-xl md:text-xl text-sm mt-1 animate__delay-1s animate__animated animate__fadeIn flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
-          <Link href="/demo" target="_blank" rel="noreferrer" type="button">
+          <Link
+            href={process.env.NEXT_PUBLIC_DOMAIN +"/demo"}
+            target="_blank"
+            rel="noreferrer"
+            type="button"
+          >
             <a className="button-green text-gray-200  my-2 flex items-center">
               Click to View Demo
             </a>
@@ -774,7 +788,7 @@ export default function Header() {
         </div>
         <div className="flex justify-center items-center mt-2">
           <Tippy
-            zIndex={999999999999999}
+            zIndex={99999999999999}
             content={"Help"}
             animation="scale"
             className="shadow-xl "
@@ -790,7 +804,7 @@ export default function Header() {
             </svg>
           </Tippy>
           <Tippy
-            zIndex={999999999999999}
+            zIndex={99999999999999}
             content={"Settings"}
             animation="scale"
             className="shadow-xl"
@@ -806,7 +820,7 @@ export default function Header() {
             </svg>
           </Tippy>
           <Tippy
-            zIndex={999999999999999}
+            zIndex={99999999999999}
             content={"About"}
             animation="scale"
             className="shadow-xl"
@@ -822,7 +836,7 @@ export default function Header() {
             </svg>
           </Tippy>
           <Tippy
-            zIndex={999999999999999}
+            zIndex={99999999999999}
             content={"Tutorials"}
             animation="scale"
             className="shadow-xl"
