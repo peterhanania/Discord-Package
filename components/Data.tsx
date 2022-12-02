@@ -1002,7 +1002,9 @@ const statIcons = {
     </span>
   ),
   searchStarted: (
-    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]"></span>
+    <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
+      pageview
+    </span>
   ),
   sendMessage: (
     <span className="material-symbols-rounded lg:text-[42px] md:text-[42px] text-[20px]">
