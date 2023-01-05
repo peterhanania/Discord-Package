@@ -175,7 +175,7 @@
     "emailSent": "{you've} sent {count} Emails to Discord",
     "externalDynamicLinkReceived": "{you've} Received {count} External Dynamic Links",
     "friendAddViewed": "{you've} Viewed {count} Friend Requests",
-    "friendRequestFailed": "{you've} have rejected {count} Friend Requests",
+    "friendRequestFailed": "{you've} rejected {count} Friend Requests",
     "friendsListViewed": "{you've} Viewed your Friends List {count} times",
     "giftCodeCopied": "{you've} Copied {count} Gift Codes",
     "giftCodeCreated": "{you've} Created {count} Gift Codes",
