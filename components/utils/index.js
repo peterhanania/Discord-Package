@@ -9,10 +9,13 @@ import randomWords from "random-words";
 import curseWords from "../json/demo/curse.json";
 import Events from "../json/events.json";
 import currencies from "../json/other/currencies.json";
+import connectionsJSON from "../json/connections.json";
 
 class Utils {
   static getMostUsedCurrency(transactions) {
-    if(transactions == null) { return; }
+    if (transactions == null) {
+      return;
+    }
 
     const currenciesUsed = {};
     transactions.forEach((a) => {
@@ -139,6 +142,9 @@ class Utils {
     for (let index = 0; index < length; index++) {
       item = words[index];
       if (!item) continue;
+
+      // ignore words with less or equal than 3 characters
+      if (item.length <= 3) continue;
 
       if (!object[item]) object[item] = 1;
       else ++object[item];
@@ -438,22 +444,8 @@ class Utils {
         }))
         .sort((a, b) => b.count - a.count);
 
-    const connectionsPossible = [
-      "youtube",
-      "xbox",
-      "twitter",
-      "twitch",
-      "steam",
-      "spotify",
-      "reddit",
-      "playstation",
-      "github",
-      "facebook",
-      "epicgames",
-      "battlenet",
-    ];
-
-    const connectionsRand = Math.floor(Math.random() * 5) + 1;
+    const connectionsPossible = Object.keys(connectionsJSON);
+    const connectionsRand = Math.floor(Math.random() * connectionsPossible.length) + 1;
     const connectionsArray = [];
     for (let i = 0; i < connectionsRand; i++) {
       const connectionsArray_ =
@@ -464,6 +456,7 @@ class Utils {
       if (!connectionsArray.includes(connectionsArray_))
         connectionsArray.push(connectionsArray_);
     }
+
     const connections = connectionsArray.map((connection) => ({
       type: connection,
       name: username + Math.floor(Math.random() * 10) + 1,

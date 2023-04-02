@@ -529,6 +529,8 @@ export default function Upload(): ReactElement {
                   userInformationData.settings.settings.appearance;
             }
 
+            // deprecated => Discord does not give accurate folder data.
+
             // if (options.settings.folderCount) {
             //   if (
             //     userInformationData.settings.settings.guildFolders &&
@@ -2104,129 +2106,38 @@ export default function Upload(): ReactElement {
                 "Loading Messages|||Calculating your top hours on Discord"
               );
 
-            const hourlyMessages = [];
-            for (let i = 0; i < 24; i++) {
-              hourlyMessages.push(
-                channels
-                  .map((c) => c.messages)
-                  .flat()
-                  .filter((m) => {
-                    if (!m.timestamp) return false;
-                    const date: any = new Date(m.timestamp).getHours();
-                    if (date && date !== "Invalid Date") {
-                      return date === i;
-                    } else {
-                      const date_: any = moment(m.timestamp).format("HH");
-                      if (date_) {
-                        return date_ == i;
-                      } else {
-                        return false;
-                      }
-                    }
-                  }).length
-              );
-            }
+            /**
+             * @Info Removed moment support for IOS devices because its way too slow.
+             * @author @peterhanania
+             */
 
-            const dailyMessages = [];
-            for (let i = 0; i < 7; i++) {
-              dailyMessages.push(
-                channels
-                  .map((c) => c.messages)
-                  .flat()
-                  .filter((m) => {
-                    if (!m.timestamp) return false;
-                    const date: any = new Date(m.timestamp).getDay();
-                    if (date && date !== "Invalid Date") {
-                      return parseInt(date) == i;
-                    } else {
-                      const date_: any = moment(m.timestamp).format("d");
-                      if (date_) {
-                        return date_ == i;
-                      } else {
-                        return false;
-                      }
-                    }
-                  }).length
-              );
-            }
+            const messagesByHour = Array.from({ length: 24 }, () => 0);
+            const messagesByDay = Array.from({ length: 7 }, () => 0);
+            const messagesByMonth = Array.from({ length: 12 }, () => 0);
+            const messagesByYear: any = {};
 
-            const dates2: any = [];
-            const monthlyMessages = [];
-            for (let i = 0; i < 12; i++) {
-              monthlyMessages.push(
-                channels
-                  .map((c) => c.messages)
-                  .flat()
-                  .filter((m) => {
-                    if (!m.timestamp) return false;
-                    const date: any = new Date(m.timestamp).getMonth();
-                    if (!dates2.includes(date)) dates2.push(date);
+            channels.forEach((channel) => {
+              channel.messages.forEach((message: {
+                timestamp: number;
+              }) => {
+                if (!message.timestamp) return;
 
-                    if (date && date !== "Invalid Date") {
-                      return parseInt(date) == i;
-                    } else {
-                      const date_: any = parseInt(
-                        moment(m.timestamp).format("M")
-                      );
-                      if (date_) {
-                        return date_ == i + 1;
-                      } else {
-                        return false;
-                      }
-                    }
-                  }).length
-              );
-            }
+                const date = new Date(message.timestamp);
+                messagesByHour[date.getHours()]++;
+                messagesByDay[date.getDay()]++;
+                messagesByMonth[date.getMonth()]++;
 
-            const yearlyMessages: any = [];
-            const years: any = [];
-            channels
-              .map((c) => c.messages)
-              .flat()
-              .forEach((m) => {
-                if (!m.timestamp) return false;
-                const date: any = new Date(m.timestamp).getFullYear();
-                if (date && date !== "Invalid Date") {
-                  if (!years.includes(date)) {
-                    years.push(date);
-                  }
-                } else {
-                  const date_: any = moment(m.timestamp).format("YYYY");
-                  if (date_) {
-                    if (!years.includes(date_)) {
-                      years.push(date_);
-                    }
-                  }
-                }
+                const year = date.getFullYear();
+                if (!messagesByYear[year]) messagesByYear[year] = 0;
+                messagesByYear[year]++;
               });
-
-            years.forEach((year: any) => {
-              yearlyMessages.unshift(
-                channels
-                  .map((c) => c.messages)
-                  .flat()
-                  .filter((m) => {
-                    if (!m.timestamp) return false;
-                    const date: any = new Date(m.timestamp).getFullYear();
-                    if (date && date !== "Invalid Date") {
-                      return date === year;
-                    } else {
-                      const date_: any = moment(m.timestamp).format("YYYY");
-                      if (date_) {
-                        return date_ == year;
-                      } else {
-                        return false;
-                      }
-                    }
-                  }).length
-              );
             });
 
             data.messages.hoursValues = {
-              hourly: hourlyMessages,
-              daily: dailyMessages,
-              monthly: monthlyMessages,
-              yearly: yearlyMessages,
+              hourly: messagesByHour,
+              daily: messagesByDay,
+              monthly: messagesByMonth,
+              yearly: Object.values(messagesByYear),
             };
 
             if (isDebug) {

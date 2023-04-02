@@ -6,16 +6,17 @@ import React from "react";
 class ErrorBoundary extends React.Component<any> {
   state: {
     hasError: boolean;
+    error: string;
   };
   constructor(props: { children: any }) {
     super(props);
 
-    this.state = { hasError: false };
+    this.state = { hasError: false, error: "" };
   }
   static getDerivedStateFromError(error: any) {
     console.log(error);
 
-    return { hasError: true };
+    return { hasError: true, error: error.message };
   }
   componentDidCatch(error: any, errorInfo: any) {
     console.log({ error, errorInfo });
@@ -51,16 +52,17 @@ class ErrorBoundary extends React.Component<any> {
                   </h1>
                   <p className="pb-8 text-2xl dark:text-white text-gray-800 max-w-lg">
                     An error has just occured, please report this issue to the
-                    discord server! Click the button below to join the Discord,
-                    go to this browser&apos;s console, take a screenshot and
-                    send it to channel
-                    <code className="ml-1">
+                    discord server! However, before doing so, try pressing on
+                    the &apos;retry&apos; button, if it does not work, click the
+                    button below to join the Discord, take a screenshot of the
+                    error below and send it to channel
+                    <code className="mx-1">
                       <u>#bug-reports</u>
                     </code>
-                    .
+                    and we will try to fix it as soon as possible.
                   </p>
                   <div className="pb-8 text-2xl font-bold text-red-500 max-w-lg">
-                    Look at the console for more details
+                    {this.state.error}
                   </div>
                   <a
                     onClick={() => {

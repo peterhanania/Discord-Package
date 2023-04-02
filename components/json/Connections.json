@@ -21,5 +21,29 @@
   "github": { "link": "https://github.com/", "name": "GitHub" },
   "facebook": { "link": null, "name": "Facebook" },
   "epicgames": { "link": null, "name": "Epic Games" },
-  "battlenet": { "link": null, "name": "Battle.net" }
+  "battlenet": { "link": null, "name": "Battle.net" },
+  "ebay": {
+    "link": "https://www.ebay.com/str/",
+    "name": "eBay"
+  },
+  "instagram": {
+    "link": "https://www.instagram.com/",
+    "name": "Instagram"
+  },
+  "leagueoflegends": {
+    "link": null,
+    "name": "League of Legends"
+  },
+  "paypal": {
+    "link": null,
+    "name": "PayPal"
+  },
+  "riotgames": {
+    "link": null,
+    "name": "Riot Games"
+  },
+  "tiktok": {
+    "link": "https://www.tiktok.com/@",
+    "name": "TikTok"
+  }
 }
