@@ -3,7 +3,6 @@ import Badges from "./json/badges/index.json";
 import Tippy from "@tippyjs/react";
 import moment from "moment";
 import emojis from "./json/demo/emojis.json";
-import currencies from "./json/other/currencies.json";
 import Utils from "./utils";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -11572,8 +11571,7 @@ export default function Data({ data, demo }: any): ReactElement {
                     </Tippy>
                     {data?.dataFile ? "They've " : "You've "}spent{" "}
                     <p className="mx-1 font-extrabold text-blue-500 inline-flex">
-                      {Utils.getMostUsedCurrency(data.payments.transactions)}
-                      {data?.payments?.total?.toFixed(2) || 0}
+                      {Utils.getMostUsedCurrency(data.payments.transactions, data?.payments?.total?.toFixed(2) ?? 0)}
                     </p>
                     on Discord
                   </span>
@@ -11596,9 +11594,10 @@ export default function Data({ data, demo }: any): ReactElement {
                           <div className="inline-flex">
                             <p className="mx-1 font-extrabold inline-flex">
                               {Utils.getMostUsedCurrency(
-                                data.payments.transactions
+                                data.payments.transactions,
+                                t?.amount ? t.amount : 0
                               )}
-                              {t?.amount ? t.amount : 0}
+                            
                             </p>
                             on
                             <Tippy

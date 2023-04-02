@@ -12,7 +12,7 @@ import currencies from "../json/other/currencies.json";
 import connectionsJSON from "../json/connections.json";
 
 class Utils {
-  static getMostUsedCurrency(transactions) {
+  static getMostUsedCurrency(transactions, amount) {
     if (transactions == null) {
       return;
     }
@@ -34,8 +34,13 @@ class Utils {
       (a) => a?.abbreviation.toLowerCase() === mostUsedCurrency
     );
 
-    return currency.symbol;
+    // {amount}{symbol}
+    if (currency.right) return `${amount}${currency.symbol}`;
+
+    // {symbol}{amount}
+    else return `${currency.symbol}${amount}`;
   }
+
   static readFile(name, files) {
     return new Promise((resolve) => {
       const file = files.find((file) => {
@@ -445,7 +450,8 @@ class Utils {
         .sort((a, b) => b.count - a.count);
 
     const connectionsPossible = Object.keys(connectionsJSON);
-    const connectionsRand = Math.floor(Math.random() * connectionsPossible.length) + 1;
+    const connectionsRand =
+      Math.floor(Math.random() * connectionsPossible.length) + 1;
     const connectionsArray = [];
     for (let i = 0; i < connectionsRand; i++) {
       const connectionsArray_ =

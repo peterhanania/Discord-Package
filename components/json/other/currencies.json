@@ -152,7 +152,8 @@
   {
     "currency": "Egypt Pound",
     "abbreviation": "EGP",
-    "symbol": "£"
+    "symbol": "£",
+    "right": true
   },
   {
     "currency": "El Salvador Colon",
@@ -172,7 +173,8 @@
   {
     "currency": "Falkland Islands (Malvinas) Pound",
     "abbreviation": "FKP",
-    "symbol": "£"
+    "symbol": "£",
+    "right": true
   },
   {
     "currency": "Fiji Dollar",
@@ -187,7 +189,8 @@
   {
     "currency": "Gibraltar Pound",
     "abbreviation": "GIP",
-    "symbol": "£"
+    "symbol": "£",
+    "right": true
   },
   {
     "currency": "Guatemala Quetzal",
@@ -432,7 +435,8 @@
   {
     "currency": "Saint Helena Pound",
     "abbreviation": "SHP",
-    "symbol": "£"
+    "symbol": "£",
+    "right": true
   },
   {
     "currency": "Saudi Arabia Riyal",
@@ -537,7 +541,8 @@
   {
     "currency": "United Kingdom Pound",
     "abbreviation": "GBP",
-    "symbol": "£"
+    "symbol": "£",
+    "right": true
   },
   {
     "currency": "United States Dollar",
