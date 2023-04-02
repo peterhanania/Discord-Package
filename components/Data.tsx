@@ -14,7 +14,7 @@ import HighchartsExporting from "highcharts/modules/exporting";
 import HighchartsExportData from "highcharts/modules/export-data";
 import Highchartsaccessibility from "highcharts/modules/accessibility";
 import { useSnackbar } from "notistack";
-import Connections from "./json/connections.json";
+import Connections from "./json/Connections.json";
 import {
   topDMsAtom,
   topChannelsAtom,

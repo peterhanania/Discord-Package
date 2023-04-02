@@ -9,7 +9,7 @@ import randomWords from "random-words";
 import curseWords from "../json/demo/curse.json";
 import Events from "../json/events.json";
 import currencies from "../json/other/currencies.json";
-import connectionsJSON from "../json/connections.json";
+import connectionsJSON from "../json/Connections.json";
 
 class Utils {
   static getMostUsedCurrency(transactions, amount) {
