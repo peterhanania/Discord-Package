@@ -6,8 +6,14 @@ import emojis from "./json/demo/emojis.json";
 import Utils from "./utils";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { ReactElement, useState, Fragment, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import {
+  Fragment,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+import { toast, ToastContainer } from "react-toastify";
 import EventsJSON from "./json/events.json";
 import Settings from "./settings";
 import HighchartsExporting from "highcharts/modules/exporting";
@@ -16,10 +22,10 @@ import Highchartsaccessibility from "highcharts/modules/accessibility";
 import { useSnackbar } from "notistack";
 import Connections from "./json/Connections.json";
 import {
-  topDMsAtom,
   topChannelsAtom,
-  topGuildsAtom,
+  topDMsAtom,
   topGroupDMsAtom,
+  topGuildsAtom,
 } from "./atoms/data";
 import { useAtom } from "jotai";
 import Driver from "driver.js";
@@ -27,17 +33,15 @@ import "driver.js/dist/driver.min.css";
 // twe-emoji, will remove if it uses so much bandwidth
 import Twemoji from "react-twemoji";
 import { Dialog, Transition } from "@headlessui/react";
+import type { Container, Engine } from "tsparticles-engine";
+import Particles from "react-particles";
+import { loadFull } from "tsparticles";
 
 if (typeof Highcharts === "object") {
   HighchartsExporting(Highcharts);
   HighchartsExportData(Highcharts);
   Highchartsaccessibility(Highcharts);
 }
-
-import { useCallback } from "react";
-import type { Container, Engine } from "tsparticles-engine";
-import Particles from "react-particles";
-import { loadFull } from "tsparticles";
 
 function loadTenor() {
   var embedurl = "https://tenor.com/embed/";
@@ -1924,10 +1928,11 @@ export default function Data({ data, demo }: any): ReactElement {
             <div>
               <div className="lg:flex md:flex items-center text-gray-900 dark:text-white">
                 <p className="text-xl md:text-2xl lg:text-3xl">
-                  {data?.user?.username}#
-                  {"0".repeat(4 - data?.user?.discriminator.toString().length) +
-                    data?.user?.discriminator.toString()}
+                  {data?.user?.username}
+                  {data?.user?.discriminator &&
+                    "#" + data?.user?.discriminator.toString().padStart(4, "0")}
                 </p>
+
                 <div className="flex items-center">
                   {data?.messages?.characterCount &&
                   data?.messages?.messageCount ? (
@@ -4050,7 +4055,8 @@ export default function Data({ data, demo }: any): ReactElement {
           <div id="blur_5_div_1">
             <div id="blur_5_div">
               <span className="mb-2 font-bold text-blue-400 flex items-start justify-start w-full">
-                This feature is experimental, please report any issues to the Discord server.
+                This feature is experimental, please report any issues to the
+                Discord server.
               </span>
               <span
                 className=" text-gray-900 dark:text-white lg:text-4xl md:text-3xl text-xl font-bold lg:flex md:flex sm:flex items-center"
@@ -11571,7 +11577,10 @@ export default function Data({ data, demo }: any): ReactElement {
                     </Tippy>
                     {data?.dataFile ? "They've " : "You've "}spent{" "}
                     <p className="mx-1 font-extrabold text-blue-500 inline-flex">
-                      {Utils.getMostUsedCurrency(data.payments.transactions, data?.payments?.total?.toFixed(2) ?? 0)}
+                      {Utils.getMostUsedCurrency(
+                        data.payments.transactions,
+                        data?.payments?.total?.toFixed(2) ?? 0
+                      )}
                     </p>
                     on Discord
                   </span>
@@ -11597,7 +11606,6 @@ export default function Data({ data, demo }: any): ReactElement {
                                 data.payments.transactions,
                                 t?.amount ? t.amount : 0
                               )}
-                            
                             </p>
                             on
                             <Tippy
