@@ -178,5 +178,15 @@
     "description": "{p_1} have Nitro till {until}",
     "shift": 46,
     "undocumented": true
+  },
+  "COLLABORATOR": {
+    "description": "{p_1} are a collaborator and have staff permissions",
+    "shift": 50,
+    "undocumented": false
+  },
+  "RESTRICTED_COLLABORATOR": {
+    "description": "{p_1} are a restricted collaborator and have staff permissions",
+    "shift": 51,
+    "undocumented": false
   }
 }
