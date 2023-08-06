@@ -84,11 +84,6 @@
     "shift": 16,
     "undocumented": false
   },
-  "VERIFIED_TRUE": {
-    "description": "{p_1} have a verified bot but you are not verified by Discord",
-    "shift": 47,
-    "undocumented": false
-  },
   "VERIFIED_BOT_DEVELOPER": {
     "description": "{p_1} are a verified bot developer",
     "shift": 17,
@@ -115,7 +110,7 @@
     "undocumented": true
   },
   "ACTIVE_DEVELOPER": {
-    "description": "{p_1} are a active developer",
+    "description": "{p_1} are an active developer",
     "shift": 22,
     "undocumented": false
   },
@@ -174,14 +169,14 @@
     "shift": 44,
     "undocumented": true
   },
-  "nitro": {
+  "NITRO": {
     "description": "{p_1} have Nitro",
     "shift": 45,
-    "undocumented": false
+    "undocumented": true
   },
-  "nitro_until": {
+  "NITRO_UNTIL": {
     "description": "{p_1} have Nitro till {until}",
     "shift": 46,
-    "undocumented": false
+    "undocumented": true
   }
 }
