@@ -1091,13 +1091,15 @@ const statIcons = {
   ),
 };
 
-function copyToClipboard(value: string) {
-  const el: HTMLTextAreaElement = document.createElement("textarea");
-  el.value = value;
-  document.body.appendChild(el);
-  el.select();
-  document.execCommand("copy");
-  document.body?.removeChild(el);
+async function copyToClipboard(value: string) : Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(value);
+    console.log('Content copied to clipboard');
+    return true;
+  } catch (err) {
+    console.error('Failed to copy: ', err);
+    return false;
+  }
 }
 
 export default function Data({ data, demo }: any): ReactElement {
@@ -2767,11 +2769,14 @@ export default function Data({ data, demo }: any): ReactElement {
                               >
                                 <div
                                   className="cursor-pointer text-4xl opacity-90 hover:opacity-100"
-                                  onClick={() => {
-                                    copyToClipboard(
+                                  onClick={async () => {
+                                    if (await copyToClipboard(
                                       m.name + ": " + m.count + " times"
-                                    );
-                                    noti("Copied emoji to Clipboard");
+                                    )) {
+                                      noti("Copied emoji to Clipboard");
+                                    } else {
+                                      noti("Could not copy emoji to Clipboard");
+                                    }
                                   }}
                                 >
                                   <Image
@@ -2802,11 +2807,14 @@ export default function Data({ data, demo }: any): ReactElement {
                                 className="shadow-xl"
                               >
                                 <div
-                                  onClick={() => {
-                                    copyToClipboard(
+                                  onClick={async () => {
+                                    if (await copyToClipboard(
                                       ":" + m.name + ": - " + m.count + " times"
-                                    );
-                                    noti("Copied emoji to Clipboard");
+                                    )) {
+                                      noti("Copied emoji to Clipboard");
+                                    } else {
+                                      noti("Could not copy emoji to Clipboard");
+                                    }
                                   }}
                                   className="cursor-pointer opacity-90 hover:opacity-100 w-14 h-14"
                                 >
@@ -2852,11 +2860,14 @@ export default function Data({ data, demo }: any): ReactElement {
                                   className="shadow-xl"
                                 >
                                   <div
-                                    onClick={() => {
-                                      copyToClipboard(
+                                    onClick={async () => {
+                                      if (await copyToClipboard(
                                         m.emoji + ": " + m.count + " times"
-                                      );
-                                      noti("Copied emoji to Clipboard");
+                                      )) {
+                                        noti("Copied emoji to Clipboard");
+                                      } else {
+                                        noti("Could not copy emoji to Clipboard");
+                                      }
                                     }}
                                     className="cursor-pointer opacity-90 hover:opacity-100 w-14 h-14"
                                   >
@@ -2932,11 +2943,14 @@ export default function Data({ data, demo }: any): ReactElement {
                                   className="shadow-xl"
                                 >
                                   <div
-                                    onClick={() => {
-                                      copyToClipboard(
+                                    onClick={async () => {
+                                      if (await copyToClipboard(
                                         m.emoji + ": " + m.count + " times"
-                                      );
-                                      noti("Copied emoji to Clipboard");
+                                      )) {
+                                        noti("Copied emoji to Clipboard");
+                                      } else {
+                                        noti("Could not copy emoji to Clipboard");
+                                      }
                                     }}
                                     className="cursor-pointer lg:text-5xl text-4xl opacity-90 hover:opacity-100"
                                   >
@@ -2980,11 +2994,14 @@ export default function Data({ data, demo }: any): ReactElement {
                                     >
                                       <div
                                         className="cursor-pointer text-4xl opacity-90 hover:opacity-100"
-                                        onClick={() => {
-                                          copyToClipboard(
+                                        onClick={async () => {
+                                          if (await copyToClipboard(
                                             m.emoji + ": " + m.count + " times"
-                                          );
-                                          noti("Copied emoji to Clipboard");
+                                          )) {
+                                            noti("Copied emoji to Clipboard");
+                                          } else {
+                                            noti("Could not copy emoji to Clipboard");
+                                          }
                                         }}
                                       >
                                         <Image
@@ -3014,14 +3031,17 @@ export default function Data({ data, demo }: any): ReactElement {
                                         >
                                           <div
                                             className="cursor-pointer text-4xl opacity-90 hover:opacity-100 m-2"
-                                            onClick={() => {
-                                              copyToClipboard(
+                                            onClick={async () => {
+                                              if (await copyToClipboard(
                                                 m.emoji +
                                                   ": " +
                                                   m.count +
                                                   " times"
-                                              );
-                                              noti("Copied emoji to Clipboard");
+                                              )) {
+                                                noti("Copied emoji to Clipboard");
+                                              } else {
+                                                noti("Could not copy emoji to Clipboard");
+                                              }
                                             }}
                                           >
                                             <Image
@@ -11455,9 +11475,12 @@ export default function Data({ data, demo }: any): ReactElement {
                           className="cursor-pointer xl:m-1 m-2"
                           key={i}
                           id={"bot_" + i}
-                          onClick={() => {
-                            copyToClipboard(b.id);
-                            noti("Copied ID to Clipboard");
+                          onClick={async () => {
+                            if (await copyToClipboard(b.id)) {
+                              noti("Copied ID to Clipboard");
+                            } else {
+                              noti("Failed to copy ID to Clipboard");
+                            }
                           }}
                         >
                           <Tippy
