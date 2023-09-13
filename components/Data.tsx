@@ -2,6 +2,7 @@ import Image from "next/image";
 import Badges from "./json/badges/index.json";
 import Tippy from "@tippyjs/react";
 import moment from "moment";
+import chalk from "chalk";
 import emojis from "./json/demo/emojis.json";
 import Utils from "./utils";
 import Highcharts from "highcharts";
@@ -1092,12 +1093,25 @@ const statIcons = {
 };
 
 async function copyToClipboard(value: string) : Promise<boolean> {
+  const isDebug = localStorage.getItem("debug") === "true";
   try {
     await navigator.clipboard.writeText(value);
-    console.log('Content copied to clipboard');
+    if (isDebug) {
+      console.log(
+        chalk.bold.blue(`[DEBUG] `) +
+          chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+          `  ${chalk.yellow(`Content copied to clipboard`)}`
+      );
+    }
     return true;
   } catch (err) {
-    console.error('Failed to copy: ', err);
+    if (isDebug) {
+      console.error( 
+        chalk.bold.blue(`[DEBUG] `) +
+          chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+          `  ${chalk.yellow(`Failed to copy: ${err}`)}`
+      );
+    }
     return false;
   }
 }
