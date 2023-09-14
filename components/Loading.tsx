@@ -383,10 +383,10 @@ export default function Loading({ skeleton }: any): ReactElement {
                     <div className="ssc-square ico-lg rounded-lg"> </div>
                   </li>
                 </ul>
-                <p className="items-center ssc lg:flex md:lg:flex hidden">
+                <div className="items-center ssc lg:flex md:lg:flex hidden">
                   <div className="ssc-square rounded-lg w-sentence"> </div>
                   <div className="ml-2 ssc-circle w-[25.66px] h-[25.66px] rounded-full"></div>
-                </p>
+                </div>
               </span>
               <div className="row-span-3 ssc">
                 <div className="mx-2">
