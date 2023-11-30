@@ -172,7 +172,7 @@
     "devPortalPageViewed": "{you've} Viewed Discord's developer Portal {count} times",
     "dmListViewed": "{you've} opened your direct messages list {count} times",
     "emailOpened": "{you've} opened {count} emails sent by Discord",
-    "emailSent": "{you've} sent {count} Emails to Discord",
+    "emailSent": "{you've} been sent {count} Emails from Discord",
     "externalDynamicLinkReceived": "{you've} Received {count} External Dynamic Links",
     "friendAddViewed": "{you've} Viewed {count} Friend Requests",
     "friendRequestFailed": "{you've} rejected {count} Friend Requests",
