@@ -475,6 +475,14 @@ input[type="search"]:focus {
   cursor: pointer;
 }
 
+.toggle.light {
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
 .toggle label {
   margin-left: 5px;
   color: rgb(228, 217, 217);
@@ -482,8 +490,19 @@ input[type="search"]:focus {
   pointer-events: none;
 }
 
+.toggle label.light {
+  margin-left: 5px;
+  color: rgb(11, 0, 0);
+  cursor: pointer;
+  pointer-events: none;
+}
+
 .toggle input:checked + label {
   color: rgb(255, 255, 255);
+}
+
+.light {
+  color: rgb(0, 0, 0) !important;
 }
 
 .tippy-content {
