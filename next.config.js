@@ -8,7 +8,6 @@ const nextConfig = {
   },
   images: {
     domains: [
-      "upload.wikimedia.org",
       "cdn.discordapp.com",
       "i.imgur.com",
       "better-default-discord.netlify.app",

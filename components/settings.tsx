@@ -16,7 +16,7 @@ export default function Settings(): ReactElement {
       id: 1,
       name: "English",
       avatar:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/6/6c/Us_flag_large_38_stars.png/1200px-Us_flag_large_38_stars.png",
+        "https://i.imgur.com/sACh65I.png",
     },
   ];
   const [selected, setSelected] = useState(countries[0]);
