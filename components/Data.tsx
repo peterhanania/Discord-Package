@@ -11906,7 +11906,10 @@ export default function Data({ data, demo }: any): ReactElement {
                       className="ml-2 p-1 hover:bg-[#2b2d31] hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden w-8"
                       onClick={(e) => {
                         e.preventDefault();
-                        document.getElementById("popup__1")?.remove();
+                        const popup = document.getElementById("popup__1");
+                        if (popup) {
+                          popup.remove();
+                        }
                       }}
                     >
                       <svg
