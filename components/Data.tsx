@@ -11839,8 +11839,8 @@ export default function Data({ data, demo }: any): ReactElement {
                             key={i}
                             className="lg:inline-flex md:inline-flex lg:text-xl md:text-xl text-sm"
                           >
-                            - {data?.dataFile ? "They " : "You "} send ~
-                            {data?.statistics[t].day} Average Messages messages
+                            - {data?.dataFile ? "They " : "You "} send
+                            an average of {data?.statistics[t].day} messages
                             per day, {data?.statistics[t].week} messages per
                             week, {data?.statistics[t].month} messages per
                             month, and {data?.statistics[t].year} messages per
@@ -11906,7 +11906,10 @@ export default function Data({ data, demo }: any): ReactElement {
                       className="ml-2 p-1 hover:bg-[#2b2d31] hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden w-8"
                       onClick={(e) => {
                         e.preventDefault();
-                        document.getElementById("popup__1")?.remove();
+                        const popup = document.getElementById("popup__1");
+                        if (popup) {
+                          popup.remove();
+                        }
                       }}
                     >
                       <svg

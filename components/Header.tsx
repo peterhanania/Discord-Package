@@ -20,7 +20,7 @@ export default function Header() {
       id: 1,
       name: "English",
       avatar:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/6/6c/Us_flag_large_38_stars.png/1200px-Us_flag_large_38_stars.png",
+        "https://i.imgur.com/sACh65I.png",
     },
   ];
   const [selected, setSelected] = useState(countries[0]);
@@ -527,10 +527,10 @@ export default function Header() {
           <div className="flex items-center justify-center min-h-screen">
             <Dialog.Overlay className="fixed inset-0  bg-black/30" />
             <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
-              <div className="relative shadow-lg bg-[#36393f] ">
-                <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
+              <div className="relative shadow-lg dark:bg-[#36393f] bg-[#d1d5db]">
+                <div className="flex justify-between items-center p-5 rounded-t dark:bg-[#2b2d31] bg-[#eeeeee]">
                   <h3
-                    className="text-xl font-medium text-white uppercase"
+                    className="text-xl font-medium dark:text-white text-black uppercase"
                     style={{
                       fontFamily:
                         "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
@@ -561,7 +561,7 @@ export default function Header() {
                 </div>
 
                 <div className="overflow-y-auto h-[280px]">
-                  <div className="py-4 px-2 lg:py-6 lg:px-8 md:py-6 md:px-8 sm:py-6 sm:px-8 text-white font-bold text-lg">
+                  <div className="py-4 px-2 lg:py-6 lg:px-8 md:py-6 md:px-8 sm:py-6 sm:px-8 dark:text-white text-black font-bold text-lg">
                     THEME
                     <br />
                     <div
@@ -580,7 +580,7 @@ export default function Header() {
                         onChange={() => {}}
                         checked={theme === "dark"}
                       />
-                      <label htmlFor="dark">Dark</label>
+                      <label htmlFor="dark" className={theme === "light" ? "light" : ""}>Dark</label>
                     </div>
                     <div
                       className="toggle"
@@ -598,7 +598,7 @@ export default function Header() {
                         onChange={() => {}}
                         checked={theme === "light"}
                       />
-                      <label htmlFor="light">Light</label>
+                      <label htmlFor="light" className={theme === "light" ? "light" : ""}>Light</label>
                     </div>
                     <br />
                     Language
@@ -718,23 +718,23 @@ export default function Header() {
                           }}
                           id={"debug"}
                           type="checkbox"
-                          className="w-4 h-4 text-blue-600 bg-gray-100 rounded  border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                          className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                         />
                         <label
                           htmlFor={"debug"}
-                          className="pl-2 font-medium text-white font-mono"
+                          className="pl-2 font-medium dark:text-white text-black font-mono"
                           style={{
                             fontSize: "18px",
                           }}
                         >
-                          Turn debug mode on (recommended)
+                          Turn on debug mode (recommended)
                         </label>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
+                <div className="flex items-center p-6 space-x-2 rounded-b dark:bg-[#2b2d31] bg-[#eeeeee]">
                   <button
                     onClick={() => {
                       setSettings(false);

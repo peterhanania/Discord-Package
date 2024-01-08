@@ -45,7 +45,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       setLoading(false);
     }, 1000);
     console.log(
-      "%c🚀 Welcome to Discord Package 🚀\nPlease Report bugs to Peter_#4444",
+      "%c🚀 Welcome to Discord Package 🚀\nPlease Report bugs to @peterhanania",
       "font-size: 1.5rem; font-weight: bold; color: #fff; background: #000; padding: 0.5rem;"
     );
     console.log(

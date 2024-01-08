@@ -3474,6 +3474,13 @@ export default function Upload(): ReactElement {
               </defs>
             </svg>
           </Tippy>
+        </div>
+      </div>
+    </>
+  );
+}
+/* 
+The close button breaks stuff
           <Tippy
             zIndex={99999999999999}
             content={"Close"}
@@ -3483,10 +3490,17 @@ export default function Upload(): ReactElement {
             <div className="ml-3 justify-center items-center">
               <div
                 className="hover:bg-[#232323] p-1 hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden"
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   const madeBy = document.getElementById("made_by");
                   if (madeBy) {
-                    madeBy.remove();
+                    try {
+                      madeBy.remove();
+                    }
+                    catch(e)
+                    {
+                      console.error(e);
+                    }
                   }
                 }}
               >
@@ -3501,8 +3515,4 @@ export default function Upload(): ReactElement {
               </div>
             </div>
           </Tippy>
-        </div>
-      </div>
-    </>
-  );
-}
+*/

@@ -16,7 +16,7 @@ export default function Settings(): ReactElement {
       id: 1,
       name: "English",
       avatar:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/6/6c/Us_flag_large_38_stars.png/1200px-Us_flag_large_38_stars.png",
+        "https://i.imgur.com/sACh65I.png",
     },
   ];
   const [selected, setSelected] = useState(countries[0]);
@@ -47,10 +47,10 @@ export default function Settings(): ReactElement {
           <div className="flex items-center justify-center min-h-screen">
             <Dialog.Overlay className="fixed inset-0  bg-black/30" />
             <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
-              <div className="relative shadow-lg bg-[#36393f] ">
-                <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
+              <div className="relative shadow-lg dark:bg-[#36393f] bg-[#d1d5db]">
+                <div className="flex justify-between items-center p-5 rounded-t dark:bg-[#2b2d31] bg-[#eeeeee]">
                   <h3
-                    className="text-xl font-medium text-white uppercase"
+                    className="text-xl font-medium dark:text-white text-black uppercase"
                     style={{
                       fontFamily:
                         "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
@@ -63,7 +63,7 @@ export default function Settings(): ReactElement {
                       setSettings(false);
                     }}
                     type="button"
-                    className="text-gray-400 bg-transparent hover:bg-[#2f3136] hover:text-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                    className="dark:text-gray-400 text-black-400 bg-transparent hover:bg-[#2f3136] hover:text-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
                   >
                     <svg
                       className="w-5 h-5"
@@ -81,7 +81,7 @@ export default function Settings(): ReactElement {
                 </div>
 
                 <div className="overflow-y-auto h-[280px]">
-                  <div className="py-4 px-2 lg:py-6 lg:px-8 md:py-6 md:px-8 sm:py-6 sm:px-8 text-white font-bold text-lg">
+                  <div className="py-4 px-2 lg:py-6 lg:px-8 md:py-6 md:px-8 sm:py-6 sm:px-8 dark:text-white text-black font-bold text-lg">
                     THEME
                     <br />
                     <div
@@ -100,7 +100,7 @@ export default function Settings(): ReactElement {
                         onChange={() => {}}
                         checked={theme === "dark"}
                       />
-                      <label htmlFor="dark">Dark</label>
+                      <label htmlFor="dark" className={theme === "light" ? "light" : ""}>Dark</label>
                     </div>
                     <div
                       className="toggle"
@@ -118,7 +118,7 @@ export default function Settings(): ReactElement {
                         onChange={() => {}}
                         checked={theme === "light"}
                       />
-                      <label htmlFor="light">Light</label>
+                      <label htmlFor="light" className={theme === "light" ? "light" : ""}>Light</label>
                     </div>
                     <br />
                     Language
@@ -138,13 +138,13 @@ export default function Settings(): ReactElement {
                                       alt=""
                                       className="flex-shrink-0 h-6 w-6 rounded-full"
                                     />
-                                    <span className="ml-3 block truncate text-slate-900 dark:text-white">
+                                    <span className="ml-3 block truncate text-slate-900 dark:text-white text-black">
                                       {selected.name}
                                     </span>
                                   </span>
                                   <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                                     <SelectorIcon
-                                      className="h-5 w-5 text-gray-400"
+                                      className="h-5 w-5 dark:text-gray-400 text-white:400"
                                       aria-hidden="true"
                                     />
                                   </span>
@@ -225,7 +225,7 @@ export default function Settings(): ReactElement {
                   </div>
                 </div>
 
-                <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
+                <div className="flex items-center p-6 space-x-2 rounded-b dark:bg-[#2b2d31] bg-[#eeeeee]">
                   <button
                     onClick={() => {
                       setSettings(false);
