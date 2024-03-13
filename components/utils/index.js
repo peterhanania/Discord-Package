@@ -36,7 +36,6 @@ class Utils {
 
     // {amount}{symbol}
     if (currency.right) return `${amount}${currency.symbol}`;
-
     // {symbol}{amount}
     else return `${currency.symbol}${amount}`;
   }
@@ -67,6 +66,17 @@ class Utils {
       newline: ",\r",
     })
       .data.filter((m) => m.Contents)
+      .map((m) => ({
+        id: m.ID,
+        timestamp: m.Timestamp,
+        length: m.Contents.length,
+        words: m.Contents.split(" "),
+      }));
+  }
+
+  static parseJSON(input) {
+    return JSON.parse(input)
+      .filter((m) => m.Contents)
       .map((m) => ({
         id: m.ID,
         timestamp: m.Timestamp,
@@ -293,7 +303,9 @@ class Utils {
   static generateRandomData() {
     const id = Math.random().toString(36).substring(7);
     const username = names[Math.floor(Math.random() * names.length)];
-    const discriminator = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+
+    // Deprecated
+    // const discriminator = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
 
     const isNitroUser = Math.random() > 0.5 ? true : false;
     let avs;
@@ -626,10 +638,7 @@ class Utils {
       i++
     ) {
       topDMs.push({
-        user_tag:
-          names[Math.floor(Math.random() * names.length)] +
-          "#" +
-          Math.floor(Math.random() * (9999 - 1000 + 1)),
+        user_tag: names[Math.floor(Math.random() * names.length)],
         // eslint-disable-next-line no-loss-of-precision
         user_id: (
           Math.floor(
@@ -970,7 +979,7 @@ class Utils {
       user: {
         id,
         username,
-        discriminator,
+        discriminator: "",
         avatar,
         premium_until: isNitroUser
           ? Date.now() +

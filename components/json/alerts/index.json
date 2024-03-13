@@ -16,5 +16,11 @@
     "id": "alert_3",
     "url": "/discord",
     "button": "Join the Discord"
+  },
+  {
+    "title": "Welcome to Discord Package, report bugs to @peterhanania.",
+    "id": "alert_4",
+    "url": "/discord",
+    "button": "Join the Discord"
   }
 ]

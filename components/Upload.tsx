@@ -800,6 +800,33 @@ export default function Upload(): ReactElement {
                 `  ${chalk.yellow(`Started message scan`)}`
             );
 
+          // Discord Updated their message system in March of 2024
+          // They Replaced .CSV files with normal .JSON files
+
+          let extension = "csv";
+
+          const firstChannelID = channelsIDs[0];
+          const firstChannelMessagesPath = `messages/${
+            isOldPackage ? "" : "c"
+          }${firstChannelID}/messages.json`;
+
+          const firstChannelMessages = await Utils.readFile(
+            firstChannelMessagesPath,
+            files
+          );
+
+          if (firstChannelMessages) {
+            extension = "json";
+          }
+
+          if (isDebug) {
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Picked file extension: ${extension}`)}`
+            );
+          }
+
           await Promise.all(
             channelsIDs.map((channelID: any): any => {
               return new Promise((resolve) => {
@@ -808,7 +835,7 @@ export default function Upload(): ReactElement {
                 }${channelID}/channel.json`;
                 const channelMessagesPath = `messages/${
                   isOldPackage ? "" : "c"
-                }${channelID}/messages.csv`;
+                }${channelID}/messages.${extension}`;
 
                 Promise.all([
                   Utils.readFile(channelDataPath, files),
@@ -819,8 +846,11 @@ export default function Upload(): ReactElement {
                   } else messagesRead++;
 
                   const data_ = JSON.parse(rawData);
-                  const messages = Utils.parseCSV(rawMessages);
-                  const name = userMessages[data_.id];
+                  const messages =
+                    extension === "csv"
+                      ? Utils.parseCSV(rawMessages)
+                      : Utils.parseJSON(rawMessages);
+                  const name = userMessages[data_.id].replace("#0", "");
                   const isDM =
                     data_.recipients && data_.recipients.length === 2;
                   const dmUserID = isDM
@@ -2117,9 +2147,7 @@ export default function Upload(): ReactElement {
             const messagesByYear: any = {};
 
             channels.forEach((channel) => {
-              channel.messages.forEach((message: {
-                timestamp: number;
-              }) => {
+              channel.messages.forEach((message: { timestamp: number }) => {
                 if (!message.timestamp) return;
 
                 const date = new Date(message.timestamp);
