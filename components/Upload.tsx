@@ -850,21 +850,50 @@ export default function Upload(): ReactElement {
                     extension === "csv"
                       ? Utils.parseCSV(rawMessages)
                       : Utils.parseJSON(rawMessages);
-                  const name = userMessages[data_.id].replace("#0", "");
-                  const isDM =
-                    data_.recipients && data_.recipients.length === 2;
-                  const dmUserID = isDM
-                    ? data_.recipients.find(
-                        (userID: any): boolean => userID !== userId
-                      )
-                    : undefined;
-                  channels.push({
-                    data_,
-                    messages,
-                    name,
-                    isDM,
-                    dmUserID,
-                  });
+
+
+                  if (data_ && data_.id && userMessages?.[data_.id]) {
+                    const name = userMessages[data_.id].replace("#0", "");
+                    const isDM =
+                      data_.recipients && data_.recipients.length === 2;
+                    const dmUserID = isDM
+                      ? data_.recipients.find(
+                          (userID: any): boolean => userID !== userId
+                        )
+                      : undefined;
+
+                      
+                    channels.push({
+                      data_,
+                      messages,
+                      name,
+                      isDM,
+                      dmUserID,
+                    });
+                  } else {
+                    if (isDebug) {
+                      console.log(
+                        chalk.bold.blue(`[DEBUG] `) +
+                          chalk.bold.cyan(
+                            `[${moment(Date.now()).format("h:mm:ss a")}]`
+                          ) +
+                          `  ${chalk.yellow(`Error: Unknown Instance Found`)}`
+                      );
+                      console.log(data_, userMessages?.[data_?.id]);
+                    }
+
+                    const name = "Unknown";
+                    const isDM = false;
+                    const dmUserID = "unknown";
+
+                    channels.push({
+                      data_,
+                      messages,
+                      name,
+                      isDM,
+                      dmUserID,
+                    });
+                  }
 
                   resolve([rawData, rawMessages]);
                 });
