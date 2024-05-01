@@ -570,3 +570,11 @@ input[type="search"]:focus {
 .driver-popover-description {
   color: var(--text-color) !important;
 }
+
+img[alt="emoji"] {
+  object-fit: contain;
+}
+
+.m-2 {
+  margin: 0;
+}
