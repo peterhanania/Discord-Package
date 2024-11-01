@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Badges from "./json/badges/index.json";
+import Badges from "./json/badges.json";
 import Tippy from "@tippyjs/react";
 import moment from "moment";
 import chalk from "chalk";
@@ -172,46 +172,6 @@ const days_monthly = new Array(12)
   );
 
 const icons = {
-  DISCORD_EMPLOYEE: (
-    <Image
-      unoptimized={true}
-      src="https://i.imgur.com/6eIBtYR.png"
-      width={42}
-      height={42}
-      alt="DISCORD_EMPLOYEE"
-      draggable="false"
-    />
-  ),
-  DISCORD_PARTNER: (
-    <Image
-      unoptimized={true}
-      src="https://i.imgur.com/hpTiFXi.png"
-      width={42}
-      height={42}
-      alt="DISCORD_PARTNER"
-      draggable="false"
-    />
-  ),
-  HYPESQUAD_EVENTS: (
-    <Image
-      unoptimized={true}
-      src="https://i.imgur.com/RzA4bXZ.png"
-      width={42}
-      height={42}
-      alt="HYPESQUAD_EVENTS"
-      draggable="false"
-    />
-  ),
-  BUG_HUNTER_LEVEL_1: (
-    <Image
-      unoptimized={true}
-      src="https://i.imgur.com/2NLZJXk.png"
-      width={42}
-      height={42}
-      alt="BUG_HUNTER_LEVEL_1"
-      draggable="false"
-    />
-  ),
   MFA_SMS: (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -231,46 +191,6 @@ const icons = {
     >
       <path d="M21.55 31.5q.05-3.6.825-5.25.775-1.65 2.925-3.6 2.1-1.9 3.225-3.525t1.125-3.475q0-2.25-1.5-3.75t-4.2-1.5q-2.6 0-4 1.475T17.9 14.95l-4.2-1.85q1.1-2.95 3.725-5.025T23.95 6q5 0 7.7 2.775t2.7 6.675q0 2.4-1.025 4.35-1.025 1.95-3.275 4.1-2.45 2.35-2.95 3.6t-.55 4Zm2.4 12.5q-1.45 0-2.475-1.025Q20.45 41.95 20.45 40.5q0-1.45 1.025-2.475Q22.5 37 23.95 37q1.45 0 2.475 1.025Q27.45 39.05 27.45 40.5q0 1.45-1.025 2.475Q25.4 44 23.95 44Z" />
     </svg>
-  ),
-  HOUSE_BRAVERY: (
-    <Image
-      unoptimized={true}
-      src="https://i.imgur.com/mwFPsVv.png"
-      width={42}
-      height={42}
-      alt="HOUSE_BRAVERY"
-      draggable="false"
-    />
-  ),
-  HOUSE_BRILLIANCE: (
-    <Image
-      unoptimized={true}
-      src="https://i.imgur.com/UNpQI3M.png"
-      width={42}
-      height={42}
-      alt="HOUSE_BRILLIANCE"
-      draggable="false"
-    />
-  ),
-  HOUSE_BALANCE: (
-    <Image
-      unoptimized={true}
-      src="https://i.imgur.com/Jw2Xyx6.png"
-      width={42}
-      height={42}
-      alt="HOUSE_BALANCE"
-      draggable="false"
-    />
-  ),
-  EARLY_SUPPORTER: (
-    <Image
-      unoptimized={true}
-      src="https://i.imgur.com/xUtDJFl.png"
-      width={42}
-      height={42}
-      alt="EARLY_SUPPORTER"
-      draggable="false"
-    />
   ),
   TEAM_PSEUDO_USER: (
     <svg
@@ -352,16 +272,6 @@ const icons = {
       <path d="M38 12.05q-2.3 0-3.9-1.6t-1.6-3.9q0-2.3 1.6-3.9t3.9-1.6q2.3 0 3.9 1.6t1.6 3.9q0 2.3-1.6 3.9t-3.9 1.6ZM4 44V7q0-1.15.9-2.075Q5.8 4 7 4h21.85q-.2.7-.3 1.475-.1.775-.05 1.525.1 1.4.525 2.675.425 1.275 1.225 2.375H12v3h21.75q1 .5 2.05.75 1.05.25 2.2.25 1.65 0 3.175-.55T44 13.9V33q0 1.15-.925 2.075Q42.15 36 41 36H12Zm8-22.45h24v-3H12Zm0 6.5h15.65v-3H12Z" />
     </svg>
   ),
-  BUG_HUNTER_LEVEL_2: (
-    <Image
-      unoptimized={true}
-      src="https://i.imgur.com/iBK3a1Z.png"
-      width={42}
-      height={42}
-      alt="BUG_HUNTER_LEVEL_2"
-      draggable="false"
-    />
-  ),
   UNDERAGE_DELETED: (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -371,46 +281,6 @@ const icons = {
     >
       <path d="M29.2 22.9q.95 0 1.6-.65.65-.65.65-1.6 0-.95-.65-1.6-.65-.65-1.6-.65-.95 0-1.6.65-.65.65-.65 1.6 0 .95.65 1.6.65.65 1.6.65Zm-10.45 0q.95 0 1.6-.65.65-.65.65-1.6 0-.95-.65-1.6-.65-.65-1.6-.65-.95 0-1.6.65-.65.65-.65 1.6 0 .95.65 1.6.65.65 1.6.65ZM24 33.7q2.7 0 5.05-1.45 2.35-1.45 3.65-4H15.3q1.3 2.55 3.65 4Q21.3 33.7 24 33.7Zm0 8.3q-3.7 0-6.975-1.425Q13.75 39.15 11.3 36.7q-2.45-2.45-3.875-5.725Q6 27.7 6 24q0-3.7 1.425-6.975Q8.85 13.75 11.3 11.3q2.45-2.45 5.725-3.875Q20.3 6 24 6q3.7 0 6.975 1.425Q34.25 8.85 36.7 11.3q2.45 2.45 3.875 5.725Q42 20.3 42 24q0 3.7-1.425 6.975Q39.15 34.25 36.7 36.7q-2.45 2.45-5.725 3.875Q27.7 42 24 42Zm.75-25.9q1.45 0 2.2-.425.75-.425.75-1.225 0-.45-.325-.725-.325-.275-.875-.275-.35 0-.75.075t-1 .075q-1.25 0-2.075-.825-.825-.825-.825-2.075 0-.5.075-1.025Q22 9.15 22.1 8.8q-.7.1-1.3.225-.6.125-1.3.375-.1.25-.125.625-.025.375-.025.675 0 2.3 1.55 3.85 1.55 1.55 3.85 1.55Z" />
     </svg>
-  ),
-  VERIFIED_BOT: (
-    <Image
-      unoptimized={true}
-      src="https://i.imgur.com/Gs2JVkP.png"
-      width={42}
-      height={42}
-      alt="VERIFIED_BOT"
-      draggable="false"
-    />
-  ),
-  VERIFIED_TRUE: (
-    <Image
-      unoptimized={true}
-      src="https://i.imgur.com/XieNzv4.png"
-      width={42}
-      height={42}
-      alt="VERIFIED_BOT_DEVELOPER"
-      draggable="false"
-    />
-  ),
-  VERIFIED_BOT_DEVELOPER: (
-    <Image
-      unoptimized={true}
-      src="https://i.imgur.com/XieNzv4.png"
-      width={42}
-      height={42}
-      alt="VERIFIED_BOT_DEVELOPER"
-      draggable="false"
-    />
-  ),
-  CERTIFIED_MODERATOR: (
-    <Image
-      unoptimized={true}
-      src="https://i.imgur.com/E9hSIGm.png"
-      width={42}
-      height={42}
-      alt="CERTIFIED_MODERATOR"
-      draggable="false"
-    />
   ),
   BOT_HTTP_INTERACTIONS: (
     <svg
@@ -525,26 +395,6 @@ const icons = {
     >
       <path d="M24 44q-6.9-1.6-11.45-7.825Q8 29.95 8 21.9V9.95l16-6 16 6v13.5q-1.25-.6-2.6-.925-1.35-.325-2.75-.325-5.15 0-8.775 3.65t-3.625 8.8q0 2.4.975 4.7.975 2.3 2.675 4-.45.25-.95.375-.5.125-.95.275Zm10.65 0q-3.9 0-6.65-2.775-2.75-2.775-2.75-6.575 0-3.9 2.75-6.675t6.65-2.775q3.85 0 6.625 2.775t2.775 6.675q0 3.8-2.775 6.575Q38.5 44 34.65 44Zm-.15-3.25q1.65 0 3-.7t2.3-2q-1.3-.7-2.6-1.05-1.3-.35-2.7-.35-1.4 0-2.725.35-1.325.35-2.575 1.05.95 1.3 2.275 2t3.025.7Zm.05-6.25q1.3 0 2.2-.95.9-.95.9-2.25t-.9-2.2q-.9-.9-2.2-.9-1.3 0-2.25.9t-.95 2.2q0 1.3.95 2.25t2.25.95Z" />
     </svg>
-  ),
-  nitro: (
-    <Image
-      unoptimized={true}
-      src="https://i.imgur.com/LcyKRvv.png["
-      width={42}
-      height={42}
-      alt="nitro"
-      draggable="false"
-    />
-  ),
-  nitro_until: (
-    <Image
-      unoptimized={true}
-      src="https://i.imgur.com/LcyKRvv.png["
-      width={42}
-      height={42}
-      alt="nitro"
-      draggable="false"
-    />
   ),
 };
 
@@ -2537,11 +2387,8 @@ export default function Data({ data, demo }: any): ReactElement {
                 </div>
               </div>
             </div>
-            <p className="lg:hidden md:hidden text-sm lowercase font-mono">
-              badges are only available on larger screens
-            </p>
             
-            <div className="lg:flex md:flex items-center gap-1 hidden">
+            <div className="flex flex-wrap items-center gap-1">
               {data?.user?.badges?.map((m: any, id: number) => {
                 if (!(Badges as any)[m]) return null;
 
@@ -2560,8 +2407,11 @@ export default function Data({ data, demo }: any): ReactElement {
                     animation="scale"
                     className="shadow-xl"
                   >
-                    <div className="flex cursor-pointer opacity-90 hover:opacity-100">
-                      {(icons as any)[m]}
+                    <div className="cursor-pointer opacity-90 hover:opacity-100 relative w-6 h-6 sm:w-8 sm:h-8">
+                      <Image src={(Badges as any)[m]?.icon}
+                        alt={(Badges as any)[m]?.description}
+                        layout="fill"
+                      />
                     </div>
                   </Tippy>
                 );
