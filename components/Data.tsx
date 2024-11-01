@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Badges from "./json/badges.json";
+import Badges from "./data/badges";
+import AccountFlags from "./data/account_flags";
 import Tippy from "@tippyjs/react";
 import moment from "moment";
 import chalk from "chalk";
@@ -1792,8 +1793,8 @@ export default function Data({ data, demo }: any): ReactElement {
             }}
           >
             <div>
-              <div className="lg:flex md:flex items-center text-gray-900 dark:text-white">
-                <p className="text-xl md:text-2xl lg:text-3xl">
+              <div className="lg:flex md:flex items-center text-gray-900 dark:text-white space-y-1">
+                <p className="text-xl md:text-2xl lg:text-3xl mr-3.5">
                   {data?.user?.username}
                   {data?.user?.discriminator &&
                     "#" + data?.user?.discriminator.toString().padStart(4, "0")}
@@ -1820,7 +1821,7 @@ export default function Data({ data, demo }: any): ReactElement {
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         height="24"
-                        className="dark:fill-gray-300 dark:hover:fill-white ml-2"
+                        className="dark:fill-gray-300 dark:hover:fill-white"
                         width="24"
                       >
                         <path d="M6 14h8v-2H6Zm0-3h12V9H6Zm0-3h12V6H6ZM2 22V4q0-.825.588-1.413Q3.175 2 4 2h16q.825 0 1.413.587Q22 3.175 22 4v12q0 .825-.587 1.413Q20.825 18 20 18H6Z" />
@@ -2385,38 +2386,14 @@ export default function Data({ data, demo }: any): ReactElement {
                     ""
                   )}
                 </div>
+
+                <div className="ml-auto">
+                  <AccountFlags data={data.user.badges} />
+                </div>
               </div>
             </div>
             
-            <div className="flex flex-wrap items-center gap-1">
-              {data?.user?.badges?.map((m: any, id: number) => {
-                if (!(Badges as any)[m]) return null;
-
-                return (
-                  <Tippy
-                    key={id}
-                    content={(Badges as any)[m]?.description
-                      .replace(
-                        /{until}/g,
-                        moment(data?.user?.premium_until).format(
-                          "MMMM Do YYYY LTS"
-                        )
-                      )
-                      .replace(/{p_2}/g, data?.dataFile ? "Their" : "Your")
-                      .replace(/{p_1}/g, data?.dataFile ? "They" : "You")}
-                    animation="scale"
-                    className="shadow-xl"
-                  >
-                    <div className="cursor-pointer opacity-90 hover:opacity-100 relative w-6 h-6 sm:w-8 sm:h-8">
-                      <Image src={(Badges as any)[m]?.icon}
-                        alt={(Badges as any)[m]?.description}
-                        layout="fill"
-                      />
-                    </div>
-                  </Tippy>
-                );
-              })}
-            </div>
+            <Badges data={data.user.badges} />
           </div>
         </div>
       </div>
