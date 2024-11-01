@@ -2540,13 +2540,13 @@ export default function Data({ data, demo }: any): ReactElement {
             <p className="lg:hidden md:hidden text-sm lowercase font-mono">
               badges are only available on larger screens
             </p>
+            
             <div className="lg:flex md:flex items-center gap-1 hidden">
               {data?.user?.badges?.map((m: any, id: number) => {
                 if (!(Badges as any)[m]) return null;
 
                 return (
                   <Tippy
-                    zIndex={99999999999999}
                     key={id}
                     content={(Badges as any)[m]?.description
                       .replace(
