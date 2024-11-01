@@ -14,7 +14,7 @@ import connectionsJSON from "../json/Connections.json";
 class Utils {
   static getMostUsedCurrency(transactions, amount) {
     if (transactions == null) {
-      return;
+      return '$0.00';
     }
 
     const currenciesUsed = {};
