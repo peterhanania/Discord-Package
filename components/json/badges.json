@@ -1,191 +1,62 @@
 {
   "DISCORD_EMPLOYEE": {
-    "description": "{p_1} are a Discord Employee",
-    "icon": "https://i.imgur.com/6eIBtYR.png",
-    "undocumented": false
+    "description": "Discord Employee",
+    "icon": "https://i.imgur.com/6eIBtYR.png"
   },
   "DISCORD_PARTNER": {
-    "description": "{p_1} are a Discord Partner",
-    "icon": "https://i.imgur.com/hpTiFXi.png",
-    "undocumented": false
+    "description": "Discord Partner",
+    "icon": "https://i.imgur.com/hpTiFXi.png"
   },
   "HYPESQUAD_EVENTS": {
-    "description": "{p_1} are a HypeSquad Events member",
-    "icon": "https://i.imgur.com/RzA4bXZ.png",
-    "undocumented": false
+    "description": "HypeSquad Events Member",
+    "icon": "https://i.imgur.com/RzA4bXZ.png"
   },
   "BUG_HUNTER_LEVEL_1": {
-    "description": "{p_1} are a Bug Hunter",
-    "icon": "https://i.imgur.com/2NLZJXk.png",
-    "undocumented": false
-  },
-  "MFA_SMS": {
-    "description": "{p_1} have SMS 2FA enabled",
-    "undocumented": true
-  },
-  "PREMIUM_PROMO_DISMISSED": {
-    "description": "{p_1} have dismissed a nitro promotion",
-    "icon": "",
-    "undocumented": true
+    "description": "Bug Hunter",
+    "icon": "https://i.imgur.com/2NLZJXk.png"
   },
   "HOUSE_BRAVERY": {
-    "description": "{p_1} are part of HypeSquad Bravery",
-    "icon": "https://i.imgur.com/mwFPsVv.png",
-    "undocumented": false
+    "description": "HypeSquad Bravery",
+    "icon": "https://i.imgur.com/mwFPsVv.png"
   },
   "HOUSE_BRILLIANCE": {
-    "description": "{p_1} are part of HypeSquad Brilliance",
-    "icon": "https://i.imgur.com/UNpQI3M.png",
-    "undocumented": false
+    "description": "HypeSquad Brilliance",
+    "icon": "https://i.imgur.com/UNpQI3M.png"
   },
   "HOUSE_BALANCE": {
-    "description": "{p_1} are a part of HypeSquad Balance",
-    "icon": "https://i.imgur.com/Jw2Xyx6.png",
-    "undocumented": false
+    "description": "HypeSquad Balance",
+    "icon": "https://i.imgur.com/Jw2Xyx6.png"
   },
   "EARLY_SUPPORTER": {
-    "description": "{p_1} are an Early Supporter",
-    "icon": "https://i.imgur.com/xUtDJFl.png",
-    "undocumented": false
-  },
-  "TEAM_PSEUDO_USER": {
-    "description": "Account is a Team account",
-    "icon": "",
-    "undocumented": false
-  },
-  "INTERNAL_APPLICATION": {
-    "description": "{p_1} requested verification and/or partnership for a server before (Internal flag)",
-    "icon": "",
-    "undocumented": true
-  },
-  "SYSTEM": {
-    "description": "{p_2} account is a system account",
-    "icon": "",
-    "undocumented": true
-  },
-  "HAS_UNREAD_URGENT_MESSAGES": {
-    "description": "{p_1} have unread messages from Discord",
-    "icon": "",
-    "undocumented": true
+    "description": "Nitro Early Supporter",
+    "icon": "https://i.imgur.com/xUtDJFl.png"
   },
   "BUG_HUNTER_LEVEL_2": {
-    "description": "{p_1} have the gold Bug Hunter badge",
-    "icon": "https://i.imgur.com/iBK3a1Z.png",
-    "undocumented": false
-  },
-  "UNDERAGE_DELETED": {
-    "description": "{p_2} account was deleted for being underage",
-    "icon": "",
-    "undocumented": true
+    "description": "Gold Bug Hunter",
+    "icon": "https://i.imgur.com/iBK3a1Z.png"
   },
   "VERIFIED_BOT": {
-    "description": "{p_1} are a verified bot",
-    "icon": "",
-    "undocumented": false
+    "description": "Verified Bot",
+    "icon": ""
   },
   "VERIFIED_BOT_DEVELOPER": {
-    "description": "{p_1} are a verified bot developer",
-    "icon": "https://i.imgur.com/XieNzv4.png",
-    "undocumented": false
+    "description": "Early Verified Bot Developer",
+    "icon": "https://i.imgur.com/XieNzv4.png"
   },
   "CERTIFIED_MODERATOR": {
-    "description": "{p_1} are a Discord certified moderator",
-    "icon": "https://i.imgur.com/E9hSIGm.png",
-    "undocumented": false
-  },
-  "BOT_HTTP_INTERACTIONS": {
-    "description": "Bot is an HTTP interaction",
-    "icon": "",
-    "undocumented": false
-  },
-  "SPAMMER": {
-    "description": "{p_1} are marked as a spammer",
-    "icon": "",
-    "undocumented": true
-  },
-  "DISABLE_PREMIUM": {
-    "description": "Forcefully disables Nitro features",
-    "icon": "",
-    "undocumented": true
+    "description": "Certified Discord Moderator",
+    "icon": "https://i.imgur.com/E9hSIGm.png"
   },
   "ACTIVE_DEVELOPER": {
-    "description": "{p_1} are an active developer",
-    "icon": "",
-    "undocumented": false
-  },
-  "HIGH_GLOBAL_RATE_LIMIT": {
-    "description": "Account has a high global ratelimit",
-    "icon": "",
-    "undocumented": true
-  },
-  "DELETED": {
-    "description": "Account has been deleted",
-    "icon": "",
-    "undocumented": true
-  },
-  "DISABLED_SUSPICIOUS_ACTIVITY": {
-    "description": "Account has been disabled for suspicious activity",
-    "icon": "",
-    "undocumented": true
-  },
-  "SELF_DELETED": {
-    "description": "Account was deleted by the user",
-    "icon": "",
-    "undocumented": true
-  },
-  "PREMIUM_DISCRIMINATOR": {
-    "description": "{p_1} have a premium discriminator",
-    "icon": "",
-    "undocumented": true
-  },
-  "USED_DESKTOP_CLIENT": {
-    "description": "{p_1} have used the desktop client",
-    "icon": "",
-    "undocumented": true
-  },
-  "USED_WEB_CLIENT": {
-    "description": "{p_1} have used the web client",
-    "icon": "",
-    "undocumented": true
-  },
-  "USED_MOBILE_CLIENT": {
-    "description": "{p_1} have used the mobile client",
-    "icon": "",
-    "undocumented": true
-  },
-  "DISABLED": {
-    "description": "{p_2} account is currently temporarily or permanently disabled",
-    "icon": "",
-    "undocumented": true
-  },
-  "VERIFIED_EMAIL": {
-    "description": "{p_1} have a verified email",
-    "icon": "",
-    "undocumented": true
-  },
-  "QUARANTINED": {
-    "description": "{p_2} account is quarantined",
-    "icon": "",
-    "undocumented": true
+    "description": "Active Developer",
+    "icon": "https://i.imgur.com/VT6nnlu.png"
   },
   "NITRO": {
-    "description": "{p_1} have Nitro",
-    "icon": "https://i.imgur.com/LcyKRvv.png",
-    "undocumented": true
+    "description": "Nitro",
+    "icon": "https://i.imgur.com/LcyKRvv.png"
   },
   "NITRO_UNTIL": {
     "description": "{p_1} have Nitro till {until}",
-    "icon": "https://i.imgur.com/LcyKRvv.png",
-    "undocumented": true
-  },
-  "COLLABORATOR": {
-    "description": "{p_1} are a collaborator and have staff permissions",
-    "icon": "",
-    "undocumented": false
-  },
-  "RESTRICTED_COLLABORATOR": {
-    "description": "{p_1} are a restricted collaborator and have staff permissions",
-    "icon": "",
-    "undocumented": false
+    "icon": "https://i.imgur.com/LcyKRvv.png"
   }
 }
