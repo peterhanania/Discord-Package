@@ -1,0 +1,94 @@
+{
+  "MFA_SMS": {
+    "description": "SMS 2FA enabled",
+    "icon": "https://i.imgur.com/Zlz7T6Y.png"
+  },
+  "PREMIUM_PROMO_DISMISSED": {
+    "description": "Dismissed a Nitro promotion",
+    "icon": "https://i.imgur.com/Tj2cGGD.png"
+  },
+  "TEAM_PSEUDO_USER": {
+    "description": "Account is a Team account",
+    "icon": "https://i.imgur.com/kw7QccA.png"
+  },
+  "INTERNAL_APPLICATION": {
+    "description": "Requested verification and/or partnership for a server before (Internal flag)",
+    "icon": "https://i.imgur.com/ffwvcuP.png"
+  },
+  "SYSTEM": {
+    "description": "Account is a system account",
+    "icon": "https://i.imgur.com/z9OGS47.png"
+  },
+  "HAS_UNREAD_URGENT_MESSAGES": {
+    "description": "Unread messages from Discord",
+    "icon": "https://i.imgur.com/NPRjLwg.png"
+  },
+  "UNDERAGE_DELETED": {
+    "description": "Account was deleted for being underage",
+    "icon": "https://i.imgur.com/WV3IZ4W.png"
+  },
+  "BOT_HTTP_INTERACTIONS": {
+    "description": "Bot is an HTTP interaction",
+    "icon": ""
+  },
+  "SPAMMER": {
+    "description": "Marked as a spammer",
+    "icon": ""
+  },
+  "DISABLE_PREMIUM": {
+    "description": "Nitro features forcefully disabled",
+    "icon": ""
+  },
+  "HIGH_GLOBAL_RATE_LIMIT": {
+    "description": "Account has a high global ratelimit",
+    "icon": "https://i.imgur.com/wQj7zyr.png"
+  },
+  "DELETED": {
+    "description": "Account has been deleted",
+    "icon": "https://i.imgur.com/giYNtZV.png"
+  },
+  "DISABLED_SUSPICIOUS_ACTIVITY": {
+    "description": "Account has been disabled for suspicious activity",
+    "icon": "https://i.imgur.com/SsXJNxU.png"
+  },
+  "SELF_DELETED": {
+    "description": "Account was deleted by the user",
+    "icon": "https://i.imgur.com/giYNtZV.png"
+  },
+  "PREMIUM_DISCRIMINATOR": {
+    "description": "Account has a premium discriminator",
+    "icon": "https://i.imgur.com/YMeEmrS.png"
+  },
+  "USED_DESKTOP_CLIENT": {
+    "description": "Account has used the desktop client",
+    "icon": "https://i.imgur.com/MOCCooL.png"
+  },
+  "USED_WEB_CLIENT": {
+    "description": "Account has used the web client",
+    "icon": "https://i.imgur.com/lCe6zyE.png"
+  },
+  "USED_MOBILE_CLIENT": {
+    "description": "Account has used the mobile client",
+    "icon": "https://i.imgur.com/8bv7waQ.png"
+  },
+  "DISABLED": {
+    "description": "Account is currently temporarily or permanently disabled",
+    "icon": "https://i.imgur.com/zmvS3XU.png"
+  },
+  "VERIFIED_EMAIL": {
+    "description": "Account has a verified email",
+    "icon": "https://i.imgur.com/kBIYVBF.png"
+  },
+  "QUARANTINED": {
+    "description": "Account is quarantined",
+    "icon": ""
+  },
+  "COLLABORATOR": {
+    "description": "Account is a collaborator and has staff permissions",
+    "icon": ""
+  },
+  "RESTRICTED_COLLABORATOR": {
+    "description": "Account is a restricted collaborator and has staff permissions",
+    "icon": ""
+  }
+}

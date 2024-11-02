@@ -1,6 +1,6 @@
 //full credits to flags.lewistehminerz.dev
 
-import flags from "../json/badges/index.json";
+import flags from "../json/badges.json";
 
 class BitField {
 	/*
