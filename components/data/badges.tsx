@@ -13,9 +13,11 @@ type Badge = {
 
 const badgeData = BadgeData as BadgeDataType;
 
-export default function Badges({ data }: { data: string[] }) {
-	console.log(data);
-	
+type BadgesProps = {
+	data: string[];
+};
+
+export default function Badges({ data }: BadgesProps) {
 	return (
 		<div className="flex flex-wrap items-center gap-1">
 			{data.map((badgeKey: any) => {

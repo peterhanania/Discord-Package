@@ -1,10 +1,10 @@
 {
   "MFA_SMS": {
-    "description": "{p_1} have SMS 2FA enabled",
+    "description": "SMS 2FA enabled",
     "icon": "https://i.imgur.com/Zlz7T6Y.png"
   },
   "PREMIUM_PROMO_DISMISSED": {
-    "description": "{p_1} have dismissed a nitro promotion",
+    "description": "Dismissed a Nitro promotion",
     "icon": "https://i.imgur.com/Tj2cGGD.png"
   },
   "TEAM_PSEUDO_USER": {
@@ -12,19 +12,19 @@
     "icon": "https://i.imgur.com/kw7QccA.png"
   },
   "INTERNAL_APPLICATION": {
-    "description": "{p_1} requested verification and/or partnership for a server before (Internal flag)",
+    "description": "Requested verification and/or partnership for a server before (Internal flag)",
     "icon": "https://i.imgur.com/ffwvcuP.png"
   },
   "SYSTEM": {
-    "description": "{p_2} account is a system account",
+    "description": "Account is a system account",
     "icon": "https://i.imgur.com/z9OGS47.png"
   },
   "HAS_UNREAD_URGENT_MESSAGES": {
-    "description": "{p_1} have unread messages from Discord",
+    "description": "Unread messages from Discord",
     "icon": "https://i.imgur.com/NPRjLwg.png"
   },
   "UNDERAGE_DELETED": {
-    "description": "{p_2} account was deleted for being underage",
+    "description": "Account was deleted for being underage",
     "icon": "https://i.imgur.com/WV3IZ4W.png"
   },
   "BOT_HTTP_INTERACTIONS": {
@@ -32,11 +32,11 @@
     "icon": ""
   },
   "SPAMMER": {
-    "description": "{p_1} are marked as a spammer",
+    "description": "Marked as a spammer",
     "icon": ""
   },
   "DISABLE_PREMIUM": {
-    "description": "Forcefully disables Nitro features",
+    "description": "Nitro features forcefully disabled",
     "icon": ""
   },
   "HIGH_GLOBAL_RATE_LIMIT": {
@@ -56,39 +56,39 @@
     "icon": "https://i.imgur.com/giYNtZV.png"
   },
   "PREMIUM_DISCRIMINATOR": {
-    "description": "{p_1} have a premium discriminator",
+    "description": "Account has a premium discriminator",
     "icon": "https://i.imgur.com/YMeEmrS.png"
   },
   "USED_DESKTOP_CLIENT": {
-    "description": "{p_1} have used the desktop client",
+    "description": "Account has used the desktop client",
     "icon": "https://i.imgur.com/MOCCooL.png"
   },
   "USED_WEB_CLIENT": {
-    "description": "{p_1} have used the web client",
+    "description": "Account has used the web client",
     "icon": "https://i.imgur.com/lCe6zyE.png"
   },
   "USED_MOBILE_CLIENT": {
-    "description": "{p_1} have used the mobile client",
+    "description": "Account has used the mobile client",
     "icon": "https://i.imgur.com/8bv7waQ.png"
   },
   "DISABLED": {
-    "description": "{p_2} account is currently temporarily or permanently disabled",
+    "description": "Account is currently temporarily or permanently disabled",
     "icon": "https://i.imgur.com/zmvS3XU.png"
   },
   "VERIFIED_EMAIL": {
-    "description": "{p_1} have a verified email",
+    "description": "Account has a verified email",
     "icon": "https://i.imgur.com/kBIYVBF.png"
   },
   "QUARANTINED": {
-    "description": "{p_2} account is quarantined",
+    "description": "Account is quarantined",
     "icon": ""
   },
   "COLLABORATOR": {
-    "description": "{p_1} are a collaborator and have staff permissions",
+    "description": "Account is a collaborator and has staff permissions",
     "icon": ""
   },
   "RESTRICTED_COLLABORATOR": {
-    "description": "{p_1} are a restricted collaborator and have staff permissions",
+    "description": "Account is a restricted collaborator and has staff permissions",
     "icon": ""
   }
 }
