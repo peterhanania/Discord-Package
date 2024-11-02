@@ -13,7 +13,7 @@ type Flag = {
 
 const flagData = AccountFlagData as AccountFlagDataType;
 
-export default function AccountFlags({ data }: { data: any }) {
+export default function AccountFlags({ data }: { data: string[] }) {
 	return (
 		<div className="flex flex-wrap items-center gap-1.5">
 			{data.map((flagKey: any) => {

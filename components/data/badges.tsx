@@ -9,12 +9,13 @@ type BadgeDataType = {
 type Badge = {
 	description: string;
 	icon: string;
-	undocumented?: boolean;
 }
 
 const badgeData = BadgeData as BadgeDataType;
 
-export default function Badges({ data }: { data: any }) {
+export default function Badges({ data }: { data: string[] }) {
+	console.log(data);
+	
 	return (
 		<div className="flex flex-wrap items-center gap-1">
 			{data.map((badgeKey: any) => {
