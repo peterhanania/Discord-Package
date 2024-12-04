@@ -39,7 +39,6 @@ This Repo is directly hosted via Netlify to discordpackage.com
 
 <ul>
 <li>View user information</li><li>View settings like device appearance, servers and emojis</li><li>View your connections</li><li>View how much you spent on Discord, and the nitro you got gifted</li><li>View the amount of channels and users you DMed, your top DMs & channels, How much time you spent on Discord, your character count, your favorite words, links, oldest messages, Discord invite links, and curse words in each top dm and top channel. </li>
-<li>View user information</li><li>View settings like device appearance, your favorite emojis</li><li>View your connections</li><li>View how much you spent on Discord, and the nitro you got gifted</li><li>View the amount of channels and users you DMed, your top DMs & channels, How much time you spent on Discord, your character count, your favorite words, links, oldest messages, Discord invite links, and curse words in each top dm and top channel. </li>
 <li>The amount of guilds you are in</li>
 <li>Your Discord bots</li><li>Your favorite words, links, Discord invite links, and curse words</li>
 <details ><summary style="cursor: pointer; margin-left: -14px" >Countless Statistics</summary><li>Accepted Instant Invites</li>
