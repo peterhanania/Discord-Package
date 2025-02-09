@@ -2,11 +2,12 @@
 const path = require("path");
 
 const nextConfig = {
-  output: "standalone",
+  output: 'export',
   sassOptions: {
     includePaths: [path.join(__dirname, "pages/styles")],
   },
   images: {
+    unoptimized: true,
     domains: [
       "cdn.discordapp.com",
       "i.imgur.com",
