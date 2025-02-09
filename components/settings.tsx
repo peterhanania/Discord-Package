@@ -2,7 +2,8 @@ import Tippy from "@tippyjs/react";
 import { useState, Fragment, useEffect, ReactElement } from "react";
 import { Dialog, Transition, Listbox } from "@headlessui/react";
 import Image from "next/image";
-import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
+
+import { IconCheck, IconSelector } from "@tabler/icons-react";
 
 export default function Settings(): ReactElement {
   const [settings, setSettings] = useState(false);
@@ -138,15 +139,16 @@ export default function Settings(): ReactElement {
                                       alt=""
                                       className="flex-shrink-0 h-6 w-6 rounded-full"
                                     />
-                                    <span className="ml-3 block truncate text-slate-900 dark:text-white text-black">
+                                    <span className="ml-3 block truncate dark:text-white text-black">
                                       {selected.name}
                                     </span>
                                   </span>
                                   <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                    <SelectorIcon
+                                    <IconSelector
                                       className="h-5 w-5 dark:text-gray-400 text-white:400"
                                       aria-hidden="true"
                                     />
+
                                   </span>
                                 </Listbox.Button>
 
@@ -204,7 +206,7 @@ export default function Settings(): ReactElement {
                                                   "absolute inset-y-0 right-0 flex items-center pr-4"
                                                 )}
                                               >
-                                                <CheckIcon
+                                                <IconCheck
                                                   className="h-5 w-5"
                                                   aria-hidden="true"
                                                 />

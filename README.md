@@ -160,8 +160,8 @@ This project **does not** store any information, and does not have any third par
 Discord Data Package Explorer is built with **[Next.js](https://nextjs.org/)** and **[Tailwind.css](https://tailwindcss.com/)**.
 
 - Clone the repository `git clone https://github.com/peterhanania/discord-package`.
-- Install the dependencies using `npm install` or `yarn install`.
-- Start the app using `npm run dev`.
+- Install the dependencies using `pnpm install` or `yarn install`.
+- Start the app using `pnpm run dev`.
 
 ## Installation
 When hosting locally or externally, make sure you change the `NEXT_PUBLIC_DOMAIN` environment variable in the `.env.local` file to your domain or it will use the default domain `https://discordpackage.com`.

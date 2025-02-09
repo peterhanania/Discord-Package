@@ -1,21 +1,21 @@
 # Install dependencies only when needed
-FROM node:16-alpine AS deps
+FROM node:20-alpine AS deps
 
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package*.json ./
-RUN npm i
+RUN npm install -g pnpm && pnpm install
 
 # Rebuild source code only when needed
-FROM node:16 AS builder
+FROM node:20 AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN npm run build
+RUN npm install -g pnpm && pnpm build
 
 # Production image, copy all the files and run next
-FROM node:16 AS runner
+FROM node:20 AS runner
 WORKDIR /app
 
 ENV NODE_ENV production

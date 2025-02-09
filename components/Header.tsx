@@ -2,8 +2,9 @@ import Tippy from "@tippyjs/react";
 import { useState, Fragment, useEffect } from "react";
 import { Dialog, Transition, Listbox } from "@headlessui/react";
 import Image from "next/image";
-import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
+
 import Link from "next/link";
+import { IconCheck, IconSelector } from "@tabler/icons-react";
 
 export default function Header() {
   const [help, setHelp] = useState(false);
@@ -623,7 +624,7 @@ export default function Header() {
                                     </span>
                                   </span>
                                   <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                    <SelectorIcon
+                                    <IconSelector
                                       className="h-5 w-5 text-gray-400"
                                       aria-hidden="true"
                                     />
@@ -684,7 +685,7 @@ export default function Header() {
                                                   "absolute inset-y-0 right-0 flex items-center pr-4"
                                                 )}
                                               >
-                                                <CheckIcon
+                                                <IconCheck
                                                   className="h-5 w-5"
                                                   aria-hidden="true"
                                                 />

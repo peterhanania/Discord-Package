@@ -7,14 +7,17 @@
   font-style: normal;
   font-weight: 100 700;
   /* use http://localhost:port for local hosting */
-  src: url(https://discordpackage.com/sykg-zNym6YjUruM-QrEh7-nyTnjDwKNJ_190Fjzag.woff2) format("woff2");
+  src: url(https://discordpackage.com/sykg-zNym6YjUruM-QrEh7-nyTnjDwKNJ_190Fjzag.woff2)
+    format("woff2");
 }
 
 @font-face {
   font-family: "Product Sans";
   font-style: normal;
   font-weight: 400;
-  src: local("Open Sans"), local("OpenSans"),
+  src:
+    local("Open Sans"),
+    local("OpenSans"),
     url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2)
       format("woff2");
 }
@@ -34,13 +37,18 @@
   -webkit-font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
   margin-right: 10px;
-  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 48;
 }
 
 @font-face {
   font-family: Ginto;
   font-weight: 700;
-  src: url(https://cdn.jsdelivr.net/gh/ROMVoid95/DiscordFonts@master/Ginto-Nord/Ginto-Nord-700.woff2)
+  src:
+    url(https://cdn.jsdelivr.net/gh/ROMVoid95/DiscordFonts@master/Ginto-Nord/Ginto-Nord-700.woff2)
       format("woff2"),
     url(https://cdn.jsdelivr.net/gh/ROMVoid95/DiscordFonts@master/Ginto-Nord/Ginto-Nord-700.woff)
       format("woff");
@@ -246,7 +254,10 @@ input[type="radio"]:checked:after {
     cursor: pointer;
     border: 1px solid var(--bc, var(--border));
     background: var(--b, var(--background));
-    transition: background 0.3s, border-color 0.3s, box-shadow 0.2s;
+    transition:
+      background 0.3s,
+      border-color 0.3s,
+      box-shadow 0.2s;
   }
   input[type="checkbox"]:after {
     content: "";
@@ -254,7 +265,8 @@ input[type="radio"]:checked:after {
     left: 0;
     top: 0;
     position: absolute;
-    transition: transform var(--d-t, 0.3s) var(--d-t-e, ease),
+    transition:
+      transform var(--d-t, 0.3s) var(--d-t-e, ease),
       opacity var(--d-o, 0.2s);
   }
   input[type="checkbox"]:checked {
@@ -430,7 +442,10 @@ details[open] .control-icon-expand {
   border-image: initial;
   border-radius: 3px;
   cursor: pointer;
-  transition: background-color 167ms ease 0s, border-color, color;
+  transition:
+    background-color 167ms ease 0s,
+    border-color,
+    color;
 }
 
 .button-green:hover {
@@ -451,7 +466,10 @@ details[open] .control-icon-expand {
   border-color: transparent;
   border-image: initial;
   border-radius: 3px;
-  transition: background-color 167ms ease 0s, border-color, color;
+  transition:
+    background-color 167ms ease 0s,
+    border-color,
+    color;
   background: transparent;
   border-color: rgba(185, 187, 190, 0.5);
 }
@@ -550,23 +568,91 @@ input[type="search"]:focus {
 .walkthrough button {
   background: #5865f2 !important;
   border-color: #5865f2 !important;
-  color: rgb(255, 255, 255)!important;
+  color: rgb(255, 255, 255) !important;
   text-shadow: none !important;
-  white-space: nowrap!important;
-  padding: 0px 14px!important;
-  border-width: 2px!important;
-  border-style: solid!important;
-  border-color: transparent!important;
-  border-radius: 3px!important;
-  cursor: pointer!important;
-  transition: background-color 167ms ease 0s, border-color, color!important;
+  white-space: nowrap !important;
+  padding: 0px 14px !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+  border-color: transparent !important;
+  border-radius: 3px !important;
+  cursor: pointer !important;
+  transition:
+    background-color 167ms ease 0s,
+    border-color,
+    color !important;
 }
 
 .driver-popover-tip {
   border: 5px solid var(--bg-color) !important;
-  border-color: transparent transparent  var(--bg-color) !important;
+  border-color: transparent transparent var(--bg-color) !important;
 }
 
 .driver-popover-description {
   color: var(--text-color) !important;
+}
+
+.driver-popover.driverjs-theme {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.driver-popover.driverjs-theme .driver-popover-title {
+  font-size: 20px;
+}
+
+.driver-popover.driverjs-theme .driver-popover-title,
+.driver-popover.driverjs-theme .driver-popover-description,
+.driver-popover.driverjs-theme .driver-popover-progress-text {
+  color: var(--text-color);
+}
+
+.driver-popover.driverjs-theme button {
+  flex: 1;
+  text-align: center;
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  border: 2px solid var(--text-color);
+  text-shadow: none;
+  font-size: 14px;
+  padding: 5px 8px;
+  border-radius: 6px;
+}
+
+.driver-popover.driverjs-theme button:hover {
+  background-color: var(--text-color);
+  color: var(--bg-color);
+}
+
+.driver-popover.driverjs-theme .driver-popover-navigation-btns {
+  justify-content: space-between;
+  gap: 3px;
+}
+
+.driver-popover.driverjs-theme .driver-popover-close-btn {
+  color: #9b9b9b;
+}
+
+.driver-popover.driverjs-theme .driver-popover-close-btn:hover {
+  color: var(--text-color);
+}
+
+.driver-popover.driverjs-theme
+  .driver-popover-arrow-side-left.driver-popover-arrow {
+  border-left-color: #fde047;
+}
+
+.driver-popover.driverjs-theme
+  .driver-popover-arrow-side-right.driver-popover-arrow {
+  border-right-color: #fde047;
+}
+
+.driver-popover.driverjs-theme
+  .driver-popover-arrow-side-top.driver-popover-arrow {
+  border-top-color: #fde047;
+}
+
+.driver-popover.driverjs-theme
+  .driver-popover-arrow-side-bottom.driver-popover-arrow {
+  border-bottom-color: #fde047;
 }
