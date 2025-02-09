@@ -5,7 +5,7 @@ import { snakeCase } from "snake-case";
 import names from "../json/demo/names.json";
 import avatars from "../json/demo/avatars.json";
 import emojis from "../json/demo/emojis.json";
-import randomWords from "random-words";
+import { generate  } from "random-words";
 import curseWords from "../json/demo/curse.json";
 import Events from "../json/events.json";
 import currencies from "../json/other/currencies.json";
@@ -88,11 +88,11 @@ class Utils {
   static perDay(value, userID) {
     return parseInt(
       value /
-        ((Date.now() - (userID / 4194304 + 1420070400000)) /
-          24 /
-          60 /
-          60 /
-          1000)
+      ((Date.now() - (userID / 4194304 + 1420070400000)) /
+        24 /
+        60 /
+        60 /
+        1000)
     );
   }
   static readAnalyticsFile(file, loading, setLoading, selectedFeatures) {
@@ -114,8 +114,7 @@ class Utils {
         setLoading(
           `Loading Analytics: ${Math.ceil(
             (bytesRead / file.originalSize) * 100
-          )}%|||Estimated time: ${remainingTime + 1} second${
-            remainingTime + 1 === 1 ? "" : "s"
+          )}%|||Estimated time: ${remainingTime + 1} second${remainingTime + 1 === 1 ? "" : "s"
           }`
         );
 
@@ -468,7 +467,7 @@ class Utils {
     for (let i = 0; i < connectionsRand; i++) {
       const connectionsArray_ =
         connectionsPossible[
-          Math.floor(Math.random() * connectionsPossible.length)
+        Math.floor(Math.random() * connectionsPossible.length)
         ];
 
       if (!connectionsArray.includes(connectionsArray_))
@@ -492,11 +491,11 @@ class Utils {
           Math.floor(
             // eslint-disable-next-line no-loss-of-precision
             Math.random() *
-              // eslint-disable-next-line no-loss-of-precision
-              (9999999999999999 - 100000000000000 + 1)
+            // eslint-disable-next-line no-loss-of-precision
+            (9999999999999999 - 100000000000000 + 1)
           ) + 100000000000000
         ).toString();
-      const rndName_ = randomWords(Math.floor(Math.random() * 2) + 1).join(" ");
+      const rndName_ = generate(Math.floor(Math.random() * 2) + 1).join(" ");
       guilds_[rndID] = rndName_;
     }
 
@@ -521,15 +520,15 @@ class Utils {
       return {
         name:
           randomNum10to20_names[
-            Math.floor(Math.random() * randomNum10to20_names.length)
+          Math.floor(Math.random() * randomNum10to20_names.length)
           ] +
           "#" +
           randomNum10to20_tags[
-            Math.floor(Math.random() * randomNum10to20_tags.length)
+          Math.floor(Math.random() * randomNum10to20_tags.length)
           ],
         avatar:
           randomNum10to20_avatars[
-            Math.floor(Math.random() * randomNum10to20_avatars.length)
+          Math.floor(Math.random() * randomNum10to20_avatars.length)
           ],
         verified: Math.random() < 0.3,
       };
@@ -613,7 +612,7 @@ class Utils {
     function generateRandomDiscordLink() {
       const links = [];
       for (let i = 0; i < Math.floor(Math.random() * 300) + 1; i++) {
-        links.push(`https://discord.gg/${randomWords(1)[0]}`);
+        links.push(`https://discord.gg/${generate(1)[0]}`);
       }
       return links;
     }
@@ -621,10 +620,9 @@ class Utils {
     function generateRandomLink() {
       const links = [];
       for (let i = 0; i < Math.floor(Math.random() * 300) + 1; i++) {
-        const rnd = randomWords(1);
-        const link = `https://${rnd[0]}.${
-          ["com", "net", "org", "io", "dev"][Math.floor(Math.random() * 5)]
-        }/`;
+        const rnd = generate(1);
+        const link = `https://${rnd[0]}.${["com", "net", "org", "io", "dev"][Math.floor(Math.random() * 5)]
+          }/`;
         const randomNum = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
         links.push(link + randomNum);
       }
@@ -643,12 +641,12 @@ class Utils {
         user_id: (
           Math.floor(
             Math.random() *
-              // eslint-disable-next-line no-loss-of-precision
-              (9999999999999999 - 100000000000000 + 1)
+            // eslint-disable-next-line no-loss-of-precision
+            (9999999999999999 - 100000000000000 + 1)
           ) + 100000000000000
         ).toString(),
         messageCount: Math.floor(Math.random() * (30000 - 1000 + 1)) + 1000,
-        favoriteWords: randomWords({ min: 100, max: 700 })
+        favoriteWords: generate({ min: 100, max: 700 })
           .map((s) => {
             return {
               count: Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000,
@@ -721,18 +719,18 @@ class Utils {
     ) {
       const randomG =
         Math.random() > 0.5
-          ? randomWords(2).join(" ")
-          : randomWords(1)[0] + " Land";
+          ? generate(2).join(" ")
+          : generate(1)[0] + " Land";
       topChannels.push({
         name:
           Object.values(emojis)[
-            Math.floor(Math.random() * Object.values(emojis).length)
+          Math.floor(Math.random() * Object.values(emojis).length)
           ] +
           " | " +
           names[Math.floor(Math.random() * names.length)],
         guildName: randomG,
         messageCount: Math.floor(Math.random() * (30000 - 1000 + 1)) + 1000,
-        favoriteWords: randomWords({ min: 100, max: 700 })
+        favoriteWords: generate({ min: 100, max: 700 })
           .map((s) => {
             return {
               count: Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000,
@@ -801,13 +799,13 @@ class Utils {
     for (let i = 0; i < Math.floor(Math.random() * (10 - 20 + 1)) + 20; i++) {
       const randomG =
         Math.random() > 0.5
-          ? randomWords(2).join(" ")
-          : randomWords(1)[0] + " group";
+          ? generate(2).join(" ")
+          : generate(1)[0] + " group";
       topGroupDMs.push({
         name: randomG,
         recipients: Math.floor(Math.random() * (10 - 2 + 1)) + 2,
         messageCount: Math.floor(Math.random() * (30000 - 1000 + 1)) + 1000,
-        favoriteWords: randomWords({ min: 100, max: 700 })
+        favoriteWords: generate({ min: 100, max: 700 })
           .map((s) => {
             return {
               count: Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000,
@@ -918,12 +916,12 @@ class Utils {
 
     function createSentence(s) {
       const sentences = new Array(s ? s : 1000).fill(0).map(() => {
-        const sentence = randomWords({ min: 3, max: 10 }).join(" ");
+        const sentence = generate({ min: 3, max: 10 }).join(" ");
         return {
           sentence,
           timestamp: new Date(
             2019 +
-              Math.floor(Math.random() * (new Date().getFullYear() - 2019 + 1)),
+            Math.floor(Math.random() * (new Date().getFullYear() - 2019 + 1)),
             Math.floor(Math.random() * 12),
             Math.floor(Math.random() * 28),
             Math.floor(Math.random() * 24),
@@ -933,29 +931,29 @@ class Utils {
           author:
             Math.random() > 0.5
               ? "channel:" +
-                Object.values(emojis)[
-                  Math.floor(Math.random() * Object.values(emojis).length)
-                ] +
-                " | " +
-                names[Math.floor(Math.random() * names.length)] +
-                "(guild: " +
-                randomWords(1)[0] +
-                " Land" +
-                ")"
+              Object.values(emojis)[
+              Math.floor(Math.random() * Object.values(emojis).length)
+              ] +
+              " | " +
+              names[Math.floor(Math.random() * names.length)] +
+              "(guild: " +
+              generate(1)[0] +
+              " Land" +
+              ")"
               : "user:" +
-                names[Math.floor(Math.random() * names.length)] +
-                "#" +
-                Math.floor(Math.random() * (9999 - 1000 + 1)) +
-                "(ID: " +
-                // eslint-disable-next-line no-loss-of-precision
-                (
-                  Math.floor(
-                    Math.random() *
-                      // eslint-disable-next-line no-loss-of-precision
-                      (9999999999999999 - 100000000000000 + 1)
-                  ) + 100000000000000
-                ).toString() +
-                ")",
+              names[Math.floor(Math.random() * names.length)] +
+              "#" +
+              Math.floor(Math.random() * (9999 - 1000 + 1)) +
+              "(ID: " +
+              // eslint-disable-next-line no-loss-of-precision
+              (
+                Math.floor(
+                  Math.random() *
+                  // eslint-disable-next-line no-loss-of-precision
+                  (9999999999999999 - 100000000000000 + 1)
+                ) + 100000000000000
+              ).toString() +
+              ")",
         };
       });
       return sentences.sort(
@@ -967,10 +965,10 @@ class Utils {
     for (let i = 0; i < Math.floor(Math.random() * (100 - 10 + 1)) + 10; i++) {
       attachmentCount.push(
         "https://media.discordapp.net/attachments/" +
-          Math.random().toString(36).substring(7) +
-          "/" +
-          Math.random().toString(36).substring(7) +
-          "/attachment.jpg"
+        Math.random().toString(36).substring(7) +
+        "/" +
+        Math.random().toString(36).substring(7) +
+        "/attachment.jpg"
       );
     }
 
@@ -983,7 +981,7 @@ class Utils {
         avatar,
         premium_until: isNitroUser
           ? Date.now() +
-            (Math.floor(Math.random() * 30) + 1) * 24 * 60 * 60 * 1000
+          (Math.floor(Math.random() * 30) + 1) * 24 * 60 * 60 * 1000
           : null,
         flags: null,
         badges,
@@ -1012,7 +1010,7 @@ class Utils {
         characterCount: characterCount,
         messageCount: Math.floor(characterCount / (Math.random() * 3) + 1),
         hoursValues,
-        favoriteWords: randomWords({ min: 100, max: 700 })
+        favoriteWords: generate({ min: 100, max: 700 })
           .map((s) => {
             return {
               count: Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000,
@@ -1130,45 +1128,45 @@ class Utils {
         statistics &&
         parseInt(
           statistics /
-            ((Date.now() - (userId / 4194304 + 1420070400000)) /
-              24 /
-              60 /
-              60 /
-              1000)
+          ((Date.now() - (userId / 4194304 + 1420070400000)) /
+            24 /
+            60 /
+            60 /
+            1000)
         ),
 
       week:
         statistics &&
         parseInt(
           statistics /
-            ((Date.now() - (userId / 4194304 + 1420070400000)) /
-              7 /
-              24 /
-              60 /
-              60 /
-              1000)
+          ((Date.now() - (userId / 4194304 + 1420070400000)) /
+            7 /
+            24 /
+            60 /
+            60 /
+            1000)
         ),
       month:
         statistics &&
         parseInt(
           statistics /
-            ((Date.now() - (userId / 4194304 + 1420070400000)) /
-              30 /
-              24 /
-              60 /
-              60 /
-              1000)
+          ((Date.now() - (userId / 4194304 + 1420070400000)) /
+            30 /
+            24 /
+            60 /
+            60 /
+            1000)
         ),
       year:
         statistics &&
         parseInt(
           statistics /
-            ((Date.now() - (userId / 4194304 + 1420070400000)) /
-              365 /
-              24 /
-              60 /
-              60 /
-              1000)
+          ((Date.now() - (userId / 4194304 + 1420070400000)) /
+            365 /
+            24 /
+            60 /
+            60 /
+            1000)
         ),
     };
   }
@@ -1194,19 +1192,13 @@ class Utils {
   }
 
   static createEmoji(emoji) {
-    return (
-      "https://cdn.discordapp.com/emojis/" +
-      /<:.*?:(\d+)>/g.exec(emoji)[1] +
-      ".png"
-    );
+    return ("https://cdn.discordapp.com/emojis/" +
+      /<:.*?:(\d+)>/g.exec(emoji)[1] + ".png");
   }
 
   static createCustomEmoji(emoji) {
-    return (
-      "https://cdn.discordapp.com/emojis/" +
-      /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(emoji)[2] +
-      ".gif"
-    );
+    return ("https://cdn.discordapp.com/emojis/" +
+      /<a:([a-zA-Z0-9_]+):([0-9]+)>/g.exec(emoji)[2] + ".gif");
   }
 
   static async validateOptions(obj, data_d) {

@@ -3,7 +3,7 @@ import Head from "next/head";
 import { ReactElement, useEffect } from "react";
 import { useSnackbar } from "notistack";
 
-export default function Loading({ skeleton }: any): ReactElement {
+export default function Loading({ skeleton }: any): ReactElement<any> {
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {

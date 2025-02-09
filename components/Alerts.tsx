@@ -9,7 +9,7 @@ interface Alert {
   url?: string;
 }
 
-export default function Alerts(): ReactElement {
+export default function Alerts(): ReactElement<any> {
   const [show, setShow] = useState<boolean>(false);
   const [alert, setAlert] = useState<Alert | null>(null);
 

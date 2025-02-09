@@ -571,12 +571,15 @@ input[type="search"]:focus {
   color: rgb(255, 255, 255) !important;
   text-shadow: none !important;
   white-space: nowrap !important;
-  padding: 0px 14px !important;
+  padding: 8px 20px !important;
   border-width: 2px !important;
   border-style: solid !important;
   border-color: transparent !important;
   border-radius: 3px !important;
   cursor: pointer !important;
+  font-size: 16px !important;
+  min-width: 120px !important;
+  min-height: 40px !important;
   transition:
     background-color 167ms ease 0s,
     border-color,
@@ -610,23 +613,25 @@ input[type="search"]:focus {
 .driver-popover.driverjs-theme button {
   flex: 1;
   text-align: center;
-  background-color: var(--text-color);
-  color: var(--bg-color);
-  border: 2px solid var(--text-color);
+  background-color: #5865f2;
+  color: #ffffff;
+  border: none;
   text-shadow: none;
   font-size: 14px;
-  padding: 5px 8px;
-  border-radius: 6px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
 }
 
 .driver-popover.driverjs-theme button:hover {
-  background-color: var(--text-color);
-  color: var(--bg-color);
+  background-color: #4752c4;
 }
 
 .driver-popover.driverjs-theme .driver-popover-navigation-btns {
   justify-content: space-between;
-  gap: 3px;
+  gap: 12px;
+  padding: 8px 0;
 }
 
 .driver-popover.driverjs-theme .driver-popover-close-btn {
@@ -655,4 +660,48 @@ input[type="search"]:focus {
 .driver-popover.driverjs-theme
   .driver-popover-arrow-side-bottom.driver-popover-arrow {
   border-bottom-color: #fde047;
+}
+
+.driver-popover.driverjs-theme .driver-popover-next-btn,
+.driver-popover.driverjs-theme .driver-popover-prev-btn {
+  flex: 1;
+  text-align: center;
+  background-color: #5865f2;
+  color: #ffffff;
+  border: none;
+  text-shadow: none;
+  font-size: 14px;
+  padding: 12px 24px !important;
+  min-width: 100px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  transform: scale(1);
+}
+
+.driver-popover.driverjs-theme .driver-popover-prev-btn {
+  background-color: transparent;
+  border: 2px solid #4752c4;
+  color: #4752c4;
+}
+
+.driver-popover.driverjs-theme .driver-popover-next-btn:hover {
+  background-color: #4752c4;
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(71, 82, 196, 0.3);
+}
+
+.driver-popover.driverjs-theme .driver-popover-prev-btn:hover {
+  background-color: #4752c4;
+  color: #ffffff;
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(71, 82, 196, 0.3);
+}
+
+.driver-popover.driverjs-theme .driver-popover-navigation-btns {
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  margin: 0 8px;
 }
