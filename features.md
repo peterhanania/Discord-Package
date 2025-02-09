@@ -157,7 +157,7 @@ We understand that most websites shared on Discord are scams. They tend to steal
 - We run the website using Github Pages ([pages.github.com](https://pages.github.com/)) directly from the main repository. [github action](https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=github-pages)
 - No database, no storage or any other form of data is stored.
 
-If you find a security issue or have any other questions, please contact me at peter@pogy.xyz
+If you find a security issue or have any other questions, please contact me at peter@peterhanania.com
 
 ##### 13
 

@@ -80,8 +80,8 @@ export default function Home() {
 								<li>Google Analytics</li>
 							</ul>
 							<p className="font-bold">General Contact Information</p>
-							<p>peter@pogy.xyz</p>
-							<p>If you have any questions about this Policy, please contact me at peter@pogy.xyz</p>
+							<p>peter@peterhanania.com</p>
+							`<p>If you have any questions about this Policy, please contact me at peter@peterhanania.com</p>
 						</div>
 					</div>
 				</div>

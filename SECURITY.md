@@ -30,4 +30,4 @@ We understand that most websites shared on Discord are scams. They tend to steal
 
 ## Reporting a Vulnerability
 
-Kindly report all vulnerabilities to `Peter_#4444` or `peter@pogy.xyz`
+Kindly report all vulnerabilities to `peterhanania` or `peter@peterhanania.com`
