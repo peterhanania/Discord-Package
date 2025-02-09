@@ -61,6 +61,7 @@ $skeleton-square-height: 150px !default;
 /** Main class */
 .ssc {
   cursor: progress;
+  -webkit-user-select: none;
   user-select: none;
 }
 

@@ -1,62 +1,92 @@
 {
   "DISCORD_EMPLOYEE": {
     "description": "Discord Employee",
-    "icon": "https://i.imgur.com/6eIBtYR.png"
+    "icon": "https://i.imgur.com/6eIBtYR.png",
+    "internalName": "STAFF",
+    "shift": 0 
   },
   "DISCORD_PARTNER": {
     "description": "Discord Partner",
-    "icon": "https://i.imgur.com/hpTiFXi.png"
+    "icon": "https://i.imgur.com/hpTiFXi.png",
+    "internalName": "PARTNER",
+    "shift": 1
   },
   "HYPESQUAD_EVENTS": {
     "description": "HypeSquad Events Member",
-    "icon": "https://i.imgur.com/RzA4bXZ.png"
+    "icon": "https://i.imgur.com/RzA4bXZ.png",
+    "internalName": "HYPESQUAD",
+    "shift": 2
   },
   "BUG_HUNTER_LEVEL_1": {
     "description": "Bug Hunter",
-    "icon": "https://i.imgur.com/2NLZJXk.png"
+    "icon": "https://i.imgur.com/2NLZJXk.png",
+    "internalName": "BUG_HUNTER_LEVEL_1",
+    "shift": 3
   },
   "HOUSE_BRAVERY": {
     "description": "HypeSquad Bravery",
-    "icon": "https://i.imgur.com/mwFPsVv.png"
+    "icon": "https://i.imgur.com/mwFPsVv.png",
+    "internalName": "HYPESQUAD_ONLINE_HOUSE_1",
+    "shift": 6
   },
   "HOUSE_BRILLIANCE": {
     "description": "HypeSquad Brilliance",
-    "icon": "https://i.imgur.com/UNpQI3M.png"
+    "icon": "https://i.imgur.com/UNpQI3M.png",
+    "internalName": "HYPESQUAD_ONLINE_HOUSE_2",
+    "shift": 7
   },
   "HOUSE_BALANCE": {
     "description": "HypeSquad Balance",
-    "icon": "https://i.imgur.com/Jw2Xyx6.png"
+    "icon": "https://i.imgur.com/Jw2Xyx6.png",
+    "internalName": "HYPESQUAD_ONLINE_HOUSE_3",
+    "shift": 8
   },
   "EARLY_SUPPORTER": {
     "description": "Nitro Early Supporter",
-    "icon": "https://i.imgur.com/xUtDJFl.png"
+    "icon": "https://i.imgur.com/xUtDJFl.png",
+    "internalName": "PREMIUM_EARLY_SUPPORTER",
+    "shift": 9
   },
   "BUG_HUNTER_LEVEL_2": {
     "description": "Gold Bug Hunter",
-    "icon": "https://i.imgur.com/iBK3a1Z.png"
+    "icon": "https://i.imgur.com/iBK3a1Z.png",
+    "internalName": "BUG_HUNTER_LEVEL_2",
+    "shift": 14
   },
   "VERIFIED_BOT": {
     "description": "Verified Bot",
-    "icon": ""
+    "icon": "",
+    "internalName": "VERIFIED_BOT",
+    "shift": 16
   },
   "VERIFIED_BOT_DEVELOPER": {
     "description": "Early Verified Bot Developer",
-    "icon": "https://i.imgur.com/XieNzv4.png"
+    "icon": "https://i.imgur.com/XieNzv4.png",
+    "internalName": "VERIFIED_DEVELOPER",
+    "shift": 17
   },
   "CERTIFIED_MODERATOR": {
     "description": "Certified Discord Moderator",
-    "icon": "https://i.imgur.com/E9hSIGm.png"
+    "icon": "https://i.imgur.com/E9hSIGm.png",
+    "internalName": "CERTIFIED_MODERATOR",
+    "shift": 18
   },
   "ACTIVE_DEVELOPER": {
     "description": "Active Developer",
-    "icon": "https://i.imgur.com/VT6nnlu.png"
+    "icon": "https://i.imgur.com/VT6nnlu.png",
+    "internalName": "ACTIVE_DEVELOPER",
+    "shift": 22
   },
   "NITRO": {
     "description": "Nitro",
-    "icon": "https://i.imgur.com/LcyKRvv.png"
+    "icon": "https://i.imgur.com/LcyKRvv.png",
+    "internalName": "DP_NITRO",
+    "shift": null
   },
   "NITRO_UNTIL": {
     "description": "{p_1} have Nitro till {until}",
-    "icon": "https://i.imgur.com/LcyKRvv.png"
+    "icon": "https://i.imgur.com/LcyKRvv.png",
+    "internalName": "DP_NITRO_UNTIL",
+    "shift": null
   }
 }
