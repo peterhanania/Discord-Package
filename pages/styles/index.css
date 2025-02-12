@@ -33,6 +33,7 @@
   word-wrap: normal;
   direction: ltr;
   -webkit-font-feature-settings: "liga";
+  font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
   margin-right: 10px;
   font-variation-settings:
@@ -148,25 +149,25 @@ body {
 
 @keyframes sk-cubemove {
   25% {
-    transform: translateX(42px) rotate(-90deg) scale(0.5);
     -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
+    transform: translateX(42px) rotate(-90deg) scale(0.5);
   }
   50% {
-    transform: translateX(42px) translateY(42px) rotate(-179deg);
     -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
+    transform: translateX(42px) translateY(42px) rotate(-179deg);
   }
   50.1% {
-    transform: translateX(42px) translateY(42px) rotate(-180deg);
     -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
+    transform: translateX(42px) translateY(42px) rotate(-180deg);
   }
   75% {
-    transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
     -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg)
       scale(0.5);
+    transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
   }
   100% {
-    transform: rotate(-360deg);
     -webkit-transform: rotate(-360deg);
+    transform: rotate(-360deg);
   }
 }
 
@@ -243,6 +244,7 @@ input[type="radio"]:checked:after {
     --disabled-inner: #e1e6f9;
     -webkit-appearance: none;
     -moz-appearance: none;
+    appearance: none;
     height: 21px;
     outline: none;
     display: inline-block;

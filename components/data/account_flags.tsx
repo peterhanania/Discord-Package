@@ -9,6 +9,8 @@ type AccountFlagDataType = {
 type Flag = {
 	description: string;
 	icon: string;
+	internalName?: string | null;
+	shift?: number | null;
 }
 
 type FlagDataProps = {
@@ -22,6 +24,8 @@ export default function AccountFlags({ data }: FlagDataProps) {
         (<div className="flex flex-wrap items-center gap-1.5">
             {data.map((flagKey: any) => {
 				if (!flagData[flagKey]) return null;
+
+				if (!flagData[flagKey]?.icon) return null;
 
 				return (
                     (<Tippy

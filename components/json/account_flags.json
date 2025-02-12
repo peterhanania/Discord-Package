@@ -1,94 +1,231 @@
 {
+  
+  "STAFF": {
+    "description": "User is a Discord employee.",
+    "icon": "",
+    "internalName": "STAFF",
+    "shift": 0
+  },
+  "PARTNER": {
+    "description": "User is a Discord partner.",
+    "icon": "",
+    "internalName": "PARTNER",
+    "shift": 1
+  },
+  "HYPESQUAD": {
+    "description": "User is a HypeSquad Events member.",
+    "icon": "",
+    "internalName": "HYPESQUAD",
+    "shift": 2
+  },
+  "BUG_HUNTER_LEVEL_1": {
+    "description": "User is a Bug Hunter.",
+    "icon": "",
+    "internalName": "BUG_HUNTER_LEVEL_1",
+    "shift": 3
+  },
   "MFA_SMS": {
     "description": "SMS 2FA enabled",
-    "icon": "https://i.imgur.com/Zlz7T6Y.png"
+    "icon": "https://i.imgur.com/Zlz7T6Y.png",
+    "internalName": "MFA_SMS",
+    "shift": 4
   },
   "PREMIUM_PROMO_DISMISSED": {
     "description": "Dismissed a Nitro promotion",
-    "icon": "https://i.imgur.com/Tj2cGGD.png"
+    "icon": "https://i.imgur.com/Tj2cGGD.png",
+    "internalName": "PREMIUM_PROMO_DISMISSED",
+    "shift": 5
+  },
+  "HYPESQUAD_ONLINE_HOUSE_1": {
+    "description": "User is part of HypeSquad Bravery.",
+    "icon": "",
+    "internalName": "HYPESQUAD_ONLINE_HOUSE_1",
+    "shift": 6
+  },
+  "HYPESQUAD_ONLINE_HOUSE_2": {
+    "description": "User is part of HypeSquad Brilliance.",
+    "icon": "",
+    "internalName": "HYPESQUAD_ONLINE_HOUSE_2",
+    "shift": 7
+  },
+  "HYPESQUAD_ONLINE_HOUSE_3": {
+    "description": "User is a part of HypeSquad Balance.",
+    "icon": "",
+    "internalName": "HYPESQUAD_ONLINE_HOUSE_3",
+    "shift": 8
+  },
+  "PREMIUM_EARLY_SUPPORTER": {
+    "description": "User is an Early Supporter.",
+    "icon": "",
+    "internalName": "PREMIUM_EARLY_SUPPORTER",
+    "shift": 9
   },
   "TEAM_PSEUDO_USER": {
     "description": "Account is a Team account",
-    "icon": "https://i.imgur.com/kw7QccA.png"
+    "icon": "https://i.imgur.com/kw7QccA.png",
+    "internalName": "TEAM_PSEUDO_USER",
+    "shift": 10
   },
-  "INTERNAL_APPLICATION": {
-    "description": "Requested verification and/or partnership for a server before (Internal flag)",
-    "icon": "https://i.imgur.com/ffwvcuP.png"
+  "IS_HUBSPOT_CONTACT": {
+    "description": "User is registered on Discord's HubSpot customer platform, used for official Discord programs (e.g. partner)",
+    "icon": "https://i.imgur.com/67Je5iZ.png",
+    "internalName": "IS_HUBSPOT_CONTACT",
+    "shift": 11
   },
   "SYSTEM": {
     "description": "Account is a system account",
-    "icon": "https://i.imgur.com/z9OGS47.png"
+    "icon": "https://i.imgur.com/z9OGS47.png",
+    "internalName": "SYSTEM",
+    "shift": 12
   },
   "HAS_UNREAD_URGENT_MESSAGES": {
     "description": "Unread messages from Discord",
-    "icon": "https://i.imgur.com/NPRjLwg.png"
+    "icon": "https://i.imgur.com/NPRjLwg.png",
+    "internalName": "HAS_UNREAD_URGENT_MESSAGES",
+    "shift": 13
+  },
+  "BUG_HUNTER_LEVEL_2": {
+    "description": "User has the gold Bug Hunter badge.",
+    "icon": "",
+    "internalName": "BUG_HUNTER_LEVEL_2",
+    "shift": 14
   },
   "UNDERAGE_DELETED": {
     "description": "Account was deleted for being underage",
-    "icon": "https://i.imgur.com/WV3IZ4W.png"
+    "icon": "https://i.imgur.com/WV3IZ4W.png",
+    "internalName": "UNDERAGE_DELETED",
+    "shift": 15
+  },
+  "VERIFIED_BOT": {
+    "description": "User is a verified bot.",
+    "icon": "https://i.imgur.com/67Je5iZ.png",
+    "internalName": "VERIFIED_BOT",
+    "shift": 16
+  },
+  "VERIFIED_DEVELOPER": {
+    "description": "User is a verified bot developer.",
+    "icon": "",
+    "internalName": "VERIFIED_DEVELOPER",
+    "shift": 17
+  },
+  "CERTIFIED_MODERATOR": {
+    "description": "User is a Discord certified moderator alum.",
+    "icon": "",
+    "internalName": "CERTIFIED_MODERATOR",
+    "shift": 18
   },
   "BOT_HTTP_INTERACTIONS": {
     "description": "Bot is an HTTP interaction",
-    "icon": ""
+    "icon": "https://i.imgur.com/67Je5iZ.png",
+    "internalName": "BOT_HTTP_INTERACTIONS",
+    "shift": 19
   },
   "SPAMMER": {
     "description": "Marked as a spammer",
-    "icon": ""
+    "icon": "https://i.imgur.com/67Je5iZ.png",
+    "internalName": "SPAMMER",
+    "shift": 20
   },
   "DISABLE_PREMIUM": {
     "description": "Nitro features forcefully disabled",
-    "icon": ""
+    "icon": "https://i.imgur.com/67Je5iZ.png",
+    "internalName": "DISABLE_PREMIUM",
+    "shift": 21
+  },
+  "ACTIVE_DEVELOPER": {
+    "description": "User is an active developer.",
+    "icon": "",
+    "internalName": "ACTIVE_DEVELOPER",
+    "shift": 22
+  },
+  "PROVISIONAL_ACCOUNT": {
+    "description": "User is a provisional account used with the social layer integration.",
+    "icon": "https://i.imgur.com/67Je5iZ.png",
+    "internalName": "PROVISIONAL_ACCOUNT",
+    "shift": 23
   },
   "HIGH_GLOBAL_RATE_LIMIT": {
     "description": "Account has a high global ratelimit",
-    "icon": "https://i.imgur.com/wQj7zyr.png"
+    "icon": "https://i.imgur.com/wQj7zyr.png",
+    "internalName": "HIGH_GLOBAL_RATE_LIMIT",
+    "shift": 33
   },
   "DELETED": {
     "description": "Account has been deleted",
-    "icon": "https://i.imgur.com/giYNtZV.png"
+    "icon": "https://i.imgur.com/giYNtZV.png",
+    "internalName": "DELETED",
+    "shift": 34
   },
   "DISABLED_SUSPICIOUS_ACTIVITY": {
     "description": "Account has been disabled for suspicious activity",
-    "icon": "https://i.imgur.com/SsXJNxU.png"
+    "icon": "https://i.imgur.com/SsXJNxU.png",
+    "internalName": "DISABLED_SUSPICIOUS_ACTIVITY",
+    "shift": 35
   },
   "SELF_DELETED": {
     "description": "Account was deleted by the user",
-    "icon": "https://i.imgur.com/giYNtZV.png"
+    "icon": "https://i.imgur.com/giYNtZV.png",
+    "internalName": "SELF_DELETED",
+    "shift": 36
   },
   "PREMIUM_DISCRIMINATOR": {
     "description": "Account has a premium discriminator",
-    "icon": "https://i.imgur.com/YMeEmrS.png"
+    "icon": "https://i.imgur.com/YMeEmrS.png",
+    "internalName": "PREMIUM_DISCRIMINATOR",
+    "shift": 37
   },
   "USED_DESKTOP_CLIENT": {
     "description": "Account has used the desktop client",
-    "icon": "https://i.imgur.com/MOCCooL.png"
+    "icon": "https://i.imgur.com/MOCCooL.png",
+    "internalName": "USED_DESKTOP_CLIENT",
+    "shift": 38
   },
   "USED_WEB_CLIENT": {
     "description": "Account has used the web client",
-    "icon": "https://i.imgur.com/lCe6zyE.png"
+    "icon": "https://i.imgur.com/lCe6zyE.png",
+    "internalName": "USED_WEB_CLIENT",
+    "shift": 39
   },
   "USED_MOBILE_CLIENT": {
     "description": "Account has used the mobile client",
-    "icon": "https://i.imgur.com/8bv7waQ.png"
+    "icon": "https://i.imgur.com/8bv7waQ.png",
+    "internalName": "USED_MOBILE_CLIENT",
+    "shift": 40
   },
   "DISABLED": {
     "description": "Account is currently temporarily or permanently disabled",
-    "icon": "https://i.imgur.com/zmvS3XU.png"
+    "icon": "https://i.imgur.com/zmvS3XU.png",
+    "internalName": "DISABLED",
+    "shift": 41
   },
-  "VERIFIED_EMAIL": {
-    "description": "Account has a verified email",
-    "icon": "https://i.imgur.com/kBIYVBF.png"
+  "HAS_SESSION_STARTED": {
+    "description": "User has started at least one Gateway session and is now eligible to send messages",
+    "icon": "https://i.imgur.com/67Je5iZ.png",
+    "internalName": "HAS_SESSION_STARTED",
+    "shift": 43
   },
   "QUARANTINED": {
     "description": "Account is quarantined",
-    "icon": ""
+    "icon": "https://i.imgur.com/67Je5iZ.png",
+    "internalName": "QUARANTINED",
+    "shift": 44
   },
+  "PREMIUM_ELIGIBLE_FOR_UNIQUE_USERNAME": {
+    "description": "User is eligible for early access to pomelo migration",
+    "icon": "https://i.imgur.com/67Je5iZ.png",
+    "shift": 47,
+    "internalName": "PREMIUM_ELIGIBLE_FOR_UNIQUE_USERNAME"
+},
   "COLLABORATOR": {
     "description": "Account is a collaborator and has staff permissions",
-    "icon": ""
+    "icon": "https://i.imgur.com/67Je5iZ.png",
+    "internalName": "COLLABORATOR",
+    "shift": 50
   },
   "RESTRICTED_COLLABORATOR": {
     "description": "Account is a restricted collaborator and has staff permissions",
-    "icon": ""
+    "icon": "https://i.imgur.com/67Je5iZ.png",
+    "internalName": "RESTRICTED_COLLABORATOR",
+    "shift": 51
   }
 }

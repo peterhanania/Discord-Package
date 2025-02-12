@@ -257,7 +257,7 @@ export default function Header() {
                       height: "auto"
                     }} />{" "}
                   <h3 className="text-xl font-medium text-white mb-2 mt-4">
-                    2- Click on &quot;Privacy & Safety&quot;.
+                    2- Click on &quot;Data & Privacy&quot;.
                   </h3>
                   <Image
                     unoptimized={true}
@@ -283,16 +283,29 @@ export default function Header() {
                       maxWidth: "100%",
                       height: "auto"
                     }} />
+                    <h3 className="text-xl font-medium text-white mb-2 mt-4">
+                      4- Check all checkboxes and click on &quot;Request My Data&quot;.
+                    </h3>
+                    <Image
+                      unoptimized={true}
+                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/4.png"}
+                      alt="4"
+                      width={500}
+                      height={300}
+                      style={{
+                        maxWidth: "100%",
+                        height: "auto"
+                      }} />
                   <h3 className="text-xl font-medium text-white mb-2 mt-4">
-                    4- Keep checking your email and download your data once
+                    5- Keep checking your email and download your data once
                     reached. The data will be sent to the email associated
                     with your Discord account and usually takes up to 24 hours
                     to reach.
                   </h3>
                   <Image
                     unoptimized={true}
-                    src={process.env.NEXT_PUBLIC_DOMAIN +"/help/4.png"}
-                    alt="4"
+                    src={process.env.NEXT_PUBLIC_DOMAIN +"/help/5.png"}
+                    alt="5"
                     width={500}
                     height={30}
                     style={{
@@ -301,10 +314,10 @@ export default function Header() {
                     }} />{" "}
                   <Image
                     unoptimized={true}
-                    src={process.env.NEXT_PUBLIC_DOMAIN +"/help/5.png"}
-                    alt="5"
+                    alt="6"
                     width={500}
                     height={300}
+                    src={process.env.NEXT_PUBLIC_DOMAIN +"/help/6.png"}
                     style={{
                       maxWidth: "100%",
                       height: "auto"
