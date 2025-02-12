@@ -9,19 +9,23 @@ type BadgeDataType = {
 type Badge = {
 	description: string;
 	icon: string;
+	internalName?: string | null;
+	shift?: number | null;
 }
-
-const badgeData = BadgeData as BadgeDataType;
 
 type BadgesProps = {
 	data: string[];
 };
+
+const badgeData = BadgeData as BadgeDataType;
 
 export default function Badges({ data }: BadgesProps) {
 	return (
         (<div className="flex flex-wrap items-center gap-1">
             {data.map((badgeKey: any) => {
 				if (!badgeData[badgeKey]) return null;
+
+				if (!badgeData[badgeKey]?.icon) return null;
 
 				return (
                     (<Tippy

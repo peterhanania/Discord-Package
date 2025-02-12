@@ -2458,26 +2458,25 @@ export default function Upload(): ReactElement<any> {
             let badges;
 
             if (Array.isArray(userInformationData.flags)) {
-              badges = userInformationData.flags;
+              badges = BitField.getBadgesFromNames(userInformationData.flags);
             } else {
-              // Legacy bitfield calculation
               badges = BitField.calculate(userInformationData.flags);
             }
 
             if (data.user.premium_until) {
-              badges.push("nitro_until");
+              badges.push("NITRO_UNTIL");
             } else if (
               !data.user.premium_until &&
               userInformationData.premium_until
             ) {
-              badges.push("nitro");
+              badges.push("NITRO");
             }
 
             if (
               data?.bots?.filter((bot: any) => bot.verified)?.length > 0 &&
               !badges.includes("VERIFIED_BOT_DEVELOPER")
             ) {
-              badges.push("VERIFIED_TRUE");
+              badges.push("VERIFIED_BOT_DEVELOPER");
             }
 
             data.user.badges = badges;
