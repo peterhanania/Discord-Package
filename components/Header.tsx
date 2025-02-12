@@ -1,16 +1,16 @@
 import Tippy from "@tippyjs/react";
-import { useState, Fragment, useEffect } from "react";
 import { Dialog, Transition, Listbox } from "@headlessui/react";
+import React, { useState, Fragment, useEffect } from "react";
 import Image from "next/image";
 
 import Link from "next/link";
 import { IconCheck, IconSelector } from "@tabler/icons-react";
 
 export default function Header() {
-  const [help, setHelp] = useState(false);
-  const [settings, setSettings] = useState(false);
-  const [info, setInfo] = useState(false);
-  const [tutorial, setTutorial] = useState(false);
+  const [help, setHelp] = useState<boolean>(false);
+  const [settings, setSettings] = useState<boolean>(false);
+  const [info, setInfo] = useState<boolean>(false);
+  const [tutorial, setTutorial] = useState<boolean>(false);
 
   function classNames(...classes: any): any {
     return classes.filter(Boolean).join(" ");
