@@ -32,7 +32,7 @@ import { useAtom } from "jotai";
 import { driver } from 'driver.js';
 import "driver.js/dist/driver.css";
 // twe-emoji, will remove if it uses so much bandwidth
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition, DialogPanel } from "@headlessui/react";
 import ReactConfetti from "react-confetti";
 import Twemoji from "react-twemoji";
 
@@ -737,7 +737,7 @@ async function copyToClipboard(value: string): Promise<boolean> {
   }
 }
 
-export default function Data({ data, demo }: any): ReactElement {
+export default function Data({ data, demo }: any): ReactElement<any> {
   const [topDMs, setTopDMs] = useAtom(topDMsAtom);
   const [topChannels, setTopChannels] = useAtom(topChannelsAtom);
   const [topGuilds, setTopGuilds] = useAtom(topGuildsAtom);
@@ -1163,7 +1163,7 @@ export default function Data({ data, demo }: any): ReactElement {
             className="fixed z-[999999] inset-0 overflow-y-auto"
           >
             <div className="flex items-center justify-center min-h-screen">
-              <Dialog.Overlay className="fixed inset-0  bg-black/30" />
+              <DialogPanel className="fixed inset-0  bg-black/30" />
               <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
                 <div className="relative shadow-lg bg-[#36393f] ">
                   <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
@@ -2760,7 +2760,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                       )}
                                                     </>
                                                   )}: {f.count}time
-                                                  {f.count > 1 ? "s" : ""}
+                                                                                                    {f.count > 1 ? "s" : ""}
                                                 </li>)
                                               );
                                             })}
@@ -4870,7 +4870,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                         )}{" "}
                                                       </>
                                                     )}: {f.count}time
-                                                    {f.count > 1 ? "s" : ""}
+                                                                                                        {f.count > 1 ? "s" : ""}
                                                   </li>)
                                                 );
                                               }
@@ -5582,7 +5582,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                           )}{" "}
                                                         </>
                                                       )}: {f.count}time
-                                                      {f.count > 1
+                                                                                                            {f.count > 1
                                                         ? "s"
                                                         : ""}
                                                     </li>)
@@ -6753,7 +6753,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                 )}{" "}
                                                               </>
                                                             )}: {f.count}time
-                                                            {f.count > 1
+                                                                                                                        {f.count > 1
                                                               ? "s"
                                                               : ""}
                                                           </li>)
@@ -7548,7 +7548,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                 )}{" "}
                                                               </>
                                                             )}: {f.count}time
-                                                            {f.count > 1
+                                                                                                                        {f.count > 1
                                                               ? "s"
                                                               : ""}
                                                           </li>)
@@ -8410,7 +8410,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                 )}{" "}
                                                               </>
                                                             )}: {f.count}time
-                                                            {f.count > 1
+                                                                                                                        {f.count > 1
                                                               ? "s"
                                                               : ""}
                                                           </li>)
@@ -9208,7 +9208,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                 )}{" "}
                                                               </>
                                                             )}: {f.count}time
-                                                            {f.count > 1
+                                                                                                                        {f.count > 1
                                                               ? "s"
                                                               : ""}
                                                           </li>)
@@ -10049,7 +10049,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                 )}{" "}
                                                               </>
                                                             )}: {f.count}time
-                                                            {f.count > 1
+                                                                                                                        {f.count > 1
                                                               ? "s"
                                                               : ""}
                                                           </li>)
@@ -10824,7 +10824,7 @@ export default function Data({ data, demo }: any): ReactElement {
                                                                 )}{" "}
                                                               </>
                                                             )}: {f.count}time
-                                                            {f.count > 1
+                                                                                                                        {f.count > 1
                                                               ? "s"
                                                               : ""}
                                                           </li>)
