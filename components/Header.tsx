@@ -1,16 +1,15 @@
 import Tippy from "@tippyjs/react";
-import { Dialog, Transition, Listbox } from "@headlessui/react";
-import React, { useState, Fragment, useEffect } from "react";
+import { Dialog, Transition, TransitionChild, Listbox, DialogPanel, DialogBackdrop, ListboxOptions, ListboxOption, ListboxButton } from "@headlessui/react";
+import React, { useState, Fragment, useEffect, JSX } from "react";
 import Image from "next/image";
-
 import Link from "next/link";
 import { IconCheck, IconSelector } from "@tabler/icons-react";
 
 export default function Header() {
-  const [help, setHelp] = useState<boolean>(false);
-  const [settings, setSettings] = useState<boolean>(false);
-  const [info, setInfo] = useState<boolean>(false);
-  const [tutorial, setTutorial] = useState<boolean>(false);
+  const [help, setHelp] = useState(false);
+  const [settings, setSettings] = useState(false);
+  const [info, setInfo] = useState(false);
+  const [tutorial, setTutorial] = useState(false);
 
   function classNames(...classes: any): any {
     return classes.filter(Boolean).join(" ");
@@ -20,8 +19,7 @@ export default function Header() {
     {
       id: 1,
       name: "English",
-      avatar:
-        "https://i.imgur.com/sACh65I.png",
+      avatar: "https://i.imgur.com/sACh65I.png",
     },
   ];
   const [selected, setSelected] = useState(countries[0]);
@@ -31,759 +29,729 @@ export default function Header() {
     setTheme(localStorage.theme);
   }, []);
 
-  return (<>
-    <Transition
-      show={tutorial}
-      enter="transition-opacity delay-200 duration-200"
-      enterFrom="opacity-0"
-      enterTo="opacity-100"
-      leave="transition-opacity duration-150"
-      leaveFrom="opacity-100"
-      leaveTo="opacity-0"
-      as={Fragment}
-    >
-      <Dialog
-        onClose={() => {
-          setTutorial(false);
-        }}
-        className="fixed z-[999999] inset-0 overflow-y-auto"
-      >
-        <div className="flex items-center justify-center min-h-screen">
-          <Dialog.Overlay className="fixed inset-0  bg-black/30" />
-          <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
-            <div className="relative shadow-lg bg-[#36393f] ">
-              <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
-                <h3
-                  className="text-xl font-medium text-white uppercase"
-                  style={{
-                    fontFamily:
-                      "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
-                  }}
-                >
-                  tutorials
-                </h3>
-                <button
-                  onClick={() => {
-                    setTutorial(false);
-                  }}
-                  type="button"
-                  className="text-gray-400 bg-transparent hover:bg-[#2f3136] hover:text-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div className="overflow-y-auto h-[560px] px-5 py-2">
-                <code className="dark:text-white text-black font-bold">
-                  🎇 If you made a video about DP, make sure to join the
-                  discord and let us know! 🎊
-                </code>
-                <div className="mt-2">
-                  <span className="dark:text-white text-black font-bold text-xl">
-                    1. Tutorial by{" "}
-                    <a
-                      href="https://youtube.com/c/laaw_tutorials"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1 "
-                    >
-                      <b>Law Tutorials</b>
-                    </a>
-                  </span>
-                  <div className="py-3">
-                    <iframe
-                      width="560"
-                      height="315"
-                      src="https://www.youtube-nocookie.com/embed/ByNY60Nty4A"
-                      title="YouTube video player"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </div>
-                <div>
-                  <span className="dark:text-white text-black font-bold text-xl">
-                    2. Tutorial by{" "}
-                    <a
-                      href="https://www.youtube.com/c/MrMothDevs"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1 "
-                    >
-                      <b>Mr Moth Devs</b>
-                    </a>
-                  </span>
-                  <div className="py-3">
-                    <iframe
-                      width="560"
-                      height="315"
-                      src="https://www.youtube-nocookie.com/embed/m5BSKDi-4gk"
-                      title="YouTube video player"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </div>
-                <div>
-                  <span className="dark:text-white text-black font-bold text-xl">
-                    3. Tutorial by{" "}
-                    <a
-                      href="https://www.youtube.com/c/Spaceonyoutube"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1 "
-                    >
-                      <b>Space</b>
-                    </a>
-                  </span>
-                  <div className="py-3">
-                    <iframe
-                      width="560"
-                      height="315"
-                      src="https://www.youtube-nocookie.com/embed/hYHMaieRPGI"
-                      title="YouTube video player"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </div>
-              </div>
+  const renderDialog = (state: boolean, setState: (v: boolean) => void, content: JSX.Element) => (
+    <Transition show={state} as={Fragment}>
+      <Dialog open={state} onClose={() => setState(false)} className="relative z-[999999]">
+        <TransitionChild
+          as={Fragment}
+          enter="transition-opacity delay-200 duration-200"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-150"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <DialogBackdrop className="fixed inset-0 bg-black/30" />
+        </TransitionChild>
 
-              <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
-                <button
-                  onClick={() => {
-                    setTutorial(false);
-                  }}
-                  type="button"
-                  className="button-green text-gray-200"
+        <TransitionChild
+          as={Fragment}
+          enter="transition-opacity delay-200 duration-200"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-150"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 flex items-center justify-center p-4">
+            {content}
+          </div>
+        </TransitionChild>
+      </Dialog>
+    </Transition>
+  );
+
+  return (<>
+    {/* Tutorial Dialog */}
+    {renderDialog(tutorial, setTutorial,
+      <DialogPanel className="relative p-4 w-full max-w-4xl md:h-auto h-full shadow-lg bg-[#36393f]">
+        <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
+          <div className="relative shadow-lg bg-[#36393f] ">
+            <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
+              <h3
+                className="text-xl font-medium text-white uppercase"
+                style={{
+                  fontFamily:
+                    "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+                }}
+              >
+                tutorials
+              </h3>
+              <button
+                onClick={() => {
+                  setTutorial(false);
+                }}
+                type="button"
+                className="text-gray-400 bg-transparent hover:bg-[#2f3136] hover:text-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  Got It
-                </button>
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className="overflow-y-auto h-[560px] px-5 py-2">
+              <code className="dark:text-white text-black font-bold">
+                🎇 If you made a video about DP, make sure to join the
+                discord and let us know! 🎊
+              </code>
+              <div className="mt-2">
+                <span className="dark:text-white text-black font-bold text-xl">
+                  1. Tutorial by{" "}
+                  <a
+                    href="https://youtube.com/c/laaw_tutorials"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1 "
+                  >
+                    <b>Law Tutorials</b>
+                  </a>
+                </span>
+                <div className="py-3">
+                  <iframe
+                    width="560"
+                    height="315"
+                    src="https://www.youtube-nocookie.com/embed/ByNY60Nty4A"
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
               </div>
+              <div>
+                <span className="dark:text-white text-black font-bold text-xl">
+                  2. Tutorial by{" "}
+                  <a
+                    href="https://www.youtube.com/c/MrMothDevs"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1 "
+                  >
+                    <b>Mr Moth Devs</b>
+                  </a>
+                </span>
+                <div className="py-3">
+                  <iframe
+                    width="560"
+                    height="315"
+                    src="https://www.youtube-nocookie.com/embed/m5BSKDi-4gk"
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </div>
+              <div>
+                <span className="dark:text-white text-black font-bold text-xl">
+                  3. Tutorial by{" "}
+                  <a
+                    href="https://www.youtube.com/c/Spaceonyoutube"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1 "
+                  >
+                    <b>Space</b>
+                  </a>
+                </span>
+                <div className="py-3">
+                  <iframe
+                    width="560"
+                    height="315"
+                    src="https://www.youtube-nocookie.com/embed/hYHMaieRPGI"
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
+              <button
+                onClick={() => {
+                  setTutorial(false);
+                }}
+                type="button"
+                className="button-green text-gray-200"
+              >
+                Got It
+              </button>
             </div>
           </div>
         </div>
-      </Dialog>
-    </Transition>
-    <Transition
-      show={help}
-      enter="transition-opacity delay-200 duration-200"
-      enterFrom="opacity-0"
-      enterTo="opacity-100"
-      leave="transition-opacity duration-150"
-      leaveFrom="opacity-100"
-      leaveTo="opacity-0"
-      as={Fragment}
-    >
-      <Dialog
-        onClose={() => {
-          setHelp(false);
-        }}
-        className="fixed z-[999999] inset-0 overflow-y-auto"
-      >
-        <div className="flex items-center justify-center min-h-screen">
-          <Dialog.Overlay className="fixed inset-0  bg-black/30" />
-          <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
-            <div className="relative shadow-lg bg-[#36393f] ">
-              <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
-                <h3
-                  className="text-xl font-medium text-white uppercase"
-                  style={{
-                    fontFamily:
-                      "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
-                  }}
-                >
-                  How to Retrieve your Package
-                </h3>
+      </DialogPanel>
+    )}
+    {/* Help Dialog */}
+    {renderDialog(help, setHelp,
+      <DialogPanel className="relative p-4 w-full max-w-4xl md:h-auto h-full shadow-lg bg-[#36393f]">
+        <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
+          <div className="relative shadow-lg bg-[#36393f] ">
+            <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
+              <h3
+                className="text-xl font-medium text-white uppercase"
+                style={{
+                  fontFamily:
+                    "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+                }}
+              >
+                How to Retrieve your Package
+              </h3>
 
-                <button
-                  onClick={() => {
-                    setHelp(false);
-                  }}
-                  type="button"
-                  className="text-gray-400 bg-transparent hover:bg-[#2f3136] hover:text-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+              <button
+                onClick={() => {
+                  setHelp(false);
+                }}
+                type="button"
+                className="text-gray-400 bg-transparent hover:bg-[#2f3136] hover:text-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+            <p className="text-white text-lg py-2 px-8">
+              If you need help, kindly join our
+              <a
+                href={process.env.NEXT_PUBLIC_DOMAIN + "/discord"}
+                className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold mx-1"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Discord Server
+              </a>
+            </p>
+            <div className="overflow-y-auto h-[560px] ">
+              <div className="py-6 px-8">
+                <h3 className="text-xl font-medium text-white mb-2">
+                  1- Click on the &quot;User Settings&quot; icon.
+                </h3>
+                <Image
+                  unoptimized={true}
+                  src={process.env.NEXT_PUBLIC_DOMAIN + "/help/1.png"}
+                  alt="1"
+                  width={500}
+                  height={300}
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} />{" "}
+                <h3 className="text-xl font-medium text-white mb-2 mt-4">
+                  2- Click on &quot;Data & Privacy&quot;.
+                </h3>
+                <Image
+                  unoptimized={true}
+                  src={process.env.NEXT_PUBLIC_DOMAIN + "/help/2.png"}
+                  alt="2"
+                  width={500}
+                  height={300}
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} />{" "}
+                <h3 className="text-xl font-medium text-white mb-2 mt-4">
+                  3- Scroll down to the end then click on &quot;Request Data
+                  &quot; to request your data.
+                </h3>
+                <Image
+                  unoptimized={true}
+                  src={process.env.NEXT_PUBLIC_DOMAIN + "/help/3.png"}
+                  alt="3"
+                  width={500}
+                  height={300}
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} />
+                <h3 className="text-xl font-medium text-white mb-2 mt-4">
+                  4- Check all checkboxes and click on &quot;Request My Data&quot;.
+                </h3>
+                <Image
+                  unoptimized={true}
+                  src={process.env.NEXT_PUBLIC_DOMAIN + "/help/4.png"}
+                  alt="4"
+                  width={500}
+                  height={300}
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} />
+                <h3 className="text-xl font-medium text-white mb-2 mt-4">
+                  5- Keep checking your email and download your data once
+                  reached. The data will be sent to the email associated
+                  with your Discord account and usually takes up to 24 hours
+                  to reach.
+                </h3>
+                <Image
+                  unoptimized={true}
+                  src={process.env.NEXT_PUBLIC_DOMAIN + "/help/5.png"}
+                  alt="5"
+                  width={500}
+                  height={30}
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} />{" "}
+                <Image
+                  unoptimized={true}
+                  alt="6"
+                  width={500}
+                  height={300}
+                  src={process.env.NEXT_PUBLIC_DOMAIN + "/help/6.png"}
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} />
+                <h3 className="text-xl font-medium text-white mb-2 mt-4">
+                  5- Upload the downloaded package by dragging or clicking
+                  on the box.
+                </h3>
+                <video controls>
+                  <source
+                    src={process.env.NEXT_PUBLIC_DOMAIN + "/help/1.mp4"}
+                    type="video/webm"
+                  />
+                  Your browser does not support embedded videos
+                </video>{" "}
+                <h3 className="text-xl font-medium text-white mb-2 mt-4">
+                  You could cancel by pressing on the box while its
+                  uploading.
+                </h3>
+                <video controls>
+                  <source
+                    src={process.env.NEXT_PUBLIC_DOMAIN + "/help/2.mp4"}
+                    type="video/webm"
+                  />
+                  Your browser does not support embedded videos.
+                </video>
+                <h3 className="text-xl font-medium text-white mb-2 mt-4">
+                  You could press &quot;More Options&quot; to customize what
+                  data you want to display
+                </h3>
+                <video controls>
+                  <source
+                    src={process.env.NEXT_PUBLIC_DOMAIN + "/help/3.mp4"}
+                    type="video/webm"
+                  />
+                  Your browser does not support embedded videos
+                </video>
               </div>
-              <p className="text-white text-lg py-2 px-8">
-                If you need help, kindly join our
+            </div>
+
+            <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
+              <button
+                onClick={() => {
+                  setHelp(false);
+                }}
+                type="button"
+                className="button-green text-gray-200"
+              >
+                Got It
+              </button>
+            </div>
+          </div>
+        </div>
+      </DialogPanel>
+    )}
+    {/* Info Dialog */}
+    {renderDialog(info, setInfo,
+      <DialogPanel className="relative p-4 w-full max-w-4xl md:h-auto h-full shadow-lg bg-[#36393f]">
+
+        <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
+          <div className="relative shadow-lg bg-[#36393f] ">
+            <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
+              <h3
+                className="text-xl font-medium text-white uppercase"
+                style={{
+                  fontFamily:
+                    "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+                }}
+              >
+                About
+              </h3>
+              <button
+                onClick={() => {
+                  setInfo(false);
+                }}
+                type="button"
+                className="text-gray-400 bg-transparent hover:bg-[#2f3136] hover:text-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div className="overflow-y-auto h-[340px]">
+              <div className="py-4 px-2 lg:py-6 lg:px-8 md:py-6 md:px-8 sm:py-6 sm:px-8 text-white font-bold text-lg">
+                <u className="mr-1">
+                  <a
+                    className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
+                    href={process.env.NEXT_PUBLIC_DOMAIN + "/privacy"}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    PRIVACY
+                  </a>
+                </u>
+                |
+                <u className="ml-1">
+                  <a
+                    className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
+                    href={process.env.NEXT_PUBLIC_DOMAIN + "/discord"}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    DISCORD
+                  </a>
+                </u>
+                <br />
+                Discord Package Explorer and Viewer is a new tool made by{" "}
                 <a
-                  href={process.env.NEXT_PUBLIC_DOMAIN +"/discord"}
-                  className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold mx-1"
+                  className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
+                  href="https://github.com/peterhanania"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Discord Server
+                  Peter
+                </a>{" "}
+                with the help of{" "}
+                <a
+                  className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
+                  href="https://github.com/Androz2091"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Androz2091
                 </a>
-              </p>
-              <div className="overflow-y-auto h-[560px] ">
-                <div className="py-6 px-8">
-                  <h3 className="text-xl font-medium text-white mb-2">
-                    1- Click on the &quot;User Settings&quot; icon.
-                  </h3>
-                  <Image
-                    unoptimized={true}
-                    src={process.env.NEXT_PUBLIC_DOMAIN +"/help/1.png"}
-                    alt="1"
-                    width={500}
-                    height={300}
-                    style={{
-                      maxWidth: "100%",
-                      height: "auto"
-                    }} />{" "}
-                  <h3 className="text-xl font-medium text-white mb-2 mt-4">
-                    2- Click on &quot;Data & Privacy&quot;.
-                  </h3>
-                  <Image
-                    unoptimized={true}
-                    src={process.env.NEXT_PUBLIC_DOMAIN +"/help/2.png"}
-                    alt="2"
-                    width={500}
-                    height={300}
-                    style={{
-                      maxWidth: "100%",
-                      height: "auto"
-                    }} />{" "}
-                  <h3 className="text-xl font-medium text-white mb-2 mt-4">
-                    3- Scroll down to the end then click on &quot;Request Data
-                    &quot; to request your data.
-                  </h3>
-                  <Image
-                    unoptimized={true}
-                    src={process.env.NEXT_PUBLIC_DOMAIN +"/help/3.png"}
-                    alt="3"
-                    width={500}
-                    height={300}
-                    style={{
-                      maxWidth: "100%",
-                      height: "auto"
-                    }} />
-                    <h3 className="text-xl font-medium text-white mb-2 mt-4">
-                      4- Check all checkboxes and click on &quot;Request My Data&quot;.
-                    </h3>
-                    <Image
-                      unoptimized={true}
-                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/4.png"}
-                      alt="4"
-                      width={500}
-                      height={300}
-                      style={{
-                        maxWidth: "100%",
-                        height: "auto"
-                      }} />
-                  <h3 className="text-xl font-medium text-white mb-2 mt-4">
-                    5- Keep checking your email and download your data once
-                    reached. The data will be sent to the email associated
-                    with your Discord account and usually takes up to 24 hours
-                    to reach.
-                  </h3>
-                  <Image
-                    unoptimized={true}
-                    src={process.env.NEXT_PUBLIC_DOMAIN +"/help/5.png"}
-                    alt="5"
-                    width={500}
-                    height={30}
-                    style={{
-                      maxWidth: "100%",
-                      height: "auto"
-                    }} />{" "}
-                  <Image
-                    unoptimized={true}
-                    alt="6"
-                    width={500}
-                    height={300}
-                    src={process.env.NEXT_PUBLIC_DOMAIN +"/help/6.png"}
-                    style={{
-                      maxWidth: "100%",
-                      height: "auto"
-                    }} />
-                  <h3 className="text-xl font-medium text-white mb-2 mt-4">
-                    5- Upload the downloaded package by dragging or clicking
-                    on the box.
-                  </h3>
-                  <video controls>
-                    <source
-                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/1.mp4"}
-                      type="video/webm"
-                    />
-                    Your browser does not support embedded videos
-                  </video>{" "}
-                  <h3 className="text-xl font-medium text-white mb-2 mt-4">
-                    You could cancel by pressing on the box while its
-                    uploading.
-                  </h3>
-                  <video controls>
-                    <source
-                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/2.mp4"}
-                      type="video/webm"
-                    />
-                    Your browser does not support embedded videos.
-                  </video>
-                  <h3 className="text-xl font-medium text-white mb-2 mt-4">
-                    You could press &quot;More Options&quot; to customize what
-                    data you want to display
-                  </h3>
-                  <video controls>
-                    <source
-                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/3.mp4"}
-                      type="video/webm"
-                    />
-                    Your browser does not support embedded videos
-                  </video>
-                </div>
-              </div>
-
-              <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
-                <button
-                  onClick={() => {
-                    setHelp(false);
-                  }}
-                  type="button"
-                  className="button-green text-gray-200"
+                &apos;s{" "}
+                <a
+                  className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
+                  href="https://ddpe.androz2091.fr"
+                  target="_blank"
+                  rel="noreferrer"
                 >
-                  Got It
-                </button>
+                  Package Explorer
+                </a>
+                . I got inspired by the idea and decided to work on a more
+                customizable one as a side project. This project is 100%
+                free and will always remain free. My main goal is to
+                visualize the data used by Discord in a more user friendly
+                way.
+                <br />
+                <br />
+                This project does not store any information, and does not
+                have any third party services other than Google Analytics.
+                <br />
+                <br />
+                This website is also deployed on{" "}
+                <a
+                  className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
+                  href="https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=github-pages"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Github Pages
+                </a>{" "}
+                from the{" "}
+                <a
+                  className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
+                  href="https://github.com/peterhanania/discord-package"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Original Repository
+                </a>
+                <br />
+                <br />
+                Feel free to Contribute to this project!
+                <div className="mt-4 mb-2">Our Contributors!</div>
+                <a href="https://github.com/peterhanania/discord-package/graphs/contributors">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="https://contrib.rocks/image?repo=peterhanania/discord-package"
+                    alt="Contributors"
+                  />
+                </a>
               </div>
+            </div>
+
+            <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
+              <button
+                onClick={() => {
+                  setInfo(false);
+                }}
+                type="button"
+                className="button-green text-gray-200"
+              >
+                Got It
+              </button>
             </div>
           </div>
         </div>
-      </Dialog>
-    </Transition>
-    <Transition
-      show={info}
-      enter="transition-opacity delay-200 duration-200"
-      enterFrom="opacity-0"
-      enterTo="opacity-100"
-      leave="transition-opacity duration-150"
-      leaveFrom="opacity-100"
-      leaveTo="opacity-0"
-      as={Fragment}
-    >
-      <Dialog
-        onClose={() => {
-          setInfo(false);
-        }}
-        className="fixed z-[999999] inset-0 overflow-y-auto"
-      >
-        <div className="flex items-center justify-center min-h-screen">
-          <Dialog.Overlay className="fixed inset-0  bg-black/30" />
-          <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
-            <div className="relative shadow-lg bg-[#36393f] ">
-              <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
-                <h3
-                  className="text-xl font-medium text-white uppercase"
-                  style={{
-                    fontFamily:
-                      "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
-                  }}
-                >
-                  About
-                </h3>
-                <button
-                  onClick={() => {
-                    setInfo(false);
-                  }}
-                  type="button"
-                  className="text-gray-400 bg-transparent hover:bg-[#2f3136] hover:text-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-              </div>
+      </DialogPanel>
+    )}
+    {/* Settings Dialog */}
+    {renderDialog(settings, setSettings,
+      <DialogPanel className="relative p-4 w-full max-w-4xl md:h-auto h-full shadow-lg dark:bg-[#36393f] bg-[#d1d5db]">
 
-              <div className="overflow-y-auto h-[340px]">
-                <div className="py-4 px-2 lg:py-6 lg:px-8 md:py-6 md:px-8 sm:py-6 sm:px-8 text-white font-bold text-lg">
-                  <u className="mr-1">
-                    <a
-                      className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                      href={process.env.NEXT_PUBLIC_DOMAIN +"/privacy"}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      PRIVACY
-                    </a>
-                  </u>
-                  |
-                  <u className="ml-1">
-                    <a
-                      className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                      href={process.env.NEXT_PUBLIC_DOMAIN +"/discord"}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      DISCORD
-                    </a>
-                  </u>
-                  <br />
-                  Discord Package Explorer and Viewer is a new tool made by{" "}
-                  <a
-                    className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                    href="https://github.com/peterhanania"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Peter
-                  </a>{" "}
-                  with the help of{" "}
-                  <a
-                    className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                    href="https://github.com/Androz2091"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Androz2091
-                  </a>
-                  &apos;s{" "}
-                  <a
-                    className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                    href="https://ddpe.androz2091.fr"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Package Explorer
-                  </a>
-                  . I got inspired by the idea and decided to work on a more
-                  customizable one as a side project. This project is 100%
-                  free and will always remain free. My main goal is to
-                  visualize the data used by Discord in a more user friendly
-                  way.
-                  <br />
-                  <br />
-                  This project does not store any information, and does not
-                  have any third party services other than Google Analytics.
-                  <br />
-                  <br />
-                  This website is also deployed on{" "}
-                  <a
-                    className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                    href="https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=github-pages"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Github Pages
-                  </a>{" "}
-                  from the{" "}
-                  <a
-                    className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                    href="https://github.com/peterhanania/discord-package"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Original Repository
-                  </a>
-                  <br />
-                  <br />
-                  Feel free to Contribute to this project!
-                  <div className="mt-4 mb-2">Our Contributors!</div>
-                  <a href="https://github.com/peterhanania/discord-package/graphs/contributors">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src="https://contrib.rocks/image?repo=peterhanania/discord-package"
-                      alt="Contributors"
-                    />
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-center p-6 space-x-2 rounded-b bg-[#2b2d31]">
-                <button
-                  onClick={() => {
-                    setInfo(false);
-                  }}
-                  type="button"
-                  className="button-green text-gray-200"
+        <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
+          <div className="relative shadow-lg dark:bg-[#36393f] bg-[#d1d5db]">
+            <div className="flex justify-between items-center p-5 rounded-t dark:bg-[#2b2d31] bg-[#eeeeee]">
+              <h3
+                className="text-xl font-medium dark:text-white text-black uppercase"
+                style={{
+                  fontFamily:
+                    "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
+                }}
+              >
+                Settings
+              </h3>
+              <button
+                onClick={() => {
+                  setSettings(false);
+                }}
+                type="button"
+                className="text-gray-400 bg-transparent hover:bg-[#2f3136] hover:text-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  Got It
-                </button>
-              </div>
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
             </div>
-          </div>
-        </div>
-      </Dialog>
-    </Transition>
-    <Transition
-      show={settings}
-      enter="transition-opacity delay-200 duration-200"
-      enterFrom="opacity-0"
-      enterTo="opacity-100"
-      leave="transition-opacity duration-150"
-      leaveFrom="opacity-100"
-      leaveTo="opacity-0"
-      as={Fragment}
-    >
-      <Dialog
-        onClose={() => {
-          setSettings(false);
-        }}
-        className="fixed z-[999999] inset-0 overflow-y-auto"
-      >
-        <div className="flex items-center justify-center min-h-screen">
-          <Dialog.Overlay className="fixed inset-0  bg-black/30" />
-          <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
-            <div className="relative shadow-lg dark:bg-[#36393f] bg-[#d1d5db]">
-              <div className="flex justify-between items-center p-5 rounded-t dark:bg-[#2b2d31] bg-[#eeeeee]">
-                <h3
-                  className="text-xl font-medium dark:text-white text-black uppercase"
-                  style={{
-                    fontFamily:
-                      "Ginto,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Arial,sans-serif",
-                  }}
-                >
-                  Settings
-                </h3>
-                <button
+
+            <div className="overflow-y-auto h-[280px]">
+              <div className="py-4 px-2 lg:py-6 lg:px-8 md:py-6 md:px-8 sm:py-6 sm:px-8 dark:text-white text-black font-bold text-lg">
+                THEME
+                <br />
+                <div
+                  className="toggle"
                   onClick={() => {
-                    setSettings(false);
+                    document.documentElement.classList.add("dark");
+                    setTheme("dark");
+                    localStorage.setItem("theme", "dark");
                   }}
-                  type="button"
-                  className="text-gray-400 bg-transparent hover:bg-[#2f3136] hover:text-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
                 >
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-              </div>
-
-              <div className="overflow-y-auto h-[280px]">
-                <div className="py-4 px-2 lg:py-6 lg:px-8 md:py-6 md:px-8 sm:py-6 sm:px-8 dark:text-white text-black font-bold text-lg">
-                  THEME
-                  <br />
-                  <div
-                    className="toggle"
-                    onClick={() => {
-                      document.documentElement.classList.add("dark");
-                      setTheme("dark");
-                      localStorage.setItem("theme", "dark");
-                    }}
-                  >
-                    <input
-                      type="radio"
-                      name="theme"
-                      id="dark"
-                      value="dark"
-                      onChange={() => {}}
-                      checked={theme === "dark"}
-                    />
-                    <label htmlFor="dark" className={theme === "light" ? "light" : ""}>Dark</label>
-                  </div>
-                  <div
-                    className="toggle"
-                    onClick={() => {
-                      document.documentElement.classList.remove("dark");
-                      setTheme("light");
-                      localStorage.setItem("theme", "light");
-                    }}
-                  >
-                    <input
-                      type="radio"
-                      name="theme"
-                      id="light"
-                      value="light"
-                      onChange={() => {}}
-                      checked={theme === "light"}
-                    />
-                    <label htmlFor="light" className={theme === "light" ? "light" : ""}>Light</label>
-                  </div>
-                  <br />
-                  Language
-                  <div>
-                    <span className="flex justify-between align-middle text-sm text-gray-700 dark:text-gray-200">
-                      <Listbox value={selected} onChange={setSelected}>
-                        {({ open }) => (
-                          <>
-                            <div className="mt-1 relative">
-                              <Listbox.Button className="relative w-full cursor-pointer bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm pl-3 pr-10 py-2 text-left sm:text-sm">
-                                <span className="flex items-center">
-                                  <Image
-                                    unoptimized={true}
-                                    height={20}
-                                    width={20}
-                                    src={selected.avatar}
-                                    alt=""
-                                    className="flex-shrink-0 h-6 w-6 rounded-full"
-                                    style={{
-                                      maxWidth: "100%",
-                                      height: "auto"
-                                    }} />
-                                  <span className="ml-3 block truncate text-slate-900 dark:text-white">
-                                    {selected.name}
-                                  </span>
+                  <input
+                    type="radio"
+                    name="theme"
+                    id="dark"
+                    value="dark"
+                    onChange={() => { }}
+                    checked={theme === "dark"}
+                  />
+                  <label htmlFor="dark" className={theme === "light" ? "light" : ""}>Dark</label>
+                </div>
+                <div
+                  className="toggle"
+                  onClick={() => {
+                    document.documentElement.classList.remove("dark");
+                    setTheme("light");
+                    localStorage.setItem("theme", "light");
+                  }}
+                >
+                  <input
+                    type="radio"
+                    name="theme"
+                    id="light"
+                    value="light"
+                    onChange={() => { }}
+                    checked={theme === "light"}
+                  />
+                  <label htmlFor="light" className={theme === "light" ? "light" : ""}>Light</label>
+                </div>
+                <br />
+                Language
+                <div>
+                  <span className="flex justify-between align-middle text-sm text-gray-700 dark:text-gray-200">
+                    <Listbox value={selected} onChange={setSelected}>
+                      {({ open }) => (
+                        <>
+                          <div className="mt-1 relative">
+                            <ListboxButton className="relative w-full cursor-pointer bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm pl-3 pr-10 py-2 text-left sm:text-sm">
+                              <span className="flex items-center">
+                                <Image
+                                  unoptimized={true}
+                                  height={20}
+                                  width={20}
+                                  src={selected.avatar}
+                                  alt=""
+                                  className="flex-shrink-0 h-6 w-6 rounded-full"
+                                  style={{
+                                    maxWidth: "100%",
+                                    height: "auto"
+                                  }} />
+                                <span className="ml-3 block truncate text-slate-900 dark:text-white">
+                                  {selected.name}
                                 </span>
-                                <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                  <IconSelector
-                                    className="h-5 w-5 text-gray-400"
-                                    aria-hidden="true"
-                                  />
-                                </span>
-                              </Listbox.Button>
+                              </span>
+                              <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                <IconSelector
+                                  className="h-5 w-5 text-gray-400"
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            </ListboxButton>
 
-                              <Transition
-                                show={open}
-                                as={Fragment}
-                                leave="transition ease-in duration-100"
-                                leaveFrom="opacity-100"
-                                leaveTo="opacity-0"
-                              >
-                                <Listbox.Options className="bg-white dark:bg-gray-800 z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ">
-                                  {countries.map((country) => (
-                                    <Listbox.Option
-                                      key={country.id}
-                                      className={({ active }) =>
-                                        classNames(
-                                          active
-                                            ? "text-gray-900 bg-indigo-600"
-                                            : "text-gray-900",
-                                          "cursor-pointer select-none relative py-2 pl-3 pr-9"
-                                        )
-                                      }
-                                      value={country}
-                                    >
-                                      {({ selected, active }) => (
-                                        <>
-                                          <div className="flex items-center">
-                                            <Image
-                                              unoptimized={true}
-                                              height={20}
-                                              width={20}
-                                              src={country.avatar}
-                                              alt=""
-                                              className="flex-shrink-0 h-6 w-6 rounded-full"
-                                              style={{
-                                                maxWidth: "100%",
-                                                height: "auto"
-                                              }} />
-                                            <span
-                                              className={classNames(
-                                                selected
-                                                  ? "font-semibold"
-                                                  : "font-normal",
-                                                "ml-3 block truncate",
-                                                "text-slate-900 dark:text-white"
-                                              )}
-                                            >
-                                              {country.name}
-                                            </span>
-                                          </div>
+                            <Transition
+                              show={open}
+                              as={Fragment}
+                              leave="transition ease-in duration-100"
+                              leaveFrom="opacity-100"
+                              leaveTo="opacity-0"
+                            >
+                              <ListboxOptions className="bg-white dark:bg-gray-800 z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ">
+                                {countries.map((country) => (
+                                  <ListboxOption
+                                    key={country.id}
+                                    className={({ focus }) =>
+                                      classNames(
+                                        focus
+                                          ? "text-gray-900 bg-indigo-600"
+                                          : "text-gray-900",
+                                        "cursor-pointer select-none relative py-2 pl-3 pr-9"
+                                      )
+                                    }
+                                    value={country}
+                                  >
+                                    {({ selected, focus }) => (
+                                      <>
+                                        <div className="flex items-center">
+                                          <Image
+                                            unoptimized={true}
+                                            height={20}
+                                            width={20}
+                                            src={country.avatar}
+                                            alt=""
+                                            className="flex-shrink-0 h-6 w-6 rounded-full"
+                                            style={{
+                                              maxWidth: "100%",
+                                              height: "auto"
+                                            }} />
+                                          <span
+                                            className={classNames(
+                                              selected
+                                                ? "font-semibold"
+                                                : "font-normal",
+                                              "ml-3 block truncate",
+                                              "text-slate-900 dark:text-white"
+                                            )}
+                                          >
+                                            {country.name}
+                                          </span>
+                                        </div>
 
-                                          {selected ? (
-                                            <span
-                                              className={classNames(
-                                                active
-                                                  ? "text-white"
-                                                  : "text-indigo-600",
-                                                "absolute inset-y-0 right-0 flex items-center pr-4"
-                                              )}
-                                            >
-                                              <IconCheck
-                                                className="h-5 w-5"
-                                                aria-hidden="true"
-                                              />
-                                            </span>
-                                          ) : null}
-                                        </>
-                                      )}
-                                    </Listbox.Option>
-                                  ))}
-                                </Listbox.Options>
-                              </Transition>
-                            </div>
-                          </>
-                        )}
-                      </Listbox>
-                    </span>
-                  </div>
-                  <br />
-                  <div>
-                    <div className="flex items-center cursor-pointer">
-                      <input
-                        defaultChecked={
-                          localStorage.getItem("debug") === "true"
+                                        {selected ? (
+                                          <span
+                                            className={classNames(
+                                              focus
+                                                ? "text-white"
+                                                : "text-indigo-600",
+                                              "absolute inset-y-0 right-0 flex items-center pr-4"
+                                            )}
+                                          >
+                                            <IconCheck
+                                              className="h-5 w-5"
+                                              aria-hidden="true"
+                                            />
+                                          </span>
+                                        ) : null}
+                                      </>
+                                    )}
+                                  </ListboxOption>
+                                ))}
+                              </ListboxOptions>
+                            </Transition>
+                          </div>
+                        </>
+                      )}
+                    </Listbox>
+                  </span>
+                </div>
+                <br />
+                <div>
+                  <div className="flex items-center cursor-pointer">
+                    <input
+                      defaultChecked={
+                        localStorage.getItem("debug") === "true"
+                      }
+                      onChange={() => {
+                        if (localStorage.getItem("debug") === "true") {
+                          localStorage.setItem("debug", "false");
+                        } else {
+                          localStorage.setItem("debug", "true");
                         }
-                        onChange={() => {
-                          if (localStorage.getItem("debug") === "true") {
-                            localStorage.setItem("debug", "false");
-                          } else {
-                            localStorage.setItem("debug", "true");
-                          }
-                        }}
-                        id={"debug"}
-                        type="checkbox"
-                        className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      />
-                      <label
-                        htmlFor={"debug"}
-                        className="pl-2 font-medium dark:text-white text-black font-mono"
-                        style={{
-                          fontSize: "18px",
-                        }}
-                      >
-                        Turn on debug mode (recommended)
-                      </label>
-                    </div>
+                      }}
+                      id={"debug"}
+                      type="checkbox"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor={"debug"}
+                      className="pl-2 font-medium dark:text-white text-black font-mono"
+                      style={{
+                        fontSize: "18px",
+                      }}
+                    >
+                      Turn on debug mode (recommended)
+                    </label>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div className="flex items-center p-6 space-x-2 rounded-b dark:bg-[#2b2d31] bg-[#eeeeee]">
-                <button
-                  onClick={() => {
-                    setSettings(false);
-                  }}
-                  type="button"
-                  className="button-green text-gray-200"
-                >
-                  Done
-                </button>
-              </div>
+            <div className="flex items-center p-6 space-x-2 rounded-b dark:bg-[#2b2d31] bg-[#eeeeee]">
+              <button
+                onClick={() => {
+                  setSettings(false);
+                }}
+                type="button"
+                className="button-green text-gray-200"
+              >
+                Done
+              </button>
             </div>
           </div>
         </div>
-      </Dialog>
-    </Transition>
+      </DialogPanel>
+    )}
     <header className="flex flex-col items-center lg:pt-20 md:pt-16 pt-4">
       <div className="flex justify-center">
         <h1
@@ -810,14 +778,14 @@ export default function Header() {
       </p>
       <div className="portrait:hidden lg:hidden landscape:flex md:landscape:hidden lg:text-xl md:text-xl text-sm mt-1 animate__delay-1s animate__animated animate__fadeIn flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
         <Link
-          href={process.env.NEXT_PUBLIC_DOMAIN +"/demo"}
+          href={process.env.NEXT_PUBLIC_DOMAIN + "/demo"}
           target="_blank"
           rel="noreferrer"
           type="button"
           className="button-green text-gray-200  my-2 flex items-center">
-          
-            Click to View Demo
-          
+
+          Click to View Demo
+
         </Link>
       </div>
       <div className="flex justify-center items-center mt-2">
