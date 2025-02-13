@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/peterhanania"><img src="https://i.imgur.com/JXomrnb.png" alt="Discord Package Logo" width="200"></a>
+  <a href="https://github.com/peterhanania"><img src="https://i.imgur.com/JXomrnb.png" alt="Discord Package Logo" width="700"></a>
   <br>
   Discord Package Explorer
   <br>
@@ -24,8 +24,7 @@
   <a href="#key-features">Key Features</a> •
   <a href="#demo">Demo</a> •
   <a href="#installation">Installation</a> •
-  <a href="#deployment">Deployment</a> •
-  <a href="#contributing">Contributing</a>
+  <a href="#contributors">Contributors</a>
 </p>
 
 ## About
