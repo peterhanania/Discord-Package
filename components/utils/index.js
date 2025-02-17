@@ -1,7 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import Papa from "papaparse";
 import { DecodeUTF8 } from "fflate";
-import { snakeCase } from "snake-case";
+import { snakeCase } from "change-case";
 import names from "../json/demo/names.json";
 import avatars from "../json/demo/avatars.json";
 import emojis from "../json/demo/emojis.json";
