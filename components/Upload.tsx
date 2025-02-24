@@ -61,7 +61,7 @@ export default function Upload(): ReactElement {
     return el.classList
       ? el.classList.contains(cl)
       : !!el.className &&
-          !!el.className.match(new RegExp("(?: |^)" + cl + "(?: |$)"));
+      !!el.className.match(new RegExp("(?: |^)" + cl + "(?: |$)"));
   }
 
   React.useEffect(() => {
@@ -246,8 +246,8 @@ export default function Upload(): ReactElement {
           );
           console.log(
             chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Loading in Debug Mode`)}`
+            chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+            `  ${chalk.yellow(`Loading in Debug Mode`)}`
           );
           await delay(2000);
         } else {
@@ -258,8 +258,8 @@ export default function Upload(): ReactElement {
         if (isDebug)
           console.log(
             chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Loading your package`)}`
+            chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+            `  ${chalk.yellow(`Loading your package`)}`
           );
         if (isDebug) setLoading("Loading Package|||Registering Package");
 
@@ -267,8 +267,8 @@ export default function Upload(): ReactElement {
         if (isDebug)
           console.log(
             chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Package registered`)}`
+            chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+            `  ${chalk.yellow(`Package registered`)}`
           );
 
         const files: Array<any> = [];
@@ -288,8 +288,8 @@ export default function Upload(): ReactElement {
         if (isDebug) {
           console.log(
             chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Initializing file reader`)}`
+            chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+            `  ${chalk.yellow(`Initializing file reader`)}`
           );
           await delay(50);
           setLoading("Loading Package|||Initializing file reader");
@@ -311,8 +311,8 @@ export default function Upload(): ReactElement {
         if (isDebug) {
           console.log(
             chalk.bold.blue(`[DEBUG] `) +
-              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Checking package validity`)}`
+            chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+            `  ${chalk.yellow(`Checking package validity`)}`
           );
           await delay(50);
           setLoading("Loading Package|||Checking for Valid Package");
@@ -342,8 +342,8 @@ export default function Upload(): ReactElement {
           if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Preparing to extract Data`)}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Preparing to extract Data`)}`
             );
           let data: objectInterface = {
             user: {
@@ -404,8 +404,8 @@ export default function Upload(): ReactElement {
           if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loading user information`)}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Loading user information`)}`
             );
 
           setPercent(5);
@@ -415,8 +415,8 @@ export default function Upload(): ReactElement {
             await delay(1000);
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Parsing account/user.json`)}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Parsing account/user.json`)}`
             );
           } else await delay(100);
 
@@ -427,8 +427,8 @@ export default function Upload(): ReactElement {
           if (isDebug) {
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loading main information`)}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Loading main information`)}`
             );
 
             setLoading("Loading User Information|||Loading Main Information");
@@ -440,12 +440,12 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loaded user ID ${userInformationData.id}`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Loaded user ID ${userInformationData.id}`
+                )}`
               );
           } else throw new Error("User ID not found");
 
@@ -465,10 +465,10 @@ export default function Upload(): ReactElement {
           if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded user ${userInformationData?.username}#${userInformationData?.discriminator}`
-                )}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(
+                `Loaded user ${userInformationData?.username}#${userInformationData?.discriminator}`
+              )}`
             );
 
           if (userInformationData.avatar_hash)
@@ -477,10 +477,10 @@ export default function Upload(): ReactElement {
           if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded user avatar hash ${userInformationData?.avatar_hash}`
-                )}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(
+                `Loaded user avatar hash ${userInformationData?.avatar_hash}`
+              )}`
             );
 
           setPercent(10);
@@ -490,18 +490,18 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Loaded user premium until`)}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(`Loaded user premium until`)}`
               );
           }
 
           if (isDebug) {
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Preparing to load settings`)}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Preparing to load settings`)}`
             );
             await delay(400);
             setLoading(
@@ -519,10 +519,10 @@ export default function Upload(): ReactElement {
               if (isDebug)
                 console.log(
                   chalk.bold.blue(`[DEBUG] `) +
-                    chalk.bold.cyan(
-                      `[${moment(Date.now()).format("h:mm:ss a")}]`
-                    ) +
-                    `  ${chalk.yellow(`Loaded settings appearance`)}`
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Loaded settings appearance`)}`
                 );
               if (userInformationData.settings.settings.appearance)
                 data.settings.appearance =
@@ -553,8 +553,8 @@ export default function Upload(): ReactElement {
           if (isDebug) {
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loading setting Frecency`)}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Loading setting Frecency`)}`
             );
             await delay(700);
             setLoading("Loading User Information|||Loading Setting Frecency");
@@ -576,7 +576,7 @@ export default function Upload(): ReactElement {
                 ).forEach((key: any) => {
                   const key_e =
                     userInformationData.settings.frecency.emojiFrecency.emojis[
-                      key
+                    key
                     ];
                   emojis.push({
                     name: key,
@@ -588,12 +588,12 @@ export default function Upload(): ReactElement {
                 if (isDebug)
                   console.log(
                     chalk.bold.blue(`[DEBUG] `) +
-                      chalk.bold.cyan(
-                        `[${moment(Date.now()).format("h:mm:ss a")}]`
-                      ) +
-                      `  ${chalk.yellow(
-                        `Loaded ${emojis.length} recent emojis`
-                      )}`
+                    chalk.bold.cyan(
+                      `[${moment(Date.now()).format("h:mm:ss a")}]`
+                    ) +
+                    `  ${chalk.yellow(
+                      `Loaded ${emojis.length} recent emojis`
+                    )}`
                   );
               }
             }
@@ -633,10 +633,10 @@ export default function Upload(): ReactElement {
                 if (isDebug)
                   console.log(
                     chalk.bold.blue(`[DEBUG] `) +
-                      chalk.bold.cyan(
-                        `[${moment(Date.now()).format("h:mm:ss a")}]`
-                      ) +
-                      `  ${chalk.yellow(`Loaded ${cncs.length} connections`)}`
+                    chalk.bold.cyan(
+                      `[${moment(Date.now()).format("h:mm:ss a")}]`
+                    ) +
+                    `  ${chalk.yellow(`Loaded ${cncs.length} connections`)}`
                   );
               }
             }
@@ -645,8 +645,8 @@ export default function Upload(): ReactElement {
           if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loading payments`)}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Loading payments`)}`
             );
           setPercent(20);
           if (isDebug) {
@@ -676,12 +676,12 @@ export default function Upload(): ReactElement {
               if (isDebug)
                 console.log(
                   chalk.bold.blue(`[DEBUG] `) +
-                    chalk.bold.cyan(
-                      `[${moment(Date.now()).format("h:mm:ss a")}]`
-                    ) +
-                    `  ${chalk.yellow(
-                      `Loaded ${Object.keys(types).length} payments`
-                    )}`
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(
+                    `Loaded ${Object.keys(types).length} payments`
+                  )}`
                 );
               data.payments.giftedNitro = types;
             }
@@ -716,10 +716,10 @@ export default function Upload(): ReactElement {
               if (isDebug)
                 console.log(
                   chalk.bold.blue(`[DEBUG] `) +
-                    chalk.bold.cyan(
-                      `[${moment(Date.now()).format("h:mm:ss a")}]`
-                    ) +
-                    `  ${chalk.yellow(`Loaded ${trns.length} transactions`)}`
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Loaded ${trns.length} transactions`)}`
                 );
             }
           }
@@ -728,8 +728,8 @@ export default function Upload(): ReactElement {
           if (isDebug) {
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loaded user information`)}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Loaded user information`)}`
             );
             setLoading("Loading User Information|||Loaded User Information");
             await delay(2000);
@@ -739,10 +739,10 @@ export default function Upload(): ReactElement {
           if (isDebug) {
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Preparing to load messages [messages/index.json]`
-                )}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(
+                `Preparing to load messages [messages/index.json]`
+              )}`
             );
           } else await delay(100);
 
@@ -761,12 +761,12 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Error: channelsIDFILE[0].name. Check array below:`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Error: channelsIDFILE[0].name. Check array below:`
+                )}`
               );
             if (isDebug) console.log(channelsIDFILE);
             throw new Error("invalid_package_missing_messages");
@@ -796,8 +796,8 @@ export default function Upload(): ReactElement {
           if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Started message scan`)}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Started message scan`)}`
             );
 
           // Discord Updated their message system in March of 2024
@@ -806,9 +806,8 @@ export default function Upload(): ReactElement {
           let extension = "csv";
 
           const firstChannelID = channelsIDs[0];
-          const firstChannelMessagesPath = `messages/${
-            isOldPackage ? "" : "c"
-          }${firstChannelID}/messages.json`;
+          const firstChannelMessagesPath = `messages/${isOldPackage ? "" : "c"
+            }${firstChannelID}/messages.json`;
 
           const firstChannelMessages = await Utils.readFile(
             firstChannelMessagesPath,
@@ -822,20 +821,18 @@ export default function Upload(): ReactElement {
           if (isDebug) {
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Picked file extension: ${extension}`)}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Picked file extension: ${extension}`)}`
             );
           }
 
           await Promise.all(
             channelsIDs.map((channelID: any): any => {
               return new Promise((resolve) => {
-                const channelDataPath = `messages/${
-                  isOldPackage ? "" : "c"
-                }${channelID}/channel.json`;
-                const channelMessagesPath = `messages/${
-                  isOldPackage ? "" : "c"
-                }${channelID}/messages.${extension}`;
+                const channelDataPath = `messages/${isOldPackage ? "" : "c"
+                  }${channelID}/channel.json`;
+                const channelMessagesPath = `messages/${isOldPackage ? "" : "c"
+                  }${channelID}/messages.${extension}`;
 
                 Promise.all([
                   Utils.readFile(channelDataPath, files),
@@ -858,11 +855,11 @@ export default function Upload(): ReactElement {
                       data_.recipients && data_.recipients.length === 2;
                     const dmUserID = isDM
                       ? data_.recipients.find(
-                          (userID: any): boolean => userID !== userId
-                        )
+                        (userID: any): boolean => userID !== userId
+                      )
                       : undefined;
 
-                      
+
                     channels.push({
                       data_,
                       messages,
@@ -874,10 +871,10 @@ export default function Upload(): ReactElement {
                     if (isDebug) {
                       console.log(
                         chalk.bold.blue(`[DEBUG] `) +
-                          chalk.bold.cyan(
-                            `[${moment(Date.now()).format("h:mm:ss a")}]`
-                          ) +
-                          `  ${chalk.yellow(`Error: Unknown Instance Found`)}`
+                        chalk.bold.cyan(
+                          `[${moment(Date.now()).format("h:mm:ss a")}]`
+                        ) +
+                        `  ${chalk.yellow(`Error: Unknown Instance Found`)}`
                       );
                       console.log(data_, userMessages?.[data_?.id]);
                     }
@@ -913,8 +910,8 @@ export default function Upload(): ReactElement {
           if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loaded ${messagesRead} message files`)}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Loaded ${messagesRead} message files`)}`
             );
 
           setPercent(35);
@@ -922,10 +919,10 @@ export default function Upload(): ReactElement {
             await delay(700);
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Preparing to load Channels (Channels, DMs, Groups)`
-                )}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(
+                `Preparing to load Channels (Channels, DMs, Groups)`
+              )}`
             );
           } else await delay(100);
 
@@ -934,10 +931,10 @@ export default function Upload(): ReactElement {
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Calculating top channels`)}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(`Calculating top channels`)}`
               );
               setLoading("Loading Messages|||Calculating top Channels");
             } else await delay(100);
@@ -1069,8 +1066,8 @@ export default function Upload(): ReactElement {
                     : null,
                   topCustomEmojis: options.other.topCustomEmojis
                     ? topCustomEmojis
-                        .sort((a, b) => b.count - a.count)
-                        .slice(0, 1000)
+                      .sort((a, b) => b.count - a.count)
+                      .slice(0, 1000)
                     : null,
                 };
               });
@@ -1078,12 +1075,12 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loaded ${data?.messages?.topChannels?.length} channels`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Loaded ${data?.messages?.topChannels?.length} channels`
+                )}`
               );
           }
 
@@ -1092,10 +1089,10 @@ export default function Upload(): ReactElement {
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Loading top DMs`)}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(`Loading top DMs`)}`
               );
               setLoading("Loading Messages|||Calculating top DMs");
             } else await delay(100);
@@ -1231,8 +1228,8 @@ export default function Upload(): ReactElement {
                     : null,
                   topCustomEmojis: options.other.topCustomEmojis
                     ? topCustomEmojis
-                        .sort((a, b) => b.count - a.count)
-                        .slice(0, 1000)
+                      .sort((a, b) => b.count - a.count)
+                      .slice(0, 1000)
                     : null,
                 };
               });
@@ -1240,12 +1237,12 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loaded ${data?.messages?.topDMs?.length} DMs`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Loaded ${data?.messages?.topDMs?.length} DMs`
+                )}`
               );
           }
 
@@ -1254,10 +1251,10 @@ export default function Upload(): ReactElement {
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Loading top Guilds`)}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(`Loading top Guilds`)}`
               );
               setLoading("Loading Messages|||Calculating top Guilds");
             } else await delay(100);
@@ -1389,8 +1386,8 @@ export default function Upload(): ReactElement {
                     : null,
                   topCustomEmojis: options.other.topCustomEmojis
                     ? topCustomEmojis
-                        .sort((a, b) => b.count - a.count)
-                        .slice(0, 1000)
+                      .sort((a, b) => b.count - a.count)
+                      .slice(0, 1000)
                     : null,
                 };
               });
@@ -1472,12 +1469,12 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loaded ${data?.messages?.topGuilds?.length} guilds`
-                  )} `
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Loaded ${data?.messages?.topGuilds?.length} guilds`
+                )} `
               );
           }
 
@@ -1486,10 +1483,10 @@ export default function Upload(): ReactElement {
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Loading top group DMs`)}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(`Loading top group DMs`)}`
               );
               setLoading("Loading Messages|||Calculating top Group DMs");
             } else await delay(100);
@@ -1623,8 +1620,8 @@ export default function Upload(): ReactElement {
                   : null,
                 topCustomEmojis: options.other.topCustomEmojis
                   ? topCustomEmojis
-                      .sort((a, b) => b.count - a.count)
-                      .slice(0, 1000)
+                    .sort((a, b) => b.count - a.count)
+                    .slice(0, 1000)
                   : null,
               };
             });
@@ -1636,12 +1633,12 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loaded ${data?.messages?.topGroupDMs?.length} group DMs`
-                  )} `
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Loaded ${data?.messages?.topGroupDMs?.length} group DMs`
+                )} `
               );
           }
 
@@ -1650,12 +1647,12 @@ export default function Upload(): ReactElement {
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Calculating character count & message count`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Calculating character count & message count`
+                )}`
               );
               setLoading("Loading Messages|||Getting your character Count");
               await delay(700);
@@ -1677,12 +1674,12 @@ export default function Upload(): ReactElement {
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Calculating your old messages on discord`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Calculating your old messages on discord`
+                )}`
               );
               setLoading("Loading Messages|||Getting your oldest messages");
               await delay(700);
@@ -1755,9 +1752,8 @@ export default function Upload(): ReactElement {
                     return {
                       sentence: message.words.join(" "),
                       timestamp: message.timestamp,
-                      author: `Group Name: ${
-                        channel.name ? channel.name : "Unknown DM"
-                      }`,
+                      author: `Group Name: ${channel.name ? channel.name : "Unknown DM"
+                        }`,
                     };
                   })
                   .flat();
@@ -1785,12 +1781,12 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loaded ${data?.messages?.oldestMessages?.length} oldest messages`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Loaded ${data?.messages?.oldestMessages?.length} oldest messages`
+                )}`
               );
           }
 
@@ -1799,10 +1795,10 @@ export default function Upload(): ReactElement {
               setLoading("Loading Messages|||Getting your attachment Count");
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Loading your attachment Count`)}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(`Loading your attachment Count`)}`
               );
             } else await delay(100);
 
@@ -1826,17 +1822,17 @@ export default function Upload(): ReactElement {
                       (attachment: any) => {
                         const mtch = regex.test(attachment)
                           ? attachment.match(
-                              regex
-                              // eslint-disable-next-line no-mixed-spaces-and-tabs
-                              // eslint-disable-next-line no-mixed-spaces-and-tabs
-                            )[0]
+                            regex
+                            // eslint-disable-next-line no-mixed-spaces-and-tabs
+                            // eslint-disable-next-line no-mixed-spaces-and-tabs
+                          )[0]
                           : tenorGIFregex.test(attachment)
-                          ? attachment.match(
+                            ? attachment.match(
                               tenorGIFregex
                               // eslint-disable-next-line no-mixed-spaces-and-tabs
                               // eslint-disable-next-line no-mixed-spaces-and-tabs
                             )[0]
-                          : attachment;
+                            : attachment;
 
                         if (mtch && mtch.length > 25)
                           return mtch
@@ -1865,12 +1861,12 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loaded ${data?.messages?.attachmentCount?.length} attachments`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Loaded ${data?.messages?.attachmentCount?.length} attachments`
+                )}`
               );
           }
 
@@ -1878,10 +1874,10 @@ export default function Upload(): ReactElement {
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Loading your mention Count`)}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(`Loading your mention Count`)}`
               );
               setLoading("Loading Messages|||Getting your mention Count");
             } else await delay(100);
@@ -1995,10 +1991,10 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Loaded mentions`)}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(`Loaded mentions`)}`
               );
           }
 
@@ -2008,10 +2004,10 @@ export default function Upload(): ReactElement {
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Calculating your top emojis`)}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(`Calculating your top emojis`)}`
               );
               setLoading("Loading Messages|||Getting your top emojis");
             } else await delay(100);
@@ -2067,12 +2063,12 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loaded ${data?.messages?.topEmojis?.length} top emojis`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Loaded ${data?.messages?.topEmojis?.length} top emojis`
+                )}`
               );
           }
 
@@ -2082,10 +2078,10 @@ export default function Upload(): ReactElement {
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Calculating your top custom emojis`)}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(`Calculating your top custom emojis`)}`
               );
               setLoading("Loading Messages|||Getting your top custom emojis");
             } else await delay(100);
@@ -2141,12 +2137,12 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loaded ${data?.messages?.topCustomEmojis?.length} top custom emojis`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Loaded ${data?.messages?.topCustomEmojis?.length} top custom emojis`
+                )}`
               );
           }
 
@@ -2155,10 +2151,10 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Calculating your top hours on Discord`)}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(`Calculating your top hours on Discord`)}`
               );
             if (isDebug)
               setLoading(
@@ -2200,10 +2196,10 @@ export default function Upload(): ReactElement {
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Calculated your top hours on Discord`)}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(`Calculated your top hours on Discord`)}`
               );
             }
           }
@@ -2213,8 +2209,8 @@ export default function Upload(): ReactElement {
           if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Loading "other" data `)}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Loading "other" data `)}`
             );
 
           const words = channels
@@ -2245,12 +2241,12 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loaded ${data?.messages?.favoriteWords?.length} favorite words`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Loaded ${data?.messages?.favoriteWords?.length} favorite words`
+                )}`
               );
           }
 
@@ -2268,12 +2264,12 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loaded ${data?.messages?.topCursed?.length} curse words`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Loaded ${data?.messages?.topCursed?.length} curse words`
+                )}`
               );
           }
 
@@ -2289,12 +2285,12 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loaded ${data?.messages?.topLinks?.length} general links`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Loaded ${data?.messages?.topLinks?.length} general links`
+                )}`
               );
           }
 
@@ -2310,12 +2306,12 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loaded ${data?.messages?.topDiscordLinks?.length} Discord links`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Loaded ${data?.messages?.topDiscordLinks?.length} Discord links`
+                )}`
               );
           }
 
@@ -2324,20 +2320,20 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loading your guilds and their respective data`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Loading your guilds and their respective data`
+                )}`
               );
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Scanning [servers/index.json]`)}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(`Scanning [servers/index.json]`)}`
               );
               setLoading("Loading Guilds|||");
               await delay(2000);
@@ -2357,12 +2353,12 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(
-                    `Loaded ${Object.keys(data?.guilds)?.length} guilds`
-                  )}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(
+                  `Loaded ${Object.keys(data?.guilds)?.length} guilds`
+                )}`
               );
           }
 
@@ -2371,10 +2367,10 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Loading your Discord bots`)}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(`Loading your Discord bots`)}`
               );
 
             if (isDebug) await delay(2000);
@@ -2429,10 +2425,10 @@ export default function Upload(): ReactElement {
               if (isDebug)
                 console.log(
                   chalk.bold.blue(`[DEBUG] `) +
-                    chalk.bold.cyan(
-                      `[${moment(Date.now()).format("h:mm:ss a")}]`
-                    ) +
-                    `  ${chalk.yellow(`Loaded ${botsArr.length} bots`)}`
+                  chalk.bold.cyan(
+                    `[${moment(Date.now()).format("h:mm:ss a")}]`
+                  ) +
+                  `  ${chalk.yellow(`Loaded ${botsArr.length} bots`)}`
                 );
             } else {
               if (isDebug) {
@@ -2445,24 +2441,25 @@ export default function Upload(): ReactElement {
           if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Calculating your badges`)}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Calculating your badges`)}`
             );
 
           if (!isDebug) setLoading("Loading Your Flags");
           await delay(1000);
-
           setPercent(88);
+
           if (userInformationData.flags && options.user.badges) {
             data.user.flags = userInformationData.flags;
-            const badges = BitField.calculate(userInformationData.flags);
+            const badges = userInformationData.flags;
+
             if (data.user.premium_until) {
-              badges.push("nitro_until");
+              badges.push("NITRO_UNTIL");
             } else if (
               !data.user.premium_until &&
               userInformationData.premium_until
             ) {
-              badges.push("nitro");
+              badges.push("NITRO");
             }
 
             if (
@@ -2483,10 +2480,10 @@ export default function Upload(): ReactElement {
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                  chalk.bold.cyan(
-                    `[${moment(Date.now()).format("h:mm:ss a")}]`
-                  ) +
-                  `  ${chalk.yellow(`Calculating your analytics`)}`
+                chalk.bold.cyan(
+                  `[${moment(Date.now()).format("h:mm:ss a")}]`
+                ) +
+                `  ${chalk.yellow(`Calculating your analytics`)}`
               );
             if (isDebug) await delay(2000);
             const statistics: any = await Utils.readAnalyticsFile(
@@ -2519,17 +2516,17 @@ export default function Upload(): ReactElement {
           if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(
-                  `Loaded all data in ${Date.now() - startTime}ms `
-                )}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(
+                `Loaded all data in ${Date.now() - startTime}ms `
+              )}`
             );
 
           if (isDebug)
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-                `  ${chalk.yellow(`Preparing to render data`)}`
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Preparing to render data`)}`
             );
 
           if (isDebug && Date.now() - startTime > 60000) {
@@ -2831,7 +2828,7 @@ export default function Upload(): ReactElement {
                                     >
                                       {
                                         (Utils.classifyOBJ(Features) as any)[
-                                          item
+                                        item
                                         ]
                                       }
                                     </label>
@@ -2930,7 +2927,7 @@ export default function Upload(): ReactElement {
                           </svg>
                         </summary>
                         {selectedFeatures?.statistics?.length ===
-                        Object.keys(EventsJSON.events).length ? (
+                          Object.keys(EventsJSON.events).length ? (
                           <span
                             onClick={() => {
                               setSelectedFeatures({
@@ -2956,7 +2953,7 @@ export default function Upload(): ReactElement {
                           </span>
                         )}
                         {selectedFeatures?.statistics !==
-                        EventsJSON.defaultEvents ? (
+                          EventsJSON.defaultEvents ? (
                           <span
                             onClick={() => {
                               setSelectedFeatures({
@@ -3083,7 +3080,7 @@ export default function Upload(): ReactElement {
                         }
                         toast.success(
                           "Successfully saved options" +
-                            (savetodevice ? " to device" : ""),
+                          (savetodevice ? " to device" : ""),
                           {
                             position: "top-right",
                             autoClose: 3000,
@@ -3259,9 +3256,9 @@ export default function Upload(): ReactElement {
                                 return el.classList
                                   ? el.classList.contains(cl)
                                   : !!el.className &&
-                                      !!el.className.match(
-                                        new RegExp("(?: |^)" + cl + "(?: |$)")
-                                      );
+                                  !!el.className.match(
+                                    new RegExp("(?: |^)" + cl + "(?: |$)")
+                                  );
                               }
                               e.preventDefault();
                               const element =
