@@ -32,7 +32,6 @@ import { Suspense } from "react";
 import Link from "next/link";
 import Loading from "./Loading";
 import { useSnackbar } from "notistack";
-import Data from "./Data";
 
 interface IObjectKeys {
   [key: string]: any;
@@ -123,6 +122,7 @@ export default function Upload(): ReactElement<any> {
 
           validateData_(obj, data_d);
         } catch (e) {
+          console.error(e);
           return;
         }
       }
