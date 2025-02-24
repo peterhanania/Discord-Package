@@ -15,6 +15,12 @@ module.exports = {
         xl3: "1669px",
         ...defaultTheme.screens,
       },
+      animation: {
+        'spin-slow': 'spin 3s linear infinite',
+      },
+      gradients: {
+        'blue-gradient': ['from-blue-500', 'to-blue-600'],
+      },
     },
   },
 };

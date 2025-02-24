@@ -1,7 +1,7 @@
 import { Transition } from "@headlessui/react";
 import { useState, useEffect, ReactElement } from "react";
 
-export default function Privacy(): ReactElement {
+export default function Privacy(): ReactElement<any> {
   const [show, setShow] = useState(true);
   const [document, setDocument] = useState<any>(null);
 

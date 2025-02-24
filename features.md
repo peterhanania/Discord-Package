@@ -29,20 +29,24 @@ Ever wondered what Data Discord collects? Or did you ever want to view what's in
 
 #### 1. Click on the User Settings icon
 
-<img src="https://discordpackage.com/help/1.png" />
+![Opening the settings](public/help/1.png)
 
-#### 2. Click on "Privacy & Safety"
+#### 2. Click on "Data & Privacy"
 
-<img src="https://discordpackage.com/help/2.png" />
+![Where to request the data](public/help/2.png)
 
-#### 3. Scroll Down to the end then click on "Request Data " to request your Data
+#### 3. Scroll Down to the end then click on "Request Data" to request your Data
 
-<img src="https://discordpackage.com/help/3.png" />
+![How to request the data](public/help/3.png)
 
-#### 4. Keep checking your email and download your data once reached. The data will be sent to the email associated with your Discord account and usually takes up to 24 hours to reach.
+#### 4. Check all checkboxes and click on "Request My Data"
 
-<img src="https://discordpackage.com/help/4.png" />
-<img src="https://discordpackage.com/help/5.png" />
+![Which options to select](public/help/4.png)
+
+#### 5. Keep checking your email and download your data once reached. The data will be sent to the email associated with your Discord account and usually takes up to 24 hours to reach.
+
+![Email Overview](public/help/5.png)
+![Email](public/help/6.png)
 
 ##### 2
 
@@ -157,7 +161,7 @@ We understand that most websites shared on Discord are scams. They tend to steal
 - We run the website using Github Pages ([pages.github.com](https://pages.github.com/)) directly from the main repository. [github action](https://github.com/peterhanania/Discord-Package/deployments/activity_log?environment=github-pages)
 - No database, no storage or any other form of data is stored.
 
-If you find a security issue or have any other questions, please contact me at peter@pogy.xyz
+If you find a security issue or have any other questions, please contact me at peter@peterhanania.com
 
 ##### 13
 

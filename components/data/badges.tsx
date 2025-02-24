@@ -9,14 +9,16 @@ type BadgeDataType = {
 type Badge = {
 	description: string;
 	icon: string;
+	internalName?: string | null;
+	shift?: number | null;
 }
-
-const badgeData = BadgeData as BadgeDataType;
 
 type BadgesProps = {
 	data: string[];
 	nitroUntil: string;
 };
+
+const badgeData = BadgeData as BadgeDataType;
 
 export default function Badges({ data, nitroUntil }: BadgesProps) {
 	// Ideally there's a better way to do this, but with the current setup this will have to do. If more placeholders are needed in badges, we can update this.
@@ -32,21 +34,27 @@ export default function Badges({ data, nitroUntil }: BadgesProps) {
 	};
 
 	return (
-		<div className="flex flex-wrap items-center gap-1">
+		(<div className="flex flex-wrap items-center gap-1">
 			{data.map((badgeKey: any) => {
 				if (!badgeData[badgeKey]) return null;
 
+				if (!badgeData[badgeKey]?.icon) return null;
+
 				return (
-					<Tippy
+					(<Tippy
 						key={badgeKey}
 						content={fillPlaceholder(badgeData[badgeKey]?.description)}
 					>
 						<div className="opacity-90 hover:opacity-100 relative w-6 h-6 sm:w-8 sm:h-8">
-							<Image src={badgeData[badgeKey]?.icon} alt={badgeData[badgeKey]?.description} layout="fill" />
+							<Image
+								src={badgeData[badgeKey]?.icon}
+								alt={badgeData[badgeKey]?.description}
+								fill
+								sizes="100vw" />
 						</div>
-					</Tippy>
+					</Tippy>)
 				);
 			})}
-		</div>
+		</div>)
 	);
 }

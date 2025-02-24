@@ -8,11 +8,12 @@ import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import Loading from "./Loading";
 
-export default function Upload(): ReactElement {
+export default function Upload(): ReactElement<any> {
   const [data] = useAtom(dataAtom);
 
   const DynamicComponent = dynamic(() => import("./Data"), {
-    suspense: true,
+    ssr: true,
+    loading: () => <SnackbarProvider><Loading skeleton={true} /></SnackbarProvider>,
   });
 
   return data ? (

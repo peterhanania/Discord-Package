@@ -21,7 +21,7 @@ export default function Home() {
 							<p className="font-bold text-xl">Privacy Policy</p>
 							<u className="italic">Updated on: Sep 29, 2022</u>
 							<p className="pb-1">
-								Welcome to <b>discord package</b>. Your privacy is very important to us.
+								Welcome to <b>Discord Package</b>. Your privacy is very important to us.
 							</p>
 							<p>
 								Discord Package is dedicated to protecting the privacy rights of our users ("users" or "you"). This Privacy Policy (the "Policy")
@@ -80,8 +80,8 @@ export default function Home() {
 								<li>Google Analytics</li>
 							</ul>
 							<p className="font-bold">General Contact Information</p>
-							<p>peter@pogy.xyz</p>
-							<p>If you have any questions about this Policy, please contact me at peter@pogy.xyz</p>
+							<p>peter@peterhanania.com</p>
+							<p>If you have any questions about this Policy, please contact me at peter@peterhanania.com</p>
 						</div>
 					</div>
 				</div>

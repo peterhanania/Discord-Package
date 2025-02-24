@@ -1,10 +1,12 @@
+@use "sass:math";
+
 /* Variables */
 $skeleton-element-color: rgba(0, 0, 0, 0.17) !default;
 
 $skeleton-loading-animation-time: 1.3s !default;
 
 $skeleton-margin-standart: 16px !default;
-$skeleton-margin-small: $skeleton-margin-standart / 2 !default;
+$skeleton-margin-small: math.div($skeleton-margin-standart, 2) !default;
 
 $skeleton-card-box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.17) !default;
 $skeleton-card-background-color: #ffffff !default;
@@ -59,6 +61,7 @@ $skeleton-square-height: 150px !default;
 /** Main class */
 .ssc {
   cursor: progress;
+  -webkit-user-select: none;
   user-select: none;
 }
 

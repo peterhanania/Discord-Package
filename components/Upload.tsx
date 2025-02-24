@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable no-unexpected-multiline */
 /* eslint-disable no-mixed-spaces-and-tabs */
 import React from "react";
@@ -17,6 +19,7 @@ import moment from "moment";
 import chalk from "chalk";
 import { Line } from "rc-progress";
 import { SnackbarProvider } from "notistack";
+import { motion } from "framer-motion";
 import {
   dataExtractedAtom,
   defaultOptionAtom,
@@ -29,6 +32,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import Loading from "./Loading";
 import { useSnackbar } from "notistack";
+import Data from "./Data";
 
 interface IObjectKeys {
   [key: string]: any;
@@ -45,7 +49,7 @@ interface objectInterface extends IObjectKeys {
   other?: any;
 }
 
-export default function Upload(): ReactElement {
+export default function Upload(): ReactElement<any> {
   const [dragging, setDragging] = React.useState(false);
   const [error, setError] = React.useState<String | boolean | null>(null);
   const [loading, setLoading] = React.useState<String | boolean | null>(null);
@@ -2451,7 +2455,13 @@ export default function Upload(): ReactElement {
 
           if (userInformationData.flags && options.user.badges) {
             data.user.flags = userInformationData.flags;
-            const badges = userInformationData.flags;
+            let badges;
+
+            if (Array.isArray(userInformationData.flags)) {
+              badges = BitField.getBadgesFromNames(userInformationData.flags);
+            } else {
+              badges = BitField.calculate(userInformationData.flags);
+            }
 
             if (data.user.premium_until) {
               badges.push("NITRO_UNTIL");
@@ -2466,7 +2476,7 @@ export default function Upload(): ReactElement {
               data?.bots?.filter((bot: any) => bot.verified)?.length > 0 &&
               !badges.includes("VERIFIED_BOT_DEVELOPER")
             ) {
-              badges.push("VERIFIED_TRUE");
+              badges.push("VERIFIED_BOT_DEVELOPER");
             }
 
             data.user.badges = badges;
@@ -2637,7 +2647,8 @@ export default function Upload(): ReactElement {
   };
 
   const DynamicComponent = dynamic(() => import("./Data"), {
-    suspense: true,
+    ssr: false,
+    loading: () => <SnackbarProvider><Loading skeleton={true} /></SnackbarProvider>,
   });
 
   return dataExtracted ? (
@@ -3396,31 +3407,41 @@ export default function Upload(): ReactElement {
           -- or --
         </span>
         <div className=" lg:text-xl md:text-xl text-sm mt-1  flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
-          <Link href={process.env.NEXT_PUBLIC_DOMAIN + "/demo"}>
-            <a
-              className="button-green text-gray-200  my-2 flex items-center"
-              onClick={() => {
-                enqueueSnackbar("Loading demo, please wait...", {
-                  persist: true,
-                  preventDuplicate: true,
-                  anchorOrigin: {
-                    vertical: "bottom",
-                    horizontal: "center",
-                  },
-                });
-              }}
-            >
-              View a Demo
-            </a>
+          <Link
+            href={process.env.NEXT_PUBLIC_DOMAIN + "/demo"}
+            className="button-green text-gray-200  my-2 flex items-center"
+            onClick={() => {
+              enqueueSnackbar("Loading demo, please wait...", {
+                persist: true,
+                preventDuplicate: true,
+                anchorOrigin: {
+                  vertical: "bottom",
+                  horizontal: "center",
+                },
+              });
+            }}>
+
+            View a Demo
+
           </Link>
         </div>
       </div>
-      <div
+      <motion.div
         id="made_by"
-        className="group lg:landscape:flex md:landscape:flex landscape:hidden animate__animated animate__fadeIn animate__delay-1s flex justify-center items-center absolute bottom-8 right-0 left-0"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1, duration: 0.5 }}
+        className="group lg:landscape:flex md:landscape:flex landscape:hidden flex justify-center items-center absolute bottom-8 right-0 left-0"
       >
-        <div className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] text-slate-800 dark:text-white font-bold flex items-center rounded-md">
-          <a
+        <motion.div
+          initial={{ scale: 0.9 }}
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          className="px-4 py-2 bg-gray-300 dark:bg-[#2b2d31] text-slate-800 dark:text-white font-bold flex items-center rounded-md"
+        >
+          <motion.a
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
             href={process.env.NEXT_PUBLIC_DOMAIN + "/discord"}
             target="_blank"
             rel="noreferrer"
@@ -3432,7 +3453,8 @@ export default function Upload(): ReactElement {
               animation="scale"
               className="shadow-xl"
             >
-              <svg
+              <motion.svg
+                whileHover={{ rotate: 10 }}
                 className="w-6 h-6 dark:filter dark:grayscale dark:invert cursor-pointer"
                 width="71"
                 height="55"
@@ -3451,9 +3473,9 @@ export default function Upload(): ReactElement {
                     <rect width="71" height="55" fill="white" />
                   </clipPath>
                 </defs>
-              </svg>
+              </motion.svg>
             </Tippy>
-          </a>
+          </motion.a>
           |{" "}
           <Tippy
             zIndex={99999999999999}
@@ -3461,24 +3483,28 @@ export default function Upload(): ReactElement {
             animation="scale"
             className="shadow-xl"
           >
-            <a
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               href={process.env.NEXT_PUBLIC_DOMAIN + "/privacy"}
               target="_blank"
               rel="noreferrer"
               className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1 uppercase"
             >
               privacy
-            </a>
+            </motion.a>
           </Tippy>
           | Made by{" "}
-          <a
+          <motion.a
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1"
             href="https://github.com/peterhanania"
             target="_blank"
             rel="noreferrer"
           >
             Peter
-          </a>
+          </motion.a>
           using
           <Tippy
             zIndex={99999999999999}
@@ -3486,7 +3512,9 @@ export default function Upload(): ReactElement {
             animation="scale"
             className="shadow-xl"
           >
-            <svg
+            <motion.svg
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.5 }}
               className="h-6 w-6 rounded-lg ml-2 mr-1 dark:filter dark:grayscale dark:invert"
               viewBox="0 0 256 256"
               version="1.1"
@@ -3498,7 +3526,7 @@ export default function Upload(): ReactElement {
                   fill="#000000"
                 ></path>
               </g>
-            </svg>
+            </motion.svg>
           </Tippy>
           <Tippy
             zIndex={99999999999999}
@@ -3506,7 +3534,13 @@ export default function Upload(): ReactElement {
             animation="scale"
             className="shadow-xl"
           >
-            <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6 rounded-lg">
+            <motion.svg
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.5 }}
+              viewBox="0 0 24 24"
+              fill="none"
+              className="h-6 w-6 rounded-lg"
+            >
               <path
                 fillRule="evenodd"
                 clipRule="evenodd"
@@ -3526,47 +3560,10 @@ export default function Upload(): ReactElement {
                   <stop offset="1" stopColor="#6DD7B9"></stop>
                 </linearGradient>
               </defs>
-            </svg>
+            </motion.svg>
           </Tippy>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </>
   );
 }
-/* 
-The close button breaks stuff
-          <Tippy
-            zIndex={99999999999999}
-            content={"Close"}
-            animation="scale"
-            className="shadow-xl"
-          >
-            <div className="ml-3 justify-center items-center">
-              <div
-                className="hover:bg-[#232323] p-1 hover:opacity-100 opacity-60 rounded-lg group-hover:block hidden"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const madeBy = document.getElementById("made_by");
-                  if (madeBy) {
-                    try {
-                      madeBy.remove();
-                    }
-                    catch(e)
-                    {
-                      console.error(e);
-                    }
-                  }
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24"
-                  width="24"
-                  className="fill-white cursor-pointer"
-                >
-                  <path d="M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6Z" />
-                </svg>
-              </div>
-            </div>
-          </Tippy>
-*/
