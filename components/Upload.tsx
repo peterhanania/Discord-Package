@@ -6,7 +6,7 @@ import React from "react";
 import Tippy from "@tippyjs/react";
 import Utils from "./utils";
 import { Unzip, AsyncUnzipInflate } from "fflate";
-import { Transition, Dialog } from "@headlessui/react";
+import { Transition, Dialog, DialogBackdrop } from "@headlessui/react";
 import { Fragment, ReactElement } from "react";
 import Features from "./json/features.json";
 import EventsJSON from "./json/events.json";
@@ -32,7 +32,6 @@ import { Suspense } from "react";
 import Link from "next/link";
 import Loading from "./Loading";
 import { useSnackbar } from "notistack";
-import Data from "./Data";
 
 interface IObjectKeys {
   [key: string]: any;
@@ -123,6 +122,7 @@ export default function Upload(): ReactElement<any> {
 
           validateData_(obj, data_d);
         } catch (e) {
+          console.error(e);
           return;
         }
       }
@@ -2451,8 +2451,8 @@ export default function Upload(): ReactElement<any> {
 
           if (!isDebug) setLoading("Loading Your Flags");
           await delay(1000);
-
           setPercent(88);
+
           if (userInformationData.flags && options.user.badges) {
             data.user.flags = userInformationData.flags;
             let badges;
@@ -2695,7 +2695,7 @@ export default function Upload(): ReactElement<any> {
           className="fixed z-[999999] inset-0 overflow-y-auto"
         >
           <div className="flex items-center justify-center min-h-screen">
-            <Dialog.Overlay className="fixed inset-0  bg-black/30" />
+            <DialogBackdrop className="fixed inset-0  bg-black/30" />
             <div className="relative p-4 w-full max-w-7xl md:h-auto h-full">
               <div className="relative shadow-lg bg-[#36393f] ">
                 <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">

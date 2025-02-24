@@ -3,7 +3,7 @@
     "description": "Discord Employee",
     "icon": "https://i.imgur.com/6eIBtYR.png",
     "internalName": "STAFF",
-    "shift": 0 
+    "shift": 0
   },
   "DISCORD_PARTNER": {
     "description": "Discord Partner",
@@ -84,7 +84,7 @@
     "shift": null
   },
   "NITRO_UNTIL": {
-    "description": "{p_1} have Nitro till {until}",
+    "description": "Nitro subscriber until {nitroExpiry}",
     "icon": "https://i.imgur.com/LcyKRvv.png",
     "internalName": "DP_NITRO_UNTIL",
     "shift": null

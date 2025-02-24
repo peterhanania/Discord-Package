@@ -5,7 +5,7 @@ import { snakeCase } from "snake-case";
 import names from "../json/demo/names.json";
 import avatars from "../json/demo/avatars.json";
 import emojis from "../json/demo/emojis.json";
-import { generate  } from "random-words";
+import { generate } from "random-words";
 import curseWords from "../json/demo/curse.json";
 import Events from "../json/events.json";
 import currencies from "../json/other/currencies.json";
@@ -1231,6 +1231,7 @@ class Utils {
       if (val2) return false;
       return true;
     } catch (err) {
+      console.error(err);
       return false;
     }
   }
@@ -1241,6 +1242,7 @@ class Utils {
       const id = last.match(/\d+/)[0];
       return id;
     } catch (err) {
+      console.error(err);
       return null;
     }
   }

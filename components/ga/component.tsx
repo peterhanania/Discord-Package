@@ -16,7 +16,7 @@ export default function GoogleAdsComponent(props: { format: string, slot: string
         google_ad_client: process.env.NEXT_PUBLIC_GOOGLE_ADSENSE,
       });
     } catch (error) {
-      // nothing
+      console.warn("Google Adsense failed to load:", error);
     }
   }, [slot]);
 

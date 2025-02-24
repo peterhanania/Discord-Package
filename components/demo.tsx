@@ -17,7 +17,7 @@ export default function Upload(): ReactElement<any> {
   });
 
   return data ? (
-    <Suspense fallback={<SnackbarProvider><Loading skeleton={true}/></SnackbarProvider>}>
+    <Suspense fallback={<SnackbarProvider><Loading skeleton={true} /></SnackbarProvider>}>
       <SnackbarProvider>
         <DynamicComponent data={data} demo={true} />
       </SnackbarProvider>

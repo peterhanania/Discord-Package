@@ -7,14 +7,14 @@ const badgeData = BadgeData as BadgeDataType;
 const flagData = AccountFlagData as BadgeDataType;
 
 type BadgeDataType = {
-	[key: string]: Badge;
+    [key: string]: Badge;
 };
 
 type Badge = {
-	description: string;
-	icon: string;
-	internalName?: string | null;
-	shift?: number | null;
+    description: string;
+    icon: string;
+    internalName?: string | null;
+    shift?: number | null;
 }
 
 class BitField {
@@ -55,11 +55,11 @@ class BitField {
         return this._checkFlags(flagNum);
     }
 
-	static getBadgesFromNames(names: string[]) {
+    static getBadgesFromNames(names: string[]) {
         return names.map(name => {
-            let badge = Object.entries(badgeData).find(([key, _]) => key === name);
+            let badge = Object.entries(badgeData).find(([key]) => key === name);
             if (badge === undefined) {
-                badge = Object.entries(badgeData).find(([_, value]) => value.internalName === name);
+                badge = Object.entries(badgeData).find(([, value]) => value.internalName === name);
             }
             return badge ? badge[0] : name;
         });
