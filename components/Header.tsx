@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import { useState, Fragment, useEffect } from "react";
-import { Dialog, Transition, Listbox } from "@headlessui/react";
+import { Dialog, Transition, Listbox, DialogBackdrop } from "@headlessui/react";
 import Image from "next/image";
 
 import Link from "next/link";
@@ -49,7 +49,7 @@ export default function Header() {
         className="fixed z-[999999] inset-0 overflow-y-auto"
       >
         <div className="flex items-center justify-center min-h-screen">
-          <Dialog.Overlay className="fixed inset-0  bg-black/30" />
+          <DialogBackdrop className="fixed inset-0  bg-black/30" />
           <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
             <div className="relative shadow-lg bg-[#36393f] ">
               <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
@@ -195,7 +195,7 @@ export default function Header() {
         className="fixed z-[999999] inset-0 overflow-y-auto"
       >
         <div className="flex items-center justify-center min-h-screen">
-          <Dialog.Overlay className="fixed inset-0  bg-black/30" />
+          <DialogBackdrop className="fixed inset-0  bg-black/30" />
           <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
             <div className="relative shadow-lg bg-[#36393f] ">
               <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
@@ -233,7 +233,7 @@ export default function Header() {
               <p className="text-white text-lg py-2 px-8">
                 If you need help, kindly join our
                 <a
-                  href={process.env.NEXT_PUBLIC_DOMAIN +"/discord"}
+                  href={process.env.NEXT_PUBLIC_DOMAIN + "/discord"}
                   className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold mx-1"
                   target="_blank"
                   rel="noreferrer"
@@ -248,7 +248,7 @@ export default function Header() {
                   </h3>
                   <Image
                     unoptimized={true}
-                    src={process.env.NEXT_PUBLIC_DOMAIN +"/help/1.png"}
+                    src={process.env.NEXT_PUBLIC_DOMAIN + "/help/1.png"}
                     alt="1"
                     width={500}
                     height={300}
@@ -261,7 +261,7 @@ export default function Header() {
                   </h3>
                   <Image
                     unoptimized={true}
-                    src={process.env.NEXT_PUBLIC_DOMAIN +"/help/2.png"}
+                    src={process.env.NEXT_PUBLIC_DOMAIN + "/help/2.png"}
                     alt="2"
                     width={500}
                     height={300}
@@ -275,7 +275,7 @@ export default function Header() {
                   </h3>
                   <Image
                     unoptimized={true}
-                    src={process.env.NEXT_PUBLIC_DOMAIN +"/help/3.png"}
+                    src={process.env.NEXT_PUBLIC_DOMAIN + "/help/3.png"}
                     alt="3"
                     width={500}
                     height={300}
@@ -283,19 +283,19 @@ export default function Header() {
                       maxWidth: "100%",
                       height: "auto"
                     }} />
-                    <h3 className="text-xl font-medium text-white mb-2 mt-4">
-                      4- Check all checkboxes and click on &quot;Request My Data&quot;.
-                    </h3>
-                    <Image
-                      unoptimized={true}
-                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/4.png"}
-                      alt="4"
-                      width={500}
-                      height={300}
-                      style={{
-                        maxWidth: "100%",
-                        height: "auto"
-                      }} />
+                  <h3 className="text-xl font-medium text-white mb-2 mt-4">
+                    4- Check all checkboxes and click on &quot;Request My Data&quot;.
+                  </h3>
+                  <Image
+                    unoptimized={true}
+                    src={process.env.NEXT_PUBLIC_DOMAIN + "/help/4.png"}
+                    alt="4"
+                    width={500}
+                    height={300}
+                    style={{
+                      maxWidth: "100%",
+                      height: "auto"
+                    }} />
                   <h3 className="text-xl font-medium text-white mb-2 mt-4">
                     5- Keep checking your email and download your data once
                     reached. The data will be sent to the email associated
@@ -304,7 +304,7 @@ export default function Header() {
                   </h3>
                   <Image
                     unoptimized={true}
-                    src={process.env.NEXT_PUBLIC_DOMAIN +"/help/5.png"}
+                    src={process.env.NEXT_PUBLIC_DOMAIN + "/help/5.png"}
                     alt="5"
                     width={500}
                     height={30}
@@ -317,7 +317,7 @@ export default function Header() {
                     alt="6"
                     width={500}
                     height={300}
-                    src={process.env.NEXT_PUBLIC_DOMAIN +"/help/6.png"}
+                    src={process.env.NEXT_PUBLIC_DOMAIN + "/help/6.png"}
                     style={{
                       maxWidth: "100%",
                       height: "auto"
@@ -328,7 +328,7 @@ export default function Header() {
                   </h3>
                   <video controls>
                     <source
-                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/1.mp4"}
+                      src={process.env.NEXT_PUBLIC_DOMAIN + "/help/1.mp4"}
                       type="video/webm"
                     />
                     Your browser does not support embedded videos
@@ -339,7 +339,7 @@ export default function Header() {
                   </h3>
                   <video controls>
                     <source
-                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/2.mp4"}
+                      src={process.env.NEXT_PUBLIC_DOMAIN + "/help/2.mp4"}
                       type="video/webm"
                     />
                     Your browser does not support embedded videos.
@@ -350,7 +350,7 @@ export default function Header() {
                   </h3>
                   <video controls>
                     <source
-                      src={process.env.NEXT_PUBLIC_DOMAIN +"/help/3.mp4"}
+                      src={process.env.NEXT_PUBLIC_DOMAIN + "/help/3.mp4"}
                       type="video/webm"
                     />
                     Your browser does not support embedded videos
@@ -391,7 +391,7 @@ export default function Header() {
         className="fixed z-[999999] inset-0 overflow-y-auto"
       >
         <div className="flex items-center justify-center min-h-screen">
-          <Dialog.Overlay className="fixed inset-0  bg-black/30" />
+          <DialogBackdrop className="fixed inset-0  bg-black/30" />
           <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
             <div className="relative shadow-lg bg-[#36393f] ">
               <div className="flex justify-between items-center p-5 rounded-t bg-[#2b2d31]">
@@ -431,7 +431,7 @@ export default function Header() {
                   <u className="mr-1">
                     <a
                       className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                      href={process.env.NEXT_PUBLIC_DOMAIN +"/privacy"}
+                      href={process.env.NEXT_PUBLIC_DOMAIN + "/privacy"}
                       target="_blank"
                       rel="noreferrer"
                     >
@@ -442,7 +442,7 @@ export default function Header() {
                   <u className="ml-1">
                     <a
                       className="hover:transition-all duration-200 text-blue-400 hover:text-blue-600 font-bold"
-                      href={process.env.NEXT_PUBLIC_DOMAIN +"/discord"}
+                      href={process.env.NEXT_PUBLIC_DOMAIN + "/discord"}
                       target="_blank"
                       rel="noreferrer"
                     >
@@ -553,7 +553,7 @@ export default function Header() {
         className="fixed z-[999999] inset-0 overflow-y-auto"
       >
         <div className="flex items-center justify-center min-h-screen">
-          <Dialog.Overlay className="fixed inset-0  bg-black/30" />
+          <DialogBackdrop className="fixed inset-0  bg-black/30" />
           <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
             <div className="relative shadow-lg dark:bg-[#36393f] bg-[#d1d5db]">
               <div className="flex justify-between items-center p-5 rounded-t dark:bg-[#2b2d31] bg-[#eeeeee]">
@@ -605,7 +605,7 @@ export default function Header() {
                       name="theme"
                       id="dark"
                       value="dark"
-                      onChange={() => {}}
+                      onChange={() => { }}
                       checked={theme === "dark"}
                     />
                     <label htmlFor="dark" className={theme === "light" ? "light" : ""}>Dark</label>
@@ -623,7 +623,7 @@ export default function Header() {
                       name="theme"
                       id="light"
                       value="light"
-                      onChange={() => {}}
+                      onChange={() => { }}
                       checked={theme === "light"}
                     />
                     <label htmlFor="light" className={theme === "light" ? "light" : ""}>Light</label>
@@ -810,14 +810,14 @@ export default function Header() {
       </p>
       <div className="portrait:hidden lg:hidden landscape:flex md:landscape:hidden lg:text-xl md:text-xl text-sm mt-1 animate__delay-1s animate__animated animate__fadeIn flex justify-center items-center text-slate-900 dark:text-gray-200 font-bold">
         <Link
-          href={process.env.NEXT_PUBLIC_DOMAIN +"/demo"}
+          href={process.env.NEXT_PUBLIC_DOMAIN + "/demo"}
           target="_blank"
           rel="noreferrer"
           type="button"
           className="button-green text-gray-200  my-2 flex items-center">
-          
-            Click to View Demo
-          
+
+          Click to View Demo
+
         </Link>
       </div>
       <div className="flex justify-center items-center mt-2">

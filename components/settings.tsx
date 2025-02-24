@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import { useState, Fragment, useEffect, ReactElement } from "react";
-import { Dialog, Transition, Listbox } from "@headlessui/react";
+import { Dialog, Transition, Listbox, DialogBackdrop } from "@headlessui/react";
 import Image from "next/image";
 
 import { IconCheck, IconSelector } from "@tabler/icons-react";
@@ -45,7 +45,7 @@ export default function Settings(): ReactElement<any> {
         className="fixed z-[999999] inset-0 overflow-y-auto"
       >
         <div className="flex items-center justify-center min-h-screen">
-          <Dialog.Overlay className="fixed inset-0  bg-black/30" />
+          <DialogBackdrop className="fixed inset-0  bg-black/30" />
           <div className="relative p-4 w-full max-w-4xl md:h-auto h-full">
             <div className="relative shadow-lg dark:bg-[#36393f] bg-[#d1d5db]">
               <div className="flex justify-between items-center p-5 rounded-t dark:bg-[#2b2d31] bg-[#eeeeee]">
@@ -97,7 +97,7 @@ export default function Settings(): ReactElement<any> {
                       name="theme"
                       id="dark"
                       value="dark"
-                      onChange={() => {}}
+                      onChange={() => { }}
                       checked={theme === "dark"}
                     />
                     <label htmlFor="dark" className={theme === "light" ? "light" : ""}>Dark</label>
@@ -115,7 +115,7 @@ export default function Settings(): ReactElement<any> {
                       name="theme"
                       id="light"
                       value="light"
-                      onChange={() => {}}
+                      onChange={() => { }}
                       checked={theme === "light"}
                     />
                     <label htmlFor="light" className={theme === "light" ? "light" : ""}>Light</label>
