@@ -1,11 +1,8 @@
 import Tippy from "@tippyjs/react";
 import copyToClipboard from "utils/copyToClipboard";
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import Twemoji from "react-twemoji";
 import { SnackbarNotificationType, useSnackbarNotification } from "hooks/useSnackbarNotification";
 import { toast } from "react-toastify";
-import Utils from "components/utils";
 import Card from "components/generic/card";
 import Smile from "assets/icons/Smile";
 import HeadSparkle from "assets/icons/HeadSparkle";
@@ -34,31 +31,6 @@ export default function Emojis({ data }: EmojiProps) {
 
 	const [isOwner] = useState<boolean>(data?.dataFile ? false : true);
 
-	useEffect(() => {
-		setHasTopEmojis(data?.messages?.topEmojis?.length > 0);
-		setHasTopCustomEmojis(data?.messages?.topCustomEmojis?.length > 0);
-		setHasRecentEmojis(data?.settings?.recentEmojis?.length > 0);
-	}, [data]);
-
-	useEffect(() => {
-		switch (filter) {
-			case FilterOptions.TOP:
-				setEmojis(topEmojis);
-				break;
-			case FilterOptions.TOP_CUSTOM:
-				setEmojis(topCustomEmojis);
-				break;
-			case FilterOptions.RECENT:
-				setEmojis(recentEmojis);
-				break;
-			default:
-				break;
-		}
-	}, [filter])
-
-	const selectedFilterClass = 'bg-gray-400 dark:bg-[#232323] rounded-lg flex items-center p-2';
-	const titleString = `${!isOwner ? "Their" : "Your"} ${filter === FilterOptions.TOP ? "Top" : filter === FilterOptions.TOP_CUSTOM ? "Top Custom" : filter === FilterOptions.RECENT ? "Recent" : "Top"} Emojis`;
-
 	const recentEmojis = data?.settings?.recentEmojis
 		?.slice(0, 30)
 		.sort((a: any, b: any) => {
@@ -80,6 +52,37 @@ export default function Emojis({ data }: EmojiProps) {
 				" more",
 			count: "ignore",
 		});
+
+	useEffect(() => {
+		setHasTopEmojis(data?.messages?.topEmojis?.length > 0);
+		setHasTopCustomEmojis(data?.messages?.topCustomEmojis?.length > 0);
+		setHasRecentEmojis(data?.settings?.recentEmojis?.length > 0);
+	}, [data]);
+
+	const changeFilter = (filter: FilterOptions) => {
+		switch (filter) {
+			case FilterOptions.TOP:
+				setEmojis(topEmojis);
+				break;
+			case FilterOptions.TOP_CUSTOM:
+				setEmojis(topCustomEmojis);
+				break;
+			case FilterOptions.RECENT:
+				setEmojis(recentEmojis);
+				break;
+			default:
+				break;
+		}
+	}
+
+	useEffect(() => {
+		changeFilter(filter);
+		// eslint-disable-next-line
+	}, [filter])
+
+
+	const selectedFilterClass = 'bg-gray-400 dark:bg-[#232323] rounded-lg flex items-center p-2';
+	const titleString = `${!isOwner ? "Their" : "Your"} ${filter === FilterOptions.TOP ? "Top" : filter === FilterOptions.TOP_CUSTOM ? "Top Custom" : filter === FilterOptions.RECENT ? "Recent" : "Top"} Emojis`;
 
 	return (
 		<Card>
