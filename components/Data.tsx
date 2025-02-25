@@ -30,11 +30,9 @@ import {
 import { useAtom } from "jotai";
 import { driver } from 'driver.js';
 import "driver.js/dist/driver.css";
-// twe-emoji, will remove if it uses so much bandwidth
 import { Dialog, DialogBackdrop, Transition } from "@headlessui/react";
 import ReactConfetti from "react-confetti";
-import Twemoji from "react-twemoji";
-import Emojis from "./data/emojis";
+import Emojis from "./data/emojis/emojis";
 
 if (typeof Highcharts === "object") {
   require("highcharts/modules/exporting");
