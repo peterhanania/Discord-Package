@@ -7,7 +7,7 @@ import Tippy from "@tippyjs/react";
 import Utils from "./utils";
 import { Unzip, AsyncUnzipInflate } from "fflate";
 import { Transition, Dialog, DialogBackdrop } from "@headlessui/react";
-import { Fragment, ReactElement } from "react";
+import { ReactElement } from "react";
 import Features from "./json/features.json";
 import EventsJSON from "./json/events.json";
 import { ToastContainer, toast } from "react-toastify";
@@ -2685,7 +2685,7 @@ export default function Upload(): ReactElement<any> {
         leave="transition-opacity duration-150"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
-        as={Fragment}
+        as="div"
       >
         <Dialog
           onClose={() => {
@@ -3348,6 +3348,7 @@ export default function Upload(): ReactElement<any> {
                                 leave="transition-opacity duration-150"
                                 leaveFrom="opacity-100"
                                 leaveTo="opacity-0"
+                                as="div"
                               >
                                 <div className="animate-fadeIn max-w-screen-lg mx-auto fixed bg-[#2b2d31] inset-x-5 p-5 bottom-10 rounded-lg drop-shadow-2xl flex gap-4 flex-wrap md:flex-nowrap text-center md:text-left items-center justify-center md:justify-between">
                                   <div

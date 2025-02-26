@@ -1,5 +1,5 @@
 import Tippy from "@tippyjs/react";
-import { useState, Fragment, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, Transition, Listbox, DialogBackdrop } from "@headlessui/react";
 import Image from "next/image";
 
@@ -40,7 +40,7 @@ export default function Header() {
       leave="transition-opacity duration-150"
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
-      as={Fragment}
+      as="div"
     >
       <Dialog
         onClose={() => {
@@ -186,7 +186,7 @@ export default function Header() {
       leave="transition-opacity duration-150"
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
-      as={Fragment}
+      as="div"
     >
       <Dialog
         onClose={() => {
@@ -382,7 +382,7 @@ export default function Header() {
       leave="transition-opacity duration-150"
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
-      as={Fragment}
+      as="div"
     >
       <Dialog
         onClose={() => {
@@ -544,7 +544,7 @@ export default function Header() {
       leave="transition-opacity duration-150"
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
-      as={Fragment}
+      as="div"
     >
       <Dialog
         onClose={() => {
@@ -663,7 +663,7 @@ export default function Header() {
 
                               <Transition
                                 show={open}
-                                as={Fragment}
+                                as="div"
                                 leave="transition ease-in duration-100"
                                 leaveFrom="opacity-100"
                                 leaveTo="opacity-0"

@@ -10,7 +10,6 @@ import Utils from "./utils";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import {
-  Fragment,
   ReactElement,
   useEffect,
   useState,
@@ -1153,7 +1152,7 @@ export default function Data({ data, demo }: any): ReactElement {
           leave="transition-opacity duration-150"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
-          as={Fragment}
+          as="div"
         >
           <Dialog
             onClose={() => {

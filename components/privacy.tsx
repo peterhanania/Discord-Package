@@ -2,20 +2,20 @@ import { Transition } from "@headlessui/react";
 import { useState, useEffect, ReactElement } from "react";
 
 export default function Privacy(): ReactElement<any> {
-  const [show, setShow] = useState(true);
-  const [document, setDocument] = useState<any>(null);
+	const [show, setShow] = useState(true);
+	const [document, setDocument] = useState<any>(null);
 
-  useEffect(() => {
-    setDocument(window.document as Document);
-  }, [document]);
+	useEffect(() => {
+		setDocument(window.document as Document);
+	}, [document]);
 
-  function handleRead() {
-    setShow(false);
-    document.cookie = "privacy_read=true; path=/";
-  }
+	function handleRead() {
+		setShow(false);
+		document.cookie = "privacy_read=true; path=/";
+	}
 
-  if (document && document?.cookie.indexOf("privacy_read") === -1) {
-    return (
+	if (document && document?.cookie.indexOf("privacy_read") === -1) {
+		return (
 			<div className="py-6 flex flex-col justify-center sm:py-12 fixed z-50">
 				<section>
 					<Transition
@@ -26,7 +26,8 @@ export default function Privacy(): ReactElement<any> {
 						enterTo="opacity-100"
 						leave="transition-opacity duration-150"
 						leaveFrom="opacity-100"
-						leaveTo="opacity-0">
+						leaveTo="opacity-0"
+						as="div">
 						<div
 							className="fixed inset-0  bg-black/30"
 							onClick={() => {
@@ -93,5 +94,5 @@ export default function Privacy(): ReactElement<any> {
 				</section>
 			</div>
 		);
-  } else return <></>;
+	} else return <></>;
 }

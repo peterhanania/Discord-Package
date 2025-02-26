@@ -1,5 +1,5 @@
 import Tippy from "@tippyjs/react";
-import { useState, Fragment, useEffect, ReactElement } from "react";
+import { useState, useEffect, ReactElement } from "react";
 import { Dialog, Transition, Listbox, DialogBackdrop } from "@headlessui/react";
 import Image from "next/image";
 
@@ -36,7 +36,7 @@ export default function Settings(): ReactElement<any> {
       leave="transition-opacity duration-150"
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
-      as={Fragment}
+      as="div"
     >
       <Dialog
         onClose={() => {
@@ -156,7 +156,7 @@ export default function Settings(): ReactElement<any> {
 
                               <Transition
                                 show={open}
-                                as={Fragment}
+                                as="div"
                                 leave="transition ease-in duration-100"
                                 leaveFrom="opacity-100"
                                 leaveTo="opacity-0"
