@@ -3195,7 +3195,8 @@ export default function Upload(): ReactElement<any> {
                       drag and drop
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">
-                      Upload your Discord package or extracted JSON here
+                      Upload your Discord package or extracted JSON here<br/>
+                      <i>Please make sure that you selected all options in the data request modal</i>
                     </p>
 
                     <button
