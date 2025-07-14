@@ -326,9 +326,9 @@ export default function Upload(): ReactElement<any> {
 
         const requiredFiles = [
           "README.txt",
-          "account/user.json",
-          "messages/index.json",
-          "servers/index.json",
+          "Account/user.json",
+          "Messages/index.json",
+          "Servers/index.json",
         ];
 
         for (const requiredFile of requiredFiles) {
@@ -420,12 +420,12 @@ export default function Upload(): ReactElement<any> {
             console.log(
               chalk.bold.blue(`[DEBUG] `) +
               chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
-              `  ${chalk.yellow(`Parsing account/user.json`)}`
+              `  ${chalk.yellow(`Parsing Account/user.json`)}`
             );
           } else await delay(100);
 
           const userInformationData = JSON.parse(
-            await Utils.readFile("account/user.json", files)
+            await Utils.readFile("Account/user.json", files)
           );
 
           if (isDebug) {
@@ -745,16 +745,16 @@ export default function Upload(): ReactElement<any> {
               chalk.bold.blue(`[DEBUG] `) +
               chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
               `  ${chalk.yellow(
-                `Preparing to load messages [messages/index.json]`
+                `Preparing to load messages [Messages/index.json]`
               )}`
             );
           } else await delay(100);
 
           setPercent(27);
           const userMessages = JSON.parse(
-            await Utils.readFile("messages/index.json", files)
+            await Utils.readFile("Messages/index.json", files)
           );
-          const messagesREGEX = /messages\/c?([0-9]{16,32})\/$/;
+          const messagesREGEX = /Messages\/c?([0-9]{16,32})\/$/;
           const channelsIDFILE = files.filter((file: any) => {
             if (file && file?.name) {
               return messagesREGEX.test(file.name);
@@ -778,7 +778,7 @@ export default function Upload(): ReactElement<any> {
 
           const isOldPackage =
             channelsIDFILE[0].name.match(
-              /messages\/(c)?([0-9]{16,32})\/$/
+              /Messages\/(c)?([0-9]{16,32})\/$/
             )[1] === undefined;
 
           const channelsIDs = channelsIDFILE.map((file: any) => {
@@ -810,7 +810,7 @@ export default function Upload(): ReactElement<any> {
           let extension = "csv";
 
           const firstChannelID = channelsIDs[0];
-          const firstChannelMessagesPath = `messages/${isOldPackage ? "" : "c"
+          const firstChannelMessagesPath = `Messages/${isOldPackage ? "" : "c"
             }${firstChannelID}/messages.json`;
 
           const firstChannelMessages = await Utils.readFile(
@@ -833,9 +833,9 @@ export default function Upload(): ReactElement<any> {
           await Promise.all(
             channelsIDs.map((channelID: any): any => {
               return new Promise((resolve) => {
-                const channelDataPath = `messages/${isOldPackage ? "" : "c"
+                const channelDataPath = `Messages/${isOldPackage ? "" : "c"
                   }${channelID}/channel.json`;
-                const channelMessagesPath = `messages/${isOldPackage ? "" : "c"
+                const channelMessagesPath = `Messages/${isOldPackage ? "" : "c"
                   }${channelID}/messages.${extension}`;
 
                 Promise.all([
@@ -2337,14 +2337,14 @@ export default function Upload(): ReactElement<any> {
                 chalk.bold.cyan(
                   `[${moment(Date.now()).format("h:mm:ss a")}]`
                 ) +
-                `  ${chalk.yellow(`Scanning [servers/index.json]`)}`
+                `  ${chalk.yellow(`Scanning [Servers/index.json]`)}`
               );
               setLoading("Loading Guilds|||");
               await delay(2000);
             } else await delay(100);
 
             const guilds = JSON.parse(
-              await Utils.readFile("servers/index.json", files)
+              await Utils.readFile("Servers/index.json", files)
             );
             data.guilds = guilds;
             if (isDebug) {
@@ -2390,7 +2390,7 @@ export default function Upload(): ReactElement<any> {
 
             const bots = files.filter(
               (file: any) =>
-                file.name.startsWith("account/applications/") &&
+                file.name.startsWith("Account/applications/") &&
                 file.name.endsWith(".json")
             );
 
