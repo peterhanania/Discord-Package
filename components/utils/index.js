@@ -445,7 +445,7 @@ class Utils {
         Math.floor(Math.random() * 40) + 200
       )
       // eslint-disable-next-line no-unused-vars
-      .map(([key, value]) => ({
+      .map(([_, value]) => ({
         emoji: value,
         count: Math.floor(Math.random() * 200) + 1,
       }))
@@ -694,7 +694,7 @@ class Utils {
             Math.floor(Math.random() * 40) + 200
           )
           // eslint-disable-next-line no-unused-vars
-          .map(([key, value]) => ({
+          .map(([_, value]) => ({
             emoji: value,
             count: Math.floor(Math.random() * 200) + 1,
           }))
@@ -778,7 +778,7 @@ class Utils {
             Math.floor(Math.random() * 40) + 200
           )
           // eslint-disable-next-line no-unused-vars
-          .map(([key, value]) => ({
+          .map(([_, value]) => ({
             emoji: value,
             count: Math.floor(Math.random() * 200) + 1,
           }))
@@ -853,7 +853,7 @@ class Utils {
             Math.floor(Math.random() * 40) + 200
           )
           // eslint-disable-next-line no-unused-vars
-          .map(([key, value]) => ({
+          .map(([_, value]) => ({
             emoji: value,
             count: Math.floor(Math.random() * 200) + 1,
           }))

@@ -1,13 +1,27 @@
 {
-  "extends": ["next", "next/core-web-vitals", "eslint:recommended"],
+  "extends": [
+    "next",
+    "next/core-web-vitals",
+    "eslint:recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "env": {
     "es6": true,
-    "es2020": true,  
+    "es2020": true,
     "browser": true,
     "node": true,
     "mocha": true
   },
   "rules": {
-    "no-unused-vars": 1
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ]
   }
 }
