@@ -31,10 +31,11 @@ class Utils {
       .shift();
 
     const currency = currencies?.find(
-      (a) => a?.abbreviation.toLowerCase() === mostUsedCurrency
+      (a) => a?.abbreviation?.toLowerCase() === String(mostUsedCurrency || "").toLowerCase()
     );
 
     // {amount}{symbol}
+    if (!currency) return `$${amount}`;
     if (currency.right) return `${amount}${currency.symbol}`;
     // {symbol}{amount}
     else return `${currency.symbol}${amount}`;
