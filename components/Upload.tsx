@@ -2498,7 +2498,7 @@ export default function Upload(): ReactElement<any> {
             if (isDebug) await delay(2000);
             const statistics: any = await Utils.readAnalyticsFile(
               files.find((file: any) =>
-                /activity\/analytics\/events-[0-9]{4}-[0-9]{5}-of-[0-9]{5}\.json/.test(
+                /Activity\/analytics\/events-[0-9]{4}-[0-9]{5}-of-[0-9]{5}\.json/.test(
                   file.name
                 )
               ),
