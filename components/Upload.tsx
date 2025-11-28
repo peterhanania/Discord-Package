@@ -691,7 +691,7 @@ export default function Upload(): ReactElement<any> {
             }
           }
 
-          const confirmedPayments = userInformationData?.payments.filter(
+          const confirmedPayments = (userInformationData?.payments || []).filter(
             (p: any): boolean => p.status === 1
           );
           if (confirmedPayments.length) {
@@ -754,7 +754,7 @@ export default function Upload(): ReactElement<any> {
           const userMessages = JSON.parse(
             await Utils.readFile("Messages/index.json", files)
           );
-          const messagesREGEX = /Messages\/c?([0-9]{16,32})\/$/;
+          const messagesREGEX = /Messages\/(c)?([0-9]{16,32})\/channel\.json$/;
           const channelsIDFILE = files.filter((file: any) => {
             if (file && file?.name) {
               return messagesREGEX.test(file.name);
@@ -778,12 +778,12 @@ export default function Upload(): ReactElement<any> {
 
           const isOldPackage =
             channelsIDFILE[0].name.match(
-              /Messages\/(c)?([0-9]{16,32})\/$/
+              /Messages\/(c)?([0-9]{16,32})\/channel\.json$/
             )[1] === undefined;
 
           const channelsIDs = channelsIDFILE.map((file: any) => {
             if (file && file?.name) {
-              return file.name.match(messagesREGEX)[1];
+              return file.name.match(messagesREGEX)[2];
             }
           });
 

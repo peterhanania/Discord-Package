@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "pnpm next dev",
     "build": "pnpm next build",
-    "start": "pnpm next start",
+    "start": "npx serve@latest out",
     "lint": "pnpm next lint"
   },
   "dependencies": {
