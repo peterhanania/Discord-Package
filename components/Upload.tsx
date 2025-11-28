@@ -48,6 +48,11 @@ interface objectInterface extends IObjectKeys {
   other?: any;
 }
 
+const DynamicComponent = dynamic(() => import("./Data"), {
+  ssr: false,
+  loading: () => <SnackbarProvider><Loading skeleton={true} /></SnackbarProvider>,
+});
+
 export default function Upload(): ReactElement<any> {
   const [dragging, setDragging] = React.useState(false);
   const [error, setError] = React.useState<String | boolean | null>(null);
@@ -371,14 +376,14 @@ export default function Upload(): ReactElement<any> {
               giftedNitro: null,
             },
             messages: {
-              topChannels: null,
-              topDMs: null,
+              topChannels: [],
+              topDMs: [],
               characterCount: null,
               messageCount: null,
               hoursValues: [],
-              oldestMessages: null,
-              topCustomEmojis: null,
-              topEmojis: null,
+              oldestMessages: [],
+              topCustomEmojis: [],
+              topEmojis: [],
             },
             guilds: null,
             statistics: {
@@ -403,6 +408,7 @@ export default function Upload(): ReactElement<any> {
               },
             },
           };
+          setDataExtracted({ ...data });
 
           setPercent(2);
           if (isDebug)
@@ -500,6 +506,7 @@ export default function Upload(): ReactElement<any> {
                 `  ${chalk.yellow(`Loaded user premium until`)}`
               );
           }
+          setDataExtracted({ ...data });
 
           if (isDebug) {
             console.log(
@@ -602,6 +609,7 @@ export default function Upload(): ReactElement<any> {
               }
             }
           }
+          setDataExtracted({ ...data });
 
           setPercent(15);
 
@@ -645,6 +653,7 @@ export default function Upload(): ReactElement<any> {
               }
             }
           }
+          setDataExtracted({ ...data });
 
           if (isDebug)
             console.log(
@@ -727,6 +736,7 @@ export default function Upload(): ReactElement<any> {
                 );
             }
           }
+          setDataExtracted({ ...data });
 
           setPercent(22);
           if (isDebug) {
@@ -930,158 +940,223 @@ export default function Upload(): ReactElement<any> {
             );
           } else await delay(100);
 
+          // Optimization: Process channels once
+          const analyzeChannel = (channel: any) => {
+            const words = channel.messages
+              .map((message: any) => message.words)
+              .flat()
+              .filter((w: any) => {
+                const mentionRegex = /^<@!?(\d+)>$/;
+                const mention_ = mentionRegex.test(w)
+                  ? w.match(mentionRegex)[1]
+                  : null;
+                return !mention_;
+              });
+
+            let author = "Unknown";
+            if (channel.data_ && channel.data_.guild) {
+              author = `channel: ${channel.name} (guild: ${channel.data_.guild.name})`;
+            } else if (channel.isDM && channel.name.includes("Direct Message with")) {
+              author = `user: ${channel.name.split("Direct Message with")[1].trim()} (id: ${channel.dmUserID})`;
+            }
+
+            const oldestMessages = channel.messages
+              .map((message: any) => {
+                const msg = {
+                  sentence: message.words.join(" "),
+                  timestamp: message.timestamp,
+                };
+                if (author !== "Unknown") (msg as any).author = author;
+                return msg;
+              })
+              .flat()
+              .sort((a: any, b: any): any => {
+                const date1: any = new Date(a.timestamp);
+                const date2: any = new Date(b.timestamp);
+                return date1 - date2;
+              })
+              .slice(0, 100);
+
+            const topEmojisANDcustom = channel.messages
+              .map((message: any) => {
+                const emojis = Utils.getEmojiCount(message.words);
+                const customEmojis = Utils.getCustomEmojiCount(message.words);
+
+                return {
+                  emojis: emojis && Object.keys(emojis).length ? emojis : null,
+                  customEmojis: customEmojis && customEmojis.length ? customEmojis : null,
+                };
+              })
+              .flat();
+
+            const topEmojis_ = topEmojisANDcustom
+              .flat()
+              .filter((w: any) => w.emojis)
+              .map((w: any) => w.emojis)
+              .flat();
+
+            const topEmojisMap: any = {};
+            topEmojis_.forEach((key: any) => {
+              if (topEmojisMap[key.emoji]) {
+                topEmojisMap[key.emoji]++;
+              } else {
+                topEmojisMap[key.emoji] = 1;
+              }
+            });
+            const topEmojis = Object.keys(topEmojisMap).map((emoji) => ({
+              emoji,
+              count: topEmojisMap[emoji],
+            }));
+
+            const topCustomEmojis_ = topEmojisANDcustom
+              .flat()
+              .filter((w: any) => w.customEmojis)
+              .map((w: any) => w.customEmojis)
+              .flat();
+
+            const topCustomEmojisMap: any = {};
+            topCustomEmojis_.forEach((key: any) => {
+              if (topCustomEmojisMap[key.emoji]) {
+                topCustomEmojisMap[key.emoji]++;
+              } else {
+                topCustomEmojisMap[key.emoji] = 1;
+              }
+            });
+            const topCustomEmojis = Object.keys(topCustomEmojisMap).map((emoji) => ({
+              emoji,
+              count: topCustomEmojisMap[emoji],
+            }));
+
+            const favoriteWords = Utils.getFavoriteWords(words).slice(0, 1000);
+            const curseWords = Utils.getCursedWords(
+              words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
+            );
+            const topCursed = curseWords.slice(0, 1000);
+            const links = Utils.getTopLinks(words);
+            const topLinks = links.slice(0, 1000);
+            const discordLink = Utils.getDiscordLinks(words).slice(0, 1000);
+            const topDiscordLinks = discordLink;
+
+            let characterCount = 0;
+            if (options.messages.characterCount) {
+              channel.messages.forEach((msg: any) => {
+                characterCount += msg.length || 0;
+              });
+            }
+
+            let attachments: any[] = [];
+            if (options.messages.attachmentCount) {
+              attachments = channel.messages.map((message: any) => {
+                const regex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|mp4|pdf|zip|wmv|mp3|nitf|doc|docx))/gi;
+                const tenorGIFregex = /https?:\/\/(c\.tenor\.com\/([^ /\n]+)\/([^ /\n]+)\.gif|tenor\.com\/view\/(?:.*-)?([^ /\n]+))/gi;
+
+                const atts = message.words.filter((word: any) => {
+                  if (tenorGIFregex.test(word)) return true;
+                  return regex.test(word);
+                });
+
+                return atts.map((attachment: any) => {
+                  const mtch = regex.test(attachment)
+                    ? attachment.match(regex)[0]
+                    : tenorGIFregex.test(attachment)
+                      ? attachment.match(tenorGIFregex)[0]
+                      : attachment;
+
+                  if (mtch && mtch.length > 25)
+                    return mtch.replace(/[`"|'{}\[\]]/g, "");
+                  return mtch;
+                }).filter((s: any) => s && s.length > 0);
+              }).flat();
+            }
+
+            const mentionCount = {
+              channel: 0,
+              user: 0,
+              role: 0,
+              here: 0,
+              everyone: 0
+            };
+            if (options.messages.mentionCount) {
+              const discordChannelMentionRegex = /<#[0-9]*>/gi;
+              const discordUserMentionRegex = /<@[0-9]*>/gi;
+              const discordRoleMentionRegex = /<@&[0-9]*>/gi;
+
+              channel.messages.forEach((message: any) => {
+                message.words.forEach((word: any) => {
+                  if (discordChannelMentionRegex.test(word)) mentionCount.channel++;
+                  if (discordUserMentionRegex.test(word)) mentionCount.user++;
+                  if (discordRoleMentionRegex.test(word)) mentionCount.role++;
+                  if (/@here/g.test(word)) mentionCount.here++;
+                  if (/@everyone/g.test(word)) mentionCount.everyone++;
+                });
+              });
+            }
+
+            return {
+              name: channel.name,
+              messageCount: channel.messages.length,
+              guildName: channel.data_?.guild?.name,
+              favoriteWords: options.other.favoriteWords ? favoriteWords : null,
+              topCursed: options.other.showCurseWords ? topCursed : null,
+              topLinks: options.other.showLinks ? topLinks : null,
+              topDiscordLinks: options.other.showDiscordLinks ? topDiscordLinks : null,
+              oldestMessages: options.other.oldestMessages ? oldestMessages : null,
+              topEmojis: options.other.topEmojis
+                ? topEmojis.sort((a: any, b: any) => b.count - a.count).slice(0, 1000)
+                : null,
+              topCustomEmojis: options.other.topCustomEmojis
+                ? topCustomEmojis.sort((a: any, b: any) => b.count - a.count).slice(0, 1000)
+                : null,
+
+              // Specific fields
+              channel_id: channel.data_?.id,
+              user_id: channel.dmUserID,
+              user_tag: channel.isDM && channel.name.includes("Direct Message with") ? channel.name.split("Direct Message with")[1].trim() : null,
+              recipients: channel.data_?.recipients?.length,
+
+              // Helper flags
+              isDM: channel.isDM,
+              isGroupDM: !channel.data_?.guild && !channel.isDM && channel.data_?.recipients?.length > 1 && !channel.dmUserID,
+              hasGuild: !!(channel.data_ && channel.data_.guild),
+
+              // New fields
+              characterCount,
+              attachments,
+              mentionCount
+            };
+          };
+
+          if (isDebug) {
+            console.log(
+              chalk.bold.blue(`[DEBUG] `) +
+              chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+              `  ${chalk.yellow(`Analyzing channels...`)}`
+            );
+            setLoading("Loading Messages|||Analyzing Channels");
+          }
+
+          // Process all channels once
+          const analyzedChannels = channels.map(analyzeChannel);
+
           if (options.messages.topChannels) {
             setPercent(38);
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(
-                  `[${moment(Date.now()).format("h:mm:ss a")}]`
-                ) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
                 `  ${chalk.yellow(`Calculating top channels`)}`
               );
               setLoading("Loading Messages|||Calculating top Channels");
             } else await delay(100);
 
-            data.messages.topChannels = channels
-              .filter((c) => c.data_ && c.data_.guild)
-              .sort((a, b) => b.messages.length - a.messages.length)
-
-              .map((channel) => {
-                const words = channel.messages
-                  .map((message: any): any => message.words)
-                  .flat()
-                  .filter((w: any): any => {
-                    const mentionRegex = /^<@!?(\d+)>$/;
-                    const mention_ = mentionRegex.test(w)
-                      ? w.match(mentionRegex)[1]
-                      : null;
-
-                    return !mention_;
-                  });
-
-                const oldestMessages = channel.messages
-                  .map((message: any): any => {
-                    return {
-                      sentence: message.words.join(" "),
-                      timestamp: message.timestamp,
-                      author: `channel: ${channel.name} (guild: ${channel.data_.guild.name})`,
-                    };
-                  })
-                  .flat()
-                  .sort((a: any, b: any): any => {
-                    const date1: any = new Date(a.timestamp);
-                    const date2: any = new Date(b.timestamp);
-
-                    return date1 - date2;
-                  })
-                  .slice(0, 100);
-
-                const topEmojisANDcustom = channel.messages
-                  .map((message: any): any => {
-                    const emojis = Utils.getEmojiCount(message.words);
-                    const customEmojis = Utils.getCustomEmojiCount(
-                      message.words
-                    );
-
-                    return {
-                      emojis:
-                        emojis && Object.keys(emojis).length ? emojis : null,
-                      customEmojis:
-                        customEmojis && customEmojis.length
-                          ? customEmojis
-                          : null,
-                    };
-                  })
-                  .flat();
-
-                const topEmojis_ = topEmojisANDcustom
-                  .flat()
-                  .filter((w: any) => w.emojis)
-                  .map((w: any) => w.emojis)
-                  .flat();
-
-                const topEmojis: Array<any> = [];
-                topEmojis_.forEach((key: any) => {
-                  if (!topEmojis.find((x) => x.emoji === key.emoji)) {
-                    topEmojis.push({
-                      emoji: key.emoji,
-                      count: 1,
-                    });
-                  } else {
-                    const index = topEmojis.findIndex(
-                      (x) => x.emoji === key.emoji
-                    );
-                    topEmojis[index].count += 1;
-                  }
-                });
-
-                const topCustomEmojis_ = topEmojisANDcustom
-                  .flat()
-                  .filter((w: any) => w.customEmojis)
-                  .map((w: any) => w.customEmojis)
-                  .flat();
-
-                const topCustomEmojis: Array<any> = [];
-                topCustomEmojis_.forEach((key: any) => {
-                  if (!topCustomEmojis.find((x) => x.emoji === key.emoji)) {
-                    topCustomEmojis.push({
-                      emoji: key.emoji,
-                      count: 1,
-                    });
-                  } else {
-                    const index = topCustomEmojis.findIndex(
-                      (x) => x.emoji === key.emoji
-                    );
-                    topCustomEmojis[index].count += 1;
-                  }
-                });
-
-                const favoriteWords = Utils.getFavoriteWords(words).slice(
-                  0,
-                  1000
-                );
-                const curseWords = Utils.getCursedWords(
-                  words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
-                );
-                const topCursed = curseWords.slice(0, 1000);
-                const links = Utils.getTopLinks(words).slice(0, 1000);
-                const topLinks = links.slice(0, 1000);
-                const discordLink = Utils.getDiscordLinks(words).slice(0, 1000);
-                const topDiscordLinks = discordLink;
-
-                return {
-                  name: channel.name,
-                  messageCount: channel.messages.length,
-                  guildName: channel.data_.guild.name,
-                  favoriteWords: options.other.favoriteWords
-                    ? favoriteWords
-                    : null,
-                  topCursed: options.other.showCurseWords ? topCursed : null,
-                  topLinks: options.other.showLinks ? topLinks : null,
-                  topDiscordLinks: options.other.showDiscordLinks
-                    ? topDiscordLinks
-                    : null,
-                  oldestMessages: options.other.oldestMessages
-                    ? oldestMessages
-                    : null,
-                  topEmojis: options.other.topEmojis
-                    ? topEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
-                    : null,
-                  topCustomEmojis: options.other.topCustomEmojis
-                    ? topCustomEmojis
-                      .sort((a, b) => b.count - a.count)
-                      .slice(0, 1000)
-                    : null,
-                };
-              });
+            data.messages.topChannels = analyzedChannels
+              .filter((c) => c.hasGuild)
+              .sort((a, b) => b.messageCount - a.messageCount);
 
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(
-                  `[${moment(Date.now()).format("h:mm:ss a")}]`
-                ) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
                 `  ${chalk.yellow(
                   `Loaded ${data?.messages?.topChannels?.length} channels`
                 )}`
@@ -1093,584 +1168,161 @@ export default function Upload(): ReactElement<any> {
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(
-                  `[${moment(Date.now()).format("h:mm:ss a")}]`
-                ) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
                 `  ${chalk.yellow(`Loading top DMs`)}`
               );
               setLoading("Loading Messages|||Calculating top DMs");
             } else await delay(100);
 
-            data.messages.topDMs = channels
-              .filter(
-                (channel) =>
-                  channel?.isDM &&
-                  channel?.name?.includes("Direct Message with")
-              )
-              .sort((a, b) => b.messages.length - a.messages.length)
-
-              .map((channel) => {
-                const words = channel.messages
-                  .map((message: any) => message.words)
-                  .flat()
-                  .filter((w: any) => {
-                    const mentionRegex = /^<@!?(\d+)>$/;
-                    const mention_ = mentionRegex.test(w)
-                      ? w.match(mentionRegex)[1]
-                      : null;
-
-                    return !mention_;
-                  });
-
-                const oldestMessages = channel.messages
-                  .map((message: any) => {
-                    return {
-                      sentence: message.words.join(" "),
-                      timestamp: message.timestamp,
-                      author: `user: ${channel.name
-                        .split("Direct Message with")[1]
-                        .trim()} (id: ${channel.dmUserID})`,
-                    };
-                  })
-                  .flat()
-                  .sort((a: any, b: any): any => {
-                    const date1: any = new Date(a.timestamp);
-                    const date2: any = new Date(b.timestamp);
-
-                    return date1 - date2;
-                  })
-                  .slice(0, 100);
-
-                const topEmojisANDcustom = channel.messages
-                  .map((message: any) => {
-                    const emojis = Utils.getEmojiCount(message.words);
-                    const customEmojis = Utils.getCustomEmojiCount(
-                      message.words
-                    );
-
-                    return {
-                      emojis:
-                        emojis && Object.keys(emojis).length ? emojis : null,
-                      customEmojis:
-                        customEmojis && customEmojis.length
-                          ? customEmojis
-                          : null,
-                    };
-                  })
-                  .flat();
-
-                const topEmojis_ = topEmojisANDcustom
-                  .flat()
-                  .filter((w: any) => w.emojis)
-                  .map((w: any) => w.emojis)
-                  .flat();
-
-                const topEmojis: Array<any> = [];
-                topEmojis_.forEach((key: any) => {
-                  if (!topEmojis.find((x) => x.emoji === key.emoji)) {
-                    topEmojis.push({
-                      emoji: key.emoji,
-                      count: 1,
-                    });
-                  } else {
-                    const index = topEmojis.findIndex(
-                      (x) => x.emoji === key.emoji
-                    );
-                    topEmojis[index].count += 1;
-                  }
-                });
-
-                const topCustomEmojis_ = topEmojisANDcustom
-                  .flat()
-                  .filter((w: any) => w.customEmojis)
-                  .map((w: any) => w.customEmojis)
-                  .flat();
-
-                const topCustomEmojis: Array<any> = [];
-                topCustomEmojis_.forEach((key: any) => {
-                  if (!topCustomEmojis.find((x) => x.emoji === key.emoji)) {
-                    topCustomEmojis.push({
-                      emoji: key.emoji,
-                      count: 1,
-                    });
-                  } else {
-                    const index = topCustomEmojis.findIndex(
-                      (x) => x.emoji === key.emoji
-                    );
-                    topCustomEmojis[index].count += 1;
-                  }
-                });
-                const favoriteWords = Utils.getFavoriteWords(words).slice(
-                  0,
-                  1000
-                );
-                const curseWords = Utils.getCursedWords(
-                  words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
-                );
-                const topCursed = curseWords.slice(0, 1000);
-                const links = Utils.getTopLinks(words);
-                const topLinks = links.slice(0, 1000);
-                const discordLink = Utils.getDiscordLinks(words).slice(0, 1000);
-                const topDiscordLinks = discordLink;
-
-                return {
-                  channel_id: channel.data_.id,
-                  user_id: channel.dmUserID,
-                  user_tag: channel.name.split("Direct Message with")[1].trim(),
-                  messageCount: channel.messages.length,
-                  favoriteWords: options.other.favoriteWords
-                    ? favoriteWords
-                    : null,
-                  topCursed: options.other.showCurseWords ? topCursed : null,
-                  topLinks: options.other.showLinks ? topLinks : null,
-                  topDiscordLinks: options.other.showDiscordLinks
-                    ? topDiscordLinks
-                    : null,
-                  oldestMessages,
-                  topEmojis: options.other.topEmojis
-                    ? topEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
-                    : null,
-                  topCustomEmojis: options.other.topCustomEmojis
-                    ? topCustomEmojis
-                      .sort((a, b) => b.count - a.count)
-                      .slice(0, 1000)
-                    : null,
-                };
-              });
+            data.messages.topDMs = analyzedChannels
+              .filter((c) => c.isDM && c.name.includes("Direct Message with"))
+              .sort((a, b) => b.messageCount - a.messageCount);
 
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(
-                  `[${moment(Date.now()).format("h:mm:ss a")}]`
-                ) +
-                `  ${chalk.yellow(
-                  `Loaded ${data?.messages?.topDMs?.length} DMs`
-                )}`
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Loaded ${data?.messages?.topDMs?.length} DMs`)}`
               );
           }
 
           if (options.messages.topGuilds) {
-            setPercent(45);
+            setPercent(48);
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(
-                  `[${moment(Date.now()).format("h:mm:ss a")}]`
-                ) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
                 `  ${chalk.yellow(`Loading top Guilds`)}`
               );
               setLoading("Loading Messages|||Calculating top Guilds");
             } else await delay(100);
 
-            const topGuilds = channels
-              .filter((c) => c.data_ && c.data_.guild)
-              .sort((a, b) => b.messages.length - a.messages.length)
+            const guildsMap = new Map();
 
-              .map((channel) => {
-                const words = channel.messages
-                  .map((message: any) => message.words)
-                  .flat()
-                  .filter((w: any) => {
-                    const mentionRegex = /^<@!?(\d+)>$/;
-                    const mention_ = mentionRegex.test(w)
-                      ? w.match(mentionRegex)[1]
-                      : null;
-
-                    return !mention_;
+            for (const channel of analyzedChannels) {
+              if (channel.hasGuild && channel.guildName) {
+                if (!guildsMap.has(channel.guildName)) {
+                  guildsMap.set(channel.guildName, {
+                    guildName: channel.guildName,
+                    name: [],
+                    messageCount: 0,
+                    favoriteWordsMap: new Map(),
+                    topEmojisMap: new Map(),
+                    topCustomEmojisMap: new Map(),
+                    topCursedMap: new Map(),
+                    topLinksMap: new Map(),
+                    topDiscordLinksMap: new Map(),
+                    oldestMessages: []
                   });
+                }
 
-                const oldestMessages = channel.messages
-                  .map((message: any) => {
-                    return {
-                      sentence: message.words.join(" "),
-                      timestamp: message.timestamp,
-                      author: `channel: ${channel.name} (guild: ${channel.data_.guild.name})`,
-                    };
-                  })
-                  .flat()
-                  .sort((a: any, b: any): any => {
-                    const date1: any = new Date(a.timestamp);
-                    const date2: any = new Date(b.timestamp);
+                const guild = guildsMap.get(channel.guildName);
+                guild.name.push(channel.name);
+                guild.messageCount += channel.messageCount;
 
-                    return date1 - date2;
-                  })
-                  .slice(0, 100);
-
-                const topEmojisANDcustom = channel.messages
-                  .map((message: any) => {
-                    const emojis = Utils.getEmojiCount(message.words);
-                    const customEmojis = Utils.getCustomEmojiCount(
-                      message.words
-                    );
-
-                    return {
-                      emojis:
-                        emojis && Object.keys(emojis).length ? emojis : null,
-                      customEmojis:
-                        customEmojis && customEmojis.length
-                          ? customEmojis
-                          : null,
-                    };
-                  })
-                  .flat();
-
-                const topEmojis_ = topEmojisANDcustom
-                  .flat()
-                  .filter((w: any) => w.emojis)
-                  .map((w: any) => w.emojis)
-                  .flat();
-
-                const topEmojis: Array<any> = [];
-                topEmojis_.forEach((key: any) => {
-                  if (!topEmojis.find((x) => x.emoji === key.emoji)) {
-                    topEmojis.push({
-                      emoji: key.emoji,
-                      count: 1,
-                    });
-                  } else {
-                    const index = topEmojis.findIndex(
-                      (x) => x.emoji === key.emoji
-                    );
-                    topEmojis[index].count += 1;
+                const aggregateToMap = (sourceArray: any[], targetMap: Map<any, any>, keyName: string) => {
+                  if (!sourceArray) return;
+                  for (const item of sourceArray) {
+                    const key = item[keyName];
+                    const count = item.count;
+                    targetMap.set(key, (targetMap.get(key) || 0) + count);
                   }
-                });
-
-                const topCustomEmojis_ = topEmojisANDcustom
-                  .flat()
-                  .filter((w: any) => w.customEmojis)
-                  .map((w: any) => w.customEmojis)
-                  .flat();
-
-                const topCustomEmojis: Array<any> = [];
-                topCustomEmojis_.forEach((key: any) => {
-                  if (!topCustomEmojis.find((x) => x.emoji === key.emoji)) {
-                    topCustomEmojis.push({
-                      emoji: key.emoji,
-                      count: 1,
-                    });
-                  } else {
-                    const index = topCustomEmojis.findIndex(
-                      (x) => x.emoji === key.emoji
-                    );
-                    topCustomEmojis[index].count += 1;
-                  }
-                });
-
-                const favoriteWords = Utils.getFavoriteWords(words).slice(
-                  0,
-                  1000
-                );
-                const curseWords = Utils.getCursedWords(
-                  words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
-                );
-                const topCursed = curseWords.slice(0, 1000);
-                const links = Utils.getTopLinks(words);
-                const topLinks = links.slice(0, 1000);
-                const discordLink = Utils.getDiscordLinks(words).slice(0, 1000);
-                const topDiscordLinks = discordLink;
-
-                return {
-                  name: channel.name,
-                  messageCount: channel.messages.length,
-                  guildName: channel.data_.guild.name,
-                  favoriteWords: options.other.favoriteWords
-                    ? favoriteWords
-                    : null,
-                  topCursed: options.other.showCurseWords ? topCursed : null,
-                  topLinks: options.other.showLinks ? topLinks : null,
-                  topDiscordLinks: options.other.showDiscordLinks
-                    ? topDiscordLinks
-                    : null,
-                  oldestMessages: options.other.oldestMessages
-                    ? oldestMessages
-                    : null,
-                  topEmojis: options.other.topEmojis
-                    ? topEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
-                    : null,
-                  topCustomEmojis: options.other.topCustomEmojis
-                    ? topCustomEmojis
-                      .sort((a, b) => b.count - a.count)
-                      .slice(0, 1000)
-                    : null,
                 };
-              });
 
-            const guilds: Array<any> = [];
+                const aggregations = [
+                  { channelProp: 'favoriteWords', guildMapProp: 'favoriteWordsMap', key: 'word' },
+                  { channelProp: 'topEmojis', guildMapProp: 'topEmojisMap', key: 'emoji' },
+                  { channelProp: 'topCustomEmojis', guildMapProp: 'topCustomEmojisMap', key: 'emoji' },
+                  { channelProp: 'topCursed', guildMapProp: 'topCursedMap', key: 'word' },
+                  { channelProp: 'topLinks', guildMapProp: 'topLinksMap', key: 'word' },
+                  { channelProp: 'topDiscordLinks', guildMapProp: 'topDiscordLinksMap', key: 'word' },
+                ];
 
-            // eslint-disable-next-line no-inner-declarations
-            function merge(a: Array<any>, b: Array<any>) {
-              return a.concat(b);
-            }
-
-            topGuilds.forEach((ch: any): any => {
-              if (!guilds.find((x) => x.guildName === ch.guildName)) {
-                ch.name = [ch.name];
-                guilds.push(ch);
-              } else {
-                const index = guilds.findIndex(
-                  (x) => x.guildName === ch.guildName
-                );
-
-                guilds[index].name.push(ch.name);
-                guilds[index].messageCount += ch.messageCount;
-
-                if (options.other.favoriteWords) {
-                  guilds[index].favoriteWords = merge(
-                    guilds[index].favoriteWords,
-                    ch.favoriteWords
-                  );
+                for (const agg of aggregations) {
+                  aggregateToMap((channel as any)[agg.channelProp], (guild as any)[agg.guildMapProp], agg.key);
                 }
 
-                if (options.other.showCurseWords) {
-                  guilds[index].topCursed = merge(
-                    guilds[index].topCursed,
-                    ch.topCursed
-                  );
-                }
-
-                if (options.other.showLinks) {
-                  guilds[index].topLinks = merge(
-                    guilds[index].topLinks,
-                    ch.topLinks
-                  );
-                }
-
-                if (options.other.showDiscordLinks) {
-                  guilds[index].topDiscordLinks = merge(
-                    guilds[index].topDiscordLinks,
-                    ch.topDiscordLinks
-                  );
-                }
-
-                if (options.other.oldestMessages) {
-                  guilds[index].oldestMessages = merge(
-                    guilds[index].oldestMessages,
-                    ch.oldestMessages
-                  );
-                }
-
-                if (options.other.topEmojis) {
-                  guilds[index].topEmojis = merge(
-                    guilds[index].topEmojis,
-                    ch.topEmojis
-                  );
-                }
-
-                if (options.other.topCustomEmojis) {
-                  guilds[index].topCustomEmojis = merge(
-                    guilds[index].topCustomEmojis,
-                    ch.topCustomEmojis
-                  );
+                if (channel.oldestMessages) {
+                  guild.oldestMessages.push(...channel.oldestMessages);
                 }
               }
-            });
+            }
 
-            data.messages.topGuilds = guilds.sort(
-              (a, b) => b.messageCount - a.messageCount
-            );
+            data.messages.topGuilds = Array.from(guildsMap.values()).map((guild: any) => {
+              const sortAndSlice = (map: Map<any, any>, keyName: string) => {
+                return Array.from(map.entries())
+                  .map(([key, count]) => ({ [keyName]: key, count: count as number }))
+                  .sort((a, b) => b.count - a.count)
+                  .slice(0, 100);
+              };
+
+              return {
+                ...guild,
+                favoriteWords: sortAndSlice(guild.favoriteWordsMap, 'word'),
+                topEmojis: sortAndSlice(guild.topEmojisMap, 'emoji'),
+                topCustomEmojis: sortAndSlice(guild.topCustomEmojisMap, 'emoji'),
+                topCursed: sortAndSlice(guild.topCursedMap, 'word'),
+                topLinks: sortAndSlice(guild.topLinksMap, 'word'),
+                topDiscordLinks: sortAndSlice(guild.topDiscordLinksMap, 'word'),
+                oldestMessages: guild.oldestMessages
+                  .sort((a: any, b: any) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
+                  .slice(0, 100)
+              };
+            }).sort((a: any, b: any) => b.messageCount - a.messageCount);
 
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(
-                  `[${moment(Date.now()).format("h:mm:ss a")}]`
-                ) +
-                `  ${chalk.yellow(
-                  `Loaded ${data?.messages?.topGuilds?.length} guilds`
-                )} `
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Loaded ${data?.messages?.topGuilds?.length} Guilds`)}`
               );
           }
 
           if (options.messages.topGroupDMs) {
-            setPercent(48);
+            setPercent(50);
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(
-                  `[${moment(Date.now()).format("h:mm:ss a")}]`
-                ) +
-                `  ${chalk.yellow(`Loading top group DMs`)}`
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Loading top Group DMs`)}`
               );
               setLoading("Loading Messages|||Calculating top Group DMs");
             } else await delay(100);
 
-            const channel_ = channels
-              .filter(
-                (c) =>
-                  c?.data_ &&
-                  !c?.data_?.guild &&
-                  !c?.isDM &&
-                  c?.data_?.recipients?.length > 1 &&
-                  !c?.dmUserID
-              )
-              .sort((a, b) => b.messages.length - a.messages.length);
-
-            const channel__ = channel_.map((channel) => {
-              const words = channel.messages
-                .map((message: any) => message.words)
-                .flat()
-                .filter((w: any) => {
-                  const mentionRegex = /^<@!?(\d+)>$/;
-                  const mention_ = mentionRegex.test(w)
-                    ? w.match(mentionRegex)[1]
-                    : null;
-
-                  return !mention_;
-                });
-
-              const oldestMessages = channel.messages
-                .map((message: any) => {
-                  return {
-                    sentence: message.words.join(" "),
-                    timestamp: message.timestamp,
-                  };
-                })
-                .flat()
-                .sort((a: any, b: any): any => {
-                  const date1: any = new Date(a.timestamp);
-                  const date2: any = new Date(b.timestamp);
-
-                  return date1 - date2;
-                })
-                .slice(0, 100);
-
-              const topEmojisANDcustom = channel.messages
-                .map((message: any) => {
-                  const emojis = Utils.getEmojiCount(message.words);
-                  const customEmojis = Utils.getCustomEmojiCount(message.words);
-
-                  return {
-                    emojis:
-                      emojis && Object.keys(emojis).length ? emojis : null,
-                    customEmojis:
-                      customEmojis && customEmojis.length ? customEmojis : null,
-                  };
-                })
-                .flat();
-
-              const topEmojis_ = topEmojisANDcustom
-                .flat()
-                .filter((w: any) => w.emojis)
-                .map((w: any) => w.emojis)
-                .flat();
-
-              const topEmojis: Array<any> = [];
-              topEmojis_.forEach((key: any) => {
-                if (!topEmojis.find((x) => x.emoji === key.emoji)) {
-                  topEmojis.push({
-                    emoji: key.emoji,
-                    count: 1,
-                  });
-                } else {
-                  const index = topEmojis.findIndex(
-                    (x) => x.emoji === key.emoji
-                  );
-                  topEmojis[index].count += 1;
-                }
-              });
-
-              const topCustomEmojis_ = topEmojisANDcustom
-                .flat()
-                .filter((w: any) => w.customEmojis)
-                .map((w: any) => w.customEmojis)
-                .flat();
-
-              const topCustomEmojis: Array<any> = [];
-              topCustomEmojis_.forEach((key: any) => {
-                if (!topCustomEmojis.find((x) => x.emoji === key.emoji)) {
-                  topCustomEmojis.push({
-                    emoji: key.emoji,
-                    count: 1,
-                  });
-                } else {
-                  const index = topCustomEmojis.findIndex(
-                    (x) => x.emoji === key.emoji
-                  );
-                  topCustomEmojis[index].count += 1;
-                }
-              });
-
-              const favoriteWords = Utils.getFavoriteWords(words).slice(
-                0,
-                1000
-              );
-              const curseWords = Utils.getCursedWords(
-                words.filter((w: any) => w.length < 10 && !/[^\w\s]/g.test(w))
-              );
-              const topCursed = curseWords.slice(0, 1000);
-              const links = Utils.getTopLinks(words);
-              const topLinks = links.slice(0, 1000);
-              const discordLink = Utils.getDiscordLinks(words).slice(0, 1000);
-              const topDiscordLinks = discordLink;
-
-              return {
-                name: channel.name,
-                messageCount: channel.messages.length,
-                recipients: channel.data_.recipients.length,
-                favoriteWords: options.other.favoriteWords
-                  ? favoriteWords
-                  : null,
-                topCursed: options.other.showCurseWords ? topCursed : null,
-                topLinks: options.other.showLinks ? topLinks : null,
-                topDiscordLinks: options.other.showDiscordLinks
-                  ? topDiscordLinks
-                  : null,
-                oldestMessages: options.other.oldestMessages
-                  ? oldestMessages
-                  : null,
-                topEmojis: options.other.topEmojis
-                  ? topEmojis.sort((a, b) => b.count - a.count).slice(0, 1000)
-                  : null,
-                topCustomEmojis: options.other.topCustomEmojis
-                  ? topCustomEmojis
-                    .sort((a, b) => b.count - a.count)
-                    .slice(0, 1000)
-                  : null,
-              };
-            });
-
-            data.messages.topGroupDMs = channel__.sort(
-              (a, b) => b.messageCount - a.messageCount
-            );
+            data.messages.topGroupDMs = analyzedChannels
+              .filter((c) => c.isGroupDM)
+              .sort((a, b) => b.messageCount - a.messageCount);
 
             if (isDebug)
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(
-                  `[${moment(Date.now()).format("h:mm:ss a")}]`
-                ) +
-                `  ${chalk.yellow(
-                  `Loaded ${data?.messages?.topGroupDMs?.length} group DMs`
-                )} `
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Loaded ${data?.messages?.topGroupDMs?.length} Group DMs`)}`
               );
           }
+
 
           if (options.messages.characterCount) {
             setPercent(52);
             if (isDebug) {
               console.log(
                 chalk.bold.blue(`[DEBUG] `) +
-                chalk.bold.cyan(
-                  `[${moment(Date.now()).format("h:mm:ss a")}]`
-                ) +
-                `  ${chalk.yellow(
-                  `Calculating character count & message count`
-                )}`
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`Calculating character count & message count`)}`
               );
               setLoading("Loading Messages|||Getting your character Count");
               await delay(700);
             } else await delay(100);
 
-            data.messages.characterCount = channels
-              .map((channel) => channel.messages)
-              .flat()
-              .map((message: any) => message.length)
-              .reduce((p, c) => p + c);
+            let charCount = 0;
+            let msgCount = 0;
+            for (const channel of analyzedChannels) {
+              msgCount += channel.messageCount;
+              charCount += channel.characterCount;
+            }
 
-            data.messages.messageCount = channels
-              .map((channel) => channel.messages)
-              .flat().length;
+            data.messages.characterCount = charCount;
+            data.messages.messageCount = msgCount;
           }
 
           if (options.messages.oldestMessages) {
@@ -1689,97 +1341,11 @@ export default function Upload(): ReactElement<any> {
               await delay(700);
             } else await delay(100);
 
-            const oldestInChannel = channels
-              .filter((c) => c.data_ && c.data_.guild)
-              .map((channel) => {
-                const words = channel.messages
-                  .map((message: any) => {
-                    return {
-                      sentence: message.words.join(" "),
-                      timestamp: message.timestamp,
-                      author: `channel: ${channel.name} (guild: ${channel.data_.guild.name})`,
-                    };
-                  })
-                  .flat();
-
-                return words;
-              })
+            const oldestInTotal = analyzedChannels
+              .filter((c) => c.oldestMessages)
+              .map((c) => c.oldestMessages)
               .flat()
-              .sort((a: any, b: any): any => {
-                const date1: any = new Date(a.timestamp);
-                const date2: any = new Date(b.timestamp);
-
-                return date1 - date2;
-              });
-
-            const oldestInDMs = channels
-              .filter(
-                (channel) =>
-                  channel?.isDM &&
-                  channel?.name?.includes("Direct Message with")
-              )
-
-              .map((channel) => {
-                const words = channel.messages
-                  .map((message: any) => {
-                    return {
-                      sentence: message.words.join(" "),
-                      timestamp: message.timestamp,
-                      author: `user: ${channel.name
-                        .split("Direct Message with")[1]
-                        .trim()} (ID: ${channel.dmUserID})`,
-                    };
-                  })
-                  .flat();
-                return words;
-              })
-              .flat()
-              .sort((a: any, b: any): any => {
-                const date1: any = new Date(a.timestamp);
-                const date2: any = new Date(b.timestamp);
-
-                return date1 - date2;
-              });
-
-            const oldestInGroupDM = channels
-              .filter(
-                (c) =>
-                  c?.data_ &&
-                  !c?.data_?.guild &&
-                  !c?.isDM &&
-                  c?.data_?.recipients?.length > 1 &&
-                  !c?.dmUserID
-              )
-              .map((channel) => {
-                const words = channel.messages
-                  .map((message: any) => {
-                    return {
-                      sentence: message.words.join(" "),
-                      timestamp: message.timestamp,
-                      author: `Group Name: ${channel.name ? channel.name : "Unknown DM"
-                        }`,
-                    };
-                  })
-                  .flat();
-                return words;
-              })
-              .flat()
-              .sort((a: any, b: any): any => {
-                const date1: any = new Date(a.timestamp);
-                const date2: any = new Date(b.timestamp);
-
-                return date1 - date2;
-              });
-
-            const oldestInTotal = oldestInChannel
-              .concat(oldestInDMs)
-              .concat(oldestInGroupDM)
-              .sort((a: any, b: any): number => {
-                const date1: any = new Date(a.timestamp);
-                const date2: any = new Date(b.timestamp);
-
-                return date1 - date2;
-              });
+              .sort((a: any, b: any) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
 
             data.messages.oldestMessages = oldestInTotal.slice(0, 1000);
             if (isDebug)
@@ -1807,58 +1373,9 @@ export default function Upload(): ReactElement<any> {
             } else await delay(100);
 
             setPercent(58);
-            const oldestInChannel = channels
-              .map((channel) => {
-                const words = channel.messages
-                  .map((message: any) => {
-                    const regex =
-                      /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|mp4|pdf|zip|wmv|mp3|nitf|doc|docx))/gi;
-                    const tenorGIFregex =
-                      /https?:\/\/(c\.tenor\.com\/([^ /\n]+)\/([^ /\n]+)\.gif|tenor\.com\/view\/(?:.*-)?([^ /\n]+))/gi;
-
-                    const attachments = message.words.filter((word: any) => {
-                      if (tenorGIFregex.test(word)) return true;
-                      return regex.test(word);
-                    });
-
-                    // replace everything before and after the regex with ""
-                    const attachmentsCleaned = attachments.map(
-                      (attachment: any) => {
-                        const mtch = regex.test(attachment)
-                          ? attachment.match(
-                            regex
-                            // eslint-disable-next-line no-mixed-spaces-and-tabs
-                            // eslint-disable-next-line no-mixed-spaces-and-tabs
-                          )[0]
-                          : tenorGIFregex.test(attachment)
-                            ? attachment.match(
-                              tenorGIFregex
-                              // eslint-disable-next-line no-mixed-spaces-and-tabs
-                              // eslint-disable-next-line no-mixed-spaces-and-tabs
-                            )[0]
-                            : attachment;
-
-                        if (mtch && mtch.length > 25)
-                          return mtch
-                            .replace(/`/g, "")
-                            .replace(/"/g, "")
-                            .replace(/\|/g, "")
-                            .replace(/'/g, "")
-                            .replace(/{/g, "")
-                            .replace(/}/g, "")
-                            .replace(/\[/g, "")
-                            .replace(/\]/g, "");
-                      }
-                    );
-
-                    return attachmentsCleaned.filter(
-                      (s: Array<any>) => s && s.length > 0
-                    );
-                  })
-                  .flat();
-
-                return words;
-              })
+            const oldestInChannel = analyzedChannels
+              .filter((c) => c.attachments)
+              .map((c) => c.attachments)
               .flat();
 
             data.messages.attachmentCount = oldestInChannel;
@@ -1887,109 +1404,22 @@ export default function Upload(): ReactElement<any> {
             } else await delay(100);
 
             setPercent(62);
-            const oldestInChannel = channels
-              .map((channel) => {
-                const words = channel.messages
-                  .map((message: any) => {
-                    const discordChannelMentionRegex = /<#[0-9]*>/gi;
-                    const discordUserMentionRegex = /<@[0-9]*>/gi;
-                    const discordRoleMentionRegex = /<@&[0-9]*>/gi;
-
-                    const mentions = message.words.map(() => {
-                      const o = {
-                        channel: message.words.filter((word: any) =>
-                          discordChannelMentionRegex.test(word)
-                        ).length,
-                        user: message.words.filter((word: any) =>
-                          discordUserMentionRegex.test(word)
-                        ).length,
-                        role: message.words.filter((word: any) =>
-                          discordRoleMentionRegex.test(word)
-                        ).length,
-                        here: message.words.filter((word: any) =>
-                          /@here/g.test(word)
-                        ).length,
-                        everyone: message.words.filter((word: any) =>
-                          /@everyone/g.test(word)
-                        ).length,
-                      };
-
-                      //if all the keys length are 0 return
-                      if (
-                        o.channel === 0 &&
-                        o.user === 0 &&
-                        o.role === 0 &&
-                        o.here === 0 &&
-                        o.everyone === 0
-                      ) {
-                        return false;
-                      } else {
-                        return o;
-                      }
-                    });
-
-                    return mentions;
-                  })
-                  .flat();
-
-                return words;
-              })
-              .flat()
-              .filter((x) => x)
-              .sort(
-                (a, b) =>
-                  a.channel +
-                  a.user +
-                  a.role +
-                  a.here +
-                  a.everyone -
-                  b.channel +
-                  b.user +
-                  b.role +
-                  b.here +
-                  b.everyone
-              );
-
-            const top: any = {};
-            oldestInChannel.forEach((mention) => {
-              if (mention.channel > 0) {
-                if (top.channel) {
-                  top.channel += mention.channel;
-                } else {
-                  top.channel = mention.channel;
-                }
+            const top: any = {
+              channel: 0,
+              user: 0,
+              role: 0,
+              here: 0,
+              everyone: 0
+            };
+            for (const channel of analyzedChannels) {
+              if (channel.mentionCount) {
+                top.channel += channel.mentionCount.channel;
+                top.user += channel.mentionCount.user;
+                top.role += channel.mentionCount.role;
+                top.here += channel.mentionCount.here;
+                top.everyone += channel.mentionCount.everyone;
               }
-              if (mention.user > 0) {
-                if (top.user) {
-                  top.user += mention.user;
-                } else {
-                  top.user = mention.user;
-                }
-              }
-              if (mention.role > 0) {
-                if (top.role) {
-                  top.role += mention.role;
-                } else {
-                  top.role = mention.role;
-                }
-              }
-
-              if (mention.here > 0) {
-                if (top.here) {
-                  top.here += mention.here;
-                } else {
-                  top.here = mention.here;
-                }
-              }
-
-              if (mention.everyone > 0) {
-                if (top.everyone) {
-                  top.everyone += mention.everyone;
-                } else {
-                  top.everyone = mention.everyone;
-                }
-              }
-            });
+            }
 
             data.messages.mentionCount = top;
             if (isDebug)
@@ -2318,6 +1748,77 @@ export default function Upload(): ReactElement<any> {
                 )}`
               );
           }
+          if (options.other.topEmojis) {
+            setPercent(80);
+            if (isDebug) {
+              setLoading("Loading Messages|||Calculating your top emojis");
+              await delay(100);
+            }
+
+            const globalTopEmojisMap: any = {};
+            analyzedChannels.forEach((channel) => {
+              if (channel.topEmojis) {
+                channel.topEmojis.forEach((e: any) => {
+                  if (globalTopEmojisMap[e.emoji]) {
+                    globalTopEmojisMap[e.emoji] += e.count;
+                  } else {
+                    globalTopEmojisMap[e.emoji] = e.count;
+                  }
+                });
+              }
+            });
+
+            data.messages.topEmojis = Object.keys(globalTopEmojisMap)
+              .map((emoji) => ({ emoji, count: globalTopEmojisMap[emoji] }))
+              .sort((a, b) => b.count - a.count)
+              .slice(0, 1000);
+
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(
+                  `Loaded ${data?.messages?.topEmojis?.length} emojis`
+                )}`
+              );
+          }
+
+          if (options.other.topCustomEmojis) {
+            setPercent(81);
+            if (isDebug) {
+              setLoading("Loading Messages|||Calculating your top custom emojis");
+              await delay(100);
+            }
+
+            const globalTopCustomEmojisMap: any = {};
+            analyzedChannels.forEach((channel) => {
+              if (channel.topCustomEmojis) {
+                channel.topCustomEmojis.forEach((e: any) => {
+                  if (globalTopCustomEmojisMap[e.emoji]) {
+                    globalTopCustomEmojisMap[e.emoji] += e.count;
+                  } else {
+                    globalTopCustomEmojisMap[e.emoji] = e.count;
+                  }
+                });
+              }
+            });
+
+            data.messages.topCustomEmojis = Object.keys(globalTopCustomEmojisMap)
+              .map((emoji) => ({ emoji, count: globalTopCustomEmojisMap[emoji] }))
+              .sort((a, b) => b.count - a.count)
+              .slice(0, 1000);
+
+            if (isDebug)
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(
+                  `Loaded ${data?.messages?.topCustomEmojis?.length} custom emojis`
+                )}`
+              );
+          }
+
+          setDataExtracted({ ...data });
 
           if (options.guilds) {
             setPercent(82);
@@ -2365,6 +1866,7 @@ export default function Upload(): ReactElement<any> {
                 )}`
               );
           }
+          setDataExtracted({ ...data });
 
           if (options.bots) {
             setPercent(86);
@@ -2441,6 +1943,7 @@ export default function Upload(): ReactElement<any> {
               }
             }
           }
+          setDataExtracted({ ...data });
 
           if (isDebug)
             console.log(
@@ -2481,6 +1984,7 @@ export default function Upload(): ReactElement<any> {
 
             data.user.badges = badges;
           }
+          setDataExtracted({ ...data });
 
           setPercent(90);
           if (options.statistics.length) {
@@ -2522,6 +2026,7 @@ export default function Upload(): ReactElement<any> {
               );
             }
           }
+          setDataExtracted({ ...data });
 
           if (isDebug)
             console.log(
@@ -2599,6 +2104,7 @@ export default function Upload(): ReactElement<any> {
             }
 
             setDataExtracted(data);
+            setLoading(null);
           })
           .catch((err) => {
             if (isDebug) console.log(err);
@@ -2646,10 +2152,7 @@ export default function Upload(): ReactElement<any> {
     }
   };
 
-  const DynamicComponent = dynamic(() => import("./Data"), {
-    ssr: false,
-    loading: () => <SnackbarProvider><Loading skeleton={true} /></SnackbarProvider>,
-  });
+
 
   return dataExtracted ? (
     <Suspense
@@ -2660,7 +2163,7 @@ export default function Upload(): ReactElement<any> {
       }
     >
       <SnackbarProvider>
-        <DynamicComponent data={dataExtracted} demo={false} />
+        <DynamicComponent data={dataExtracted} demo={false} loading={loading} percent={percent} />
       </SnackbarProvider>
     </Suspense>
   ) : (

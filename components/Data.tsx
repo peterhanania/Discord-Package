@@ -17,6 +17,7 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import EventsJSON from "./json/events.json";
 import Settings from "./settings";
+import { Line } from "rc-progress";
 
 
 import { useSnackbar } from "notistack";
@@ -736,7 +737,7 @@ async function copyToClipboard(value: string): Promise<boolean> {
   }
 }
 
-export default function Data({ data, demo }: any): ReactElement {
+export default function Data({ data, demo, loading, percent }: any): ReactElement {
   const [topDMs, setTopDMs] = useAtom(topDMsAtom);
   const [topChannels, setTopChannels] = useAtom(topChannelsAtom);
   const [topGuilds, setTopGuilds] = useAtom(topGuildsAtom);
@@ -774,6 +775,19 @@ export default function Data({ data, demo }: any): ReactElement {
       }, 3000);
     }
   }, []);
+
+  useEffect(() => {
+    setEmojiType(
+      data?.messages?.topEmojis && data?.messages?.topEmojis.length
+        ? "topEmojis"
+        : data?.messages?.topCustomEmojis &&
+          data?.messages?.topCustomEmojis.length
+          ? "topCustomEmojis"
+          : data?.settings?.recentEmojis && data?.settings?.recentEmojis.length
+            ? "recentEmojis"
+            : null
+    );
+  }, [data]);
 
   function renderConfetti() {
     const confettiContainer = document.createElement('div');
@@ -1143,6 +1157,14 @@ export default function Data({ data, demo }: any): ReactElement {
 
   return data ? (
     <div className="h-screen">
+      {loading && (
+        <div className="sticky top-0 left-0 w-full z-[999999999] bg-[#2b2d31] text-white p-2 flex items-center justify-center space-x-4 shadow-lg border-b border-gray-700">
+           <div className="w-1/3">
+             <Line percent={percent} strokeWidth={2} strokeColor="#5865F2" trailColor="#40444b" />
+           </div>
+           <span className="font-mono text-sm">{typeof loading === 'string' ? loading.split('|||')[1] || loading : 'Loading...'}</span>
+        </div>
+      )}
       <div className="md:block lg:block hidden">
         <Transition
           show={showWalkthrough}
@@ -5958,7 +5980,7 @@ export default function Data({ data, demo }: any): ReactElement {
                           topChannels[0] !== "noresults"
                           ? data?.messages?.topChannels.map(
                             (m: any, i: number) => {
-                              return (<>
+                              return (
                                 <div key={i}>
                                   <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
                                     <div className="flex items-center max-w-full sm:max-w-4/6">
@@ -6796,12 +6818,12 @@ export default function Data({ data, demo }: any): ReactElement {
                                     </div>
                                   </div>
                                 </div>
-                              </>);
+                              );
                             }
                           )
                           : topChannels?.map((m: any, i: number) => {
-                            return (<>
-                              {m !== "noresults" ? (
+                            return (
+                              m !== "noresults" ? (
                                 <div key={i}>
                                   <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
                                     <div className="flex items-center max-w-full sm:max-w-4/6">
@@ -7602,8 +7624,8 @@ export default function Data({ data, demo }: any): ReactElement {
                                     term.
                                   </span>
                                 </div>
-                              )}
-                            </>);
+                              )
+                            );
                           })
                         : ""}
                     </div>
@@ -7644,7 +7666,7 @@ export default function Data({ data, demo }: any): ReactElement {
                           topGuilds[0] !== "noresults"
                           ? data?.messages?.topGuilds.map(
                             (m: any, i: number) => {
-                              return (<>
+                              return (
                                 <div key={i}>
                                   <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
                                     <div className="flex items-center max-w-full sm:max-w-4/6">
@@ -8453,12 +8475,12 @@ export default function Data({ data, demo }: any): ReactElement {
                                     </div>
                                   </div>
                                 </div>
-                              </>);
+                              );
                             }
                           )
                           : topGuilds?.map((m: any, i: number) => {
-                            return (<>
-                              {m !== "noresults" ? (
+                            return (
+                              m !== "noresults" ? (
                                 <div key={i}>
                                   <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
                                     <div className="flex items-center max-w-full sm:max-w-4/6">
@@ -9262,8 +9284,8 @@ export default function Data({ data, demo }: any): ReactElement {
                                     term.
                                   </span>
                                 </div>
-                              )}
-                            </>);
+                              )
+                            );
                           })
                         : ""}
                     </div>
@@ -9304,7 +9326,7 @@ export default function Data({ data, demo }: any): ReactElement {
                           topChannels[0] !== "noresults"
                           ? data?.messages?.topGroupDMs.map(
                             (m: any, i: number) => {
-                              return (<>
+                              return (
                                 <div key={i}>
                                   <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
                                     <div className="flex items-center max-w-full sm:max-w-4/6">
@@ -10092,12 +10114,12 @@ export default function Data({ data, demo }: any): ReactElement {
                                     </div>
                                   </div>
                                 </div>
-                              </>);
+                              );
                             }
                           )
                           : topGroupDMs?.map((m: any, i: number) => {
-                            return (<>
-                              {m !== "noresults" ? (
+                            return (
+                              m !== "noresults" ? (
                                 <div key={i}>
                                   <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
                                     <div className="flex items-center max-w-full sm:max-w-4/6">
@@ -10878,8 +10900,8 @@ export default function Data({ data, demo }: any): ReactElement {
                                     term.
                                   </span>
                                 </div>
-                              )}
-                            </>);
+                              )
+                            );
                           })
                         : ""}
                     </div>
