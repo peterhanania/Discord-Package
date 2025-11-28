@@ -1063,7 +1063,7 @@ export default function Upload(): ReactElement<any> {
                       : attachment;
 
                   if (mtch && mtch.length > 25)
-                    return mtch.replace(/[`"|'{}\[\]]/g, "");
+                    return mtch.replace(/[`"|'{}[\]]/g, "");
                   return mtch;
                 }).filter((s: any) => s && s.length > 0);
               }).flat();
