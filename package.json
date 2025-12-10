@@ -26,7 +26,7 @@
     "highcharts-react-official": "^3.2.1",
     "jotai": "^2.11.3",
     "moment": "^2.30.1",
-    "next": "15.1.6",
+    "next": "^15.1.9",
     "notistack": "^3.0.2",
     "papaparse": "^5.5.2",
     "random-words": "^2.0.1",
