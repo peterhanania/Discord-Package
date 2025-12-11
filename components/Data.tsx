@@ -1155,6 +1155,19 @@ export default function Data({ data, demo, loading, percent }: any): ReactElemen
     driverObj.drive();
   }
 
+  const exportHtml = () => {
+    const htmlContent = document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "discord_data_export.html";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   return data ? (
     <div className="h-screen">
       {loading && (
@@ -11429,6 +11442,19 @@ export default function Data({ data, demo, loading, percent }: any): ReactElemen
               </p>
             </a>
           </div>
+        </div>
+      </div>
+      <div
+        className="group animate__fadeIn animate__delay-5s animate__animated"
+      >
+        <div className="fixed bottom-5 left-5 hidden lg:block opacity-70 hover:opacity-100 cursor-pointer">
+          <button
+            onClick={exportHtml}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg flex items-center"
+          >
+             <span className="material-symbols-rounded mr-2">download</span>
+            Export as HTML
+          </button>
         </div>
       </div>
     </div>
