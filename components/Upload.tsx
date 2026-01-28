@@ -762,7 +762,7 @@ export default function Upload(): ReactElement<any> {
 
           setPercent(27);
           const userMessages = JSON.parse(
-            await Utils.readFile("Messages/index.json", files, { debug: true, maxSizeBytes: 1_000_000_000 })
+            await Utils.readFile("Messages/index.json", files, { debug: isDebug })
           );
           const messagesREGEX = /Messages\/(c)?([0-9]{16,32})\/channel\.json$/;
           const channelsIDFILE = files.filter((file: any) => {
@@ -843,7 +843,7 @@ export default function Upload(): ReactElement<any> {
 
           const firstChannelMessages = await Utils.readFile(
             firstChannelMessagesPath,
-            files, { debug: true, maxSizeBytes: 1_000_000_000 }
+            files, { debug: isDebug }
           );
 
           if (firstChannelMessages) {
@@ -866,8 +866,8 @@ export default function Upload(): ReactElement<any> {
 
             try {
               const [rawData, rawMessages] = await Promise.all([
-                Utils.readFile(channelDataPath, files, { debug: true, maxSizeBytes: 1_000_000_000 }),
-                Utils.readFile(channelMessagesPath, files, { debug: true, maxSizeBytes: 1_000_000_000 }),
+                Utils.readFile(channelDataPath, files, { debug: isDebug }),
+                Utils.readFile(channelMessagesPath, files, { debug: isDebug }),
               ]);
 
               filesReadCount += 2;

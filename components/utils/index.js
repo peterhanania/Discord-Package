@@ -43,7 +43,7 @@ class Utils {
 
   static readFile(name, files, opts = {}) {
     const {
-      maxSizeBytes = 512 * 1024 * 1024, // 512 MB safety cap to avoid OOM on huge entries
+      maxSizeBytes = 5_000_000_000, // 5 GB safety cap to avoid OOM on huge entries
       onChunk,
       collect = true,
       debug = false,
