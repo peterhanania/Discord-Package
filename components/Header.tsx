@@ -88,33 +88,9 @@ export default function Header() {
                   🎇 If you made a video about DP, make sure to join the
                   discord and let us know! 🎊
                 </code>
-                <div className="mt-2">
-                  <span className="dark:text-white text-black font-bold text-xl">
-                    1. Tutorial by{" "}
-                    <a
-                      href="https://youtube.com/c/laaw_tutorials"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1 "
-                    >
-                      <b>Law Tutorials</b>
-                    </a>
-                  </span>
-                  <div className="py-3">
-                    <iframe
-                      width="560"
-                      height="315"
-                      src="https://www.youtube-nocookie.com/embed/ByNY60Nty4A"
-                      title="YouTube video player"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </div>
                 <div>
                   <span className="dark:text-white text-black font-bold text-xl">
-                    2. Tutorial by{" "}
+                    1. Tutorial by{" "}
                     <a
                       href="https://www.youtube.com/c/MrMothDevs"
                       target="_blank"
@@ -129,30 +105,6 @@ export default function Header() {
                       width="560"
                       height="315"
                       src="https://www.youtube-nocookie.com/embed/m5BSKDi-4gk"
-                      title="YouTube video player"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </div>
-                <div>
-                  <span className="dark:text-white text-black font-bold text-xl">
-                    3. Tutorial by{" "}
-                    <a
-                      href="https://www.youtube.com/c/Spaceonyoutube"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="hover:transition-all duration-200 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 font-bold px-1 "
-                    >
-                      <b>Space</b>
-                    </a>
-                  </span>
-                  <div className="py-3">
-                    <iframe
-                      width="560"
-                      height="315"
-                      src="https://www.youtube-nocookie.com/embed/hYHMaieRPGI"
                       title="YouTube video player"
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

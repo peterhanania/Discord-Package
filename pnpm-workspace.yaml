@@ -1,0 +1,6 @@
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - react-particles
+  - sharp
+  - tsparticles-engine
+  - unrs-resolver
