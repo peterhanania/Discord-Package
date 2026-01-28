@@ -34,3 +34,5 @@ yarn-error.log*
 .vercel
 yarn.lock
 components/json/test.json
+*.zip
+package/

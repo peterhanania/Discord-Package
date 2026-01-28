@@ -41,23 +41,85 @@ class Utils {
     else return `${currency.symbol}${amount}`;
   }
 
-  static readFile(name, files) {
-    return new Promise((resolve) => {
+  static readFile(name, files, opts = {}) {
+    const {
+      maxSizeBytes = 5_000_000_000, // 5 GB safety cap to avoid OOM on huge entries
+      onChunk,
+      collect = true,
+      debug = false,
+    } = opts;
+
+    const log = debug
+      ? (...args) => console.log("[readFile]", name, "-", ...args)
+      : () => {};
+
+    return new Promise((resolve, reject) => {
       const file = files.find((file) => {
         if (file && file?.name) {
           return file.name === name;
         }
       });
       if (!file) return resolve(null);
+      log("start", { originalSize: file?.originalSize });
       const fileContent = [];
       const decoder = new DecodeUTF8();
+      let finished = false;
+      let bytesRead = 0;
+
+      if (file.originalSize && file.originalSize > maxSizeBytes) {
+        log("rejecting oversized entry", {
+          originalSize: file.originalSize,
+          maxSizeBytes,
+        });
+        return reject(
+          new Error(
+            `${name} is too large to load in memory (${file.originalSize} bytes > ${maxSizeBytes} bytes cap)`
+          )
+        );
+      }
+
       file.ondata = (err, data, final) => {
-        decoder.push(data, final);
+        if (finished) return;
+        if (err) {
+          finished = true;
+          log("error in ondata", err);
+          const partial = fileContent.length ? fileContent.join("") : null;
+          return resolve(partial);
+        }
+        bytesRead += data?.length || 0;
+        log("chunk", { size: data?.length || 0, bytesRead, final });
+        if (bytesRead > maxSizeBytes) {
+          finished = true;
+          const partial = fileContent.length ? fileContent.join("") : null;
+          log("cap exceeded", { bytesRead, maxSizeBytes });
+          return reject(
+            new Error(
+              `${name} exceeded in-memory cap while reading (${bytesRead} bytes > ${maxSizeBytes} bytes)`
+            )
+          );
+        }
+        try {
+          decoder.push(data, final);
+        } catch (_pushErr) {
+          finished = true;
+          log("decoder.push error", _pushErr);
+          const partial = fileContent.length ? fileContent.join("") : null;
+          return resolve(partial);
+        }
+        if (final) finished = true;
       };
+
       decoder.ondata = (str, final) => {
-        fileContent.push(str);
-        if (final) resolve(fileContent.join(""));
+        if (finished && !final) return;
+        if (onChunk) onChunk(str, final);
+        if (collect) fileContent.push(str);
+        if (final) {
+          finished = true;
+          log("done", { bytesRead, collected: collect });
+          resolve(collect ? fileContent.join("") : null);
+        }
       };
+
       file.start();
     });
   }
@@ -75,15 +137,102 @@ class Utils {
       }));
   }
 
-  static parseJSON(input) {
-    return JSON.parse(input)
-      .filter((m) => m.Contents)
-      .map((m) => ({
-        id: m.ID,
-        timestamp: m.Timestamp,
-        length: m.Contents.length,
-        words: m.Contents.split(" "),
-      }));
+  // Escape literal newlines only inside the Contents value to keep JSON parseable
+  static escapeNewlinesInContents(str) {
+    const contentsRegex = /(\"Contents\"\s*:\s*\")((?:\\.|[^"\\])*)(\")/g;
+    return str.replace(contentsRegex, (_match, prefix, body, suffix) => {
+      if (!body.includes("\n") && !body.includes("\r")) return _match;
+      return `${prefix}${body.replace(/\r?\n/g, "\\n")}${suffix}`;
+    });
+  }
+
+  // Normalize common malformed JSON shapes for messages
+  static normalizeJsonForMessages(str) {
+    if (!str) return str;
+    let normalized = str.replace(/,\s*([}\]])/g, "$1");
+    normalized = normalized.replace(/}\s*{(?=\s*"ID")/g, "},{");
+    const trimmed = normalized.trim();
+    if (trimmed.startsWith("{") && trimmed.endsWith("}") && !trimmed.startsWith("[{")) {
+      normalized = `[${trimmed}]`;
+    }
+    return normalized;
+  }
+
+  static salvageObjects(raw, reviver) {
+    if (!raw) return [];
+    const body = raw.trim().replace(/^\[\s*/, "").replace(/\s*\]$/, "");
+    const pieces = body.split(/(?<=})\s*,?\s*(?={)/);
+    const items = [];
+    for (const piece of pieces) {
+      const candidate = piece.trim();
+      if (!candidate) continue;
+      const withBraces = candidate.startsWith("{") && candidate.endsWith("}")
+        ? candidate
+        : `{${candidate.replace(/^{|}$/g, "")}}`;
+      try {
+        items.push(JSON.parse(withBraces, reviver));
+      } catch (_err) {
+        continue;
+      }
+    }
+    return items;
+  }
+
+  static parseJSON(input, ctx = {}) {
+    if (input == null || input === "") {
+      const prefix = ctx.entryName ? `while parsing ${ctx.entryName}: ` : "";
+      throw new Error(`${prefix}empty JSON payload`);
+    }
+
+    const escaped = Utils.escapeNewlinesInContents(input);
+    const normalized = Utils.normalizeJsonForMessages(escaped);
+
+    const reviver = (key, value) => {
+      if (key === "Contents" && typeof value === "string") {
+        return value.replace(/\r?\n/g, "\n");
+      }
+      return value;
+    };
+
+    const mapMessages = (parsed) => {
+      const messages = Array.isArray(parsed)
+        ? parsed
+        : parsed && Array.isArray(parsed.messages)
+          ? parsed.messages
+          : null;
+
+      if (!messages) {
+        const prefix = ctx.entryName ? `while parsing ${ctx.entryName}: ` : "";
+        throw new Error(`${prefix}expected messages array but got ${typeof parsed}`);
+      }
+
+      return messages
+        .filter((m) => m && m.Contents)
+        .map((m) => ({
+          id: m.ID,
+          timestamp: m.Timestamp,
+          length: m.Contents.length,
+          words: m.Contents.split(" "),
+        }));
+    };
+
+    try {
+      return mapMessages(JSON.parse(normalized, reviver));
+    } catch (err) {
+      try {
+        const salvaged = Utils.salvageObjects(normalized, reviver);
+        if (salvaged.length) return mapMessages(salvaged);
+      } catch (_salvageErr) {
+        // ignore and fall through
+      }
+
+      const bad = Utils.findControlChar(normalized);
+      const prefix = ctx.entryName ? `while parsing ${ctx.entryName}: ` : "";
+      const detail = bad
+        ? `first illegal char code ${bad.code} (${bad.hex}) at index ${bad.index}; snippet: ${bad.snippet}`
+        : "no control char located";
+      throw new Error(`${prefix}${err.message} (${detail})`);
+    }
   }
 
   static perDay(value, userID) {
