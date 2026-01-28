@@ -860,7 +860,7 @@ export default function Upload(): ReactElement<any> {
                   const messages =
                     extension === "csv"
                       ? Utils.parseCSV(rawMessages)
-                      : Utils.parseJSON(rawMessages);
+                      : Utils.parseJSON(rawMessages, { entryName: channelMessagesPath });
 
 
                   if (data_ && data_.id && userMessages?.[data_.id]) {

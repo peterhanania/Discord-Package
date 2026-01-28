@@ -75,15 +75,102 @@ class Utils {
       }));
   }
 
-  static parseJSON(input) {
-    return JSON.parse(input)
-      .filter((m) => m.Contents)
-      .map((m) => ({
-        id: m.ID,
-        timestamp: m.Timestamp,
-        length: m.Contents.length,
-        words: m.Contents.split(" "),
-      }));
+  // Escape literal newlines only inside the Contents value to keep JSON parseable
+  static escapeNewlinesInContents(str) {
+    const contentsRegex = /(\"Contents\"\s*:\s*\")((?:\\.|[^"\\])*)(\")/g;
+    return str.replace(contentsRegex, (_match, prefix, body, suffix) => {
+      if (!body.includes("\n") && !body.includes("\r")) return _match;
+      return `${prefix}${body.replace(/\r?\n/g, "\\n")}${suffix}`;
+    });
+  }
+
+  // Normalize common malformed JSON shapes for messages
+  static normalizeJsonForMessages(str) {
+    if (!str) return str;
+    let normalized = str.replace(/,\s*([}\]])/g, "$1");
+    normalized = normalized.replace(/}\s*{(?=\s*"ID")/g, "},{");
+    const trimmed = normalized.trim();
+    if (trimmed.startsWith("{") && trimmed.endsWith("}") && !trimmed.startsWith("[{")) {
+      normalized = `[${trimmed}]`;
+    }
+    return normalized;
+  }
+
+  static salvageObjects(raw, reviver) {
+    if (!raw) return [];
+    const body = raw.trim().replace(/^\[\s*/, "").replace(/\s*\]$/, "");
+    const pieces = body.split(/(?<=})\s*,?\s*(?={)/);
+    const items = [];
+    for (const piece of pieces) {
+      const candidate = piece.trim();
+      if (!candidate) continue;
+      const withBraces = candidate.startsWith("{") && candidate.endsWith("}")
+        ? candidate
+        : `{${candidate.replace(/^{|}$/g, "")}}`;
+      try {
+        items.push(JSON.parse(withBraces, reviver));
+      } catch (_err) {
+        continue;
+      }
+    }
+    return items;
+  }
+
+  static parseJSON(input, ctx = {}) {
+    if (input == null || input === "") {
+      const prefix = ctx.entryName ? `while parsing ${ctx.entryName}: ` : "";
+      throw new Error(`${prefix}empty JSON payload`);
+    }
+
+    const escaped = Utils.escapeNewlinesInContents(input);
+    const normalized = Utils.normalizeJsonForMessages(escaped);
+
+    const reviver = (key, value) => {
+      if (key === "Contents" && typeof value === "string") {
+        return value.replace(/\r?\n/g, "\n");
+      }
+      return value;
+    };
+
+    const mapMessages = (parsed) => {
+      const messages = Array.isArray(parsed)
+        ? parsed
+        : parsed && Array.isArray(parsed.messages)
+          ? parsed.messages
+          : null;
+
+      if (!messages) {
+        const prefix = ctx.entryName ? `while parsing ${ctx.entryName}: ` : "";
+        throw new Error(`${prefix}expected messages array but got ${typeof parsed}`);
+      }
+
+      return messages
+        .filter((m) => m && m.Contents)
+        .map((m) => ({
+          id: m.ID,
+          timestamp: m.Timestamp,
+          length: m.Contents.length,
+          words: m.Contents.split(" "),
+        }));
+    };
+
+    try {
+      return mapMessages(JSON.parse(normalized, reviver));
+    } catch (err) {
+      try {
+        const salvaged = Utils.salvageObjects(normalized, reviver);
+        if (salvaged.length) return mapMessages(salvaged);
+      } catch (_salvageErr) {
+        // ignore and fall through
+      }
+
+      const bad = Utils.findControlChar(normalized);
+      const prefix = ctx.entryName ? `while parsing ${ctx.entryName}: ` : "";
+      const detail = bad
+        ? `first illegal char code ${bad.code} (${bad.hex}) at index ${bad.index}; snippet: ${bad.snippet}`
+        : "no control char located";
+      throw new Error(`${prefix}${err.message} (${detail})`);
+    }
   }
 
   static perDay(value, userID) {
