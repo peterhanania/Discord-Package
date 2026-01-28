@@ -762,7 +762,7 @@ export default function Upload(): ReactElement<any> {
 
           setPercent(27);
           const userMessages = JSON.parse(
-            await Utils.readFile("Messages/index.json", files)
+            await Utils.readFile("Messages/index.json", files, { debug: true, maxSizeBytes: 1_000_000_000 })
           );
           const messagesREGEX = /Messages\/(c)?([0-9]{16,32})\/channel\.json$/;
           const channelsIDFILE = files.filter((file: any) => {
@@ -791,14 +791,32 @@ export default function Upload(): ReactElement<any> {
               /Messages\/(c)?([0-9]{16,32})\/channel\.json$/
             )[1] === undefined;
 
-          const channelsIDs = channelsIDFILE.map((file: any) => {
-            if (file && file?.name) {
-              return file.name.match(messagesREGEX)[2];
-            }
-          });
+          const channelsIDs = channelsIDFILE
+            .map((file: any) => {
+              if (file && file?.name) {
+                const match = file.name.match(messagesREGEX);
+                return match ? match[2] : null;
+              }
+              return null;
+            })
+            .filter((id: any) => !!id);
 
           const channels: Array<any> = [];
           let messagesRead = 0;
+          const totalMessageFiles = channelsIDs.length * 2; // channel.json + messages per channel
+          let filesReadCount = 0;
+          const reportMessageProgress = (label: string) => {
+            const progressLabel = `${filesReadCount}/${totalMessageFiles} files`;
+            if (isDebug) {
+              console.log(
+                chalk.bold.blue(`[DEBUG] `) +
+                chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                `  ${chalk.yellow(`${label} (${progressLabel})`)}`
+              );
+            } else {
+              setLoading(`Loading Messages|||${progressLabel}`);
+            }
+          };
 
           if (isDebug) {
             setLoading("Loading Messages|||Scanning Messages");
@@ -825,7 +843,7 @@ export default function Upload(): ReactElement<any> {
 
           const firstChannelMessages = await Utils.readFile(
             firstChannelMessagesPath,
-            files
+            files, { debug: true, maxSizeBytes: 1_000_000_000 }
           );
 
           if (firstChannelMessages) {
@@ -840,77 +858,76 @@ export default function Upload(): ReactElement<any> {
             );
           }
 
-          await Promise.all(
-            channelsIDs.map((channelID: any): any => {
-              return new Promise((resolve) => {
-                const channelDataPath = `Messages/${isOldPackage ? "" : "c"
-                  }${channelID}/channel.json`;
-                const channelMessagesPath = `Messages/${isOldPackage ? "" : "c"
-                  }${channelID}/messages.${extension}`;
+          reportMessageProgress("Starting channel reads");
 
-                Promise.all([
-                  Utils.readFile(channelDataPath, files),
-                  Utils.readFile(channelMessagesPath, files),
-                ]).then(([rawData, rawMessages]) => {
-                  if (!rawData || !rawMessages) {
-                    return resolve([rawData, rawMessages]);
-                  } else messagesRead++;
+          for (const channelID of channelsIDs) {
+            const channelDataPath = `Messages/${isOldPackage ? "" : "c"}${channelID}/channel.json`;
+            const channelMessagesPath = `Messages/${isOldPackage ? "" : "c"}${channelID}/messages.${extension}`;
 
-                  const data_ = JSON.parse(rawData);
-                  const messages =
-                    extension === "csv"
-                      ? Utils.parseCSV(rawMessages)
-                      : Utils.parseJSON(rawMessages, { entryName: channelMessagesPath });
+            try {
+              const [rawData, rawMessages] = await Promise.all([
+                Utils.readFile(channelDataPath, files, { debug: true, maxSizeBytes: 1_000_000_000 }),
+                Utils.readFile(channelMessagesPath, files, { debug: true, maxSizeBytes: 1_000_000_000 }),
+              ]);
 
+              filesReadCount += 2;
+              reportMessageProgress(`Read ${channelID}`);
+              if (!rawData || !rawMessages) {
+                continue;
+              }
+              messagesRead++;
 
-                  if (data_ && data_.id && userMessages?.[data_.id]) {
-                    const name = userMessages[data_.id].replace("#0", "");
-                    const isDM =
-                      data_.recipients && data_.recipients.length === 2;
-                    const dmUserID = isDM
-                      ? data_.recipients.find(
-                        (userID: any): boolean => userID !== userId
-                      )
-                      : undefined;
+              const data_ = JSON.parse(rawData);
+              const messages =
+                extension === "csv"
+                  ? Utils.parseCSV(rawMessages)
+                  : Utils.parseJSON(rawMessages, { entryName: channelMessagesPath });
 
+              if (data_ && data_.id && userMessages?.[data_.id]) {
+                const name = userMessages[data_.id].replace("#0", "");
+                const isDM = data_.recipients && data_.recipients.length === 2;
+                const dmUserID = isDM
+                  ? data_.recipients.find((userID: any): boolean => userID !== userId)
+                  : undefined;
 
-                    channels.push({
-                      data_,
-                      messages,
-                      name,
-                      isDM,
-                      dmUserID,
-                    });
-                  } else {
-                    if (isDebug) {
-                      console.log(
-                        chalk.bold.blue(`[DEBUG] `) +
-                        chalk.bold.cyan(
-                          `[${moment(Date.now()).format("h:mm:ss a")}]`
-                        ) +
-                        `  ${chalk.yellow(`Error: Unknown Instance Found`)}`
-                      );
-                      console.log(data_, userMessages?.[data_?.id]);
-                    }
-
-                    const name = "Unknown";
-                    const isDM = false;
-                    const dmUserID = "unknown";
-
-                    channels.push({
-                      data_,
-                      messages,
-                      name,
-                      isDM,
-                      dmUserID,
-                    });
-                  }
-
-                  resolve([rawData, rawMessages]);
+                channels.push({
+                  data_,
+                  messages,
+                  name,
+                  isDM,
+                  dmUserID,
                 });
-              });
-            })
-          );
+              } else {
+                if (isDebug) {
+                  console.log(
+                    chalk.bold.blue(`[DEBUG] `) +
+                    chalk.bold.cyan(`[${moment(Date.now()).format("h:mm:ss a")}]`) +
+                    `  ${chalk.yellow(`Error: Unknown Instance Found`)}`
+                  );
+                  console.log(data_, userMessages?.[data_?.id]);
+                }
+
+                const name = "Unknown";
+                const isDM = false;
+                const dmUserID = "unknown";
+
+                channels.push({
+                  data_,
+                  messages,
+                  name,
+                  isDM,
+                  dmUserID,
+                });
+              }
+            } catch (err) {
+              filesReadCount += 2;
+              reportMessageProgress(`Error reading ${channelID}`);
+              if (isDebug) console.error(err);
+              continue;
+            }
+          }
+
+          reportMessageProgress("Finished channel reads");
 
           if (isDebug) {
             setLoading("Loading Messages|||Finished Message Scan");
@@ -2440,49 +2457,48 @@ export default function Upload(): ReactElement<any> {
                             <path d="M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6Z" />
                           </svg>
                         </summary>
-                        {selectedFeatures?.statistics?.length ===
-                          Object.keys(EventsJSON.events).length ? (
-                          <span
-                            onClick={() => {
-                              setSelectedFeatures({
-                                ...selectedFeatures,
-                                statistics: [],
-                              });
-                            }}
-                            className="-mt-2 absolute text-sm text-gray-400 hover:text-gray-200 font-bold cursor-pointer"
-                          >
-                            unselect all
-                          </span>
-                        ) : (
-                          <span
-                            onClick={() => {
-                              setSelectedFeatures({
-                                ...selectedFeatures,
-                                statistics: Object.keys(EventsJSON.events),
-                              });
-                            }}
-                            className="-mt-2 absolute text-sm text-gray-400 hover:text-gray-200 font-bold cursor-pointer"
-                          >
-                            select all
-                          </span>
-                        )}
-                        {selectedFeatures?.statistics !==
-                          EventsJSON.defaultEvents ? (
-                          <span
-                            onClick={() => {
-                              setSelectedFeatures({
-                                ...selectedFeatures,
-                                statistics: EventsJSON.defaultEvents,
-                              });
-                            }}
-                            className="-mt-2 ml-20 absolute text-sm text-gray-400 hover:text-gray-200 font-bold cursor-pointer"
-                          >
-                            important events
-                          </span>
-                        ) : (
-                          ""
-                        )}
-                        <div className="mb-5"></div>
+                        <div className="flex flex-wrap gap-4 mt-2 mb-4 text-sm text-gray-400 font-bold">
+                          {selectedFeatures?.statistics?.length ===
+                            Object.keys(EventsJSON.events).length ? (
+                            <span
+                              onClick={() => {
+                                setSelectedFeatures({
+                                  ...selectedFeatures,
+                                  statistics: [],
+                                });
+                              }}
+                              className="cursor-pointer hover:text-gray-200"
+                            >
+                              unselect all
+                            </span>
+                          ) : (
+                            <span
+                              onClick={() => {
+                                setSelectedFeatures({
+                                  ...selectedFeatures,
+                                  statistics: Object.keys(EventsJSON.events),
+                                });
+                              }}
+                              className="cursor-pointer hover:text-gray-200"
+                            >
+                              select all
+                            </span>
+                          )}
+                          {selectedFeatures?.statistics !==
+                            EventsJSON.defaultEvents ? (
+                            <span
+                              onClick={() => {
+                                setSelectedFeatures({
+                                  ...selectedFeatures,
+                                  statistics: EventsJSON.defaultEvents,
+                                });
+                              }}
+                              className="cursor-pointer hover:text-gray-200"
+                            >
+                              important events
+                            </span>
+                          ) : null}
+                        </div>
                         {Object.values(EventsJSON.events).map((item, i) => {
                           return (
                             <div
@@ -2698,7 +2714,7 @@ export default function Upload(): ReactElement<any> {
                       drag and drop
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">
-                      Upload your Discord package or extracted JSON here<br/>
+                      Upload your Discord package or extracted JSON here<br />
                       <i>Please make sure that you selected all options in the data request modal</i>
                     </p>
 

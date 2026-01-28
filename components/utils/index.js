@@ -41,23 +41,85 @@ class Utils {
     else return `${currency.symbol}${amount}`;
   }
 
-  static readFile(name, files) {
-    return new Promise((resolve) => {
+  static readFile(name, files, opts = {}) {
+    const {
+      maxSizeBytes = 512 * 1024 * 1024, // 512 MB safety cap to avoid OOM on huge entries
+      onChunk,
+      collect = true,
+      debug = false,
+    } = opts;
+
+    const log = debug
+      ? (...args) => console.log("[readFile]", name, "-", ...args)
+      : () => {};
+
+    return new Promise((resolve, reject) => {
       const file = files.find((file) => {
         if (file && file?.name) {
           return file.name === name;
         }
       });
       if (!file) return resolve(null);
+      log("start", { originalSize: file?.originalSize });
       const fileContent = [];
       const decoder = new DecodeUTF8();
+      let finished = false;
+      let bytesRead = 0;
+
+      if (file.originalSize && file.originalSize > maxSizeBytes) {
+        log("rejecting oversized entry", {
+          originalSize: file.originalSize,
+          maxSizeBytes,
+        });
+        return reject(
+          new Error(
+            `${name} is too large to load in memory (${file.originalSize} bytes > ${maxSizeBytes} bytes cap)`
+          )
+        );
+      }
+
       file.ondata = (err, data, final) => {
-        decoder.push(data, final);
+        if (finished) return;
+        if (err) {
+          finished = true;
+          log("error in ondata", err);
+          const partial = fileContent.length ? fileContent.join("") : null;
+          return resolve(partial);
+        }
+        bytesRead += data?.length || 0;
+        log("chunk", { size: data?.length || 0, bytesRead, final });
+        if (bytesRead > maxSizeBytes) {
+          finished = true;
+          const partial = fileContent.length ? fileContent.join("") : null;
+          log("cap exceeded", { bytesRead, maxSizeBytes });
+          return reject(
+            new Error(
+              `${name} exceeded in-memory cap while reading (${bytesRead} bytes > ${maxSizeBytes} bytes)`
+            )
+          );
+        }
+        try {
+          decoder.push(data, final);
+        } catch (_pushErr) {
+          finished = true;
+          log("decoder.push error", _pushErr);
+          const partial = fileContent.length ? fileContent.join("") : null;
+          return resolve(partial);
+        }
+        if (final) finished = true;
       };
+
       decoder.ondata = (str, final) => {
-        fileContent.push(str);
-        if (final) resolve(fileContent.join(""));
+        if (finished && !final) return;
+        if (onChunk) onChunk(str, final);
+        if (collect) fileContent.push(str);
+        if (final) {
+          finished = true;
+          log("done", { bytesRead, collected: collect });
+          resolve(collect ? fileContent.join("") : null);
+        }
       };
+
       file.start();
     });
   }
