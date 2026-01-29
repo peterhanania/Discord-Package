@@ -90,7 +90,6 @@ class Utils {
         log("chunk", { size: data?.length || 0, bytesRead, final });
         if (bytesRead > maxSizeBytes) {
           finished = true;
-          const partial = fileContent.length ? fileContent.join("") : null;
           log("cap exceeded", { bytesRead, maxSizeBytes });
           return reject(
             new Error(
@@ -139,7 +138,7 @@ class Utils {
 
   // Escape literal newlines only inside the Contents value to keep JSON parseable
   static escapeNewlinesInContents(str) {
-    const contentsRegex = /(\"Contents\"\s*:\s*\")((?:\\.|[^"\\])*)(\")/g;
+    const contentsRegex = /("Contents"\s*:\s*")((?:\\.|[^"\\])*)(")/g;
     return str.replace(contentsRegex, (_match, prefix, body, suffix) => {
       if (!body.includes("\n") && !body.includes("\r")) return _match;
       return `${prefix}${body.replace(/\r?\n/g, "\\n")}${suffix}`;
