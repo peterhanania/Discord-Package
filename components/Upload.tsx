@@ -2171,6 +2171,20 @@ export default function Upload(): ReactElement<any> {
 
 
 
+  // Info/Warning box for upload requirements
+  const InfoBox = () => (
+    <div className="mt-10 mb-4 w-full lg:w-1/2 mx-auto">
+      <div className="rounded-lg border border-yellow-400 bg-yellow-100 dark:bg-yellow-900 p-4 text-yellow-800 dark:text-yellow-200 shadow-md">
+        <strong className="block text-lg mb-2">Important:</strong>
+        <ul className="list-disc pl-5 text-sm">
+          <li>When requesting your Discord package data, <b>you must select <span className="text-pink-600">all export options</span></b> in the Discord data request modal.</li>
+          <li>All <b>folders in your package must be named in <span className="text-pink-600">English</span></b> for proper processing.</li>
+        </ul>
+        <span className="block mt-2 text-xs text-yellow-700 dark:text-yellow-300">Ignoring these instructions may cause errors or missing data during upload.</span>
+      </div>
+    </div>
+  );
+
   return dataExtracted ? (
     <Suspense
       fallback={
@@ -2187,7 +2201,9 @@ export default function Upload(): ReactElement<any> {
     <>
       <Alerts />
       <Privacy />
-      <Header />{" "}
+      <Header />
+      <InfoBox />
+      <div className="mb-6" />
       <ToastContainer
         position="top-right"
         autoClose={false}
