@@ -366,8 +366,10 @@ details {
 details[open] {
   padding: 45px 70px 45px 45px;
   min-height: 20px;
-  background-color: #2f3136;
+  background-color: var(--bg-color);
+  color: var(--text-color); 
   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(128, 128, 128, 0.3); 
 }
 
 @media (max-width: 768px) {
