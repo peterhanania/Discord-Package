@@ -433,6 +433,23 @@ export default function Upload(): ReactElement<any> {
           const userInformationData = JSON.parse(
             await Utils.readFile("Account/user.json", files)
           );
+          const avatarHashesByUserId = new Map<string, string>();
+          if (Array.isArray(userInformationData.relationships)) {
+            userInformationData.relationships.forEach((relationship: any) => {
+              const relationshipUser = relationship?.user;
+              if (
+                typeof relationshipUser?.id === "string" &&
+                /^\d{16,32}$/.test(relationshipUser.id) &&
+                typeof relationshipUser?.avatar === "string" &&
+                /^(a_)?[a-f0-9]{32}$/i.test(relationshipUser.avatar)
+              ) {
+                avatarHashesByUserId.set(
+                  relationshipUser.id,
+                  relationshipUser.avatar
+                );
+              }
+            });
+          }
 
           if (isDebug) {
             console.log(
@@ -1129,6 +1146,9 @@ export default function Upload(): ReactElement<any> {
               channel_id: channel.data_?.id,
               user_id: channel.dmUserID,
               user_tag: channel.isDM && channel.name.includes("Direct Message with") ? channel.name.split("Direct Message with")[1].trim() : null,
+              avatar_hash: channel.isDM
+                ? avatarHashesByUserId.get(channel.dmUserID) || null
+                : null,
               recipients: channel.data_?.recipients?.length,
 
               // Helper flags

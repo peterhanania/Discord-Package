@@ -12,6 +12,36 @@ import currencies from "../json/other/currencies.json";
 import connectionsJSON from "../json/Connections.json";
 
 class Utils {
+  static getDiscordUserAvatarURL(userId, avatarHash = null) {
+    const validUserId =
+      typeof userId === "string" && /^\d{16,32}$/.test(userId)
+        ? userId
+        : "0";
+    const validAvatarHash =
+      typeof avatarHash === "string" &&
+      /^(a_)?[a-f0-9]{32}$/i.test(avatarHash)
+        ? avatarHash
+        : null;
+
+    if (validAvatarHash) {
+      const animated = validAvatarHash.startsWith("a_")
+        ? "&animated=true"
+        : "";
+      return `https://cdn.discordapp.com/avatars/${validUserId}/${validAvatarHash}.webp?size=64${animated}`;
+    }
+
+    let defaultAvatarIndex = 0;
+    try {
+      defaultAvatarIndex = Number(
+        (BigInt(validUserId) >> BigInt(22)) % BigInt(6)
+      );
+    } catch {
+      defaultAvatarIndex = 0;
+    }
+
+    return `https://cdn.discordapp.com/embed/avatars/${defaultAvatarIndex}.png`;
+  }
+
   static getMostUsedCurrency(transactions, amount) {
     if (transactions == null) {
       return '$0.00';
@@ -786,6 +816,13 @@ class Utils {
     ) {
       topDMs.push({
         user_tag: names[Math.floor(Math.random() * names.length)],
+        channel_id: (
+          Math.floor(
+            Math.random() *
+            // eslint-disable-next-line no-loss-of-precision
+            (9999999999999999 - 100000000000000 + 1)
+          ) + 100000000000000
+        ).toString(),
         // eslint-disable-next-line no-loss-of-precision
         user_id: (
           Math.floor(
