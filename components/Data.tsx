@@ -737,6 +737,31 @@ async function copyToClipboard(value: string): Promise<boolean> {
   }
 }
 
+function TopUserAvatar({ user }: any): ReactElement {
+  const fallbackAvatar = Utils.getDiscordUserAvatarURL(user?.user_id);
+
+  return (
+    <Image
+      unoptimized={true}
+      src={Utils.getDiscordUserAvatarURL(
+        user?.user_id,
+        user?.avatar_hash
+      )}
+      alt={`${user?.user_tag || "Discord user"} avatar`}
+      width={40}
+      height={40}
+      loading="lazy"
+      draggable={false}
+      className="w-10 h-10 rounded-full object-cover ml-3 shrink-0"
+      onError={(e) => {
+        e.currentTarget.onerror = null;
+        e.currentTarget.removeAttribute("srcset");
+        e.currentTarget.src = fallbackAvatar;
+      }}
+    />
+  );
+}
+
 export default function Data({ data, demo, loading, percent }: any): ReactElement {
   const [topDMs, setTopDMs] = useAtom(topDMsAtom);
   const [topChannels, setTopChannels] = useAtom(topChannelsAtom);
@@ -765,6 +790,36 @@ export default function Data({ data, demo, loading, percent }: any): ReactElemen
         horizontal: "center",
       },
     });
+  };
+
+  const showDMChannelFolder = (channelId: string) => {
+    const folderName = `c${channelId}`;
+
+    toast(
+      <div className="Toastify__toast-body_">
+        <span className="font-bold text-lg text-black dark:text-white">
+          Message folder
+        </span>
+        <div className="flex items-center gap-2 mt-2">
+          <code className="text-black dark:text-white break-all">
+            {folderName}
+          </code>
+          <button
+            type="button"
+            className="px-2 py-1 rounded bg-gray-300 hover:bg-gray-400 dark:bg-[#23272A] dark:hover:bg-gray-600 text-black dark:text-white"
+            onClick={async () => {
+              if (await copyToClipboard(folderName)) {
+                noti("Copied folder ID to Clipboard");
+              } else {
+                noti("Could not copy folder ID to Clipboard");
+              }
+            }}
+          >
+            Copy
+          </button>
+        </div>
+      </div>
+    );
   };
 
   const [showWalkthrough, setShowWalkthrough] = useState<boolean>(false);
@@ -4269,11 +4324,24 @@ export default function Data({ data, demo, loading, percent }: any): ReactElemen
                               >
                                 {i + 1}
                               </div>
+                              <TopUserAvatar user={m} />
 
                               <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
-                                <div className="flex items-center text-lg">
+                                <button
+                                  type="button"
+                                  className="flex items-center text-lg text-left hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:no-underline"
+                                  disabled={!m?.channel_id}
+                                  title={
+                                    m?.channel_id
+                                      ? "Show message folder ID"
+                                      : undefined
+                                  }
+                                  onClick={() =>
+                                    showDMChannelFolder(m.channel_id)
+                                  }
+                                >
                                   {m?.user_tag}
-                                </div>
+                                </button>
                                 <span className="text-gray-400 text-sm -mt-2">
                                   {m?.user_id}
                                 </span>
@@ -4952,10 +5020,23 @@ export default function Data({ data, demo, loading, percent }: any): ReactElemen
                           <div key={i}>
                             <div className="lg:flex md:flex sm:flex items-center lg:py-10 md:py-10 sm:py-10 py-2 sm:flex-row lg:h-1 md:h-1 sm:h-1 hover:bg-gray-400 dark:hover:bg-[#23272A] px-2 rounded-lg ">
                               <div className="flex items-center max-w-full sm:max-w-4/6">
+                                <TopUserAvatar user={m} />
                                 <div className="text-gray-900 dark:text-white font-bold  ml-4 overflow-hidden text-ellipsis whitespace-nowrap ">
-                                  <div className="flex items-center text-lg">
+                                  <button
+                                    type="button"
+                                    className="flex items-center text-lg text-left hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:no-underline"
+                                    disabled={!m?.channel_id}
+                                    title={
+                                      m?.channel_id
+                                        ? "Show message folder ID"
+                                        : undefined
+                                    }
+                                    onClick={() =>
+                                      showDMChannelFolder(m.channel_id)
+                                    }
+                                  >
                                     {m?.user_tag}
-                                  </div>
+                                  </button>
                                   <span className="text-gray-400 text-sm -mt-2">
                                     {m?.user_id}
                                   </span>
