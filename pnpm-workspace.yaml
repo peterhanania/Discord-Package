@@ -1,3 +1,9 @@
+allowBuilds:
+  '@parcel/watcher': true
+  react-particles: true
+  sharp: true
+  tsparticles-engine: true
+  unrs-resolver: true
 onlyBuiltDependencies:
   - '@parcel/watcher'
   - react-particles
